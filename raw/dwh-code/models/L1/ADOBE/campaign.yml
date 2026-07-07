@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: campaign
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"CAMPAIGN"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [campaignid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: campaignid
+        data_type: VARCHAR(30)
+      - name: marketingplanid
+        data_type: VARCHAR(30)
+      - name: programid
+        data_type: VARCHAR(30)
+      - name: nomepianomarketing
+        data_type: VARCHAR(80)
+      - name: datainiziopianomarketing
+        data_type: VARCHAR(20)
+      - name: datafinepianomarketing
+        data_type: VARCHAR(20)
+      - name: nomeprogramma
+        data_type: VARCHAR(80)
+      - name: datainizioprogramma
+        data_type: VARCHAR(20)
+      - name: datafineprogramma
+        data_type: VARCHAR(20)
+      - name: nomecampagna
+        data_type: VARCHAR(80)
+      - name: datainiziocampagna
+        data_type: VARCHAR(20)
+      - name: datafinecampagna
+        data_type: VARCHAR(20)
+      - name: canalecampagna
+        data_type: VARCHAR(80)
+      - name: naturacampagna
+        data_type: VARCHAR(80)
+      - name: statocampagna
+        data_type: VARCHAR(80)
+      - name: categoriacomunicazione
+        data_type: VARCHAR(80)
+      - name: obiettivobusiness
+        data_type: VARCHAR(80)
+      - name: clustercampagna
+        data_type: VARCHAR(80)

@@ -1,0 +1,52 @@
+version: 2
+models:
+  - name: org_transact
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [CD_CLIENTE, PR_TRANSAZIONE]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: PR_TRANSAZIONE
+        data_type: NUMBER
+      - name: CD_ACCOUNT
+        data_type: VARCHAR(80)
+      - name: TP_PAYMENT_METHOD_DEBIT_CREDIT
+        data_type: VARCHAR(6)
+      - name: CD_PAYMENT_TIMING
+        data_type: VARCHAR(4)
+      - name: TP_PAYMENT
+        data_type: VARCHAR(13)
+      - name: TP_VALUE
+        data_type: VARCHAR(3)
+      - name: TP_PROCESSO
+        data_type: VARCHAR(7)
+      - name: TP_OGGETTO_TRANSZ
+        data_type: VARCHAR(15)
+      - name: TP_CATEGORIA_FIN
+        data_type: VARCHAR(18)
+      - name: TP_TRANSAZIONE
+        data_type: VARCHAR(6)
+      - name: CD_STATO
+        data_type: VARCHAR(14)
+      - name: TP_TRANSACTION
+        data_type: VARCHAR(6)
+      - name: TP_NET_TAX
+        data_type: VARCHAR(4)
+      - name: DT_CONTABILE
+        data_type: DATE
+      - name: DT_PAGAMENTO
+        data_type: DATE
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: DT_CREAZIONE_RECD
+        data_type: DATE
+      - name: DT_FATTURAZIONE
+        data_type: DATE
+      - name: EU_MOVIMENTO
+        data_type: NUMBER(13,2)

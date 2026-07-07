@@ -1,0 +1,89 @@
+version: 2
+models:
+  - name: dm_dim_produz_utilizzi_carte
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PROTOCOLLO, CD_RIGA, CD_EMETTITORE]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: CD_PROTOCOLLO
+        data_type: NUMBER(9)
+      - name: CD_RIGA
+        data_type: NUMBER(4)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(30)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: CD_GER_TERRITORIALE_1
+        data_type: VARCHAR(10)
+      - name: CD_GER_TERRITORIALE_2
+        data_type: VARCHAR(3)
+      - name: CD_GER_TERRITORIALE_3
+        data_type: VARCHAR(3)
+      - name: CD_GER_TERRITORIALE_4
+        data_type: VARCHAR(3)
+      - name: CD_NODO_FOGLIA
+        data_type: VARCHAR(10)
+      - name: EU_FINANZIAMENTO
+        data_type: NUMBER(11,2)
+      - name: NM_DURATA_FINANZ
+        data_type: NUMBER(3)
+      - name: NM_IRR
+        data_type: NUMBER(9)
+      - name: TP_UTILIZZO
+        data_type: NUMBER(3)
+      - name: TP_MOVIMENTO
+        data_type: VARCHAR(1)
+      - name: FL_STORNATO
+        data_type: VARCHAR(1)
+      - name: FL_STORNO
+        data_type: VARCHAR(1)
+      - name: CD_PROMOZIONE
+        data_type: VARCHAR(3)
+      - name: NM_MESI_DILAZIONE
+        data_type: NUMBER(3)
+      - name: PC_COMMISSIONE
+        data_type: NUMBER(6,3)
+      - name: NM_TAEG
+        data_type: NUMBER(5,2)
+      - name: FL_CONTRIBUTI_PROMO
+        data_type: VARCHAR(1)
+      - name: NM_TAN_PROMO
+        data_type: NUMBER(6,3)
+      - name: NM_TEG_PROMO
+        data_type: NUMBER(6,3)
+      - name: NM_TAEG_PROMO
+        data_type: NUMBER(6,3)
+      - name: FL_TAEG_FISSO
+        data_type: VARCHAR(1)
+      - name: NM_TAEG_FISSO_MIN
+        data_type: NUMBER(5,2)
+      - name: NM_TAEG_FISSO_MAX
+        data_type: NUMBER(5,2)
+      - name: PC_SCONTO
+        data_type: NUMBER(6,3)
+      - name: NM_RATE
+        data_type: NUMBER(3)
+      - name: PC_TASSO_RATA
+        data_type: NUMBER(6,3)

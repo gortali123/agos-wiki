@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: country
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"COUNTRY"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: cd_country
+        data_type: NUMBER(20,0)
+      - name: ds_country
+        data_type: VARCHAR(150)

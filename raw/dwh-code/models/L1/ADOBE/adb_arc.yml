@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: adb_arc
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"ADB_ARC"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [datasurvey]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: datasurvey
+        data_type: DATE
+      - name: idsurvey
+        data_type: VARCHAR(50)
+      - name: codicecontroparte
+        data_type: VARCHAR(20)
+      - name: campiaggiuntivi
+        data_type: VARCHAR(255)
+      - name: commentonps
+        data_type: VARCHAR(500)
+      - name: nps
+        data_type: VARCHAR(2)
+      - name: ces
+        data_type: VARCHAR(50)

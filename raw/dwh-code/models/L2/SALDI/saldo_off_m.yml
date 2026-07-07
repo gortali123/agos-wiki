@@ -1,0 +1,23 @@
+version: 2
+models:
+  - name: saldo_off_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SALDI", "entita": "SALDO_OFF_M"}'
+      pre_hook: "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(9,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_CONTROPARTE
+        data_type: VARCHAR(9)
+      - name: EU_OFF_BALANCE
+        data_type: NUMBER(13,2)

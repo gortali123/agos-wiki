@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: <table>
+        data_tests:
+          - try_cast_table:
+              arguments:
+                validation_config:
+                  my_date_col: "try_to_date(my_date_col, 'DD/MM/YYYY')"
+                  skip_col: skip
+          - primary_key_table:
+              arguments:
+                pk_columns: [<pk_columns>]
+      - name: <table>_deleted

@@ -1,0 +1,126 @@
+version: 2
+
+models:
+  - name: campaignrequest
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"CAMPAIGNREQUEST"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [broadlogid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: broadlogid
+        data_type: VARCHAR(30)
+      - name: programid
+        data_type: VARCHAR(30)
+      - name: campaignid
+        data_type: VARCHAR(30)
+      - name: agosfilialeid
+        data_type: VARCHAR(5)
+      - name: agosclienteid
+        data_type: VARCHAR(30)
+      - name: agosconsumoid
+        data_type: VARCHAR(30)
+      - name: agosrevolvingid
+        data_type: VARCHAR(30)
+      - name: marketingplanid
+        data_type: VARCHAR(30)
+      - name: deliveryid
+        data_type: VARCHAR(30)
+      - name: codicecontratto
+        data_type: VARCHAR(10)
+      - name: codiceistituto
+        data_type: VARCHAR(2)
+      - name: codicecontroparte
+        data_type: NUMBER(18,9)
+      - name: nomecampagna
+        data_type: VARCHAR(80)
+      - name: datainiziocampagna
+        data_type: VARCHAR(20)
+      - name: datafinecampagna
+        data_type: VARCHAR(20)
+      - name: nomedelivery
+        data_type: VARCHAR(80)
+      - name: canaledelivery
+        data_type: VARCHAR(80)
+      - name: statodelivery
+        data_type: VARCHAR(80)
+      - name: oggettoemail
+        data_type: VARCHAR(200)
+      - name: datainvio
+        data_type: VARCHAR(20)
+      - name: statoinvio
+        data_type: VARCHAR(80)
+      - name: dataaggiornamentostatoinvio
+        data_type: VARCHAR(20)
+      - name: codicetrattamento
+        data_type: VARCHAR(10)
+      - name: codicecomunicazione
+        data_type: VARCHAR(10)
+      - name: descrizionecomunicazione
+        data_type: VARCHAR(80)
+      - name: templatelettera
+        data_type: VARCHAR(80)
+      - name: providerprinter
+        data_type: VARCHAR(80)
+      - name: providercallcenter
+        data_type: VARCHAR(80)
+      - name: codiceattributomailing
+        data_type: VARCHAR(10)
+      - name: codicesegmento
+        data_type: VARCHAR(10)
+      - name: tipomailing
+        data_type: VARCHAR(10)
+      - name: flaggruppodicontrollo
+        data_type: NUMBER(1,0)
+      - name: siglamailing
+        data_type: VARCHAR(80)
+      - name: codiceorganizzazionecarta
+        data_type: VARCHAR(10)
+      - name: descrizioneorganizzazionecarta
+        data_type: VARCHAR(80)
+      - name: codicetipoorganizzazionecarta
+        data_type: VARCHAR(10)
+      - name: descrizionetipoorganizzazionecarta
+        data_type: VARCHAR(80)
+      - name: importoproposto
+        data_type: NUMBER(10,2)
+      - name: testocomunicazione
+        data_type: VARCHAR(80)
+      - name: codicemailinglettera
+        data_type: VARCHAR(10)
+      - name: codiceofferta
+        data_type: VARCHAR(10)
+      - name: codicecontatto
+        data_type: VARCHAR(10)
+      - name: codicecentrotelemarketing
+        data_type: VARCHAR(10)
+      - name: descrizioneofferta
+        data_type: VARCHAR(80)
+      - name: descrizionetipomailing
+        data_type: VARCHAR(80)
+      - name: descrizionetrattamento
+        data_type: VARCHAR(80)
+      - name: descrizionecontatto
+        data_type: VARCHAR(80)
+      - name: descrizionecentrotelemarketing
+        data_type: VARCHAR(80)
+      - name: descrizionesegmento
+        data_type: VARCHAR(80)
+      - name: tipologiabounce
+        data_type: VARCHAR(50)
+      - name: motivobounce
+        data_type: VARCHAR(50)
+      - name: flagmarchiatura
+        data_type: VARCHAR(1)
+      - name: email
+        data_type: VARCHAR(70)
+      - name: mobile
+        data_type: VARCHAR(50)

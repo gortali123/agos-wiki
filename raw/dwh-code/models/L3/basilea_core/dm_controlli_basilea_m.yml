@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: dm_controlli_basilea_m
+    config:
+      pre_hook: "{{ delete_last_month('DT_CONTROLLO') }}"
+      materialized: incremental
+      incremental_strategy: append   
+      contract: 
+        enforced: true
+    constraints:
+      - type: primary_key
+        columns: [CD_CONTROLLO, DT_CONTROLLO]
+    columns:
+      - name: CD_CONTROLLO
+        data_type: VARCHAR(7)
+      - name: DS_CONTROLLO
+        data_type: VARCHAR(2000)
+      - name: DT_CONTROLLO
+        data_type: DATE
+      - name: TP_PROC_ESECUZIONE_CONTROLLO
+        data_type: VARCHAR(5)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: NM_RECORD_KO
+        data_type: NUMBER(38,0)
+      - name: TS_CARICAMENTO
+        data_type: TIMESTAMP_NTZ

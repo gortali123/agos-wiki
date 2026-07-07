@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: servizi_assicurativi
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, CD_SERVIZIO]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: CD_SERVIZIO
+        data_type: VARCHAR(5)
+      - name: TP_SERVIZIO
+        data_type: VARCHAR(3)
+      - name: DS_SERVIZIO
+        data_type: VARCHAR(30)
+      - name: TP_POLIZZA
+        data_type: VARCHAR(2)
+      - name: CD_PACCHETTO_SERVIZI
+        data_type: VARCHAR(5)
+      - name: DS_PACCHETTO_SERVIZI
+        data_type: VARCHAR(30)
+      - name: TP_PACCHETTO
+        data_type: VARCHAR(5)
+      - name: TP_CLASSE
+        data_type: VARCHAR(3)
+      - name: TP_FAMIGLIA_PRODOTTO
+        data_type: VARCHAR(5)
+      - name: CD_PARTITA
+        data_type: NUMBER(9)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_COMPAGNIA
+        data_type: NUMBER(9)
+      - name: DS_COMPAGNIA
+        data_type: VARCHAR(30)
+      - name: CD_STATO_ASSIC
+        data_type: VARCHAR(2)
+      - name: DS_STATO_ASSIC
+        data_type: VARCHAR(30)
+      - name: DT_ADESIONE
+        data_type: DATE
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_STORNO
+        data_type: DATE
+      - name: DT_RECESSO
+        data_type: DATE
+      - name: DT_RINNOVO
+        data_type: DATE
+      - name: EU_PREMIO_LORDO
+        data_type: NUMBER(13,2)
+      - name: EU_PREMIO_NETTO
+        data_type: NUMBER(13,2)
+      - name: EU_INCASSO_PREMIO
+        data_type: NUMBER(13,2)
+      - name: FL_PNF
+        data_type: VARCHAR(1)
+      - name: FL_SINISTRO_ATTIVO
+        data_type: VARCHAR(1)

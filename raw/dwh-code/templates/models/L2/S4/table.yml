@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: <table>
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [<pk_cols>]
+    columns:
+      - name: <CD_PK>
+        data_type: <dtype>
+      - name: <CAMPO1>
+        data_type: <dtype1>
+      - name: <CAMPO2>
+        data_type: <dtype2>

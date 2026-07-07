@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: campaignresponse
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"CAMPAIGNRESPONSE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [trackingid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: trackingid
+        data_type: VARCHAR(30)
+      - name: broadlogid
+        data_type: VARCHAR(30)
+      - name: campaignid
+        data_type: VARCHAR(30)
+      - name: deliveryid
+        data_type: VARCHAR(30)
+      - name: datarisposta
+        data_type: VARCHAR(20)
+      - name: tipointerazione
+        data_type: VARCHAR(30)
+      - name: dettagliinterazionecliente
+        data_type: VARCHAR(400)
+      - name: codiceesito
+        data_type: VARCHAR(10)
+      - name: descrizioneesito
+        data_type: VARCHAR(80)
+      - name: canaleesito
+        data_type: VARCHAR(80)
+      - name: ccprovenienza
+        data_type: VARCHAR(80)
+      - name: operatorecc
+        data_type: VARCHAR(80)
+      - name: filialecontatto
+        data_type: VARCHAR(10)
+      - name: operatorefiliale
+        data_type: VARCHAR(80)
+      - name: categorialink
+        data_type: VARCHAR(50)

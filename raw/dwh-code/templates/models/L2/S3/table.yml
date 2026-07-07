@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: <table>
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [<pk_cols>, DT_OSSERVAZIONE]
+      pre_hook:
+        - "{{ delete_month() }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [<pk_cols>, DT_OSSERVAZIONE]
+    columns:
+      - name: <CD_PK>
+        data_type: <dtype>
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: <CAMPO1>
+        data_type: <dtype1>
+      - name: <CAMPO2>
+        data_type: <dtype2>

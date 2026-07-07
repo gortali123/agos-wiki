@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: <table>
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      post_hook: "{{ logic_delete_merge() }}"
+      unique_key: [<pk_cols>]
+      meta:
+        cluster: ["<A1|A2>"]
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [<pk_cols>]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: <col1>
+        data_type: <dtype>
+      # ...
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: connection_type
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"CONNECTION_TYPE"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: cd_connection_type
+        data_type: NUMBER(20,0)
+      - name: ds_connection_type
+        data_type: VARCHAR(150)

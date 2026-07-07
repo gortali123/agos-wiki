@@ -1,0 +1,62 @@
+version: 2
+models:
+  - name: creditline
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [DT_RIFERIMENTO, CD_PRATICA, DS_NOME_LIN_CREDIT]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(30)
+      - name: TP_LINEA_DI_CREDITO
+        data_type: VARCHAR(12)
+      - name: DS_NOME_LIN_CREDIT
+        data_type: VARCHAR(40)
+      - name: CD_PARENT_CREDIT_LINE
+        data_type: VARCHAR(20)
+      - name: CD_STATO_LIN_CRED
+        data_type: VARCHAR(8)
+      - name: TP_CREDIT_LINE_CALCULATION
+        data_type: VARCHAR(5)
+      - name: CD_CURRENCY
+        data_type: VARCHAR(3)
+      - name: FL_RESTRUCTURED
+        data_type: VARCHAR(5)
+      - name: NM_CERTIFICATI
+        data_type: NUMBER
+      - name: CD_CREDIT_LINE_MARKER
+        data_type: VARCHAR(1)
+      - name: FL_VALID_NO_SUPPLIER_LOAN
+        data_type: VARCHAR(5)
+      - name: FL_VALID_ALL_SUPPLIER_LOANS
+        data_type: VARCHAR(5)
+      - name: DT_REVISIONE
+        data_type: DATE
+      - name: DT_FINE_LIN_CREDIT
+        data_type: DATE
+      - name: DT_INIZIO_LIN_CREDIT
+        data_type: DATE
+      - name: EU_CREDIT_LINE_RISK
+        data_type: NUMBER(13,2)
+      - name: EU_FIDO
+        data_type: NUMBER(13,2)
+      - name: EU_FIDO_UTZTO
+        data_type: NUMBER(13,2)
+      - name: EU_ATTESA_LIQZNE
+        data_type: NUMBER(13,2)
+      - name: EU_COMPENSAZIONE_BANC
+        data_type: NUMBER(13,2)
+      - name: EU_IMPAGATO_TOT
+        data_type: NUMBER(13,2)
+      - name: EU_GUARANTEE
+        data_type: NUMBER(13,2)
+      - name: PC_GUARANTEE_IN_LIMIT
+        data_type: NUMBER(10,3)
+      - name: PC_GUARANTEE_OVER_LIMIT
+        data_type: NUMBER(10,3)

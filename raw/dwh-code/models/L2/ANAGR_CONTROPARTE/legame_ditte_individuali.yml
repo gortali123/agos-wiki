@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: legame_ditte_individuali
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: >
+        {{ delete_l2(
+            'ccanalog',
+            ['CD_CONTROPARTE'],
+            ['AL_CODICE']
+        ) }}
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_CONTROPARTE, TS_INSERIMENTO]
+    columns:
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: TP_CONTROPARTE
+        data_type: VARCHAR(1)
+      - name: CD_CONTROPARTE_DI
+        data_type: NUMBER(9,0)
+      - name: CD_PARTITA_IVA_DI
+        data_type: VARCHAR(11)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

@@ -1,0 +1,22 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(AIPARCL_PRATICA AS NUMBER(12,0)) AS aiparcl_pratica,
+  TRY_CAST(AIPARCL_PROGRESSIVO AS NUMBER(9,0)) AS aiparcl_progressivo,
+  TRY_CAST(AIPARCL_PRG_FATTURA AS NUMBER(9,0)) AS aiparcl_prg_fattura,
+  TRY_CAST(NULLIF(RTRIM(AIPARCL_TIPO_FATT), '') AS VARCHAR(2)) AS aiparcl_tipo_fatt,
+  TRY_CAST(NULLIF(RTRIM(AIPARCL_TIPO_GENERAZ), '') AS VARCHAR(1)) AS aiparcl_tipo_generaz,
+  TRY_CAST(NULLIF(RTRIM(AIPARCL_PROC_RIF), '') AS VARCHAR(2)) AS aiparcl_proc_rif,
+  TRY_CAST(AIPARCL_DATA_ELABORAZIONE AS NUMBER(8,0)) AS aiparcl_data_elaborazione,
+  TRY_CAST(AIPARCL_PROG_VAR AS NUMBER(9,0)) AS aiparcl_prog_var,
+  TRY_CAST(AIPARCL_DATA_VARIAZIONE AS NUMBER(8,0)) AS aiparcl_data_variazione,
+  TRY_CAST(AIPARCL_ORA_VARIAZIONE AS NUMBER(8,0)) AS aiparcl_ora_variazione,
+  TRY_CAST(NULLIF(RTRIM(AIPARCL_OPERATORE), '') AS VARCHAR(10)) AS aiparcl_operatore,
+  TRY_CAST(NULLIF(RTRIM(AIPARCL_TIPO_OPERAZIONE), '') AS VARCHAR(1)) AS aiparcl_tipo_operazione,
+  TRY_CAST(AIPARCL_IMPORTO_RDA AS NUMBER(13,0)) AS aiparcl_importo_rda,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','aiecfparcl') }}

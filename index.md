@@ -49,9 +49,9 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 
 ## Queries
 - [[incoerenze-doc-framework-vs-guida-sviluppo]] — lint incrociato tra i 3 documenti ingeriti (risolto/commentato dall'utente)
-- [[incoerenze-codice-vs-documentazione]] — lint doc vs codice reale in dwh-code (submodule)
+- [[incoerenze-codice-vs-documentazione]] — lint doc vs codice reale in raw/dwh-code
 - [[todo-allineamento-documentazione]] — TODO concrete per correggere i documenti di framework
 
 ## Note
 
-Codice reale disponibile in `raw/dwh-code/` (submodule → `https://github.com/gortali123/my_dwh-x-dbt`, copia curata da `dwh-x-dbt`). Prima verifica incrociata doc/codice effettuata il 2026-07-07, vedi [[incoerenze-codice-vs-documentazione]] — copertura parziale (campione di macro/modelli), non un'esplorazione esaustiva.
+Codice reale disponibile come copia semplice in `raw/dwh-code/` (aggiornata manualmente dall'utente da `dwh-x-dbt` via `sync-from-dwh-x-dbt.ps1`, mirrorata anche su `https://github.com/gortali123/my_dwh-x-dbt`). Prima verifica incrociata doc/codice effettuata il 2026-07-07, vedi [[incoerenze-codice-vs-documentazione]] — copertura parziale (campione di macro/modelli), non un'esplorazione esaustiva.

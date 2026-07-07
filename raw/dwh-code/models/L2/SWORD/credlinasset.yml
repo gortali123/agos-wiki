@@ -1,0 +1,18 @@
+version: 2
+models:
+  - name: credlinasset
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, TP_VEICOLO] 
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(30)
+      - name: TP_VEICOLO
+        data_type: VARCHAR(15)

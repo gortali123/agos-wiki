@@ -1,0 +1,24 @@
+version: 2
+models:
+  - name: plan
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, CD_PIANO] 
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(17)
+      - name: CD_PIANO
+        data_type: VARCHAR(30)
+      - name: TP_VEICOLO
+        data_type: VARCHAR(15)
+      - name: TP_FACILITY
+        data_type: VARCHAR(30)
+      - name: PC_FINANZIATO
+        data_type: NUMBER(3,0)

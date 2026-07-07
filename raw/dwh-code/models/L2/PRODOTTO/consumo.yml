@@ -1,0 +1,661 @@
+version: 2
+models:
+  - name: consumo
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_TIPO_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3,0)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR(2)
+      - name: DS_STATO
+        data_type: VARCHAR(20)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9,0)
+      - name: CD_ORIGINE_CONTATTO
+        data_type: VARCHAR(3)
+      - name: CD_DESTINAZIONE_BENE
+        data_type: VARCHAR(3)
+      - name: DS_DESTINAZIONE_BENE
+        data_type: VARCHAR(30)
+      - name: FL_BENE_DETRAZ_FISCALE
+        data_type: VARCHAR(1)
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(13,2)
+      - name: EU_FINANZIATO
+        data_type: NUMBER(13,2)
+      - name: EU_EROGATO
+        data_type: NUMBER(13,2)
+      - name: EU_TOT_INTERESSI
+        data_type: NUMBER(13,2)
+      - name: EU_MAXI_RATA
+        data_type: NUMBER(13,2)
+      - name: EU_ANTICIPO
+        data_type: NUMBER(13,2)
+      - name: EU_MONTANTE
+        data_type: NUMBER(13,2)
+      - name: EU_FRESH_CASH
+        data_type: NUMBER(13,2)
+      - name: EU_COMMISSIONI_IST
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_BOLLO_IST
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_TOT_IST
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_TERZ
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_CONVENZ
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_DILAZ_CONVENZ
+        data_type: NUMBER(13,2)
+      - name: EU_TOT_CONTRIB_DA_INTER
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_RICORRENTI
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_SMGP
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_TRASPARENZA
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_EC
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_BOLLO_EC
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_RICORRENTI_TOT
+        data_type: NUMBER(13,2)
+      - name: NM_TASSO_COSTRUZIONE
+        data_type: NUMBER(6,5)
+      - name: NM_TAEG1
+        data_type: NUMBER(5,4)
+      - name: NM_TAEG2
+        data_type: NUMBER(5,4)
+      - name: NM_TAN1
+        data_type: NUMBER(6,5)
+      - name: NM_TAN2
+        data_type: NUMBER(6,5)
+      - name: NM_TEG1
+        data_type: NUMBER(5,4)
+      - name: NM_TEG2
+        data_type: NUMBER(6,4)
+      - name: NM_TASSO_MORA
+        data_type: NUMBER(8,7)
+      - name: NM_TASSO_CLIENTE
+        data_type: NUMBER(6,5)
+      - name: NM_IRR_NOMINALE
+        data_type: NUMBER(6,5)
+      - name: NM_IRR_EFFETTIVO
+        data_type: NUMBER(6,5)
+      - name: DT_DECORRENZA
+        data_type: DATE
+      - name: DT_ULT_ACCODAMENTO
+        data_type: DATE
+      - name: DT_MAXI_RATA
+        data_type: DATE
+      - name: NM_RATE
+        data_type: NUMBER(4,0)
+      - name: NM_RATE_2
+        data_type: NUMBER(4,0)
+      - name: EU_RATA
+        data_type: NUMBER(13,2)
+      - name: EU_RATA_2
+        data_type: NUMBER(13,2)
+      - name: NM_DURATA_FINANZ
+        data_type: NUMBER(6,0)
+      - name: CD_FREQ_RATA
+        data_type: NUMBER(2,0)
+      - name: NM_MESI_DILAZIONE
+        data_type: NUMBER(2,0)
+      - name: PC_MAXI_RATA
+        data_type: NUMBER(5,2)
+      - name: CD_AUTO_TARGA
+        data_type: VARCHAR(8)
+      - name: CD_AUTO_TELAIO
+        data_type: VARCHAR(20)
+      - name: TP_AUTO
+        data_type: VARCHAR(1)
+      - name: CD_MARCA_AUTO
+        data_type: VARCHAR(2)
+      - name: FL_AUTO_NUOVA
+        data_type: VARCHAR(1)
+      - name: DT_IMMATRICOLAZIONE_AUTO
+        data_type: DATE
+      - name: DS_MODELLO_AUTO
+        data_type: VARCHAR(3)
+      - name: NM_CILINDRATA
+        data_type: NUMBER(4,0)
+      - name: EU_AUTO_EUROTAX
+        data_type: NUMBER(13,2)
+      - name: FL_MAXI_RATA_OPZIONATA
+        data_type: VARCHAR(1)
+      - name: FL_CAMPAGNA
+        data_type: VARCHAR(1)
+      - name: TP_CAMPAGNA
+        data_type: VARCHAR(1)
+      - name: FL_TASSO_ZERO
+        data_type: VARCHAR(1)
+      - name: FL_PNF
+        data_type: VARCHAR(1)
+      - name: TP_PROVENIENZA_PRATICHE
+        data_type: VARCHAR(2)
+      - name: TP_NATURA
+        data_type: VARCHAR(3)
+      - name: CD_GARANTE
+        data_type: NUMBER(9,0)
+      - name: CD_GARANTE2
+        data_type: NUMBER(9,0)
+      - name: CD_ALTRI_GARANTI_01
+        data_type: NUMBER(9,0)
+      - name: CD_ALTRI_GARANTI_11
+        data_type: NUMBER(9,0)
+      - name: CD_ALTRI_GARANTI_12
+        data_type: NUMBER(9,0)
+      - name: CD_ALTRI_GARANTI_13
+        data_type: NUMBER(9,0)
+      - name: CD_DATORE_LAVORO
+        data_type: NUMBER(9,0)
+      - name: CD_FORNITORE
+        data_type: NUMBER(9,0)
+      - name: CD_FIRMATARIO
+        data_type: NUMBER(9,0)
+      - name: CD_DEST_PAGAMENTO
+        data_type: NUMBER(9,0)
+      - name: CD_SECONDO_SOGGETTO
+        data_type: NUMBER(9,0)
+      - name: CD_COOBBLIGATO_2
+        data_type: NUMBER(9,0)
+      - name: CD_COOBBLIGATO_3
+        data_type: NUMBER(9,0)
+      - name: CD_COOBBLIGATO_4
+        data_type: NUMBER(9,0)
+      - name: CD_COOBBLIGATO_5
+        data_type: NUMBER(9,0)
+      - name: EU_IMP_RATA_NETTO
+        data_type: NUMBER(13,2)
+      - name: EU_RATA_FINALE
+        data_type: NUMBER(13,2)
+      - name: PC_PERC_COMMISSIONI
+        data_type: NUMBER(5,2)
+      - name: FL_TRATTAM_COMMISSIONE
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_COMMISSIONI
+        data_type: VARCHAR(1)
+      - name: EU_IMP_ASSICUR_ATT
+        data_type: NUMBER(13,2)
+      - name: EU_IMP_ASSICUR_PAS
+        data_type: NUMBER(13,2)
+      - name: FL_TRATTAM_ASSICURAZIONE
+        data_type: VARCHAR(1)
+      - name: CD_COMPAGNIA_ASSICUR
+        data_type: VARCHAR(5)
+      - name: EU_IMP_BOLLO_FATTURA
+        data_type: NUMBER(13,2)
+      - name: EU_IMP_BOLLO_FIDEIUS
+        data_type: NUMBER(13,2)
+      - name: TP_TRATTAMENTO_BOLLO
+        data_type: VARCHAR(1)
+      - name: EU_INT_DILAZIONE
+        data_type: NUMBER(13,2)
+      - name: EU_IMP_INT_DILAZ_TEC
+        data_type: NUMBER(13,2)
+      - name: TP_TIPO_DILAZ_TEC
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_DILAZ_EFF
+        data_type: VARCHAR(1)
+      - name: NM_GG_DILAZ_TEC
+        data_type: NUMBER(5,0)
+      - name: NM_GG_DILAZ_EFF
+        data_type: NUMBER(5,0)
+      - name: EU_IMP_DIETIMO_GG
+        data_type: NUMBER(13,2)
+      - name: FL_DILAZ_CAPITAL
+        data_type: VARCHAR(1)
+      - name: FL_DILAZ_TECNICA
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_CALC_DILAZ_EFF
+        data_type: VARCHAR(1)
+      - name: CD_IMPORTO_ESTIN_ANTIC
+        data_type: NUMBER(13,0)
+      - name: EU_INT_ESTINZIONE
+        data_type: NUMBER(13,2)
+      - name: EU_GARANZIA_CNV
+        data_type: NUMBER(13,2)
+      - name: TP_TIPO_DILAZIONE
+        data_type: VARCHAR(1)
+      - name: FL_PREAMM_DIVERSO
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_CALCOLO
+        data_type: VARCHAR(1)
+      - name: EU_IMPORTO_MANUTENZIONE
+        data_type: NUMBER(13,2)
+      - name: EU_IMPORTO_RATA_MEDIO
+        data_type: NUMBER(13,2)
+      - name: PC_PERC_SCONTO_CLI
+        data_type: NUMBER(5,3)
+      - name: EU_IMP_SCONTO_CLI
+        data_type: NUMBER(13,2)
+      - name: NM_TAEG
+        data_type: NUMBER(5,2)
+      - name: NM_TAN_PREAMM
+        data_type: NUMBER(5,3)
+      - name: NM_TAEG_PREAMM
+        data_type: NUMBER(5,3)
+      - name: NM_TAN_RATE
+        data_type: NUMBER(5,3)
+      - name: NM_MORA
+        data_type: NUMBER(5,3)
+      - name: NM_SPREAD_CONTRATTO
+        data_type: NUMBER(5,3)
+      - name: NM_TASSO_MASSIMO
+        data_type: VARCHAR(1)
+      - name: NM_TAEG_EST
+        data_type: NUMBER(5,2)
+      - name: DT_DAT_VAR_01
+        data_type: NUMBER(5,0)
+      - name: DT_DAT_VAR_02
+        data_type: NUMBER(5,0)
+      - name: CD_OPE_VAR_01
+        data_type: VARCHAR(10)
+      - name: CD_OPE_VAR_02
+        data_type: VARCHAR(10)
+      - name: DT_DATA_BOLLETTINI
+        data_type: DATE
+      - name: DT_DATA_CHIUSURA
+        data_type: DATE
+      - name: DT_DATA_STORICO
+        data_type: DATE
+      - name: DT_DATA_ACQUISTO
+        data_type: DATE
+      - name: DT_DEC_DOCUM
+        data_type: DATE
+      - name: DT_DATA_TRASMISS
+        data_type: DATE
+      - name: DT_NUOVA_SCADENZA
+        data_type: DATE
+      - name: DT_STORNO_INT_SCADENZA
+        data_type: DATE
+      - name: DT_DATA_ATT_CC
+        data_type: DATE
+      - name: DT_DT_INT_RP
+        data_type: NUMBER(8,0)
+      - name: DT_DT_INV_PREMI
+        data_type: NUMBER(8,0)
+      - name: DT_DATA_SCAD_POLIZ
+        data_type: NUMBER(8,0)
+      - name: DT_DT_VALID_CONDIZ
+        data_type: NUMBER(8,0)
+      - name: DT_DT_STAMPA_CONTRATTO
+        data_type: NUMBER(8,0)
+      - name: TS_DT_ULT_CALCOLO
+        data_type: NUMBER(8,0)
+      - name: DS_DESCRIZIONE_BENE
+        data_type: VARCHAR(50)
+      - name: NM_KILOMETRI_AUTO
+        data_type: NUMBER(6,0)
+      - name: CD_PROVINCIA_IMMATRICO
+        data_type: VARCHAR(2)
+      - name: NM_AUTO_ANNO_IMMATRIC
+        data_type: NUMBER(2,0)
+      - name: TP_TIPO_BENE_1
+        data_type: VARCHAR(9)
+      - name: TP_TIPO_BENE_2
+        data_type: VARCHAR(9)
+      - name: TP_TIPO_BENE_3
+        data_type: VARCHAR(9)
+      - name: EU_IMP_MAX_INFOCAR
+        data_type: NUMBER(13,2)
+      - name: CD_BANCA_CLI_INC
+        data_type: NUMBER(5,0)
+      - name: TP_INT_CONTO_CORRENTE
+        data_type: VARCHAR(1)
+      - name: CD_COD_DEBITORE
+        data_type: VARCHAR(16)
+      - name: FL_FIRMA_SU_RID
+        data_type: VARCHAR(1)
+      - name: CD_BANK_CODE_CLI
+        data_type: NUMBER(8,0)
+      - name: CD_SUB_NUMBER_CLI
+        data_type: NUMBER(4,0)
+      - name: TP_MOD_EROGAZIONE
+        data_type: VARCHAR(1)
+      - name: CD_BANCA_CNV_ABI
+        data_type: NUMBER(5,0)
+      - name: CD_BANCA_CNV_CAB
+        data_type: NUMBER(5,0)
+      - name: FL_AGENTE_LIQUIDATORE
+        data_type: VARCHAR(1)
+      - name: CD_BANK_CODE_CNV
+        data_type: NUMBER(8,0)
+      - name: CD_SUB_NUMBER_CNV
+        data_type: NUMBER(4,0)
+      - name: CD_BON_ABI
+        data_type: NUMBER(5,0)
+      - name: CD_BON_CAB
+        data_type: NUMBER(5,0)
+      - name: CD_BON_CC
+        data_type: VARCHAR(15)
+      - name: CD_BANK_CODE_BON
+        data_type: NUMBER(8,0)
+      - name: CD_SUB_NUMBER_BON
+        data_type: NUMBER(4,0)
+      - name: FL_CALC_SCORING
+        data_type: VARCHAR(1)
+      - name: TP_GRIGLIA_SCOR
+        data_type: VARCHAR(2)
+      - name: NM_PUNTEGGIO_1
+        data_type: NUMBER(5,0)
+      - name: NM_PUNTEGGIO_2
+        data_type: NUMBER(5,0)
+      - name: TP_MATRICE_SCOR
+        data_type: VARCHAR(2)
+      - name: CD_CAUS_RIFIUTO
+        data_type: VARCHAR(2)
+      - name: TP_ESITO_SCOR
+        data_type: VARCHAR(1)
+      - name: TP_ESITO_APPROVAZIONE
+        data_type: VARCHAR(1)
+      - name: CD_MOTIVO_OVERR
+        data_type: VARCHAR(2)
+      - name: CD_AUTORE_OVERR
+        data_type: VARCHAR(10)
+      - name: CD_MOTIVO_ESI
+        data_type: VARCHAR(3)
+      - name: PR_PRG_RICICLO_SCORING
+        data_type: NUMBER(3,0)
+      - name: CD_LIV_DELIBERA
+        data_type: NUMBER(2,0)
+      - name: CD_LIV_RESPINTA
+        data_type: NUMBER(2,0)
+      - name: DT_DATA_CONDIZ_SCORING
+        data_type: NUMBER(8,0)
+      - name: FL_CONTROLLO_TEL
+        data_type: VARCHAR(1)
+      - name: TP_QUALITA_CNV
+        data_type: VARCHAR(1)
+      - name: FL_GIA_CLIENT
+        data_type: VARCHAR(1)
+      - name: FL_CONTATTO_TELEFONICO
+        data_type: VARCHAR(1)
+      - name: CD_INDIRIZZO_ALTER
+        data_type: VARCHAR(30)
+      - name: CD_LOCALITA_ALTER
+        data_type: VARCHAR(24)
+      - name: CD_PROVINCIA_ALTER
+        data_type: VARCHAR(2)
+      - name: CD_CAP_ALTER
+        data_type: NUMBER(5,0)
+      - name: CD_TELEFONO_ALTER
+        data_type: VARCHAR(15)
+      - name: CD_UTENTE_02
+        data_type: VARCHAR(2)
+      - name: CD_UTENTE_04
+        data_type: VARCHAR(30)
+      - name: DS_DATO_AGG_1
+        data_type: VARCHAR(16)
+      - name: DS_DATO_AGG_2
+        data_type: VARCHAR(16)
+      - name: DS_DATO_AGG_3
+        data_type: NUMBER(16,0)
+      - name: DS_DATO_AGG_4
+        data_type: NUMBER(16,0)
+      - name: DS_DATO_AGG_5
+        data_type: NUMBER(8,0)
+      - name: DS_DATO_AGG_6
+        data_type: VARCHAR(16)
+      - name: CD_INDICE_RIFERIMENTO
+        data_type: VARCHAR(3)
+      - name: NM_RATE_NON_IND
+        data_type: NUMBER(3,0)
+      - name: NM_TASSO_FISSO_I
+        data_type: NUMBER(5,3)
+      - name: NM_RATA_DA_CAP
+        data_type: NUMBER(3,0)
+      - name: NM_TASSO_CAP
+        data_type: NUMBER(5,3)
+      - name: FL_IND_PIANO
+        data_type: VARCHAR(1)
+      - name: DT_DATA_LET_TASSO
+        data_type: VARCHAR(1)
+      - name: FL_FATTURA
+        data_type: VARCHAR(1)
+      - name: CD_AREA
+        data_type: VARCHAR(3)
+      - name: CD_RIF_EST_PROM
+        data_type: NUMBER(15,0)
+      - name: CD_VOCE_DEBITORIA
+        data_type: VARCHAR(4)
+      - name: CD_ESITO_CARTA
+        data_type: VARCHAR(3)
+      - name: CD_GRANDE_ACCORDO
+        data_type: VARCHAR(6)
+      - name: CD_POSTA_AL_DEALER
+        data_type: VARCHAR(2)
+      - name: TP_MODALITA_IDENT
+        data_type: VARCHAR(1)
+      - name: CD_RIF_EST_RAPP
+        data_type: NUMBER(12,0)
+      - name: PR_PROG_RICICLO
+        data_type: NUMBER(3,0)
+      - name: FL_TAR_FITTIZIA
+        data_type: VARCHAR(1)
+      - name: FL_RATE_FINE_MESE
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_GARANZIA_1
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_GARANZIA_2
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_GARANZIA_3
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_GARANZIA_4
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_GARANZIA_5
+        data_type: VARCHAR(1)
+      - name: FL_FATTORIZZATA
+        data_type: VARCHAR(1)
+      - name: EU_IMPORTO_ASSICURATO
+        data_type: NUMBER(13,2)
+      - name: EU_VAL_PERDITA
+        data_type: NUMBER(13,2)
+      - name: EU_VAL_CAPITALE
+        data_type: NUMBER(13,2)
+      - name: EU_VAL_INTERESSI
+        data_type: NUMBER(13,2)
+      - name: CD_NR_COMMISSIONE
+        data_type: NUMBER(7,0)
+      - name: FL_BOLLETTINI
+        data_type: VARCHAR(1)
+      - name: FL_CONT_CONTRATTO
+        data_type: VARCHAR(1)
+      - name: FL_DOC_PRESSO_CNV
+        data_type: VARCHAR(1)
+      - name: CD_MODELLO_CONTRATTO
+        data_type: VARCHAR(11)
+      - name: FL_EMESSI_ASS_CIR
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_CARTA
+        data_type: VARCHAR(3)
+      - name: CD_NUM_CARTA
+        data_type: NUMBER(9,0)
+      - name: CD_OLD_NUM_PRATICA
+        data_type: VARCHAR(10)
+      - name: TP_VALUTA_I_E
+        data_type: VARCHAR(1)
+      - name: CD_INT_ASSICURAZIONE
+        data_type: VARCHAR(1)
+      - name: CD_DIVISIONE_CNV
+        data_type: VARCHAR(1)
+      - name: NM_RIPETIZIONE
+        data_type: NUMBER(3,0)
+      - name: NM_RITARDO_MEDIO
+        data_type: NUMBER(5,0)
+      - name: FL_SCOPERTO
+        data_type: VARCHAR(1)
+      - name: CD_SEDE
+        data_type: NUMBER(3,0)
+      - name: NM_DURATA_ANNI
+        data_type: NUMBER(2,0)
+      - name: TP_PERIODO
+        data_type: VARCHAR(1)
+      - name: DT_ANNO_FATTURA
+        data_type: NUMBER(4,0)
+      - name: CD_RIF_INTERNO_CNV
+        data_type: VARCHAR(10)
+      - name: EU_IMPORTO_RICHIESTO
+        data_type: NUMBER(13,2)
+      - name: FL_CONVERTITO
+        data_type: VARCHAR(1)
+      - name: CD_PROTOCOLLO_ARCH
+        data_type: VARCHAR(11)
+      - name: FL_CONVERTIBILE
+        data_type: VARCHAR(1)
+      - name: FL_FIRMA_1
+        data_type: VARCHAR(1)
+      - name: FL_FIRMA_2
+        data_type: VARCHAR(1)
+      - name: DT_CONDIZ_FINANZIAMENTO
+        data_type: NUMBER(8,0)
+      - name: CD_VOLUME_AFFARI_CNV
+        data_type: NUMBER(5,0)
+      - name: CD_NUMERO_ESTERNO
+        data_type: NUMBER(9,0)
+      - name: FL_INIZIATIVA_COMM
+        data_type: VARCHAR(12)
+      - name: CD_RIF_EST_PV
+        data_type: VARCHAR(15)
+      - name: CD_NDG_CONTATTO
+        data_type: NUMBER(15,0)
+      - name: NM_TEG
+        data_type: NUMBER(5,2)
+      - name: NM_TEG_PREAMM
+        data_type: NUMBER(5,2)
+      - name: NM_TEG_EST
+        data_type: NUMBER(5,2)
+      - name: TP_TIPO_IMPOSTA
+        data_type: VARCHAR(1)
+      - name: DT_DT_VAL_IND_INIZ
+        data_type: NUMBER(8,0)
+      - name: NM_OSCIL_MIN_TASSO
+        data_type: NUMBER(5,3)
+      - name: TP_MODALITA_INVIO
+        data_type: VARCHAR(1)
+      - name: DS_EMAIL_INVIO
+        data_type: VARCHAR(50)
+      - name: TP_ESITO_CRITERI_ASSU
+        data_type: VARCHAR(1)
+      - name: FL_CHECK_TAEG_MEDIO
+        data_type: VARCHAR(1)
+      - name: NM_GG_PRIMA_SCA
+        data_type: NUMBER(2,0)
+      - name: FL_FLAG_INF_PRECONT
+        data_type: VARCHAR(1)
+      - name: FL_SUBENTRO_CONTROP
+        data_type: VARCHAR(1)
+      - name: EU_RIF_INT_DILAZIONE
+        data_type: NUMBER(13,2)
+      - name: CD_OPZ_RIF_DEFAULT
+        data_type: NUMBER(3,0)
+      - name: FL_FORZA_COMMISS_ZERO
+        data_type: VARCHAR(1)
+      - name: CD_MOTIVO_ESI_2
+        data_type: VARCHAR(3)
+      - name: CD_MOTIVO_ESI_3
+        data_type: VARCHAR(3)
+      - name: FL_FORZA_RECUPERO
+        data_type: VARCHAR(1)
+      - name: DT_DATA_DIETIMI
+        data_type: NUMBER(8,0)
+      - name: EU_EAP_DILAZ_TEC_MAT
+        data_type: NUMBER(13,2)
+      - name: EU_EAP_DILAZ_EFF_MAT
+        data_type: NUMBER(13,2)
+      - name: EU_EAP_DILAZ_TEC_RIP
+        data_type: NUMBER(13,2)
+      - name: EU_EAP_DILAZ_EFF_RIP
+        data_type: NUMBER(13,2)
+      - name: DT_DT_ULT_RATA_RSC
+        data_type: NUMBER(8,0)
+      - name: NM_GG_FRANCH_INTM
+        data_type: NUMBER(3,0)
+      - name: DT_DT_SC_VALID_COND
+        data_type: NUMBER(8,0)
+      - name: FL_EUROTAX_AUT
+        data_type: VARCHAR(1)
+      - name: NM_SPREAD_CAMP_CONT
+        data_type: NUMBER(5,3)
+      - name: TP_PERIOD_INDICIZZ
+        data_type: VARCHAR(1)
+      - name: NM_TASSO_MAX_V
+        data_type: NUMBER(5,3)
+      - name: EU_NETTO_EROG_CLI
+        data_type: NUMBER(13,2)
+      - name: CD_CARTA_EROG
+        data_type: NUMBER(16,0)
+      - name: CD_ID_CARTA_EROG
+        data_type: NUMBER(16,0)
+      - name: CD_PROD_CARTA_EROG
+        data_type: VARCHAR(6)
+      - name: TP_TIPO_LISTINO
+        data_type: VARCHAR(1)
+      - name: CD_VERSIONE_IC
+        data_type: NUMBER(6,0)
+      - name: TP_MULTIPRESTITO
+        data_type: VARCHAR(1)
+      - name: CD_PRATICA_MADRE
+        data_type: NUMBER(12,0)
+      - name: EU_IMP_MIN_MICROPR
+        data_type: NUMBER(13,2)
+      - name: DT_DT_REVIS_CONDIZ
+        data_type: NUMBER(8,0)
+      - name: TP_STATO_MICROPR
+        data_type: VARCHAR(2)
+      - name: CD_RIF_EST_RAPP_2
+        data_type: NUMBER(4,0)
+      - name: DS_CA_BOLLO
+        data_type: VARCHAR(1)
+      - name: DS_CA_TRASPARENZA
+        data_type: VARCHAR(1)
+      - name: DS_CA_SP_INCASSO
+        data_type: VARCHAR(1)
+      - name: NM_TAEG3
+        data_type: NUMBER(5,2)
+      - name: TP_TIPO_TAEG3
+        data_type: VARCHAR(1)
+      - name: PR_PRG_LOG_TAEG3
+        data_type: NUMBER(3,0)
+      - name: DS_CA_SERVIZIO
+        data_type: VARCHAR(1)
+      - name: NM_TASSO_FLOOR
+        data_type: NUMBER(5,3)
+      - name: FL_FLAG_CONTO_INTERNO
+        data_type: VARCHAR(1)
+      - name: EU_RATA_FINALE_RIF
+        data_type: NUMBER(13,2)
+      - name: DT_DT_INSER_SERV
+        data_type: NUMBER(8,0)
+      - name: CD_RUOLO_DELIBERANTE
+        data_type: VARCHAR(3)
+      - name: CD_BRANCH_CODE
+        data_type: VARCHAR(7)
+      - name: TP_APPLICAZIONE
+        data_type: VARCHAR(1)
+      - name: FL_RIPROPON_CQS
+        data_type: VARCHAR(1)
+      - name: CD_PIV
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_DEST_PAGAM
+        data_type: VARCHAR(2)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

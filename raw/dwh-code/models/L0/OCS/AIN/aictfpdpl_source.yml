@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aictfpdpl
+        data_tests:
+          - try_cast_table:
+              arguments:
+                rtrim_varchar: true
+          - primary_key_table:
+              arguments:
+                pk_columns: [aictpdp_ide, aictpdp_prg_log]
+                rtrim_varchar: true
+      - name: aictfpdpl_deleted

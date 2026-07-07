@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: cartolarizzazioni_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+      pre_hook:  "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_SOCIETA_VEICOLO
+        data_type: NUMBER(9,0)
+      - name: DT_SECUR
+        data_type: DATE
+      - name: DT_RIACQUISTO
+        data_type: DATE
+      - name: NM_RATA_CEDUTA_DAL
+        data_type: NUMBER(3,0)
+      - name: NM_RATA_CEDUTA_AL
+        data_type: NUMBER(3,0)
+      - name: DT_SCAD_RATA_CED_DAL
+        data_type: DATE
+      - name: DT_SCAD_RATA_CED_AL
+        data_type: DATE
+      - name: TP_STATUS_LOAN
+        data_type: VARCHAR(4)
+      - name: FL_SRT
+        data_type: VARCHAR(3)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_TAB_FINANZ
+        data_type: VARCHAR(3)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9,0)
+      - name: CD_FILIALE
+        data_type: VARCHAR(3)
+      - name: TP_TIPO_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: TP_CATEGORIA
+        data_type: VARCHAR(2)
+      - name: PR_PROG_CESSIONE
+        data_type: NUMBER(5,0)
+      - name: PR_PRG_TRAS_CESS
+        data_type: NUMBER(9,0)
+      - name: PR_PRG_TRAS_RIAC
+        data_type: NUMBER(9,0)
+      - name: DT_DATA_DEC_PRAT
+        data_type: DATE
+      - name: DT_DATA_COMPET_CESSIONE
+        data_type: DATE
+      - name: DT_DATA_CHIUSURA_TRANS
+        data_type: DATE
+      - name: EU_TOT_SPESE_INC_CED
+        data_type: NUMBER(13,3)
+      - name: EU_TOT_QINT_CED
+        data_type: NUMBER(13,3)
+      - name: EU_TOT_QCAP_CED
+        data_type: NUMBER(13,3)
+      - name: EU_IMP_NOMIN_CED
+        data_type: NUMBER(13,3)
+      - name: EU_TOT_IMP_ASSICURAZ
+        data_type: NUMBER(13,3)
+      - name: NM_RATEO_CESSIONE
+        data_type: NUMBER(13,3)
+      - name: PC_TAN_MODIF_PRAT
+        data_type: NUMBER(5,3)
+      - name: NM_DILAZ_RIPARTITA
+        data_type: NUMBER(13,0)
+      - name: FL_LETTERA_CESS
+        data_type: VARCHAR(4)
+      - name: FL_LETTERA_RIAC
+        data_type: VARCHAR(4)

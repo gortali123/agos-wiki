@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: carte_limitazioni_operativita
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, CD_LIMITAZIONE, DS_LIMITAZIONE, DT_INIZIO_EFFETTO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_LIMITAZIONE
+        data_type: VARCHAR(2)
+      - name: DS_LIMITAZIONE
+        data_type: VARCHAR(12)
+      - name: DT_INIZIO_EFFETTO
+        data_type: DATE
+      - name: DT_FINE_EFFETTO
+        data_type: DATE

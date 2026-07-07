@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: carte_mov_estratto_conto_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, CD_EMETTITORE, TP_PROCEDURA, DT_OSSERVAZIONE, NM_ANNO, NM_MESE, DT_MOVIMENTO, NM_PROGRESSIVO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: NM_ANNO
+        data_type: NUMBER(4,0)
+      - name: NM_MESE
+        data_type: NUMBER(2,0)
+      - name: DT_MOVIMENTO
+        data_type: DATE
+      - name: NM_PROGRESSIVO
+        data_type: NUMBER(3,0)
+      - name: EU_MOVIMENTO
+        data_type: NUMBER(13,2)
+      - name: EU_TOT_MOVIMENTO
+        data_type: NUMBER(13,2)
+      - name: CD_CAUSALE_MOVIMENTO
+        data_type: NUMBER(3,0)
+      - name: DS_MOVIMENTO
+        data_type: VARCHAR(60)
+      - name: CD_PROVENIENZA_MOVIMENTO
+        data_type: VARCHAR(1)
+      - name: CD_TIPO_RECORD
+        data_type: VARCHAR(1)
+      - name: FL_CONTABILIZZATO
+        data_type: BOOLEAN
+      - name: TP_RATA
+        data_type: VARCHAR(1)
+      - name: NM_RATA
+        data_type: NUMBER(2,0)
+      - name: NM_MESI_DILAZIONE
+        data_type: NUMBER(3,0)
+      - name: NM_RATE_CAMPAGNA
+        data_type: NUMBER(3,0)
+      - name: DT_ACQUISTO
+        data_type: DATE
+      - name: DT_REGISTRAZIONE_TRANSAZIONE
+        data_type: DATE
+      - name: DT_VALUTA
+        data_type: DATE
+      

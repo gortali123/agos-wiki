@@ -1,0 +1,36 @@
+version: 2
+models:
+  - name: plan_paysch
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, CD_PIANO, NM_GIORNI_SCADZ_RTA]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(17)
+      - name: CD_PIANO
+        data_type: VARCHAR(30)
+      - name: TP_PARTIAL_PAYMENT
+        data_type: VARCHAR(5)
+      - name: CD_REFERENCE
+        data_type: VARCHAR(5)
+      - name: TP_SCHEDULE
+        data_type: VARCHAR(12)
+      - name: TP_VALORE_PGM
+        data_type: VARCHAR(10)
+      - name: TP_PERIODO_PGM
+        data_type: VARCHAR(4)
+      - name: EU_ADJUSTMENT
+        data_type: VARCHAR(20)
+      - name: NM_GIORNI_SCADZ_RTA
+        data_type: NUMBER(3,0)
+      - name: PC_RATA
+        data_type: NUMBER(3,0)
+      - name: TP_TRANSACTION
+        data_type: VARCHAR(10)

@@ -1,0 +1,89 @@
+version: 2
+models:
+  - name: dm_mov_produzione
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, CD_EMETTITORE_UTILIZZO, CD_PROTOCOLLO_UTILIZZO, CD_RIGA_UTILIZZO, DT_MOVIMENTO, TP_MOVIMENTO]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: CD_EMETTITORE_UTILIZZO
+        data_type: NUMBER(3)
+      - name: CD_PROTOCOLLO_UTILIZZO
+        data_type: NUMBER(9)
+      - name: CD_RIGA_UTILIZZO
+        data_type: NUMBER(4)
+      - name: DT_MOVIMENTO
+        data_type: DATE
+      - name: TP_MOVIMENTO
+        data_type: VARCHAR(20)
+      - name: FL_STORNO
+        data_type: VARCHAR(1)
+      - name: NM_PRATICA_CARICATA
+        data_type: NUMBER(1)
+      - name: NM_PRATICA_ESITATA
+        data_type: NUMBER(2)
+      - name: NM_PRATICA_RESPINTA
+        data_type: NUMBER(3)
+      - name: NM_PRATICA_RITIRATA
+        data_type: NUMBER(4)
+      - name: NM_PRATICA_DECORSA
+        data_type: NUMBER(5)
+      - name: EU_FINANZIATO
+        data_type: NUMBER(13,2)
+      - name: EMFN
+        data_type: NUMBER(13,2)
+      - name: NM_IRR_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_IRR_DEN
+        data_type: NUMBER(13,2)
+      - name: NM_DURATA_FINANZ_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_DURATA_FINANZ_DEN
+        data_type: NUMBER(13,2)
+      - name: NM_TAEG1_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_TAEG1_DEN
+        data_type: NUMBER(13,2)
+      - name: NM_TAN1_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_TAN1_DEN
+        data_type: NUMBER(13,2)
+      - name: NM_TEG1_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_TEG1_DEN
+        data_type: NUMBER(13,2)
+      - name: NM_TAEG2_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_TAEG2_DEN
+        data_type: NUMBER(13,2)
+      - name: NM_TAN2_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_TAN2_DEN
+        data_type: NUMBER(13,2)
+      - name: NM_TEG2_NUM
+        data_type: NUMBER(13,2)
+      - name: NM_TEG2_DEN
+        data_type: NUMBER(13,2)
+      - name: EU_FRESH_CASH
+        data_type: NUMBER(13,2)
+      - name: EU_EROGATO
+        data_type: NUMBER(13,2)
+      - name: EU_PREMIO_ASSICURAZIONE_LORDO
+        data_type: NUMBER(13,2)
+      - name: EU_RAPPEL
+        data_type: NUMBER(13,2)
+      - name: EU_PROVVIGIONE
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_TOT_IST
+        data_type: NUMBER(13,2)
+      - name: EU_TOT_CONTRIB_DA_INTER
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_RICORRENTI_TOT
+        data_type: NUMBER(13,2)

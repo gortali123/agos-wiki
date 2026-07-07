@@ -1,0 +1,470 @@
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'agosx'
+version: '1.0.0'
+config-version: 2
+
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'default'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+# Full documentation: https://dO.getdbt.com/dO/configuring-models
+
+# In dbt, the default materialization for a model is a view. This means, when you run 
+# dbt run or dbt build, all of your models will be built as a view in your data platform. 
+# The configuration below will override this setting for models in the example folder to 
+# instead be materialized as tables. Any models you add to the root of the models folder will 
+# continue to be built as views. These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+
+models:
+  agosx:
+    +materialized: incremental
+    +transient: false
+    +contract:
+      enforced: true
+    +on_schema_change: "append_new_columns"
+    +database: AGOS_DEV_16000
+    L1:
+      +meta: {layer: "L1"}
+      +tags: ["L1"]
+      ADOBE:
+        +meta: {source: "ADOBE"}
+        +schema: L1_E_ADB
+        +tags: ["adobe"]
+      BANCO:
+        +meta: {source: "BANCO"}
+        +schema: L1_E_BAN
+        +tags: ["banco"]
+      BSN:
+        +meta: {source: "BSN"}
+        +schema: L1_E_BSN
+        +tags: ["bsn"]
+      CDE:
+        +meta: {source: "CDE"}
+        +schema: L1_E_CDE
+        +tags: ["cde"]
+      DIL:
+        +meta: {source: "DIL"}
+        +schema: L1_E_DIL
+        +tags: ["dil"]
+      FEA:
+        +meta: {source: "FEA"}
+        +schema: L1_E_FEA
+        +tags: ["fea"]
+      IDM:
+        +meta: {source: "IDM"}
+        +schema: L1_E_IDM
+        +tags: ["idm"]
+      MICRODATA:
+        +meta: {source: "MICRODATA"}
+        +schema: L1_E_MCD
+        +tags: ["microdata"]
+      PRIMEWEB:
+        +meta: {source: "PRIMEWEB"}
+        +schema: L1_E_PWB
+        +tags: ["primeweb"]
+      SAP:
+        +meta: {source: "SAP"}
+        +schema: L1_E_SAP
+        +tags: ["sap"]
+      SFC:
+        +meta: {source: "SFC"}
+        +schema: L1_E_SFC
+        +tags: ["sfc"]
+      SWORD:
+        +meta: {source: "SWORD"}
+        +schema: L1_E_SWD
+        +tags: ["sword"]
+      XEROX:
+        +meta: {source: "XEROX"}
+        +schema: L1_E_XER
+        +tags: ["xerox"]
+      OCS:
+        +meta: {source: "OCS"}
+        +tags: ["ocs"]
+        AIN:
+          +schema: L1_O_AIN
+          +meta: {modulo: "ain"}
+          +tags: ["ain"]
+        ANA:
+          +schema: L1_O_ANA
+          +meta: {modulo: "ana"}
+          +tags: ["ana"]
+        ANT:
+          +schema: L1_O_ANT
+          +meta: {modulo: "ant"}
+          +tags: ["ant"]
+        BAN:
+          +schema: L1_O_BAN
+          +meta: {modulo: "ban"}
+          +tags: ["ban"]
+        CAR:
+          +schema: L1_O_CAR
+          +meta: {modulo: "car"}
+          +tags: ["car"]
+        CH1:
+          +schema: L1_O_CH1
+          +meta: {modulo: "ch1"}
+          +tags: ["ch1"]
+        CH2:
+          +schema: L1_O_CH2
+          +meta: {modulo: "ch2"}
+          +tags: ["ch2"]
+        CHM:
+          +schema: L1_O_CHM
+          +meta: {modulo: "chm"}
+          +tags: ["chm"]
+        CMN:
+          +schema: L1_O_CMN
+          +meta: {modulo: "cmn"}
+          +tags: ["cmn"]
+        CNF:
+          +schema: L1_O_CNF
+          +meta: {modulo: "cnf"}
+          +tags: ["cnf"]
+        CNT:
+          +schema: L1_O_CNT
+          +meta: {modulo: "cnt"}
+          +tags: ["cnt"]
+        CON_:
+          +schema: L1_O_CON
+          +meta: {modulo: "con"}
+          +tags: ["con"]
+        CQS:
+          +schema: L1_O_CQS
+          +meta: {modulo: "cqs"}
+          +tags: ["cqs"]
+        CRE:
+          +schema: L1_O_CRE
+          +meta: {modulo: "cre"}
+          +tags: ["cre"]
+        CRM:
+          +schema: L1_O_CRM
+          +meta: {modulo: "crm"}
+          +tags: ["crm"]
+        EFF:
+          +schema: L1_O_EFF
+          +meta: {modulo: "eff"}
+          +tags: ["eff"]
+        FMP:
+          +schema: L1_O_FMP
+          +meta: {modulo: "fmp"}
+          +tags: ["fmp"]
+        IAS:
+          +schema: L1_O_IAS
+          +meta: {modulo: "ias"}
+          +tags: ["ias"]
+        INC:
+          +schema: L1_O_INC
+          +meta: {modulo: "inc"}
+          +tags: ["inc"]
+        INT:
+          +schema: L1_O_INT
+          +meta: {modulo: "int"}
+          +tags: ["int"]
+        ITF:
+          +schema: L1_O_ITF
+          +meta: {modulo: "iTF"}
+          +tags: ["itf"]
+        MIG:
+          +schema: L1_O_MIG
+          +meta: {modulo: "mig"}
+          +tags: ["mig"]
+        MSF:
+          +schema: L1_O_MSF
+          +meta: {modulo: "msf"}
+          +tags: ["msf"]
+        PAG:
+          +schema: L1_O_PAG
+          +meta: {modulo: "pag"}
+          +tags: ["pag"]
+        POS:
+          +schema: L1_O_POS
+          +meta: {modulo: "pos"}
+          +tags: ["pos"]
+        PRV:
+          +schema: L1_O_PRV
+          +meta: {modulo: "prv"}
+          +tags: ["prv"]
+        REC:
+          +schema: L1_O_REC
+          +meta: {modulo: "rec"}
+          +tags: ["rec"]
+        RIS:
+          +schema: L1_O_RIS
+          +meta: {modulo: "ris"}
+          +tags: ["ris"]
+        RVD:
+          +schema: L1_O_RVD
+          +meta: {modulo: "rvd"}
+          +tags: ["rvd"]
+        SDS:
+          +schema: L1_O_SDS
+          +meta: {modulo: "sds"}
+          +tags: ["sds"]
+        SER:
+          +schema: L1_O_SER
+          +meta: {modulo: "ser"}
+          +tags: ["ser"]
+        SRV:
+          +schema: L1_O_SRV
+          +meta: {modulo: "srv"}
+          +tags: ["srv"]
+        SVC:
+          +schema: L1_O_SVC
+          +meta: {modulo: "svc"}
+          +tags: ["svc"]
+        TRS:
+          +schema: L1_O_TRS
+          +meta: {modulo: "trs"}
+          +tags: ["trs"]
+        VIG:
+          +schema: L1_O_VIG
+          +meta: {modulo: "vig"}
+          +tags: ["vig"]
+        WFL:
+          +schema: L1_O_WFL
+          +meta: {modulo: "wfl"}
+          +tags: ["wfl"]
+    L2:
+      +meta: {layer: "L2"}
+      +tags: ["L2"]
+      ANAGR_CONTROPARTE:
+        +schema: L2_ANAGR_CONTROPARTE
+        +meta: {subject_area: "ANAGR_CONTROPARTE"}
+        +tags: ["ANAGR_CONTROPARTE"]
+      ANTIFRODE:
+        +schema: L2_ANTIFRODE
+        +meta: {subject_area: "ANTIFRODE"}
+        +tags: ["ANTIFRODE"]
+      ASSICURAZIONI:
+        +schema: L2_ASSICURAZIONI
+        +meta: {subject_area: "ASSICURAZIONI"}
+        +tags: ["ASSICURAZIONI"]
+      CARTE:
+        +schema: L2_PRODOTTO
+        +meta: {subject_area: "CARTE"}
+        +tags: ["CARTE"]
+      ONBOARDING:
+        +schema: L2_ONBOARDING
+        +meta: {subject_area: "ONBOARDING"}
+        +tags: ["ONBOARDING"]
+      PRODOTTO:
+        +schema: L2_PRODOTTO
+        +meta: {subject_area: "PRODOTTO"}
+        +tags: ["PRODOTTO"]
+      PRODOTTO_M:
+        +schema: L2_PRODOTTO_M
+        +meta: {subject_area: "PRODOTTO_M"}
+        +tags: ["PRODOTTO_M"]
+      RISCHI_ADEMPIMENTI:
+        +schema: L2_RISCHI_ADEMPIMENTI
+        +meta: {subject_area: "RISCHI_ADEMPIMENTI"}
+        +tags: ["RISCHI_ADEMPIMENTI"]
+      SALDI:
+        +schema: L2_SALDI
+        +meta: {subject_area: "SALDI"}
+        +tags: ["SALDI"]
+      SWORD:
+        +schema: L2_SWORD
+        +meta: {subject_area: "SWORD"}
+        +tags: ["SWORD"]
+      GESTIONE_CREDITI:
+        +schema: L2_GESTIONE_CREDITI
+        +meta: {subject_area: "GESTIONE_CREDITI"}
+        +tags: ["GESTIONE_CREDITI"]
+
+    L3:
+      +meta: {layer: "L3"}
+      basilea_core:
+        +schema: L3_BASILEA
+        +meta: {sotto_processo: "basilea_core"}
+        +tags: ["basilea_core"]
+      monitoraggio_produzione:
+        +schema: L3_MONITORING_PRODUZIONE
+        +meta: {sotto_processo: "monitoraggio_produzione"}
+        +tags: ["monitoraggio_produzione"]
+
+snapshots:
+  agosx:
+    +transient: false
+    +database: AGOS_DEV_16000
+    +dbt_valid_to_current: "to_timestamp('9999-12-31')"
+    +snapshot_meta_column_names:
+      dbt_valid_from: ts_inizio_validita
+      dbt_valid_to: ts_fine_validita
+      dbt_scd_id: id_scd
+      dbt_updated_at: ts_updated_at
+    +strategy: timestamp
+    L1:
+      +meta: {layer: "L1", cluster: "C"}
+      +tags: ["L1"]
+      FEA:
+        +updated_at: ts_coalesce_modif_creaz
+        +meta: {source: "FEA"}
+        +schema: L1_E_FEA
+        +tags: ["fea"]
+      PRIMEWEB:
+        +updated_at: ts_riferimento
+        +meta: {source: "PRIMEWEB"}
+        +schema: L1_E_PWB
+        +tags: ["primeweb"]
+      OCS:
+        +updated_at: lastmodifieddata
+        +meta: {source: "OCS"}
+        +tags: ["ocs"]
+        +post-hook: "{{ logic_delete_scd2() }}"
+        AIN:
+          +schema: L1_O_AIN
+          +meta: {modulo: "ain"}
+          +tags: ["ain"]
+        ANA:
+          +schema: L1_O_ANA
+          +meta: {modulo: "ana"}
+          +tags: ["ana"]
+        ANT:
+          +schema: L1_O_ANT
+          +meta: {modulo: "ant"}
+          +tags: ["ant"]
+        BAN:
+          +schema: L1_O_BAN
+          +meta: {modulo: "ban"}
+          +tags: ["ban"]
+        CAR:
+          +schema: L1_O_CAR
+          +meta: {modulo: "car"}
+          +tags: ["car"]
+        CMN:
+          +schema: L1_O_CMN
+          +meta: {modulo: "cmn"}
+          +tags: ["cmn"]
+        CNF:
+          +schema: L1_O_CNF
+          +meta: {modulo: "cnf"}
+          +tags: ["cnf"]
+        CNT:
+          +schema: L1_O_CNT
+          +meta: {modulo: "cnt"}
+          +tags: ["cnt"]
+        CON_:
+          +schema: L1_O_CON
+          +meta: {modulo: "con"}
+          +tags: ["con"]
+        CQS:
+          +schema: L1_O_CQS
+          +meta: {modulo: "cqs"}
+          +tags: ["cqs"]
+        CRE:
+          +schema: L1_O_CRE
+          +meta: {modulo: "cre"}
+          +tags: ["cre"]
+        CRM:
+          +schema: L1_O_CRM
+          +meta: {modulo: "crm"}
+          +tags: ["crm"]
+        EFF:
+          +schema: L1_O_EFF
+          +meta: {modulo: "eff"}
+          +tags: ["eff"]
+        FMP:
+          +schema: L1_O_FMP
+          +meta: {modulo: "fmp"}
+          +tags: ["fmp"]
+        IAS:
+          +schema: L1_O_IAS
+          +meta: {modulo: "ias"}
+          +tags: ["ias"]
+        INC:
+          +schema: L1_O_INC
+          +meta: {modulo: "inc"}
+          +tags: ["inc"]
+        INT:
+          +schema: L1_O_INT
+          +meta: {modulo: "int"}
+          +tags: ["int"]
+        MSF:
+          +schema: L1_O_MSF
+          +meta: {modulo: "msf"}
+          +tags: ["msf"]
+        PAG:
+          +schema: L1_O_PAG
+          +meta: {modulo: "pag"}
+          +tags: ["pag"]
+        POS:
+          +schema: L1_O_POS
+          +meta: {modulo: "pos"}
+          +tags: ["pos"]
+        PRV:
+          +schema: L1_O_PRV
+          +meta: {modulo: "prv"}
+          +tags: ["prv"]
+        REC:
+          +schema: L1_O_REC
+          +meta: {modulo: "rec"}
+          +tags: ["rec"]
+        RIS:
+          +schema: L1_O_RIS
+          +meta: {modulo: "ris"}
+          +tags: ["ris"]
+        RVD:
+          +schema: L1_O_RVD
+          +meta: {modulo: "rvd"}
+          +tags: ["rvd"]
+        SDS:
+          +schema: L1_O_SDS
+          +meta: {modulo: "sds"}
+          +tags: ["sds"]
+        SER:
+          +schema: L1_O_SER
+          +meta: {modulo: "ser"}
+          +tags: ["ser"]
+        SRV:
+          +schema: L1_O_SRV
+          +meta: {modulo: "srv"}
+          +tags: ["srv"]
+        SVC:
+          +schema: L1_O_SVC
+          +meta: {modulo: "svc"}
+          +tags: ["svc"]
+        TRS:
+          +schema: L1_O_TRS
+          +meta: {modulo: "trs"}
+          +tags: ["trs"]
+        VIG:
+          +schema: L1_O_VIG
+          +meta: {modulo: "vig"}
+          +tags: ["vig"]
+        WFL:
+          +schema: L1_O_WFL
+          +meta: {modulo: "wfl"}
+          +tags: ["wfl"]
+
+tests:
+  +severity: warn
+  +store_failures_as: table
+  +database: AGOS_DEV_16000  
+  +schema: DBT_STORE_FAILURES
+
+on-run-end:
+  - "{{ log_run_results(results) }}"
+  - "{{ pop_test_log_records(results) }}" 
+
+

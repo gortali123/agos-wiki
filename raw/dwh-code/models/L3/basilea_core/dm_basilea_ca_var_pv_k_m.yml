@@ -1,0 +1,182 @@
+version: 2
+
+models:
+  - name: dm_basilea_ca_var_pv_k_m
+    config:
+      pre_hook: "{{ delete_last_month('DT_ESTRAZIONE') }}"
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        columns: [DT_ESTRAZIONE, CD_PRATICA]
+    columns:
+      - name: DT_ESTRAZIONE
+        data_type: DATE
+      - name: CD_PROVENIENZA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3,0)
+      - name: TP_EMETTITORE
+        data_type: VARCHAR(2)
+      - name: TP_CIRCUITO
+        data_type: VARCHAR(1)
+      - name: CD_SOCIETA
+        data_type: NUMBER(5,0)
+      - name: TP_CO_RE
+        data_type: NUMBER(1,0)
+      - name: CD_PRVN_INFO
+        data_type: VARCHAR(2)
+      - name: CD_FILIALE
+        data_type: VARCHAR(3)
+      - name: TP_SUBPTF 
+        data_type: VARCHAR(30)
+      - name: CD_BLOCCO
+        data_type: VARCHAR(30)
+      - name: CD_NDG_CLIENTE
+        data_type: NUMBER(9,0)
+      - name: CD_NDG_MST
+        data_type: NUMBER(9,0)
+      - name: TP_CLASSE_RISCHIO
+        data_type: NUMBER(3,0)
+      - name: TP_CLASSE_RISCHIO_PRT
+        data_type: NUMBER(3,0)
+      - name: FL_DEFAULT
+        data_type: VARCHAR(1)
+      - name: DT_INGRS_DFLT_EBA
+        data_type: DATE
+      - name: FL_SME
+        data_type: VARCHAR(1)
+      - name: CD_GRIGLIA
+        data_type: VARCHAR(6)
+      - name: DS_GRIGLIA
+        data_type: VARCHAR(30)
+      - name: TP_TREATMENT
+        data_type: VARCHAR(30)
+      - name: CD_RAGGR_IRB
+        data_type: NUMBER(5,0)
+      - name: EU_DISPONIBILE_NOUTI
+        data_type: NUMBER(13,2)  
+      - name: EU_IMPIEGO_SALDO
+        data_type: NUMBER(13,2)   
+      - name: EU_IMPIEGHI
+        data_type: NUMBER(13,2)   
+      - name: EU_RATEO
+        data_type: NUMBER(13,2)    
+      - name: EU_RISCONTO
+        data_type: NUMBER(13,2)    
+      - name: EU_FIDO
+        data_type: NUMBER(13,2) 
+      - name: EU_LATE_FEES
+        data_type: NUMBER(13,2)   
+      - name: EU_MORA
+        data_type: NUMBER(13,2)    
+      - name: NM_MESI_IMPAGATO
+        data_type: NUMBER(5,0)
+      - name: NM_GG_SCAD
+        data_type: NUMBER(5,0)
+      - name: DS_STATUS
+        data_type: VARCHAR(60)
+      - name: NM_PD
+        data_type: NUMBER(13,10)       
+      - name: NM_PD_FLOOR
+        data_type: NUMBER(13,10)    
+      - name: TP_PD_TYPE
+        data_type: VARCHAR(3)
+      - name: NM_PD_TOT
+        data_type: NUMBER(4,0)
+      - name: PC_PD_SCORE
+        data_type: NUMBER(13,10)     
+      - name: PC_PD_SCORE_FLOOR
+        data_type: NUMBER(13,10)     
+      - name: DS_PD_DSC_SCORE
+        data_type: VARCHAR(60)
+      - name: NM_PD_TOT_PRT
+        data_type: NUMBER(4,0)
+      - name: PC_PD_SCORE_PRT
+        data_type: NUMBER(13,10)      
+      - name: PC_PD_SCORE_FLOOR_PRT
+        data_type: NUMBER(13,10)    
+      - name: TP_LGD_CLASSE_RISC
+        data_type: NUMBER(3,0)
+      - name: TP_CLUSTER_LGD
+        data_type: NUMBER(2,0)
+      - name: NM_LGD
+        data_type: NUMBER(13,10)  
+      - name: NM_LGD_FLOOR
+        data_type: NUMBER(13,10)   
+      - name: TP_LGD_TYPE
+        data_type: VARCHAR(3)
+      - name: PC_LGD_SCORE 
+        data_type: NUMBER(13,10)    
+      - name: PC_LGD_SCORE_FLOOR
+        data_type: NUMBER(13,10)    
+      - name: DS_LGD_DSC_SCORE
+        data_type: VARCHAR(60)
+      - name: NM_MESI_ELBE
+        data_type: NUMBER(5,0)
+      - name: NM_MM_ELBE
+        data_type: NUMBER(5,0)
+      - name: NM_ELBE_CLASSE_RISC
+        data_type: NUMBER(3,0)
+      - name: TP_CLUSTER_ELBE
+        data_type: NUMBER(2,0)
+      - name: TP_ELBE_TYPE
+        data_type: VARCHAR(3)
+      - name: NM_ELBE
+        data_type: NUMBER(13,10)   
+      - name: PC_ELBE_SCORE
+        data_type: NUMBER(13,10)    
+      - name: DS_ELBE_DSC_SCORE
+        data_type: VARCHAR(60)
+      - name: TP_CCF_CLASSE_RISC
+        data_type: NUMBER(2,0)
+      - name: TP_CLUSTER_CCF
+        data_type: NUMBER(2,0)
+      - name: TP_CCF_TYPE
+        data_type: VARCHAR(3)
+      - name: NM_CCF
+        data_type: NUMBER(13,10)
+      - name: PC_CCF
+        data_type: NUMBER(13,10)
+      - name: DS_PARAM_CCF
+        data_type: VARCHAR(60)
+      - name: TP_K_CLASSE_RISC
+        data_type: NUMBER(2,0)
+      - name: TP_CLUSTER_K
+        data_type: NUMBER(2,0)
+      - name: TP_K_TYPE
+        data_type: VARCHAR(3)
+      - name: NM_K
+        data_type: NUMBER(13,10)
+      - name: PC_K
+        data_type: NUMBER(13,10)
+      - name: DS_PARAM_K
+        data_type: VARCHAR(60)
+      - name: NM_SUPPORTING_FACTOR
+        data_type: NUMBER(13,10)
+      - name: EU_EAD_STIMATA
+        data_type: NUMBER(13,2)   
+      - name: EU_EAD_STIMATA_FLOOR
+        data_type: NUMBER(13,2)    
+      - name: EU_EL
+        data_type: NUMBER(13,2)    
+      - name: EU_EL_FLOOR
+        data_type: NUMBER(13,2)      
+      - name: EU_RWA
+        data_type: NUMBER(38,10)   
+      - name: EU_PV_IRB
+        data_type: NUMBER(38,10)  
+      - name: EU_CORRELATION
+        data_type: NUMBER(38,10)
+      - name: EU_CAPITAL_REQUIREMENT
+        data_type: NUMBER(38,10)
+      - name: NM_ANZIANITA_CARTA
+        data_type: NUMBER(4,0)
+      - name: DS_PD_CLASSIFICAZIONE_ANZIANITA
+        data_type: VARCHAR(4)
+      - name: DS_STATUS_DEF_BASILEA
+        data_type: VARCHAR(10)

@@ -1,0 +1,55 @@
+version: 2
+models:
+  - name: gestione_truffe
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, PR_TRUFFA, TS_INSERIMENTO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: PR_TRUFFA
+        data_type: NUMBER(12)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_TRUFFA
+        data_type: VARCHAR(3)
+      - name: FL_SUBITA
+        data_type: VARCHAR(1)
+      - name: FL_SVENTATA
+        data_type: VARCHAR(1)
+      - name: CD_STATO_TRUFFA
+        data_type: VARCHAR(2)
+      - name: TP_TRUFFA
+        data_type: VARCHAR(20)
+      - name: DS_TRUFFA
+        data_type: VARCHAR(30)
+      - name: FL_TRUFFA_ATTIVA
+        data_type: VARCHAR(1)
+      - name: TS_INS_TRUFFA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_INS_TRUFFA
+        data_type: VARCHAR(10)
+      - name: TS_VAR_TRUFFA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_VAR_TRUFFA
+        data_type: VARCHAR(10)
+      - name: TS_ANNULLO_TRUFFA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_ANNULLO_TRUFFA
+        data_type: VARCHAR(10)
+      - name: TS_ACCERTAM_TRUFFA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_ACCERTAM_TRUFFA
+        data_type: VARCHAR(10)
+      - name: TS_SOSPETTO_TRUFFA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_SOSPETTO_TRUFFA
+        data_type: VARCHAR(10)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

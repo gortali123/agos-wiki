@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: <table>
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [<pk_cols>, TS_INIZIO_VALIDITA]
+      pre_hook:
+        - "{{ delete_l2('<source_table>', [<tgt_pk_cols>], [<src_pk_cols>]) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [<pk_cols>, TS_INIZIO_VALIDITA]
+    columns:
+      - name: <CD_PK>
+        data_type: <dtype>
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: <CAMPO1>
+        data_type: <dtype1>
+      - name: <CAMPO2>
+        data_type: <dtype2>
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

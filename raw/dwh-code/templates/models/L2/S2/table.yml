@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: <table>
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook:
+        - "{{ delete_l2('<source_table>', [<tgt_pk_cols>], [<src_pk_cols>]) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [<pk_cols>, TS_INSERIMENTO]
+    columns:
+      - name: <CD_PK>
+        data_type: <dtype>
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: <CAMPO1>
+        data_type: <dtype1>
+      - name: <CAMPO2>
+        data_type: <dtype2>
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

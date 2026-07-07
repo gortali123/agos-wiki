@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: consolidamenti
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: "{{ delete_l2('oxcofcoct', ['TP_PROC_CONSOLIDANTE', 'CD_PRATICA_CONSOLIDANTE'], ['CONST_PROV_PRA_NEW', 'CONST_NUM_PRA_NEW']) }}" # inserito solo le PK della main
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROC_CONSOLIDANTE, CD_PRATICA_CONSOLIDANTE, NM_PROGRESSIVO, TS_INSERIMENTO]
+    columns:
+      - name: TP_PROC_CONSOLIDANTE
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA_CONSOLIDANTE
+        data_type: NUMBER(12)
+      - name: NM_PROGRESSIVO
+        data_type: NUMBER(3)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: DT_DECORRENZA
+        data_type: DATE
+      - name: TP_PROC_CONSOLIDATA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA_CONSOLIDATA
+        data_type: NUMBER(12)
+      - name: CD_STATO_CONSOLIDAMENTO
+        data_type: VARCHAR(2)
+      - name: FL_A_RECUPERO
+        data_type: VARCHAR(2)
+      - name: TP_CONSOLIDAMENTO
+        data_type: VARCHAR(1)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: EU_CONSOLIDAMENTO_TOT
+        data_type: NUMBER(13,2)
+      - name: EU_CONSOLIDAMENTO_TOT_INTERNO
+        data_type: NUMBER(13,2)
+      - name: CD_UTENTE_CARICAMENTO
+        data_type: VARCHAR(10)
+      - name: CD_UTENTE_ULTIMA_MODIFICA
+        data_type: VARCHAR(10)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

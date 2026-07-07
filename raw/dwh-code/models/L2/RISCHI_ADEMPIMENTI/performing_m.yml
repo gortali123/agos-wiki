@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: performing_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+      pre_hook: 
+        - "{{ delete_last_month('DT_OSSERVAZIONE') }}" 
+        - "{{ delete_l2('oxdrfpra', ['CD_PRATICA', 'TP_PROCEDURA', 'DT_OSSERVAZIONE'], ['DRPRA_PRATICA', 'DRPRA_PROVENIENZA', 'DRPRA_DATA_ESTRAZIONE'] )}}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(9,0)
+      - name: DT_INGRS_FORBEARANCE
+        data_type: DATE
+      - name: DT_USCITA_FORBEARANCE
+        data_type: DATE
+      - name: DT_INGRS_PROBATION
+        data_type: DATE
+      - name: DT_USCITA_PROBATION
+        data_type: DATE
+      - name: DT_USCITA_PROBATION_STIMATA
+        data_type: DATE
+      - name: DT_INGRS_PURGATORY
+        data_type: DATE
+      - name: DT_USCITA_PURGATORY
+        data_type: DATE
+      - name: DT_USCITA_PURGATORY_STIMATA
+        data_type: DATE
+      - name: DT_INGRS_OBSERVATION
+        data_type: DATE
+      - name: DT_USCITA_OBSERVATION
+        data_type: DATE
+      - name: FL_FORBEARANCE
+        data_type: VARCHAR(2)
+      - name: FL_PERFORMING
+        data_type: VARCHAR(2)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: loan_arrears
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(17)
+      - name: CD_PIANO
+        data_type: VARCHAR(30)
+      - name: CD_CERTIFICATO
+        data_type: NUMBER(9,0)
+      - name: EU_CAPITALE_IMPAG
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_IMPAG
+        data_type: NUMBER(13,2)
+      - name: DT_INSOLUTO
+        data_type: DATE

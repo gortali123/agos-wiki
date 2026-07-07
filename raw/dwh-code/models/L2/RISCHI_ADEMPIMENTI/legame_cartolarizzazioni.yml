@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: legame_cartolarizzazioni
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: 
+        - "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+        - "{{ delete_l2('oxdrfpra', ['CD_PRATICA', 'TP_PROCEDURA'], ['DRPRA_PRATICA', 'DRPRA_PROVENIENZA']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_PRATICA_CARTOLARIZZATA
+        data_type: NUMBER(12)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

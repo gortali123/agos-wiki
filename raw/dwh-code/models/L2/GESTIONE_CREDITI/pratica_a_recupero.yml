@@ -1,0 +1,107 @@
+version: 2
+models:
+  - name: pratica_a_recupero
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROVENIENZA]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: TP_PROVENIENZA
+        data_type: VARCHAR(2)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: TP_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_PAGAMENTO
+        data_type: VARCHAR(2)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_CONVENZIONATO
+        data_type: NUMBER(9)
+      - name: CD_STATO_LAVORAZIONE
+        data_type: VARCHAR(2)
+      - name: DT_STATO_LAVORAZIONE
+        data_type: DATE
+      - name: FL_IN_GESTIONE
+        data_type: VARCHAR(1)
+      - name: CD_LEGALE
+        data_type: VARCHAR(2)
+      - name: CD_STATO_LEGALE
+        data_type: VARCHAR(1)
+      - name: CD_RECUPERATORE
+        data_type: VARCHAR(5)
+      - name: FL_DBT
+        data_type: VARCHAR(1)
+      - name: FL_FID
+        data_type: VARCHAR(1)
+      - name: FL_RATE_ACCODATE
+        data_type: VARCHAR(1)
+      - name: FL_CARTOLARIZZATA
+        data_type: VARCHAR(1)
+      - name: CD_LOTTO_INGRESSO
+        data_type: NUMBER(7)
+      - name: CD_LOTTO_RECUPERO
+        data_type: NUMBER(7)
+      - name: DT_ULTIMO_PAGAMENTO
+        data_type: DATE
+      - name: DT_CONTRATTO
+        data_type: DATE
+      - name: DT_RECUPERO
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA
+        data_type: DATE
+      - name: DT_ULTIMA_SCADENZA
+        data_type: DATE
+      - name: NM_ANZIANITA
+        data_type: NUMBER(7)
+      - name: NM_RATE_IMPAGATE
+        data_type: NUMBER(3)
+      - name: NM_NUMERO_RATE
+        data_type: NUMBER(3)
+      - name: NM_GG_PRIMA_SCADENZA
+        data_type: NUMBER(2)
+      - name: EU_SALDO
+        data_type: NUMBER(13,2)
+      - name: EU_REALIZZO_PREVISTO
+        data_type: NUMBER(13,2)
+      - name: EU_SALDO_RISCHIO
+        data_type: NUMBER(13,2)
+      - name: EU_FINANZIATO
+        data_type: NUMBER(13,2)
+      - name: EU_IMPORTO_RATA
+        data_type: NUMBER(13,2)
+      - name: EU_RATA_MEDIA
+        data_type: NUMBER(13,2)
+      - name: EU_INS_RATE
+        data_type: NUMBER(13,2)
+      - name: EU_INS_CAPITALE
+        data_type: NUMBER(13,2)
+      - name: EU_INS_INTERESSI
+        data_type: NUMBER(13,2)
+      - name: EU_INS_TOTALE
+        data_type: NUMBER(13,2)
+      - name: EU_INS_CALC_RATE
+        data_type: NUMBER(13,2)
+      - name: EU_INS_ADDEB
+        data_type: NUMBER(13,2)
+      - name: EU_INS_ALTRI_ADDEB
+        data_type: NUMBER(13,2)
+      - name: EU_INS_C_ALT
+        data_type: NUMBER(13,2)
+      - name: EU_INS_A_SCADERE
+        data_type: NUMBER(13,2)
+      - name: EU_CAP_RESIDUO
+        data_type: NUMBER(13,2)
+      - name: EU_QUOTA_CAPITALE
+        data_type: NUMBER(13,2)
+      - name: EU_QUOTA_INTERESSI
+        data_type: NUMBER(13,2)
+      - name: CD_STATO_CONTENZIOSO
+        data_type: VARCHAR(2)
+      - name: DT_STATO_CONTENZIOSO
+        data_type: DATE

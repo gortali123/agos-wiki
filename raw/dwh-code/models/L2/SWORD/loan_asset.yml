@@ -1,0 +1,72 @@
+version: 2
+models:
+  - name: loan_asset
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(17)
+      - name: CD_PIANO
+        data_type: VARCHAR(30)
+      - name: CD_CERTIFICATO
+        data_type: NUMBER(9,0)
+      - name: EU_PURCHASE_PRICE_GROSS
+        data_type: NUMBER(13,2)
+      - name: EU_PURCHASE_PRICE_NET
+        data_type: NUMBER(13,2)
+      - name: EU_PURCHASE_PRICE_TAX
+        data_type: NUMBER(13,2)
+      - name: EU_VALUATION_GROSS
+        data_type: NUMBER(13,2)
+      - name: EU_VALUATION_NET
+        data_type: NUMBER(13,2)
+      - name: EU_VALUATION_TAX
+        data_type: NUMBER(13,2)
+      - name: CD_IDENTIFIER
+        data_type: VARCHAR(3)
+      - name: DS_TELAIO
+        data_type: VARCHAR(17)
+      - name: CD_STOCK_NUMBER
+        data_type: VARCHAR(1)
+      - name: DS_NUMERO_FATTURA_NM
+        data_type: VARCHAR(17)
+      - name: DS_MARCA_VEIC
+        data_type: VARCHAR(17)
+      - name: CD_MAKE
+        data_type: VARCHAR(1)
+      - name: DS_MODELLO_VEIC
+        data_type: VARCHAR(54)
+      - name: DS_ANNO_COSTRZ
+        data_type: NUMBER(4,0)
+      - name: CD_DOCUMENT_NUMBER
+        data_type: VARCHAR(1)
+      - name: DS_TARGA
+        data_type: VARCHAR(10)
+      - name: CD_BAUMUSTER
+        data_type: VARCHAR(1)
+      - name: CD_CHASSIS_NUMBER
+        data_type: VARCHAR(17)
+      - name: CD_COMMISSION_NUMBER
+        data_type: VARCHAR(1)
+      - name: NM_GIORNI_DEP
+        data_type: NUMBER
+      - name: NM_DISTANZA_PERCRS
+        data_type: NUMBER
+      - name: DS_UNITA_MSRA
+        data_type: VARCHAR(10)
+      - name: DS_LOCATION
+        data_type: VARCHAR(21)
+      - name: CD_SUPPLIER
+        data_type: VARCHAR(1)
+      - name: CD_THIRD_PARTY
+        data_type: VARCHAR(1)
+      - name: DT_REGISTRAZIONE_VEIC
+        data_type: DATE

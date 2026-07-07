@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: rtrequest
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"RTREQUEST"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: broadlogid
+        data_type: VARCHAR(30)
+      - name: externalid
+        data_type: VARCHAR(255)
+      - name: deliveryid
+        data_type: VARCHAR(255)
+      - name: nomedelivery
+        data_type: VARCHAR(255)
+      - name: canaledelivery
+        data_type: VARCHAR(255)
+      - name: statodelivery
+        data_type: VARCHAR(255)
+      - name: oggettoemail
+        data_type: VARCHAR(255)
+      - name: datainvio
+        data_type: VARCHAR(30)
+      - name: statoinvio
+        data_type: VARCHAR(255)
+      - name: dataaggiornamentostatoinvio
+        data_type: VARCHAR(30)
+      - name: tipologiabounce
+        data_type: VARCHAR(255)
+      - name: motivobounce
+        data_type: VARCHAR(255)
+      - name: email
+        data_type: VARCHAR(255)
+      - name: mobile
+        data_type: VARCHAR(255)
+      - name: eventtype
+        data_type: VARCHAR(255)
+      - name: importosimulato
+        data_type: NUMBER(38,10)
+      - name: ratasimulata
+        data_type: VARCHAR(255)
+      - name: originechiamata
+        data_type: VARCHAR(255)
+      - name: numerocarta
+        data_type: VARCHAR(255)
+      - name: flagprospect
+        data_type: NUMBER(1,0)
+      - name: formsessionid
+        data_type: VARCHAR(255)

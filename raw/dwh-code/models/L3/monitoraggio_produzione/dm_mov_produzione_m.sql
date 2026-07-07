@@ -1,0 +1,423 @@
+-- DataMart L3: DM_MOV_PRODUZIONE_M
+-- Processo: MONITORAGGIO_PRODUZIONE  |  schema target: L3_MONITORING_PRODUZIONE
+--
+-- Storicizzazione: "foto mensile SCD2" ancorata al FINE MESE DI RIFERIMENTO (merge),
+-- IDENTICA a dm_dim_produz_utilizzi_carte_m. Macro `scd2_foto_mensile` invariata nella logica.
+-- Differenza di sorgente: qui le L2 sono storicizzate per DT_OSSERVAZIONE -> ts_col='DT_OSSERVAZIONE'.
+--
+-- AUTO-DERIVAZIONE COLONNE: il modello NON elenca piu' biz_cols/payload_cols.
+-- Passa la proiezione come SQL (src_sql) + le CTE di appoggio (pre_ctes); la macro
+-- introspeziona la proiezione e ricava biz_cols (= tutte le colonne meno DT_OSSERVAZIONE)
+-- e payload_cols (= biz_cols - key_cols). L'ordine di output = ordine della SELECT in src_sql.
+--
+-- NOTA OPERATIVA: prima costruzione storia -> `dbt run --full-refresh --select dm_mov_produzione_m`.
+-- I run successivi appendono solo il mese chiuso piu' recente.
+--
+-- AS-OF (ts_col = DT_OSSERVAZIONE):
+--   * CO / CA / CQ  -> PR.DT_OSSERVAZIONE: storia piena (una riga per mese osservato).
+--   * FS pratiche (creditline), Utilizzi Carte (carte_utilizzi), Utilizzi FS (loan)
+--     -> lasciati com'erano: DT_OSSERVAZIONE = fine mese di riferimento (provvisorio).
+--        Non ricostruiscono storia in full-refresh, ma vengono storicizzati in avanti dai run
+--        incrementali. Sostituire con la vera "versione mensile" quando disponibile.
+--
+-- REFACTOR (fattorizzazione CO/CQ):
+--   Le branch CO e CQ ripetevano la stessa aritmetica in ~25 espressioni CASE ciascuna.
+--   Sono state estratte due CTE di appoggio (co_base, cq_base) che espongono:
+--     - EMFN_BASE : base imponibile. UNICO punto in cui aggiungere le provvigioni quando
+--                   disponibili (vedi TODO). Presente solo in CO (in CQ la base = EU_FINANZIATO).
+--     - SGN       : segno storno = CASE WHEN TP_MOVIMENTO='DT_STORNATA' THEN -1 ELSE 1 END.
+--                   Sostituisce il pattern `CASE WHEN storno THEN expr*-1 ELSE expr END`.
+--                   Semantica NULL preservata: NULL * -1 = NULL, come nel CASE originale.
+--   ATTENZIONE: EMFN_BASE e SGN NON devono comparire nella SELECT finale delle branch,
+--   altrimenti la macro li conta come payload_cols spurie nell'output storicizzato.
+
+
+{# ---- CTE di appoggio: anteposte dalla macro, terminate da virgola ---- #}
+{%- set pre_ctes -%}
+prat_unpivot AS (
+    SELECT *
+    FROM {{ ref('pratica_m') }}
+    --FROM AGOS_DEV_16000.L2_PRODOTTO_M.PRATICA_M_TEST
+    UNPIVOT (DT_MOVIMENTO FOR TP_MOVIMENTO IN (DT_CARICAMENTO, DT_ESITO, DT_RESPINTA, DT_RITIRATA, DT_DECORRENZA, DT_STORNATA))
+    WHERE DT_MOVIMENTO IS NOT NULL
+    -- WARN: il data model usa set di date UNPIVOT incoerenti tra i campi; usato il set completo (6 date)
+),
+
+-- ---- Base branch CO: join + helper (EMFN_BASE, SGN). Nessun CASE ripetuto a valle. ----
+co_base AS (
+    SELECT
+        PR.DT_OSSERVAZIONE,
+        PR.TP_PROCEDURA,
+        PR.CD_PRATICA,
+        PR.DT_MOVIMENTO,
+        PR.TP_MOVIMENTO,
+        PR.EU_FINANZIATO,
+        C.NM_IRR_EFFETTIVO,
+        C.NM_DURATA_FINANZ,
+        C.NM_TAEG1,
+        C.NM_TAN1,
+        C.NM_TEG1,
+        C.NM_TAEG2,
+        C.NM_TAN2,
+        C.NM_TEG2,
+        C.EU_FRESH_CASH,
+        C.EU_EROGATO,
+        C.EU_SPESE_TOT_IST,
+        C.EU_TOT_CONTRIB_DA_INTER,
+        C.EU_SPESE_RICORRENTI_TOT,
+        SA.EU_PREMIO_LORDO,
+        -- helper 1: base imponibile. UNICO punto dove aggiungere le provvigioni (TODO).
+        (PR.EU_FINANZIATO - C.EU_COMMISSIONI_IST - C.EU_TOT_CONTRIB_DA_INTER
+         /* TODO + COALESCE(P.EU_PROVVIGIONI, 0) */)                     AS EMFN_BASE,
+        -- helper 2: segno storno.
+        CASE WHEN PR.TP_MOVIMENTO = 'DT_STORNATA' THEN -1 ELSE 1 END     AS SGN
+    FROM prat_unpivot PR
+    LEFT JOIN {{ ref('consumo_m') }} C
+        ON  C.TP_PROCEDURA    = PR.TP_PROCEDURA
+        AND C.CD_PRATICA      = PR.CD_PRATICA
+        AND C.DT_OSSERVAZIONE = PR.DT_OSSERVAZIONE
+    LEFT JOIN {{ ref('servizi_assicurativi_m') }} SA
+        ON  SA.CD_PRATICA      = PR.CD_PRATICA  -- WARN: SERVIZI_ASSICURATVI (typo modello) senza chiave; join su CD_PRATICA inferito
+        AND SA.DT_OSSERVAZIONE = PR.DT_OSSERVAZIONE
+    WHERE PR.DT_MOVIMENTO IS NOT NULL
+      AND PR.TP_PROCEDURA = 'CO'
+      AND PR.CD_PRODOTTO NOT IN ('02', '09', '16', '32')
+),
+
+-- ---- Base branch CQ: join + helper SGN. Base imponibile = EU_FINANZIATO (no sottrazioni). ----
+cq_base AS (
+    SELECT
+        PR.DT_OSSERVAZIONE,
+        PR.TP_PROCEDURA,
+        PR.CD_PRATICA,
+        PR.DT_MOVIMENTO,
+        PR.TP_MOVIMENTO,
+        PR.EU_FINANZIATO,
+        C.NM_IRR_EFFETTIVO,
+        C.NM_DURATA_FINANZ,
+        C.NM_TAEG,
+        C.NM_TAN,
+        C.NM_TEG,
+        C.EU_FRESH_CASH,
+        C.EU_EROGATO,
+        SA.EU_PREMIO_LORDO,
+        CASE WHEN PR.TP_MOVIMENTO = 'DT_STORNATA' THEN -1 ELSE 1 END     AS SGN
+    FROM prat_unpivot PR
+    LEFT JOIN {{ ref('cqs_m') }} C
+        ON  C.TP_PROCEDURA    = PR.TP_PROCEDURA
+        AND C.CD_PRATICA      = PR.CD_PRATICA
+        AND C.DT_OSSERVAZIONE = PR.DT_OSSERVAZIONE
+    LEFT JOIN {{ ref('servizi_assicurativi_m') }} SA
+        ON  SA.CD_PRATICA      = PR.CD_PRATICA  -- WARN: join su CD_PRATICA inferito
+        AND SA.DT_OSSERVAZIONE = PR.DT_OSSERVAZIONE
+    WHERE PR.DT_MOVIMENTO IS NOT NULL
+      AND PR.TP_PROCEDURA = 'CQ'
+),
+-- TODO eu_pv AS ( SELECT CD_PROCEDURA, CD_PRATICA, SUM(EU_TOTALE) AS EU_PROVVIGIONI
+--                 FROM re('provvigioni_e_rappel') WHERE TP_PROVVIGIONE = 'PV' GROUP BY 1,2 ),
+-- TODO eu_ra AS ( SELECT CD_PROCEDURA, CD_PRATICA, SUM(EU_TOTALE) AS EU_RAPPEL
+--                 FROM re('provvigioni_e_rappel') WHERE TP_PROVVIGIONE = 'RA' GROUP BY 1,2 ),
+{%- endset -%}
+
+{# ---- proiezione L2 -> L3: UNA RIGA PER VERSIONE (chiave, mese). 1a colonna = ts_col (DT_OSSERVAZIONE) ---- #}
+{%- set src_sql -%}
+-- ========== Procedura: Passaggi di stato Consumo ==========
+SELECT
+    DT_OSSERVAZIONE AS DT_OSSERVAZIONE,
+    TP_PROCEDURA AS TP_PROCEDURA,
+    CD_PRATICA AS CD_PRATICA,
+    0 AS CD_EMETTITORE_UTILIZZO,
+    0 AS CD_PROTOCOLLO_UTILIZZO,
+    0 AS CD_RIGA_UTILIZZO,
+    DT_MOVIMENTO AS DT_MOVIMENTO,
+    TP_MOVIMENTO AS TP_MOVIMENTO,
+    CASE WHEN TP_MOVIMENTO = 'DT_STORNATA'   THEN 'S' ELSE 'N' END AS FL_STORNO,
+    CASE WHEN TP_MOVIMENTO = 'DT_CARICAMENTO' THEN 1 ELSE 0 END AS NM_PRATICA_CARICATA,
+    CASE WHEN TP_MOVIMENTO = 'DT_ESITO'       THEN 1 ELSE 0 END AS NM_PRATICA_ESITATA,
+    CASE WHEN TP_MOVIMENTO = 'DT_RESPINTA'    THEN 1 ELSE 0 END AS NM_PRATICA_RESPINTA,
+    CASE WHEN TP_MOVIMENTO = 'DT_RITIRATA'    THEN 1 ELSE 0 END AS NM_PRATICA_RITIRATA,
+    CASE WHEN TP_MOVIMENTO = 'DT_DECORRENZA'  THEN 1 WHEN TP_MOVIMENTO = 'DT_STORNATA' THEN -1 ELSE 0 END AS NM_PRATICA_DECORSA,
+    EU_FINANZIATO AS EU_FINANZIATO,
+    EMFN_BASE * SGN                                       AS EMFN,
+    NM_IRR_EFFETTIVO * EMFN_BASE * NM_DURATA_FINANZ * SGN AS NM_IRR_NUM,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_IRR_DEN,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_DURATA_FINANZ_NUM,
+    EMFN_BASE * SGN                                       AS NM_DURATA_FINANZ_DEN,
+    NM_TAEG1 * EMFN_BASE * NM_DURATA_FINANZ * SGN         AS NM_TAEG1_NUM,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_TAEG1_DEN,
+    NM_TAN1 * EMFN_BASE * NM_DURATA_FINANZ * SGN          AS NM_TAN1_NUM,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_TAN1_DEN,
+    NM_TEG1 * EMFN_BASE * NM_DURATA_FINANZ * SGN          AS NM_TEG1_NUM,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_TEG1_DEN,
+    NM_TAEG2 * EMFN_BASE * NM_DURATA_FINANZ * SGN         AS NM_TAEG2_NUM,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_TAEG2_DEN,
+    NM_TAN2 * EMFN_BASE * NM_DURATA_FINANZ * SGN          AS NM_TAN2_NUM,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_TAN2_DEN,
+    NM_TEG2 * EMFN_BASE * NM_DURATA_FINANZ * SGN          AS NM_TEG2_NUM,
+    EMFN_BASE * NM_DURATA_FINANZ * SGN                    AS NM_TEG2_DEN,
+    EU_FRESH_CASH * SGN                                   AS EU_FRESH_CASH,
+    EU_EROGATO * SGN                                      AS EU_EROGATO,
+    EU_PREMIO_LORDO                                       AS EU_PREMIO_ASSICURAZIONE_LORDO,
+    CAST(NULL AS NUMBER(13,2))                            AS EU_RAPPEL,      -- TODO da provvigioni_e_rappel (TP='RA')
+    CAST(NULL AS NUMBER(13,2))                            AS EU_PROVVIGIONE, -- TODO da provvigioni_e_rappel (TP='PV')
+    EU_SPESE_TOT_IST * SGN                                AS EU_SPESE_TOT_IST,
+    EU_TOT_CONTRIB_DA_INTER * SGN                         AS EU_TOT_CONTRIB_DA_INTER,
+    EU_SPESE_RICORRENTI_TOT * SGN                         AS EU_SPESE_RICORRENTI_TOT
+FROM co_base
+
+UNION ALL
+
+-- ========== Procedura: Passaggi di stato Carte ==========
+SELECT
+    PR.DT_OSSERVAZIONE AS DT_OSSERVAZIONE,
+    PR.TP_PROCEDURA AS TP_PROCEDURA,
+    PR.CD_PRATICA AS CD_PRATICA,
+    0 AS CD_EMETTITORE_UTILIZZO,
+    0 AS CD_PROTOCOLLO_UTILIZZO,
+    0 AS CD_RIGA_UTILIZZO,
+    PR.DT_MOVIMENTO AS DT_MOVIMENTO,
+    PR.TP_MOVIMENTO AS TP_MOVIMENTO,
+    CASE WHEN PR.TP_MOVIMENTO = 'DT_STORNATA' THEN 'S' ELSE 'N' END AS FL_STORNO,
+    CASE WHEN PR.TP_MOVIMENTO = 'DT_CARICAMENTO' THEN 1 ELSE 0 END AS NM_PRATICA_CARICATA,
+    CASE WHEN PR.TP_MOVIMENTO = 'DT_ESITO' THEN 1 ELSE 0 END AS NM_PRATICA_ESITATA,
+    CASE WHEN PR.TP_MOVIMENTO = 'DT_RESPINTA' THEN 1 ELSE 0 END AS NM_PRATICA_RESPINTA,
+    CASE WHEN PR.TP_MOVIMENTO = 'DT_RITIRATA' THEN 1 ELSE 0 END AS NM_PRATICA_RITIRATA,
+    CASE WHEN PR.TP_MOVIMENTO = 'DT_DECORRENZA' THEN 1 WHEN PR.TP_MOVIMENTO = 'DT_STORNATA' THEN -1 ELSE 0 END AS NM_PRATICA_DECORSA,
+    NULL AS EU_FINANZIATO,
+    NULL AS EMFN,
+    NULL AS NM_IRR_NUM,
+    NULL AS NM_IRR_DEN,
+    NULL AS NM_DURATA_FINANZ_NUM,
+    NULL AS NM_DURATA_FINANZ_DEN,
+    NULL AS NM_TAEG1_NUM,
+    NULL AS NM_TAEG1_DEN,
+    NULL AS NM_TAN1_NUM,
+    NULL AS NM_TAN1_DEN,
+    NULL AS NM_TEG1_NUM,
+    NULL AS NM_TEG1_DEN,
+    NULL AS NM_TAEG2_NUM,
+    NULL AS NM_TAEG2_DEN,
+    NULL AS NM_TAN2_NUM,
+    NULL AS NM_TAN2_DEN,
+    NULL AS NM_TEG2_NUM,
+    NULL AS NM_TEG2_DEN,
+    NULL AS EU_FRESH_CASH,
+    NULL AS EU_EROGATO,
+    NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
+    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
+    CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
+    NULL AS EU_SPESE_TOT_IST,
+    NULL AS EU_TOT_CONTRIB_DA_INTER,
+    NULL AS EU_SPESE_RICORRENTI_TOT
+FROM prat_unpivot PR
+WHERE DT_MOVIMENTO IS NOT NULL
+    AND PR.TP_PROCEDURA = 'CA'
+    AND PR.CD_EMETTITORE NOT IN (600, 300, 301)
+
+UNION ALL
+
+-- ========== Procedura: Passaggi di stato CQS ==========
+SELECT
+    DT_OSSERVAZIONE AS DT_OSSERVAZIONE,
+    TP_PROCEDURA AS TP_PROCEDURA,
+    CD_PRATICA AS CD_PRATICA,
+    0 AS CD_EMETTITORE_UTILIZZO,
+    0 AS CD_PROTOCOLLO_UTILIZZO,
+    0 AS CD_RIGA_UTILIZZO,
+    DT_MOVIMENTO AS DT_MOVIMENTO,
+    TP_MOVIMENTO AS TP_MOVIMENTO,
+    CASE WHEN TP_MOVIMENTO = 'DT_STORNATA'    THEN 'S' ELSE 'N' END AS FL_STORNO,
+    CASE WHEN TP_MOVIMENTO = 'DT_CARICAMENTO' THEN 1 ELSE 0 END AS NM_PRATICA_CARICATA,
+    CASE WHEN TP_MOVIMENTO = 'DT_ESITO'       THEN 1 ELSE 0 END AS NM_PRATICA_ESITATA,
+    CASE WHEN TP_MOVIMENTO = 'DT_RESPINTA'    THEN 1 ELSE 0 END AS NM_PRATICA_RESPINTA,
+    CASE WHEN TP_MOVIMENTO = 'DT_RITIRATA'    THEN 1 ELSE 0 END AS NM_PRATICA_RITIRATA,
+    CASE WHEN TP_MOVIMENTO = 'DT_DECORRENZA'  THEN 1 WHEN TP_MOVIMENTO = 'DT_STORNATA' THEN -1 ELSE 0 END AS NM_PRATICA_DECORSA,
+    EU_FINANZIATO AS EU_FINANZIATO,
+    NULL AS EMFN,
+    NM_IRR_EFFETTIVO * EU_FINANZIATO * NM_DURATA_FINANZ * SGN AS NM_IRR_NUM,
+    EU_FINANZIATO * NM_DURATA_FINANZ * SGN                    AS NM_IRR_DEN,
+    EU_FINANZIATO * NM_DURATA_FINANZ * SGN                    AS NM_DURATA_FINANZ_NUM,
+    EU_FINANZIATO * SGN                                       AS NM_DURATA_FINANZ_DEN,
+    NM_TAEG * EU_FINANZIATO * NM_DURATA_FINANZ * SGN          AS NM_TAEG1_NUM,
+    EU_FINANZIATO * NM_DURATA_FINANZ * SGN                    AS NM_TAEG1_DEN,
+    NM_TAN * EU_FINANZIATO * NM_DURATA_FINANZ * SGN           AS NM_TAN1_NUM,
+    EU_FINANZIATO * NM_DURATA_FINANZ * SGN                    AS NM_TAN1_DEN,
+    NM_TEG * EU_FINANZIATO * NM_DURATA_FINANZ * SGN           AS NM_TEG1_NUM,
+    EU_FINANZIATO * NM_DURATA_FINANZ * SGN                    AS NM_TEG1_DEN,
+    NULL AS NM_TAEG2_NUM,
+    NULL AS NM_TAEG2_DEN,
+    NULL AS NM_TAN2_NUM,
+    NULL AS NM_TAN2_DEN,
+    NULL AS NM_TEG2_NUM,
+    NULL AS NM_TEG2_DEN,
+    EU_FRESH_CASH * SGN                                       AS EU_FRESH_CASH,
+    EU_EROGATO * SGN                                          AS EU_EROGATO,
+    EU_PREMIO_LORDO                                           AS EU_PREMIO_ASSICURAZIONE_LORDO,
+    CAST(NULL AS NUMBER(13,2))                                AS EU_RAPPEL,
+    CAST(NULL AS NUMBER(13,2))                                AS EU_PROVVIGIONE,
+    NULL AS EU_SPESE_TOT_IST,
+    NULL AS EU_TOT_CONTRIB_DA_INTER,
+    NULL AS EU_SPESE_RICORRENTI_TOT
+FROM cq_base
+
+UNION ALL
+
+-- ========== Procedura: Pratiche FINSTOCK ==========
+SELECT
+    CL.DT_RIFERIMENTO AS DT_OSSERVAZIONE,   -- TODO vera versione mensile
+    'FS' AS TP_PROCEDURA,
+    CL.CD_PRATICA AS CD_PRATICA,
+    0 AS CD_EMETTITORE_UTILIZZO,
+    0 AS CD_PROTOCOLLO_UTILIZZO,
+    0 AS CD_RIGA_UTILIZZO,
+    CL.DT_INIZIO_LIN_CREDIT AS DT_MOVIMENTO,
+    'DT_DECORRENZA' AS TP_MOVIMENTO,
+    'N' AS FL_STORNO,
+    0 AS NM_PRATICA_CARICATA,
+    0 AS NM_PRATICA_ESITATA,
+    0 AS NM_PRATICA_RESPINTA,
+    0 AS NM_PRATICA_RITIRATA,
+    1 AS NM_PRATICA_DECORSA,
+    NULL AS EU_FINANZIATO,
+    NULL AS EMFN,
+    NULL AS NM_IRR_NUM,
+    NULL AS NM_IRR_DEN,
+    NULL AS NM_DURATA_FINANZ_NUM,
+    NULL AS NM_DURATA_FINANZ_DEN,
+    NULL AS NM_TAEG1_NUM,
+    NULL AS NM_TAEG1_DEN,
+    NULL AS NM_TAN1_NUM,
+    NULL AS NM_TAN1_DEN,
+    NULL AS NM_TEG1_NUM,
+    NULL AS NM_TEG1_DEN,
+    NULL AS NM_TAEG2_NUM,
+    NULL AS NM_TAEG2_DEN,
+    NULL AS NM_TAN2_NUM,
+    NULL AS NM_TAN2_DEN,
+    NULL AS NM_TEG2_NUM,
+    NULL AS NM_TEG2_DEN,
+    NULL AS EU_FRESH_CASH,
+    NULL AS EU_EROGATO,
+    NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
+    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
+    CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
+    NULL AS EU_SPESE_TOT_IST,
+    NULL AS EU_TOT_CONTRIB_DA_INTER,
+    NULL AS EU_SPESE_RICORRENTI_TOT
+FROM {{ ref('creditline') }} AS CL
+WHERE TP_LINEA_DI_CREDITO = 'CREDIT_LINE'
+
+UNION ALL
+
+-- ========== Procedura: Utilizzi Carte (carte_utilizzi) ==========
+SELECT
+    a.TS_INIZIO_VALIDITA::DATE AS DT_OSSERVAZIONE,
+    a.TP_PROCEDURA AS TP_PROCEDURA,
+    a.CD_PRATICA AS CD_PRATICA,
+    a.CD_EMETTITORE AS CD_EMETTITORE_UTILIZZO,
+    a.CD_PROTOCOLLO AS CD_PROTOCOLLO_UTILIZZO,
+    a.CD_RIGA AS CD_RIGA_UTILIZZO,
+    a.DT_DECORRENZA AS DT_MOVIMENTO,
+    'DT_UTILIZZO' AS TP_MOVIMENTO,
+    a.FL_STORNO AS FL_STORNO,   -- WARN: RT modello indicava 0; usato il flag FL_STORNO
+    0 AS NM_PRATICA_CARICATA,
+    0 AS NM_PRATICA_ESITATA,
+    0 AS NM_PRATICA_RESPINTA,
+    0 AS NM_PRATICA_RITIRATA,
+    0 AS NM_PRATICA_DECORSA,
+    a.EU_FINANZIATO AS EU_FINANZIATO,
+    NULL AS EMFN,
+    CASE WHEN a.FL_STORNO = 'S' THEN -1 * (COALESCE(a.NM_IRR, b.NM_TAN) * a.EU_FINANZIATO * COALESCE(a.NM_DURATA_FINANZ, c.NM_VALORE_PARAMETRO)) ELSE (COALESCE(a.NM_IRR, b.NM_TAN) * a.EU_FINANZIATO * COALESCE(a.NM_DURATA_FINANZ, c.NM_VALORE_PARAMETRO)) END AS NM_IRR_NUM,
+    CASE WHEN a.FL_STORNO = 'S' THEN -1 * (a.EU_FINANZIATO * COALESCE(a.NM_DURATA_FINANZ, c.NM_VALORE_PARAMETRO)) ELSE (a.EU_FINANZIATO * COALESCE(a.NM_DURATA_FINANZ, c.NM_VALORE_PARAMETRO)) END AS NM_IRR_DEN,
+    CASE WHEN a.FL_STORNO = 'S' THEN -1 * (a.EU_FINANZIATO * COALESCE(a.NM_DURATA_FINANZ, c.NM_VALORE_PARAMETRO)) ELSE (a.EU_FINANZIATO * COALESCE(a.NM_DURATA_FINANZ, c.NM_VALORE_PARAMETRO)) END AS NM_DURATA_FINANZ_NUM,
+    CASE WHEN a.FL_STORNO = 'S' THEN -1 * (a.EU_FINANZIATO) ELSE (a.EU_FINANZIATO) END AS NM_DURATA_FINANZ_DEN,
+    NULL AS NM_TAEG1_NUM,
+    NULL AS NM_TAEG1_DEN,
+    NULL AS NM_TAN1_NUM,
+    NULL AS NM_TAN1_DEN,
+    NULL AS NM_TEG1_NUM,
+    NULL AS NM_TEG1_DEN,
+    NULL AS NM_TAEG2_NUM,
+    NULL AS NM_TAEG2_DEN,
+    NULL AS NM_TAN2_NUM,
+    NULL AS NM_TAN2_DEN,
+    NULL AS NM_TEG2_NUM,
+    NULL AS NM_TEG2_DEN,
+    NULL AS EU_FRESH_CASH,
+    NULL AS EU_EROGATO,
+    NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
+    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
+    CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
+    NULL AS EU_SPESE_TOT_IST,
+    NULL AS EU_TOT_CONTRIB_DA_INTER,
+    NULL AS EU_SPESE_RICORRENTI_TOT
+FROM {{ ref('carte_utilizzi') }} a
+--FROM AGOS_DEV_16000.L2_PRODOTTO.CARTE_UTILIZZI_TEST a
+LEFT JOIN {{ ref('carta_m') }} b
+    ON a.TP_PROCEDURA = b.TP_PROCEDURA
+    AND a.CD_PRATICA   = b.CD_PRATICA
+    AND LAST_DAY(a.TS_INIZIO_VALIDITA) = b.DT_OSSERVAZIONE
+LEFT JOIN {{ source('L3_MONITORING_PRODUZIONE','dm_config_running_o') }} c
+    ON c.CD_CHIAVE_PARAMETRO = 'DFU'
+    AND c.DT_INIZIO_VALIDITA <= LAST_DAY(a.TS_INIZIO_VALIDITA)
+    AND c.DT_FINE_VALIDITA  > LAST_DAY(a.TS_INIZIO_VALIDITA)
+WHERE A.CD_EMETTITORE NOT IN (300, 301, 700)
+    AND A.FL_STORNATO_INTRADAY = 'N'
+
+UNION ALL
+
+-- ========== Procedura: Utilizzi FINSTOCK (loan: lasciata com'era) ==========
+SELECT
+    LO.DT_RIFERIMENTO AS DT_OSSERVAZIONE,   -- TODO vera versione mensile
+    'FS' AS TP_PROCEDURA,
+    LO.CD_PRATICA AS CD_PRATICA,
+    0 AS CD_EMETTITORE_UTILIZZO,                            -- WARN: non specificato nel modello (PK)
+    LO.CD_CERTIFICATO AS CD_PROTOCOLLO_UTILIZZO,
+    0 AS CD_RIGA_UTILIZZO,                                  -- WARN: non specificato nel modello (PK)
+    LO.DT_INIZIO_CALC_INTSSI AS DT_MOVIMENTO,
+    'DT_LOAN' AS TP_MOVIMENTO,
+    'N' AS FL_STORNO,
+    0 AS NM_PRATICA_CARICATA,
+    0 AS NM_PRATICA_ESITATA,
+    0 AS NM_PRATICA_RESPINTA,
+    0 AS NM_PRATICA_RITIRATA,
+    0 AS NM_PRATICA_DECORSA,
+    NULL AS EU_FINANZIATO,
+    NULL AS EMFN,
+    NULL AS NM_IRR_NUM,
+    NULL AS NM_IRR_DEN,
+    NULL AS NM_DURATA_FINANZ_NUM,
+    NULL AS NM_DURATA_FINANZ_DEN,
+    NULL AS NM_TAEG1_NUM,
+    NULL AS NM_TAEG1_DEN,
+    NULL AS NM_TAN1_NUM,
+    NULL AS NM_TAN1_DEN,
+    NULL AS NM_TEG1_NUM,
+    NULL AS NM_TEG1_DEN,
+    NULL AS NM_TAEG2_NUM,
+    NULL AS NM_TAEG2_DEN,
+    NULL AS NM_TAN2_NUM,
+    NULL AS NM_TAN2_DEN,
+    NULL AS NM_TEG2_NUM,
+    NULL AS NM_TEG2_DEN,
+    NULL AS EU_FRESH_CASH,
+    NULL AS EU_EROGATO,
+    NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
+    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
+    CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
+    NULL AS EU_SPESE_TOT_IST,
+    NULL AS EU_TOT_CONTRIB_DA_INTER,
+    NULL AS EU_SPESE_RICORRENTI_TOT
+FROM {{ ref('loan') }} AS LO
+WHERE CD_STATO_CERTIF = 'LIVE'
+{%- endset -%}
+
+{{ scd2_foto_mensile(
+    pre_ctes = pre_ctes,
+    src_sql  = src_sql,
+    key_cols = [
+        'TP_PROCEDURA', 'CD_PRATICA',
+        'CD_EMETTITORE_UTILIZZO', 'CD_PROTOCOLLO_UTILIZZO', 'CD_RIGA_UTILIZZO',
+        'DT_MOVIMENTO', 'TP_MOVIMENTO'],
+    ts_col   = 'DT_OSSERVAZIONE'
+) }}

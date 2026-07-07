@@ -1,0 +1,23 @@
+version: 2
+models:
+  - name: perdite_minime_abb
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, PR_POSTVENDITA]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: PR_POSTVENDITA
+        data_type: NUMBER(11)
+      - name: DT_PERDITA
+        data_type: DATE
+      - name: EU_PERDITA
+        data_type: NUMBER(13,2)
+      - name: FL_ABBUONO
+        data_type: VARCHAR(1)

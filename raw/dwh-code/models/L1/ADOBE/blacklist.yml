@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: blacklist
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"BLACKLIST"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [recapito]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: recapito
+        data_type: VARCHAR(80)
+      - name: motivo
+        data_type: VARCHAR(80)
+      - name: datablacklist
+        data_type: VARCHAR(20)

@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: giorni_scaduto
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: "{{ delete_l2('oxdrfpra', ['CD_CONTROPARTE', 'CD_PRATICA', 'TP_PROCEDURA', 'TS_INSERIMENTO'], ['DRPRA_CLIENTE', 'DRPRA_PRATICA', 'DRPRA_PROVENIENZA', 'DRPRA_DATA_ESTRAZIONE']) }}" 
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_CONTROPARTE, CD_PRATICA, TP_PROCEDURA, TS_INSERIMENTO]
+    columns:
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: NM_GG_SCADUTO_EBA_CLI
+        data_type: NUMBER(5)
+      - name: NM_GG_SCADUTO_CLI
+        data_type: NUMBER(5)
+      - name: NM_GG_SCADUTO_CONT
+        data_type: NUMBER(5)
+      - name: EU_SCADUTO_IMPAG_EBA
+        data_type: NUMBER(13,3)
+      - name: EU_IMPIEGO_TOT_EBA
+        data_type: NUMBER(13,3)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ
+

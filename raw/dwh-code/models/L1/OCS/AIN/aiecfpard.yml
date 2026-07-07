@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: aiecfpard
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_AIN", "archivio":"AIECFPARD"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [aiecpard_sezione, aiecpard_pratica, aiecpard_progressivo, aiecpard_riga]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: aiecpard_sezione
+        data_type: VARCHAR(1)
+      - name: aiecpard_pratica
+        data_type: NUMBER(12,0)
+      - name: aiecpard_progressivo
+        data_type: NUMBER(9,0)
+      - name: aiecpard_riga
+        data_type: NUMBER(5,0)
+      - name: aiecpard_causale
+        data_type: NUMBER(3,0)
+      - name: aiecpard_tipo_documento
+        data_type: VARCHAR(2)
+      - name: aiecpard_num_documento
+        data_type: NUMBER(12,0)
+      - name: aiecpard_data_documento
+        data_type: NUMBER(8,0)
+      - name: aiecpard_imp_partita
+        data_type: NUMBER(13,0)
+      - name: aiecpard_data_scad_val
+        data_type: NUMBER(8,0)
+      - name: aiecpard_data_comp
+        data_type: NUMBER(8,0)
+      - name: aiecpard_evento
+        data_type: NUMBER(11,0)
+      - name: aiecpard_tipo_mov
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)

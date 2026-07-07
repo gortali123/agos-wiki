@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: <table>
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook:
+        - "{{ delete_month(get_dt_osservazione('ts_riferimento')) }}"
+      meta:
+        cluster: ["D"]
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [<pk_cols>, DT_OSSERVAZIONE]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: dt_osservazione
+        data_type: DATE
+      - name: <col1>
+        data_type: <dtype>
+      # ...
+      - name: rowid
+        data_type: NUMBER(38, 0)

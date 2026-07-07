@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: blacklist
+        data_tests:
+          - try_cast_table
+          - primary_key_table:
+              arguments:
+                pk_columns: [recapito]

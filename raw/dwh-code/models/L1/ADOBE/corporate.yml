@@ -1,0 +1,948 @@
+version: 2
+
+models:
+  - name: corporate
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"CORPORATE"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: browser
+        data_type: VARCHAR(10)
+      - name: carrier
+        data_type: VARCHAR(72)
+      - name: code_ver
+        data_type: VARCHAR(14)
+      - name: connection_type
+        data_type: VARCHAR(1)
+      - name: country
+        data_type: VARCHAR(3)
+      - name: ct_connect_type
+        data_type: VARCHAR(7)
+      - name: curr_factor
+        data_type: VARCHAR(1)
+      - name: curr_rate
+        data_type: VARCHAR(14)
+      - name: daily_visitor
+        data_type: VARCHAR(1)
+      - name: date_time
+        data_type: VARCHAR(19)
+      - name: domain
+        data_type: VARCHAR(42)
+      - name: duplicate_events
+        data_type: VARCHAR(3)
+      - name: duplicate_purchase
+        data_type: VARCHAR(1)
+      - name: duplicated_from
+        data_type: VARCHAR(1)
+      - name: exclude_hit
+        data_type: VARCHAR(2)
+      - name: first_hit_page_url
+        data_type: VARCHAR(255)
+      - name: first_hit_pagename
+        data_type: VARCHAR(100)
+      - name: first_hit_ref_domain
+        data_type: VARCHAR(44)
+      - name: first_hit_ref_type
+        data_type: VARCHAR(1)
+      - name: first_hit_referrer
+        data_type: VARCHAR(259)
+      - name: first_hit_time_gmt
+        data_type: VARCHAR(10)
+      - name: geo_city
+        data_type: VARCHAR(32)
+      - name: geo_country
+        data_type: VARCHAR(3)
+      - name: geo_dma
+        data_type: VARCHAR(6)
+      - name: geo_region
+        data_type: VARCHAR(9)
+      - name: geo_zip
+        data_type: VARCHAR(9)
+      - name: hit_source
+        data_type: VARCHAR(1)
+      - name: hit_time_gmt
+        data_type: VARCHAR(10)
+      - name: hitid_high
+        data_type: VARCHAR(19)
+      - name: hitid_low
+        data_type: VARCHAR(19)
+      - name: hourly_visitor
+        data_type: VARCHAR(1)
+      - name: ip
+        data_type: VARCHAR(15)
+      - name: ip2
+        data_type: VARCHAR(12)
+      - name: language
+        data_type: VARCHAR(4)
+      - name: last_hit_time_gmt
+        data_type: VARCHAR(10)
+      - name: last_purchase_num
+        data_type: VARCHAR(3)
+      - name: last_purchase_time_gmt
+        data_type: VARCHAR(10)
+      - name: mc_audiences
+        data_type: VARCHAR(543)
+      - name: mcvisid
+        data_type: VARCHAR(38)
+      - name: monthly_visitor
+        data_type: VARCHAR(1)
+      - name: new_visit
+        data_type: VARCHAR(1)
+      - name: os
+        data_type: VARCHAR(10)
+      - name: page_event
+        data_type: VARCHAR(2)
+      - name: page_type
+        data_type: VARCHAR(9)
+      - name: page_url
+        data_type: VARCHAR(3488)
+      - name: pagename
+        data_type: VARCHAR(100)
+      - name: paid_search
+        data_type: VARCHAR(1)
+      - name: persistent_cookie
+        data_type: VARCHAR(1)
+      - name: post_campaign
+        data_type: VARCHAR(156)
+      - name: post_channel
+        data_type: VARCHAR(100)
+      - name: post_cookies
+        data_type: VARCHAR(1)
+      - name: post_currency
+        data_type: VARCHAR(3)
+      - name: post_cust_hit_time_gmt
+        data_type: VARCHAR(10)
+      - name: post_cust_visid
+        data_type: VARCHAR(1)
+      - name: post_evar1
+        data_type: VARCHAR(255)
+      - name: post_evar2
+        data_type: VARCHAR(255)
+      - name: post_evar3
+        data_type: VARCHAR(255)
+      - name: post_evar4
+        data_type: VARCHAR(56)
+      - name: post_evar5
+        data_type: VARCHAR(21)
+      - name: post_evar6
+        data_type: VARCHAR(6)
+      - name: post_evar7
+        data_type: VARCHAR(21)
+      - name: post_evar8
+        data_type: VARCHAR(255)
+      - name: post_evar9
+        data_type: VARCHAR(255)
+      - name: post_evar10
+        data_type: VARCHAR(255)
+      - name: post_evar11
+        data_type: VARCHAR(23)
+      - name: post_evar12
+        data_type: VARCHAR(255)
+      - name: post_evar13
+        data_type: VARCHAR(255)
+      - name: post_evar14
+        data_type: VARCHAR(225)
+      - name: post_evar15
+        data_type: VARCHAR(112)
+      - name: post_evar16
+        data_type: VARCHAR(85)
+      - name: post_evar17
+        data_type: VARCHAR(18)
+      - name: post_evar18
+        data_type: VARCHAR(112)
+      - name: post_evar19
+        data_type: VARCHAR(43)
+      - name: post_evar20
+        data_type: VARCHAR(33)
+      - name: post_evar21
+        data_type: VARCHAR(68)
+      - name: post_evar22
+        data_type: VARCHAR(1)
+      - name: post_evar23
+        data_type: VARCHAR(255)
+      - name: post_evar24
+        data_type: VARCHAR(48)
+      - name: post_evar25
+        data_type: VARCHAR(32)
+      - name: post_evar26
+        data_type: VARCHAR(10)
+      - name: post_evar27
+        data_type: VARCHAR(33)
+      - name: post_evar28
+        data_type: VARCHAR(38)
+      - name: post_evar29
+        data_type: VARCHAR(64)
+      - name: post_evar30
+        data_type: VARCHAR(85)
+      - name: post_evar31
+        data_type: VARCHAR(40)
+      - name: post_evar32
+        data_type: VARCHAR(14)
+      - name: post_evar33
+        data_type: VARCHAR(202)
+      - name: post_evar34
+        data_type: VARCHAR(28)
+      - name: post_evar35
+        data_type: VARCHAR(17)
+      - name: post_evar36
+        data_type: VARCHAR(84)
+      - name: post_evar37
+        data_type: VARCHAR(17)
+      - name: post_evar38
+        data_type: VARCHAR(8)
+      - name: post_evar39
+        data_type: VARCHAR(4)
+      - name: post_evar40
+        data_type: VARCHAR(17)
+      - name: post_evar41
+        data_type: VARCHAR(38)
+      - name: post_evar42
+        data_type: VARCHAR(38)
+      - name: post_evar43
+        data_type: VARCHAR(13)
+      - name: post_evar44
+        data_type: VARCHAR(38)
+      - name: post_evar45
+        data_type: VARCHAR(38)
+      - name: post_evar46
+        data_type: VARCHAR(8)
+      - name: post_evar47
+        data_type: VARCHAR(8)
+      - name: post_evar48
+        data_type: VARCHAR(24)
+      - name: post_evar49
+        data_type: VARCHAR(18)
+      - name: post_evar50
+        data_type: VARCHAR(26)
+      - name: post_evar51
+        data_type: VARCHAR(1)
+      - name: post_evar52
+        data_type: VARCHAR(1)
+      - name: post_evar53
+        data_type: VARCHAR(1)
+      - name: post_evar54
+        data_type: VARCHAR(1)
+      - name: post_evar55
+        data_type: VARCHAR(1)
+      - name: post_evar56
+        data_type: VARCHAR(1)
+      - name: post_evar57
+        data_type: VARCHAR(1)
+      - name: post_evar58
+        data_type: VARCHAR(1)
+      - name: post_evar59
+        data_type: VARCHAR(1)
+      - name: post_evar60
+        data_type: VARCHAR(1)
+      - name: post_evar61
+        data_type: VARCHAR(1)
+      - name: post_evar62
+        data_type: VARCHAR(1)
+      - name: post_evar63
+        data_type: VARCHAR(1)
+      - name: post_evar64
+        data_type: VARCHAR(1)
+      - name: post_evar65
+        data_type: VARCHAR(1)
+      - name: post_evar66
+        data_type: VARCHAR(1)
+      - name: post_evar67
+        data_type: VARCHAR(1)
+      - name: post_evar68
+        data_type: VARCHAR(1)
+      - name: post_evar69
+        data_type: VARCHAR(1)
+      - name: post_evar70
+        data_type: VARCHAR(1)
+      - name: post_evar71
+        data_type: VARCHAR(1)
+      - name: post_evar72
+        data_type: VARCHAR(1)
+      - name: post_evar73
+        data_type: VARCHAR(1)
+      - name: post_evar74
+        data_type: VARCHAR(49)
+      - name: post_evar75
+        data_type: VARCHAR(1)
+      - name: post_evar76
+        data_type: VARCHAR(7)
+      - name: post_evar77
+        data_type: VARCHAR(9)
+      - name: post_evar78
+        data_type: VARCHAR(9)
+      - name: post_evar79
+        data_type: VARCHAR(1)
+      - name: post_evar80
+        data_type: VARCHAR(7)
+      - name: post_evar81
+        data_type: VARCHAR(88)
+      - name: post_evar82
+        data_type: VARCHAR(1)
+      - name: post_evar83
+        data_type: VARCHAR(1)
+      - name: post_evar84
+        data_type: VARCHAR(1)
+      - name: post_evar85
+        data_type: VARCHAR(1)
+      - name: post_evar86
+        data_type: VARCHAR(1)
+      - name: post_evar87
+        data_type: VARCHAR(1)
+      - name: post_evar88
+        data_type: VARCHAR(1)
+      - name: post_evar89
+        data_type: VARCHAR(1)
+      - name: post_evar90
+        data_type: VARCHAR(1)
+      - name: post_evar91
+        data_type: VARCHAR(1)
+      - name: post_evar92
+        data_type: VARCHAR(1)
+      - name: post_evar93
+        data_type: VARCHAR(1)
+      - name: post_evar94
+        data_type: VARCHAR(1)
+      - name: post_evar95
+        data_type: VARCHAR(1)
+      - name: post_evar96
+        data_type: VARCHAR(1)
+      - name: post_evar97
+        data_type: VARCHAR(1)
+      - name: post_evar98
+        data_type: VARCHAR(1)
+      - name: post_evar99
+        data_type: VARCHAR(1)
+      - name: post_evar100
+        data_type: VARCHAR(1)
+      - name: post_evar101
+        data_type: VARCHAR(1)
+      - name: post_evar102
+        data_type: VARCHAR(1)
+      - name: post_evar103
+        data_type: VARCHAR(1)
+      - name: post_evar104
+        data_type: VARCHAR(1)
+      - name: post_evar105
+        data_type: VARCHAR(1)
+      - name: post_evar106
+        data_type: VARCHAR(1)
+      - name: post_evar107
+        data_type: VARCHAR(1)
+      - name: post_evar108
+        data_type: VARCHAR(1)
+      - name: post_evar109
+        data_type: VARCHAR(1)
+      - name: post_evar110
+        data_type: VARCHAR(1)
+      - name: post_evar111
+        data_type: VARCHAR(1)
+      - name: post_evar112
+        data_type: VARCHAR(1)
+      - name: post_evar113
+        data_type: VARCHAR(1)
+      - name: post_evar114
+        data_type: VARCHAR(1)
+      - name: post_evar115
+        data_type: VARCHAR(1)
+      - name: post_evar116
+        data_type: VARCHAR(1)
+      - name: post_evar117
+        data_type: VARCHAR(1)
+      - name: post_evar118
+        data_type: VARCHAR(1)
+      - name: post_evar119
+        data_type: VARCHAR(1)
+      - name: post_evar120
+        data_type: VARCHAR(1)
+      - name: post_evar121
+        data_type: VARCHAR(1)
+      - name: post_evar122
+        data_type: VARCHAR(1)
+      - name: post_evar123
+        data_type: VARCHAR(1)
+      - name: post_evar124
+        data_type: VARCHAR(1)
+      - name: post_evar125
+        data_type: VARCHAR(1)
+      - name: post_evar126
+        data_type: VARCHAR(1)
+      - name: post_evar127
+        data_type: VARCHAR(1)
+      - name: post_evar128
+        data_type: VARCHAR(1)
+      - name: post_evar129
+        data_type: VARCHAR(1)
+      - name: post_evar130
+        data_type: VARCHAR(1)
+      - name: post_evar131
+        data_type: VARCHAR(1)
+      - name: post_evar132
+        data_type: VARCHAR(1)
+      - name: post_evar133
+        data_type: VARCHAR(1)
+      - name: post_evar134
+        data_type: VARCHAR(1)
+      - name: post_evar135
+        data_type: VARCHAR(1)
+      - name: post_evar136
+        data_type: VARCHAR(1)
+      - name: post_evar137
+        data_type: VARCHAR(1)
+      - name: post_evar138
+        data_type: VARCHAR(1)
+      - name: post_evar139
+        data_type: VARCHAR(1)
+      - name: post_evar140
+        data_type: VARCHAR(1)
+      - name: post_evar141
+        data_type: VARCHAR(1)
+      - name: post_evar142
+        data_type: VARCHAR(1)
+      - name: post_evar143
+        data_type: VARCHAR(1)
+      - name: post_evar144
+        data_type: VARCHAR(1)
+      - name: post_evar145
+        data_type: VARCHAR(1)
+      - name: post_evar146
+        data_type: VARCHAR(1)
+      - name: post_evar147
+        data_type: VARCHAR(1)
+      - name: post_evar148
+        data_type: VARCHAR(1)
+      - name: post_evar149
+        data_type: VARCHAR(1)
+      - name: post_evar150
+        data_type: VARCHAR(1)
+      - name: post_evar151
+        data_type: VARCHAR(1)
+      - name: post_evar152
+        data_type: VARCHAR(1)
+      - name: post_evar153
+        data_type: VARCHAR(1)
+      - name: post_evar154
+        data_type: VARCHAR(1)
+      - name: post_evar155
+        data_type: VARCHAR(1)
+      - name: post_evar156
+        data_type: VARCHAR(1)
+      - name: post_evar157
+        data_type: VARCHAR(1)
+      - name: post_evar158
+        data_type: VARCHAR(1)
+      - name: post_evar159
+        data_type: VARCHAR(1)
+      - name: post_evar160
+        data_type: VARCHAR(1)
+      - name: post_evar161
+        data_type: VARCHAR(1)
+      - name: post_evar162
+        data_type: VARCHAR(1)
+      - name: post_evar163
+        data_type: VARCHAR(1)
+      - name: post_evar164
+        data_type: VARCHAR(1)
+      - name: post_evar165
+        data_type: VARCHAR(1)
+      - name: post_evar166
+        data_type: VARCHAR(1)
+      - name: post_evar167
+        data_type: VARCHAR(1)
+      - name: post_evar168
+        data_type: VARCHAR(1)
+      - name: post_evar169
+        data_type: VARCHAR(1)
+      - name: post_evar170
+        data_type: VARCHAR(1)
+      - name: post_evar171
+        data_type: VARCHAR(1)
+      - name: post_evar172
+        data_type: VARCHAR(1)
+      - name: post_evar173
+        data_type: VARCHAR(1)
+      - name: post_evar174
+        data_type: VARCHAR(1)
+      - name: post_evar175
+        data_type: VARCHAR(1)
+      - name: post_evar176
+        data_type: VARCHAR(1)
+      - name: post_evar177
+        data_type: VARCHAR(1)
+      - name: post_evar178
+        data_type: VARCHAR(1)
+      - name: post_evar179
+        data_type: VARCHAR(1)
+      - name: post_evar180
+        data_type: VARCHAR(1)
+      - name: post_evar181
+        data_type: VARCHAR(1)
+      - name: post_evar182
+        data_type: VARCHAR(1)
+      - name: post_evar183
+        data_type: VARCHAR(1)
+      - name: post_evar184
+        data_type: VARCHAR(1)
+      - name: post_evar185
+        data_type: VARCHAR(1)
+      - name: post_evar186
+        data_type: VARCHAR(1)
+      - name: post_evar187
+        data_type: VARCHAR(1)
+      - name: post_evar188
+        data_type: VARCHAR(1)
+      - name: post_evar189
+        data_type: VARCHAR(1)
+      - name: post_evar190
+        data_type: VARCHAR(1)
+      - name: post_evar191
+        data_type: VARCHAR(1)
+      - name: post_evar192
+        data_type: VARCHAR(1)
+      - name: post_evar193
+        data_type: VARCHAR(1)
+      - name: post_evar194
+        data_type: VARCHAR(1)
+      - name: post_evar195
+        data_type: VARCHAR(1)
+      - name: post_evar196
+        data_type: VARCHAR(1)
+      - name: post_evar197
+        data_type: VARCHAR(1)
+      - name: post_evar198
+        data_type: VARCHAR(1)
+      - name: post_evar199
+        data_type: VARCHAR(1)
+      - name: post_evar200
+        data_type: VARCHAR(1)
+      - name: post_evar201
+        data_type: VARCHAR(1)
+      - name: post_evar202
+        data_type: VARCHAR(1)
+      - name: post_evar203
+        data_type: VARCHAR(1)
+      - name: post_evar204
+        data_type: VARCHAR(1)
+      - name: post_evar205
+        data_type: VARCHAR(1)
+      - name: post_evar206
+        data_type: VARCHAR(1)
+      - name: post_evar207
+        data_type: VARCHAR(1)
+      - name: post_evar208
+        data_type: VARCHAR(1)
+      - name: post_evar209
+        data_type: VARCHAR(1)
+      - name: post_evar210
+        data_type: VARCHAR(1)
+      - name: post_evar211
+        data_type: VARCHAR(1)
+      - name: post_evar212
+        data_type: VARCHAR(1)
+      - name: post_evar213
+        data_type: VARCHAR(1)
+      - name: post_evar214
+        data_type: VARCHAR(1)
+      - name: post_evar215
+        data_type: VARCHAR(1)
+      - name: post_evar216
+        data_type: VARCHAR(1)
+      - name: post_evar217
+        data_type: VARCHAR(1)
+      - name: post_evar218
+        data_type: VARCHAR(1)
+      - name: post_evar219
+        data_type: VARCHAR(1)
+      - name: post_evar220
+        data_type: VARCHAR(1)
+      - name: post_evar221
+        data_type: VARCHAR(1)
+      - name: post_evar222
+        data_type: VARCHAR(1)
+      - name: post_evar223
+        data_type: VARCHAR(1)
+      - name: post_evar224
+        data_type: VARCHAR(1)
+      - name: post_evar225
+        data_type: VARCHAR(1)
+      - name: post_evar226
+        data_type: VARCHAR(1)
+      - name: post_evar227
+        data_type: VARCHAR(1)
+      - name: post_evar228
+        data_type: VARCHAR(1)
+      - name: post_evar229
+        data_type: VARCHAR(1)
+      - name: post_evar230
+        data_type: VARCHAR(1)
+      - name: post_evar231
+        data_type: VARCHAR(1)
+      - name: post_evar232
+        data_type: VARCHAR(1)
+      - name: post_evar233
+        data_type: VARCHAR(1)
+      - name: post_evar234
+        data_type: VARCHAR(1)
+      - name: post_evar235
+        data_type: VARCHAR(1)
+      - name: post_evar236
+        data_type: VARCHAR(1)
+      - name: post_evar237
+        data_type: VARCHAR(1)
+      - name: post_evar238
+        data_type: VARCHAR(1)
+      - name: post_evar239
+        data_type: VARCHAR(1)
+      - name: post_evar240
+        data_type: VARCHAR(1)
+      - name: post_evar241
+        data_type: VARCHAR(1)
+      - name: post_evar242
+        data_type: VARCHAR(1)
+      - name: post_evar243
+        data_type: VARCHAR(1)
+      - name: post_evar244
+        data_type: VARCHAR(1)
+      - name: post_evar245
+        data_type: VARCHAR(1)
+      - name: post_evar246
+        data_type: VARCHAR(1)
+      - name: post_evar247
+        data_type: VARCHAR(1)
+      - name: post_evar248
+        data_type: VARCHAR(1)
+      - name: post_evar249
+        data_type: VARCHAR(1)
+      - name: post_evar250
+        data_type: VARCHAR(1)
+      - name: post_event_list
+        data_type: VARCHAR(160)
+      - name: post_hier1
+        data_type: VARCHAR(255)
+      - name: post_hier2
+        data_type: VARCHAR(1)
+      - name: post_hier3
+        data_type: VARCHAR(1)
+      - name: post_hier4
+        data_type: VARCHAR(1)
+      - name: post_hier5
+        data_type: VARCHAR(1)
+      - name: post_keywords
+        data_type: VARCHAR(225)
+      - name: post_mc_audiences
+        data_type: VARCHAR(848)
+      - name: post_mvvar1
+        data_type: VARCHAR(16777216)
+      - name: post_mvvar2
+        data_type: VARCHAR(2318)
+      - name: post_mvvar3
+        data_type: VARCHAR(1)
+      - name: post_page_event
+        data_type: VARCHAR(3)
+      - name: post_page_event_var1
+        data_type: VARCHAR(255)
+      - name: post_page_event_var2
+        data_type: VARCHAR(100)
+      - name: post_page_event_var3
+        data_type: VARCHAR(1)
+      - name: post_page_type
+        data_type: VARCHAR(9)
+      - name: post_page_url
+        data_type: VARCHAR(255)
+      - name: post_pagename
+        data_type: VARCHAR(100)
+      - name: post_pagename_no_url
+        data_type: VARCHAR(100)
+      - name: post_persistent_cookie
+        data_type: VARCHAR(1)
+      - name: post_product_list
+        data_type: VARCHAR(636)
+      - name: post_prop1
+        data_type: VARCHAR(100)
+      - name: post_prop2
+        data_type: VARCHAR(114)
+      - name: post_prop3
+        data_type: VARCHAR(100)
+      - name: post_prop4
+        data_type: VARCHAR(56)
+      - name: post_prop5
+        data_type: VARCHAR(21)
+      - name: post_prop6
+        data_type: VARCHAR(6)
+      - name: post_prop7
+        data_type: VARCHAR(21)
+      - name: post_prop8
+        data_type: VARCHAR(100)
+      - name: post_prop9
+        data_type: VARCHAR(100)
+      - name: post_prop10
+        data_type: VARCHAR(100)
+      - name: post_prop11
+        data_type: VARCHAR(85)
+      - name: post_prop12
+        data_type: VARCHAR(18)
+      - name: post_prop13
+        data_type: VARCHAR(40)
+      - name: post_prop14
+        data_type: VARCHAR(100)
+      - name: post_prop15
+        data_type: VARCHAR(100)
+      - name: post_prop16
+        data_type: VARCHAR(43)
+      - name: post_prop17
+        data_type: VARCHAR(40)
+      - name: post_prop18
+        data_type: VARCHAR(14)
+      - name: post_prop19
+        data_type: VARCHAR(100)
+      - name: post_prop20
+        data_type: VARCHAR(33)
+      - name: post_prop21
+        data_type: VARCHAR(68)
+      - name: post_prop22
+        data_type: VARCHAR(8)
+      - name: post_prop23
+        data_type: VARCHAR(102)
+      - name: post_prop24
+        data_type: VARCHAR(48)
+      - name: post_prop25
+        data_type: VARCHAR(32)
+      - name: post_prop26
+        data_type: VARCHAR(10)
+      - name: post_prop27
+        data_type: VARCHAR(12)
+      - name: post_prop28
+        data_type: VARCHAR(1)
+      - name: post_prop29
+        data_type: VARCHAR(29)
+      - name: post_prop30
+        data_type: VARCHAR(85)
+      - name: post_prop31
+        data_type: VARCHAR(28)
+      - name: post_prop32
+        data_type: VARCHAR(8)
+      - name: post_prop33
+        data_type: VARCHAR(100)
+      - name: post_prop34
+        data_type: VARCHAR(28)
+      - name: post_prop35
+        data_type: VARCHAR(17)
+      - name: post_prop36
+        data_type: VARCHAR(64)
+      - name: post_prop37
+        data_type: VARCHAR(17)
+      - name: post_prop38
+        data_type: VARCHAR(1)
+      - name: post_prop39
+        data_type: VARCHAR(1)
+      - name: post_prop40
+        data_type: VARCHAR(1)
+      - name: post_prop41
+        data_type: VARCHAR(1)
+      - name: post_prop42
+        data_type: VARCHAR(1)
+      - name: post_prop43
+        data_type: VARCHAR(1)
+      - name: post_prop44
+        data_type: VARCHAR(1)
+      - name: post_prop45
+        data_type: VARCHAR(1)
+      - name: post_prop46
+        data_type: VARCHAR(1)
+      - name: post_prop47
+        data_type: VARCHAR(1)
+      - name: post_prop48
+        data_type: VARCHAR(1)
+      - name: post_prop49
+        data_type: VARCHAR(1)
+      - name: post_prop50
+        data_type: VARCHAR(26)
+      - name: post_prop51
+        data_type: VARCHAR(1)
+      - name: post_prop52
+        data_type: VARCHAR(1)
+      - name: post_prop53
+        data_type: VARCHAR(1)
+      - name: post_prop54
+        data_type: VARCHAR(1)
+      - name: post_prop55
+        data_type: VARCHAR(1)
+      - name: post_prop56
+        data_type: VARCHAR(1)
+      - name: post_prop57
+        data_type: VARCHAR(1)
+      - name: post_prop58
+        data_type: VARCHAR(1)
+      - name: post_prop59
+        data_type: VARCHAR(1)
+      - name: post_prop60
+        data_type: VARCHAR(1)
+      - name: post_prop61
+        data_type: VARCHAR(1)
+      - name: post_prop62
+        data_type: VARCHAR(1)
+      - name: post_prop63
+        data_type: VARCHAR(1)
+      - name: post_prop64
+        data_type: VARCHAR(1)
+      - name: post_prop65
+        data_type: VARCHAR(1)
+      - name: post_prop66
+        data_type: VARCHAR(1)
+      - name: post_prop67
+        data_type: VARCHAR(1)
+      - name: post_prop68
+        data_type: VARCHAR(1)
+      - name: post_prop69
+        data_type: VARCHAR(1)
+      - name: post_prop70
+        data_type: VARCHAR(1)
+      - name: post_prop71
+        data_type: VARCHAR(1)
+      - name: post_prop72
+        data_type: VARCHAR(1)
+      - name: post_prop73
+        data_type: VARCHAR(1)
+      - name: post_prop74
+        data_type: VARCHAR(1)
+      - name: post_prop75
+        data_type: VARCHAR(1)
+      - name: post_purchaseid
+        data_type: VARCHAR(20)
+      - name: post_referrer
+        data_type: VARCHAR(248)
+      - name: post_s_kwcid
+        data_type: VARCHAR(1)
+      - name: post_search_engine
+        data_type: VARCHAR(3)
+      - name: post_state
+        data_type: VARCHAR(1)
+      - name: post_survey
+        data_type: VARCHAR(1)
+      - name: post_t_time_info
+        data_type: VARCHAR(38)
+      - name: post_tnt
+        data_type: VARCHAR(44)
+      - name: post_tnt_action
+        data_type: VARCHAR(122)
+      - name: post_transactionid
+        data_type: VARCHAR(1)
+      - name: post_visid_high
+        data_type: VARCHAR(19)
+      - name: post_visid_low
+        data_type: VARCHAR(19)
+      - name: post_visid_type
+        data_type: VARCHAR(1)
+      - name: post_zip
+        data_type: VARCHAR(9)
+      - name: prev_page
+        data_type: VARCHAR(10)
+      - name: product_list
+        data_type: VARCHAR(489)
+      - name: product_merchandising
+        data_type: VARCHAR(1)
+      - name: purchaseid
+        data_type: VARCHAR(20)
+      - name: quarterly_visitor
+        data_type: VARCHAR(1)
+      - name: ref_domain
+        data_type: VARCHAR(44)
+      - name: ref_type
+        data_type: VARCHAR(1)
+      - name: referrer
+        data_type: VARCHAR(259)
+      - name: resolution
+        data_type: VARCHAR(3)
+      - name: s_kwcid
+        data_type: VARCHAR(1)
+      - name: s_resolution
+        data_type: VARCHAR(18)
+      - name: sampled_hit
+        data_type: VARCHAR(1)
+      - name: search_engine
+        data_type: VARCHAR(3)
+      - name: search_page_num
+        data_type: VARCHAR(2)
+      - name: secondary_hit
+        data_type: VARCHAR(1)
+      - name: sourceid
+        data_type: VARCHAR(1)
+      - name: state
+        data_type: VARCHAR(1)
+      - name: stats_server
+        data_type: VARCHAR(28)
+      - name: t_time_info
+        data_type: VARCHAR(39)
+      - name: tnt
+        data_type: VARCHAR(1)
+      - name: tnt_action
+        data_type: VARCHAR(122)
+      - name: tnt_post_vista
+        data_type: VARCHAR(1)
+      - name: transactionid
+        data_type: VARCHAR(1)
+      - name: truncated_hit
+        data_type: VARCHAR(1)
+      - name: user_agent
+        data_type: VARCHAR(16777216)
+      - name: user_hash
+        data_type: VARCHAR(10)
+      - name: user_server
+        data_type: VARCHAR(100)
+      - name: userid
+        data_type: VARCHAR(9)
+      - name: username
+        data_type: VARCHAR(33)
+      - name: va_closer_detail
+        data_type: VARCHAR(214)
+      - name: va_closer_id
+        data_type: VARCHAR(1)
+      - name: va_finder_detail
+        data_type: VARCHAR(214)
+      - name: va_finder_id
+        data_type: VARCHAR(1)
+      - name: va_instance_event
+        data_type: VARCHAR(1)
+      - name: va_new_engagement
+        data_type: VARCHAR(1)
+      - name: visid_high
+        data_type: VARCHAR(19)
+      - name: visid_low
+        data_type: VARCHAR(19)
+      - name: visid_new
+        data_type: VARCHAR(1)
+      - name: visid_timestamp
+        data_type: VARCHAR(10)
+      - name: visid_type
+        data_type: VARCHAR(1)
+      - name: visit_keywords
+        data_type: VARCHAR(225)
+      - name: visit_num
+        data_type: VARCHAR(4)
+      - name: visit_page_num
+        data_type: VARCHAR(4)
+      - name: visit_ref_domain
+        data_type: VARCHAR(44)
+      - name: visit_ref_type
+        data_type: VARCHAR(1)
+      - name: visit_referrer
+        data_type: VARCHAR(259)
+      - name: visit_search_engine
+        data_type: VARCHAR(3)
+      - name: visit_start_page_url
+        data_type: VARCHAR(255)
+      - name: visit_start_pagename
+        data_type: VARCHAR(100)
+      - name: visit_start_time_gmt
+        data_type: VARCHAR(10)
+      - name: weekly_visitor
+        data_type: VARCHAR(1)
+      - name: yearly_visitor
+        data_type: VARCHAR(1)
+      - name: zip
+        data_type: VARCHAR(1)

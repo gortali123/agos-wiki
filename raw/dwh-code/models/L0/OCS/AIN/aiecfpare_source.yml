@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aiecfpare
+        data_tests:
+          - try_cast_table:
+              arguments:
+                rtrim_varchar: true
+          - primary_key_table:
+              arguments:
+                pk_columns: [aiecpare_pratica, aiecpare_progressivo]
+                rtrim_varchar: true
+      - name: aiecfpare_deleted

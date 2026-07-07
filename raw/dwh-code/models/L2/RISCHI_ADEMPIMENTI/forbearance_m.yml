@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: forbearance_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+      pre_hook: 
+        - "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+        - "{{ delete_l2('oxdrfpra', ['CD_PRATICA', 'TP_PROCEDURA'], ['DRPRA_PRATICA', 'DRPRA_PROVENIENZA']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: FL_FORBEARANCE
+        data_type: VARCHAR(2)
+      - name: CD_CATEGORIA_FORBEARANCE
+        data_type: VARCHAR
+      - name: TP_RISTRUTTURAZIONE
+        data_type: VARCHAR
+      - name: DT_RISTRUTTURAZIONE
+        data_type: VARCHAR
+      - name: NM_VAN_A
+        data_type: VARCHAR
+      - name: NM_VAN_B
+        data_type: VARCHAR
+      - name: PC_DO
+        data_type: VARCHAR
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

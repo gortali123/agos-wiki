@@ -1,0 +1,19 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  TRY_CAST(TRACKINGID AS VARCHAR(30)) AS trackingid,
+  TRY_CAST(BROADLOGID AS VARCHAR(30)) AS broadlogid,
+  TRY_CAST(CAMPAIGNID AS VARCHAR(30)) AS campaignid,
+  TRY_CAST(DELIVERYID AS VARCHAR(30)) AS deliveryid,
+  TRY_CAST(DATARISPOSTA AS VARCHAR(20)) AS datarisposta,
+  TRY_CAST(TIPOINTERAZIONE AS VARCHAR(30)) AS tipointerazione,
+  TRY_CAST(DETTAGLIINTERAZIONECLIENTE AS VARCHAR(400)) AS dettagliinterazionecliente,
+  TRY_CAST(CODICEESITO AS VARCHAR(10)) AS codiceesito,
+  TRY_CAST(DESCRIZIONEESITO AS VARCHAR(80)) AS descrizioneesito,
+  TRY_CAST(CANALEESITO AS VARCHAR(80)) AS canaleesito,
+  TRY_CAST(CCPROVENIENZA AS VARCHAR(80)) AS ccprovenienza,
+  TRY_CAST(OPERATORECC AS VARCHAR(80)) AS operatorecc,
+  TRY_CAST(FILIALECONTATTO AS VARCHAR(10)) AS filialecontatto,
+  TRY_CAST(OPERATOREFILIALE AS VARCHAR(80)) AS operatorefiliale,
+  TRY_CAST(CATEGORIALINK AS VARCHAR(50)) AS categorialink
+from {{ source('source_l0','campaignresponse') }}

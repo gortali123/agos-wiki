@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stato_creditizio_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: 
+        - "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+        - "{{ delete_l2('oxdrfpra', ['CD_PRATICA', 'TP_PROCEDURA', 'DT_OSSERVAZIONE'], ['DRPRA_PRATICA', 'DRPRA_PROVENIENZA', 'DRPRA_DATA_ESTRAZIONE'])}}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: CD_QUALITA_CREDITIZIA
+        data_type: VARCHAR(2)
+      - name: CD_STAGE_BKI
+        data_type: NUMBER(1,0)
+      - name: FL_DFLT_EBA
+        data_type: VARCHAR(1)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

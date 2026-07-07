@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: <table>
+    relation: ref('stg_<table>')
+    config:
+      unique_key: [<pk_cols>]

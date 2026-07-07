@@ -1,0 +1,263 @@
+version: 2
+
+models:
+  - name: svalutazioni_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE, TP_VOCE_BILANCIO]
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE, TP_VOCE_BILANCIO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: TP_VOCE_BILANCIO
+        data_type: VARCHAR(1)
+      - name: CD_STATO_SVALZ
+        data_type: VARCHAR(3)
+      - name: EU_SVALUTAZIONE
+        data_type: NUMBER(11,2)
+      - name: EU_INCREMENTO
+        data_type: NUMBER(11,2)
+      - name: EU_RIPRESA
+        data_type: NUMBER(11,2)
+      - name: EU_REALIZZO
+        data_type: NUMBER(11,2)
+      - name: EU_UTILIZZO_FONDO
+        data_type: NUMBER(11,2)
+      - name: EU_UTILE_CESS
+        data_type: NUMBER(11,2)
+      - name: NM_STAGE
+        data_type: VARCHAR(2)
+      - name: FL_PRATICA_CARTOLARIZZATA
+        data_type: VARCHAR(2)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9,0)
+      - name: CD_FILIALE
+        data_type: VARCHAR(3)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3,0)
+      - name: CD_COD_CEDENTE
+        data_type: NUMBER(9,0)
+      - name: CD_AZIENDA
+        data_type: NUMBER(9,0)
+      - name: CD_AZIENDA_PAGANTE
+        data_type: NUMBER(9,0)
+      - name: NM_DURATA_RESIDUA
+        data_type: NUMBER(3,0)
+      - name: NM_DURATA_ORIG
+        data_type: NUMBER(3,0)
+      - name: NM_NUM_GG_SCAD_CONT
+        data_type: NUMBER(5,0)
+      - name: NM_MESI_ATTUALIZZAZ
+        data_type: NUMBER(10,5)
+      - name: NM_RATE_PRIMA_DB
+        data_type: NUMBER(3,0)
+      - name: NM_ANNO_DBT
+        data_type: NUMBER(4,0)
+      - name: NM_RATE_INSOLUTE
+        data_type: NUMBER(3,0)
+      - name: NM_MESI_ULT_INC
+        data_type: NUMBER(3,0)
+      - name: CD_PRATICA_SIN
+        data_type: VARCHAR(2)
+      - name: CD_NUM_PRATICA_ORIG
+        data_type: NUMBER(12,0)
+      - name: CD_SK_SOLI_INT_MORA
+        data_type: VARCHAR(1)
+      - name: CD_DEBITORE_PAGANTE
+        data_type: NUMBER(9,0)
+      - name: CD_COD_LIBERO_1
+        data_type: VARCHAR(2)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: TP_STAGE_CACF
+        data_type: VARCHAR(2)
+      - name: TP_FASCIA_DPD_FM
+        data_type: VARCHAR(2)
+      - name: TP_STATO_CREDITIZIO
+        data_type: VARCHAR(2)
+      - name: TP_STATUS_RISCHIO
+        data_type: VARCHAR(2)
+      - name: CD_CLASS_RISCHIO
+        data_type: VARCHAR(3)
+      - name: TP_TIPO_SCHEDA
+        data_type: VARCHAR(1)
+      - name: CD_COD_TRANSAZIONE
+        data_type: VARCHAR(2)
+      - name: TP_TIPO_CONFERIMENTO
+        data_type: VARCHAR(1)
+      - name: DT_CALC_IMPAIRMENT
+        data_type: DATE
+      - name: DT_PREV_REALIZZO
+        data_type: DATE
+      - name: DT_ENTRATA_STATUS
+        data_type: DATE
+      - name: DT_CONSOLIDAM
+        data_type: DATE
+      - name: DT_VARIAZIONE
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: DT_ULT_SCAD
+        data_type: DATE
+      - name: DT_DECORRENZA
+        data_type: DATE
+      - name: FL_AGGRAVIO_COLLETTIVE
+        data_type: VARCHAR(1)
+      - name: FL_ADESIONE_ACC_INPS
+        data_type: VARCHAR(1)
+      - name: FL_FLAG_LIBERO_1
+        data_type: VARCHAR(1)
+      - name: FL_GARANTITO_RISCOSSO
+        data_type: VARCHAR(1)
+      - name: FL_PREFINANZIAMENTO
+        data_type: VARCHAR(1)
+      - name: FL_FLAG_PORTAFOGLIO
+        data_type: VARCHAR(1)
+      - name: FL_USO_NEW_CLAS_SVAL
+        data_type: VARCHAR(1)
+      - name: FL_GIROFONDO
+        data_type: NUMBER(13,0)
+      - name: FL_CONSOLIDATO
+        data_type: VARCHAR(1)
+      - name: FL_FLAG_CREA
+        data_type: VARCHAR(1)
+      - name: FL_FLAG_CNT_UT
+        data_type: VARCHAR(1)
+      - name: FL_FLAG_CHIUSA
+        data_type: VARCHAR(1)
+      - name: FL_FLAG_DBT
+        data_type: VARCHAR(1)
+      - name: FL_FLAG_PERDITA
+        data_type: VARCHAR(1)
+      - name: TP_STATO_SINISTRO
+        data_type: VARCHAR(2)
+      - name: TP_TIPO_SINISTRO
+        data_type: VARCHAR(1)
+      - name: TP_SIN_SINISTRO
+        data_type: VARCHAR(2)
+      - name: EU_FSC_RIPRESA_ATTUALIZ
+        data_type: NUMBER(13,2)
+      - name: EU_IMP_LIBERO_2
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_MORA
+        data_type: NUMBER(13,2)
+      - name: EU_SCADERE_RIMONTATO
+        data_type: NUMBER(13,2)
+      - name: EU_IMP_LIBERO_1
+        data_type: NUMBER(13,2)
+      - name: EU_IMPORTO_GARANZIA
+        data_type: NUMBER(13,2)
+      - name: EU_IMP_ATTUALIZZATO
+        data_type: NUMBER(11,2)
+      - name: EU_BASE_CALC_IMPAIRMENT
+        data_type: NUMBER(11,2)
+      - name: EU_IMPAIRMENT_SCADERE
+        data_type: NUMBER(11,2)
+      - name: EU_IMPAIRMENT_SCADUTO
+        data_type: NUMBER(11,2)
+      - name: EU_FSG_CAPR_VE
+        data_type: NUMBER(11,2)
+      - name: EU_FSC_CRED_VE
+        data_type: NUMBER(11,2)
+      - name: EU_IMPORTI_PERDITA
+        data_type: NUMBER(11,2)
+      - name: EU_VARIAZIONE_SALDO
+        data_type: NUMBER(11,2)
+      - name: EU_FSG_NETTO
+        data_type: NUMBER(11,2)
+      - name: EU_FSG_FONDO
+        data_type: NUMBER(11,2)
+      - name: EU_FSG_CAPITALE_RESIDUO
+        data_type: NUMBER(11,2)
+      - name: EU_FSC_NETTO
+        data_type: NUMBER(11,2)
+      - name: EU_FSC_FONDO
+        data_type: NUMBER(11,2)
+      - name: EU_FSC_CREDITO
+        data_type: NUMBER(11,2)
+      - name: CD_REGIONE_RES_CLI
+        data_type: VARCHAR(2)
+      - name: CD_PROVINCIA_RES_CLI
+        data_type: VARCHAR(2)
+      - name: CD_UTENTE_CALC_IMPAIRMENT
+        data_type: VARCHAR(10)
+      - name: CD_UTENTE_CONSOLIDAM
+        data_type: VARCHAR(10)
+      - name: CD_UTENTE_VARIAZIONE
+        data_type: VARCHAR(10)
+      - name: CD_OPERATORE_CTZ
+        data_type: VARCHAR(4)
+      - name: TP_AZIONE_RECUPERO
+        data_type: VARCHAR(3)
+      - name: TP_CLASS_RECUPERO
+        data_type: VARCHAR(3)
+      - name: CD_ATTRIBUTO_CTZ
+        data_type: VARCHAR(2)
+      - name: CD_STATO_CTZ
+        data_type: VARCHAR(2)
+      - name: PC_PERC_LIBERO_1
+        data_type: NUMBER(6,3)
+      - name: PC_TASSO_ATTUALIZZAZ
+        data_type: NUMBER(6,3)
+      - name: PC_TAN_CONTRATTO
+        data_type: NUMBER(6,3)
+      - name: PC_TASSO_IAS
+        data_type: NUMBER(6,3)
+      - name: PC_FSG_PERC_EFFETTIVA
+        data_type: NUMBER(10,4)
+      - name: PC_FSG_PERCENTUALE
+        data_type: NUMBER(10,4)
+      - name: PC_FSC_PERC_EFFETTIVA
+        data_type: NUMBER(10,4)
+      - name: PC_FSC_PERCENTUALE
+        data_type: NUMBER(10,4)
+      - name: TP_CATEGORIA_ATC_SEGN
+        data_type: VARCHAR(2)
+      - name: TP_AREA
+        data_type: VARCHAR(3)
+      - name: TP_CANALE_ACQ
+        data_type: VARCHAR(3)
+      - name: TP_TIPO_CESSIONE
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_CONTRATTO
+        data_type: VARCHAR(1)
+      - name: TP_RIF_SCHEDA_PREC
+        data_type: VARCHAR(1)
+      - name: TP_ATTR_QTASK
+        data_type: NUMBER(5,0)
+      - name: TP_STATO_QTASK
+        data_type: NUMBER(5,0)
+      - name: TP_FASCIA_GAR
+        data_type: VARCHAR(3)
+      - name: TP_ATTR_FORBORNE
+        data_type: VARCHAR(3)
+      - name: TP_TIPO_PRATICA
+        data_type: VARCHAR(1)
+      - name: TP_ATECO_ATC
+        data_type: VARCHAR(6)
+      - name: TP_TIPO_PROVVISTA
+        data_type: VARCHAR(1)
+      - name: TP_TIPO_CATEGORIA_ATC
+        data_type: VARCHAR(1)
+      - name: TP_CATEGORIA_ATC
+        data_type: VARCHAR(2)
+      - name: TP_FINANZIARIA
+        data_type: NUMBER(9,0)
+      - name: TP_TIPO_CREAZIONE
+        data_type: VARCHAR(1)
+      - name: TP_ATTR_VIG
+        data_type: VARCHAR(2)
+      - name: TP_TIPO_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ

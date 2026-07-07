@@ -1,0 +1,113 @@
+version: 2
+models:
+  - name: flessibilita_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook:
+        - "{{ delete_l2('ccpsvt', ['CD_PRATICA', 'TP_PROCEDURA', 'DT_OSSERVAZIONE'], ['PSVT_PRATICA', 'PSVT_PROCEDURA', 'PSVT_DATA_STATO']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE, TS_INSERIMENTO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: DT_VARIAZIONE_PIANO
+        data_type: NUMBER(8,0)
+      - name: FL_FLESSIBILITA_CONTRATTUALE
+        data_type: VARCHAR(1)
+      - name: TP_FLESSIBILITA
+        data_type: VARCHAR(3)
+      - name: DT_FLESSIBILITA
+        data_type: DATE
+      - name: CD_BLOCCO_AZIONE
+        data_type: VARCHAR(2)
+      - name: CD_ORIGINE_RICHIESTA
+        data_type: VARCHAR(3)
+      - name: TP_TIPO_CARIC
+        data_type: CHAR(2)
+      - name: TP_CANALE_ACQ
+        data_type: CHAR(3)
+      - name: TP_TIPO_CONTATTO
+        data_type: CHAR(3)
+      - name: TP_AZIONE
+        data_type: CHAR(3)
+      - name: TP_STATO
+        data_type: CHAR(2)
+      - name: TP_STATO_PRAT_CAR
+        data_type: CHAR(2)
+      - name: TP_GRIGLIA_SCORING
+        data_type: CHAR(2)
+      - name: TP_ESITO_SCORING
+        data_type: CHAR(1)
+      - name: TP_ESITO_APPROVAZIONE
+        data_type: CHAR(1)
+      - name: TP_CAUS_RIFIUTO
+        data_type: CHAR(2)
+      - name: TP_MOTIVO_OVERR
+        data_type: CHAR(2)
+      - name: TP_ESITO_RICEZ
+        data_type: CHAR(2)
+      - name: TP_PROGRAMMA
+        data_type: CHAR(10)
+      - name: TP_ORIGINE_RICHIESTA
+        data_type: CHAR(3)
+      - name: TP_MOTIVO_RICHIESTA
+        data_type: CHAR(3)
+      - name: TP_MOTIVO_ESI
+        data_type: CHAR(3)
+      - name: PR_RICHEISTA
+        data_type: NUMBER(11)
+      - name: CD_FILIALE
+        data_type: CHAR(3)
+      - name: CD_AUTORE_OVERR
+        data_type: CHAR(10)
+      - name: CD_KEY_EXT
+        data_type: CHAR(30)
+      - name: CD_CAMPAGNA
+        data_type: CHAR(5)
+      - name: PR_PROGRESSIVO_PAN
+        data_type: NUMBER(13)
+      - name: PR_PROGR_SIEBEL
+        data_type: NUMBER(11)
+      - name: PR_PRG_CAMPAGNA
+        data_type: NUMBER(5)
+      - name: PR_PROGRESSIVO_EXT
+        data_type: NUMBER(11)
+      - name: DT_DATA_STATO
+        data_type: NUMBER(8)
+      - name: DT_DATA_TRASM
+        data_type: NUMBER(8)
+      - name: DT_DATA_RICEZ
+        data_type: NUMBER(8)
+      - name: DT_DATA_INS
+        data_type: NUMBER(8)
+      - name: FL_ATTRIB_BLOC
+        data_type: CHAR(2)
+      - name: FL_CALCOLO_SCORING
+        data_type: CHAR(1)
+      - name: FL_BLOCCO
+        data_type: CHAR(2)
+      - name: FL_INVIO_COMUNICAZIONI
+        data_type: CHAR(1)
+      - name: FL_LETTERA_RIFIUTO
+        data_type: CHAR(1)
+      - name: NM_SCORE
+        data_type: NUMBER(5)
+      - name: NM_LIV_DELIBERA
+        data_type: NUMBER(2)
+      - name: NM_LIV_RESPINTA
+        data_type: NUMBER(2)
+      - name: DS_NOTE_1
+        data_type: CHAR(60)
+      - name: DS_NOTE_2
+        data_type: CHAR(60)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

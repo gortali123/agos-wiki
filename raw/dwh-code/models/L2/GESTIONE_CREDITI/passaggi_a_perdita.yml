@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: passaggi_a_perdita
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: DT_PERDITA
+        data_type: DATE
+      - name: TP_PERDITA
+        data_type: VARCHAR(2)
+      - name: FL_SALDI_STRALCIO
+        data_type: VARCHAR(1)
+      - name: CD_FASCIA
+        data_type: VARCHAR(3)
+      - name: EU_DOVUTO
+        data_type: NUMBER(13,2)
+      - name: EU_PROPOSTA
+        data_type: NUMBER(13,2)
+      - name: EU_PERDITA
+        data_type: NUMBER(13,2)
+      - name: CD_OPERATORE
+        data_type: VARCHAR(10)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)

@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: unsubscribeemail
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"UNSUBSCRIBEEMAIL"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: agosclienteid
+        data_type: VARCHAR(100)
+      - name: codiceistituto
+        data_type: VARCHAR(2)
+      - name: email
+        data_type: VARCHAR(100)
+      - name: dataunsubscription
+        data_type: TIMESTAMP_NTZ

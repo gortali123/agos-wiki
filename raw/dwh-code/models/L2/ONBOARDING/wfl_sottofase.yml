@@ -1,0 +1,72 @@
+version: 2
+models:
+  - name: wfl_sottofase
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_ISTANZA, CD_FASE, CD_SOTTOFASE, TS_INIZIO_VALIDITA]
+      pre_hook:
+        - "{{ delete_l2('wfisfsf', ['CD_ISTANZA', 'CD_FASE', 'CD_SOTTOFASE'], ['WFISSF_ISTANZA', 'WFISSF_FASE', 'WFISSF_SOTTOFASE']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_ISTANZA, CD_FASE, CD_SOTTOFASE, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_ISTANZA
+        data_type: NUMBER(12,0)
+      - name: CD_FASE
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE
+        data_type: VARCHAR(10)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_STATO_SOTTOFASE
+        data_type: VARCHAR(1)
+      - name: DS_STATO_SOTTOFASE
+        data_type: VARCHAR(30)
+      - name: CD_FASE_DESTINAZIONE
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_2
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_3
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_4
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_5
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_6
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_7
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_8
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_9
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_10
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_11
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_12
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_13
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_14
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_15
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_16
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_17
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_18
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_19
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE_PREC_20
+        data_type: VARCHAR(10)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

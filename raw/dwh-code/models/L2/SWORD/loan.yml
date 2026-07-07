@@ -1,0 +1,42 @@
+version: 2
+models:
+  - name: loan
+    config: 
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO] 
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(17)
+      - name: CD_PIANO
+        data_type: VARCHAR(30)
+      - name: CD_CERTIFICATO
+        data_type: NUMBER(8,0)
+      - name: CD_STATO_CERTIF
+        data_type: VARCHAR(12)
+      - name: CD_PAYMENT_STATUS
+        data_type: VARCHAR(7)
+      - name: CD_REGION
+        data_type: VARCHAR(2)
+      - name: FL_RISTRUTTURAZIONE
+        data_type: VARCHAR(5)
+      - name: DT_INIZIO_CALC_INTSSI
+        data_type: DATE
+      - name: DT_SCADENZA_CONTR
+        data_type: DATE
+      - name: DT_RIMBORSO
+        data_type: DATE
+      - name: DT_STATO_CERTIF
+        data_type: DATE
+      - name: EU_ORIGINARIO_VEIC
+        data_type: NUMBER(13,2)
+      - name: EU_IMPORTO_CORR
+        data_type: NUMBER(13,2)
+      - name: EU_UTILIZZATO
+        data_type: NUMBER(13,2)

@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: polizze_standalone
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_POLIZZA_ASSIC, CD_PREVENTIVO]
+    columns:
+      - name: CD_POLIZZA_ASSIC
+        data_type: VARCHAR(45)
+      - name: CD_PREVENTIVO
+        data_type: NUMBER(11)
+      - name: CD_PRODOTTO_VERSIONE
+        data_type: NUMBER(6)
+      - name: CD_VERSIONE
+        data_type: VARCHAR(45)
+      - name: DS_PRODOTTO_VERSIONE
+        data_type: VARCHAR(100)
+      - name: CD_CLASSE_POLIZZA
+        data_type: NUMBER(11)
+      - name: CD_COMPAGNIA
+        data_type: NUMBER(11)
+      - name: DS_COMPAGNIA
+        data_type: VARCHAR(30)
+      - name: CD_STATO_POLIZZA
+        data_type: VARCHAR(1)
+      - name: DS_STATO_POLIZZA
+        data_type: VARCHAR(50)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_CAMPAGNA
+        data_type: NUMBER(11)
+      - name: DS_CAMPAGNA
+        data_type: VARCHAR(100)
+      - name: DT_ADESIONE
+        data_type: DATE
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_EFFETTO
+        data_type: DATE
+      - name: DT_FINE_COPERTURA
+        data_type: DATE
+      - name: DT_RECESSO
+        data_type: DATE
+      - name: EU_PREMIO_LORDO
+        data_type: NUMBER(12,2)
+      - name: EU_PREMIO_NETTO
+        data_type: NUMBER(12,2)
+      - name: DS_FREQUENZA
+        data_type: VARCHAR(30)
+      - name: FL_CONVERTITA
+        data_type: VARCHAR(1)
+      - name: CD_NODO
+        data_type: NUMBER(11)
+      - name: DS_NODO
+        data_type: VARCHAR(250)
+      - name: CD_NODO_PADRE
+        data_type: NUMBER(11)
+      - name: DS_NODO_PADRE
+        data_type: VARCHAR(250)
+      - name: CD_FILIALE_AGOS
+        data_type: VARCHAR(10)
+#      - name: DT_INSERIMENTO
+#        data_type: DATE

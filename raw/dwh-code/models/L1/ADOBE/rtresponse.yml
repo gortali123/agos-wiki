@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: rtresponse
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"RTRESPONSE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [trackingid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: trackingid
+        data_type: VARCHAR(30)
+      - name: broadlogid
+        data_type: VARCHAR(30)
+      - name: deliveryid
+        data_type: VARCHAR(255)
+      - name: datarisposta
+        data_type: VARCHAR(30)
+      - name: tipointerazione
+        data_type: VARCHAR(255)
+      - name: dettagliointerazionecliente
+        data_type: VARCHAR(255)
+      - name: canaleesito
+        data_type: VARCHAR(255)
+      - name: categorialink
+        data_type: VARCHAR(255)

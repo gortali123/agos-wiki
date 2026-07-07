@@ -1,0 +1,45 @@
+version: 2
+models:
+  - name: azioni_recupero
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROVENIENZA, CD_PRATICA]
+    columns:
+      - name: TP_PROVENIENZA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_AZIONE
+        data_type: VARCHAR(3)
+      - name: DS_AZIONE
+        data_type: VARCHAR(30)
+      - name: FL_AZIONE_SISTEMA
+        data_type: VARCHAR(1)
+      - name: TP_DOCUMENTO
+        data_type: VARCHAR(2)
+      - name: DS_DOCUMENTO
+        data_type: VARCHAR(4)
+      - name: DT_NUOVA_SCADENZA
+        data_type: DATE
+      - name: TP_SCADENZA
+        data_type: VARCHAR(2)
+      - name: NM_GIORNI
+        data_type: NUMBER(3)
+      - name: TP_ESITO
+        data_type: VARCHAR(3)
+      - name: DS_RIASS_OPERATORE
+        data_type: VARCHAR(10)
+      - name: EU_IMPORTO
+        data_type: NUMBER(13,2)
+      - name: CD_UTENTE
+        data_type: VARCHAR(10)
+      - name: CD_RECUPERATORE
+        data_type: VARCHAR(5)
+      - name: CD_LEGALE
+        data_type: VARCHAR(2)

@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: referrer_type
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"ADOBE", "schema":"L1_E_ADOBE", "archivio":"REFERRER_TYPE"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: cd_referrer_type
+        data_type: NUMBER(20,0)
+      - name: ds_referrer_type
+        data_type: VARCHAR(150)
+      - name: colona_da_skippare
+        data_type: VARCHAR(150)

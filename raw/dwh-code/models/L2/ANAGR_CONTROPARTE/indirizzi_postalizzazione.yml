@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: indirizzi_postalizzazione
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_PRATICA, TP_PROCEDURA, TS_INIZIO_VALIDITA]
+      pre_hook: >
+        {{ delete_l2(
+            'bapratag',
+            ['CD_PRATICA', 'TP_PROCEDURA'],
+            ['BAAG_PRATICA', 'BAAG_PROCEDURA']
+        ) }}
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_COOINTESTATO
+        data_type: NUMBER(9,0)
+      - name: CD_RAG_SOCIALE_1
+        data_type: VARCHAR(30)
+      - name: CD_RAG_SOCIALE_2
+        data_type: VARCHAR(30)
+      - name: DS_COR_INDIRIZZO_1
+        data_type: VARCHAR(30)
+      - name: DS_COR_INDIRIZZO_2
+        data_type: VARCHAR(30)
+      - name: DS_COR_COMUNE
+        data_type: VARCHAR(24)
+      - name: CD_CAB_COMUNE
+        data_type: VARCHAR(5)
+      - name: CD_COR_NAZIONE
+        data_type: VARCHAR(3)
+      - name: CD_COR_CAP
+        data_type: NUMBER(5,0)
+      - name: CD_COR_PROVINCIA
+        data_type: VARCHAR(2)
+      - name: NM_COR_TELEFONO_CEL
+        data_type: VARCHAR(15)
+      - name: DS_COR_EMAIL
+        data_type: VARCHAR(50)
+      - name: TP_INVIO_TRASP_CL
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_COOB_1
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_COOB_2
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_COOB_3
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_COOB_4
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_COOB_5
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_GAR_1
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_GAR_2
+        data_type: VARCHAR(1)
+      - name: TP_INVIO_TRASP_GAR_3
+        data_type: VARCHAR(1)
+      - name: CD_RIFERIMENTO_CIG
+        data_type: VARCHAR(10)
+      - name: CD_RIFERIMENTO_CUP
+        data_type: VARCHAR(15)
+      - name: DS_NOTE
+        data_type: VARCHAR(30)
+      - name: CD_UTENTE_VAR
+        data_type: VARCHAR(10)
+      - name: DT_VARIAZIONE
+        data_type: DATE
+      - name: NM_ORA_VARIAZIONE
+        data_type: TIME
+      - name: TP_CONFERMA_DATI
+        data_type: VARCHAR(1)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ
