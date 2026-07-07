@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "9726dd5df34ba33b",
+        "id": "51922ff5b9ff0a2a",
         "type": "tabs",
         "children": [
           {
-            "id": "2f534ede0de38185",
+            "id": "2a2aff4b8a3f28dd",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "queries/todo-allineamento-documentazione.md",
+                "file": "log.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "todo-allineamento-documentazione"
+              "title": "log"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "template",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -94,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "queries/todo-allineamento-documentazione.md",
+                "file": "log.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +105,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for todo-allineamento-documentazione"
+              "title": "Backlinks for log"
             }
           },
           {
@@ -113,12 +114,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "queries/todo-allineamento-documentazione.md",
+                "file": "log.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from todo-allineamento-documentazione"
+              "title": "Outgoing links from log"
             }
           },
           {
@@ -156,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "queries/todo-allineamento-documentazione.md",
+                "file": "log.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of todo-allineamento-documentazione"
+              "title": "Outline of log"
             }
           }
         ]
@@ -183,23 +184,27 @@
       "bases:Create new base": false
     }
   },
-  "active": "2f534ede0de38185",
+  "active": "2a2aff4b8a3f28dd",
   "lastOpenFiles": [
+    "log.md.tmp.22264.2735b310952b",
+    "queries/incoerenze-codice-vs-documentazione.md.tmp.22264.29820838791a",
+    "concepts/data-masking.md.tmp.22264.d5c88a98d6c9",
+    "concepts/data-masking.md.tmp.22264.31fbb1d855f2",
+    "concepts/storicizzazione-l1-cluster.md.tmp.22264.d51e0765c9d8",
+    "queries/todo-allineamento-documentazione.md.tmp.22264.0ab1f696b966",
+    "concepts/sedoIuaTI",
+    "concepts/sed6i5mtd",
+    "concepts/sedZg4s2C",
+    "queries/sedMUnJ1D",
+    "sedbDA3iA",
+    "raw/dwh-code/README.md",
+    "concepts/transcodifica-datatype-l0-l1.md",
+    "dwh-code/README.md",
+    "queries/todo-allineamento-documentazione.md",
+    "concepts/file-civetta-e-formati.md",
     "queries/incoerenze-codice-vs-documentazione.md",
     "queries/incoerenze-doc-framework-vs-guida-sviluppo.md",
     "concepts/gestione-cancellazioni.md",
-    "log.md.tmp.22264.38dcb30c390e",
-    "index.md.tmp.22264.1789381e9bc2",
-    "entities/layer-l1.md.tmp.22264.27ca70149d16",
-    "entities/cfg-l1-schema.md.tmp.22264.e9b4d4cc8570",
-    "concepts/orchestrazione-control-m-vs-dbt-cloud.md.tmp.22264.484539d7ff38",
-    "concepts/storicizzazione-l3-s5.md.tmp.22264.53a854bd2b01",
-    "entities/layer-l3.md.tmp.22264.13578ad27127",
-    "concepts/storicizzazione-l1-cluster.md.tmp.22264.c2a782bcbaaa",
-    "entities/layer-l2.md.tmp.22264.8176b1a351ef",
-    "entities/layer-l1.md.tmp.22264.f0c5ae4db335",
-    "queries/todo-allineamento-documentazione.md",
-    "dwh-code/README.md",
     "entities/layer-l1.md",
     "concepts/naming-conventions.md",
     "log.md",
@@ -210,7 +215,6 @@
     "concepts/parsing-cobol.md",
     "concepts/gestione-errori-retry-l0.md",
     "concepts/data-masking.md",
-    "concepts/file-civetta-e-formati.md",
     "Untitled.canvas",
     "concepts/data-quality-controlli.md",
     "concepts/storicizzazione-l3-s5.md",
@@ -218,8 +222,6 @@
     "concepts/storicizzazione-l1-cluster.md",
     "entities/cobol-copybook-mapping.md",
     "entities/cfg-l1-datamask.md",
-    "entities/et-l0-load-logging.md",
-    "entities/cfg-l1-cluster-sto.md",
-    "entities/cfg-l1-schema.md"
+    "entities/et-l0-load-logging.md"
   ]
 }

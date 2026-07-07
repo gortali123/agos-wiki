@@ -45,6 +45,7 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 - [[gestione-errori-retry-l0]] — codici errore e retry L0
 - [[parsing-cobol]] — parsing dinamico record COBOL
 - [[orchestrazione-control-m-vs-dbt-cloud]] — nodo aperto su orchestrazione
+- [[transcodifica-datatype-l0-l1]] — macro transcod_dtype, mappatura tipi sorgente→Snowflake
 
 ## Queries
 - [[incoerenze-doc-framework-vs-guida-sviluppo]] — lint incrociato tra i 3 documenti ingeriti (risolto/commentato dall'utente)
@@ -53,4 +54,4 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 
 ## Note
 
-Codice reale disponibile in `dwh-code/` (submodule → `https://github.com/target-reply/my_dwh-x-dbt`, copia curata da `dwh-x-dbt`). Prima verifica incrociata doc/codice effettuata il 2026-07-07, vedi [[incoerenze-codice-vs-documentazione]] — copertura parziale (campione di macro/modelli), non un'esplorazione esaustiva.
+Codice reale disponibile in `raw/dwh-code/` (submodule → `https://github.com/target-reply/my_dwh-x-dbt`, copia curata da `dwh-x-dbt`). Prima verifica incrociata doc/codice effettuata il 2026-07-07, vedi [[incoerenze-codice-vs-documentazione]] — copertura parziale (campione di macro/modelli), non un'esplorazione esaustiva.

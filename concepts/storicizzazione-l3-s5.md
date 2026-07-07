@@ -5,7 +5,7 @@ tags: [layer/L3, storicizzazione]
 updated: 2026-07-07
 ---
 
-Tipo di storicizzazione confermato come reale e stabile (macro `scd2_foto_mensile` in [[dwh-code]]), ma documentato **solo** nella [[guida-sviluppo]] — manca ancora dal documento di framework L2/L3, dove andrebbe aggiunto (vedi [[todo-allineamento-documentazione]]). Una variante di SCD2 a granularità mensile, pensata per contesti di reportistica dove interessa lo stato dell'entità a fine mese, non ogni variazione infra-mensile.
+Tipo di storicizzazione confermato come reale e stabile (macro `scd2_foto_mensile` in `raw/dwh-code`), ma documentato **solo** nella [[guida-sviluppo]] — manca ancora dal documento di framework L2/L3, dove andrebbe aggiunto (vedi [[todo-allineamento-documentazione]]). Una variante di SCD2 a granularità mensile, pensata per contesti di reportistica dove interessa lo stato dell'entità a fine mese, non ogni variazione infra-mensile.
 
 ## Logica
 

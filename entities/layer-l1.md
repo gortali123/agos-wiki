@@ -40,7 +40,7 @@ Vedi [[data-quality-controlli]].
 
 ## Campi tecnici
 
-`ts_riferimento`, `ts_caricamento`, `fl_deleted`, `ts_deleted`, e solo per Cluster C: `ts_inizio_validita`, `ts_fine_validita`, `id_scd`, `ts_update_at`.
+`ts_riferimento`, `ts_caricamento`, `fl_deleted`, `ts_deleted`, e solo per Cluster C: `ts_inizio_validita`, `ts_fine_validita`, `id_scd`, `ts_updated_at` (nome reale confermato in `dbt_project.yml` → `snapshot_meta_column_names`; il documento ufficiale L0-L1 riporta erroneamente `ts_update_at`, refuso da correggere).
 
 ## Gestione eccezioni: parsing COBOL
 
