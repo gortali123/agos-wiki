@@ -9,9 +9,16 @@ Convenzioni di naming per oggetti Snowflake e file DBT nel progetto AGOS-X, come
 
 ## Schemi
 
-- `L2_<area_funzionale>` — 16 aree funzionali definite: ANAGR_CONTROPARTE, ANAGR_COMMERCIALE, ANTIFRODE, ANTIRICICLAGGIO, ASSICURAZIONI, BUDGET, CONTATTI, DIGITAL, GESTIONE_CREDITI, HR, ONBOARDING, PRODOTTO, PRODOTTO_M, PAGAMENTI_CONTABILITA, PROVVIGIONI_RAPPEL, RISCHI_ADEMPIMENTI, SCORE_BANCHE_DATI.
+- `L2_<area_funzionale>` — 16 aree funzionali definite nel documento ufficiale: ANAGR_CONTROPARTE, ANAGR_COMMERCIALE, ANTIFRODE, ANTIRICICLAGGIO, ASSICURAZIONI, BUDGET, CONTATTI, DIGITAL, GESTIONE_CREDITI, HR, ONBOARDING, PRODOTTO, PRODOTTO_M, PAGAMENTI_CONTABILITA, PROVVIGIONI_RAPPEL, RISCHI_ADEMPIMENTI, SCORE_BANCHE_DATI.
 - `L3_<processo>`.
 - L0/L1: schema per modulo (OCS) o sorgente.
+
+**Attenzione — tre tassonomie diverse coesistono per le aree L2**, non ancora riconciliate:
+1. L'elenco sopra, dal documento ufficiale L2.
+2. I nomi cartella reali in `dbt_project.yml` ([[incoerenze-codice-vs-documentazione]] punto 4): `ANAGR_CONTROPARTE`, `ANTIFRODE`, `ASSICURAZIONI`, `CARTE`, `ONBOARDING`, `PRODOTTO`, `PRODOTTO_M`, `RISCHI_ADEMPIMENTI`, `SALDI`, `SWORD`, `GESTIONE_CREDITI`.
+3. I codici Subject Area nel foglio `Nomenclatura SubjectArea Tabell[e]` del data model L2 ([[agosx-layer-l2-datamodel]]): `ANA_CNT`, `ANA_COM`, `HR`, `CNT_VOC`, `CNT`, `DGT_ARI`, `DGT_FRP`, `DGT_TRC`, `GNS_PRV`, `GNS_RCV`, `PRD_CQS`, `PRD_PGM`, `PRD_ASS`, `PRD_CNS`, ecc.
+
+Da chiarire con l'utente quale sia la tassonomia corrente/di riferimento.
 
 ## Tabelle
 
@@ -60,4 +67,4 @@ Convenzioni di naming per oggetti Snowflake e file DBT nel progetto AGOS-X, come
 Progetto DBT unico per tutti i layer (`AGOSX/models/L0|L1|L2|L3/...`), primo livello = layer, secondo livello = sorgente (L0/L1) o area funzionale/processo (L2/L3). Possibile evoluzione futura verso split multi-progetto con **dbt mesh** (menzionato come opzione, non ancora deciso).
 
 ## Collegato da
-[[layer-l2]], [[layer-l3]], [[agosx-caricamento-l2]], [[agosx-caricamento-l0-l1]]
+[[layer-l2]], [[layer-l3]], [[agosx-caricamento-l2]], [[agosx-caricamento-l0-l1]], [[agosx-layer-l2-datamodel]]

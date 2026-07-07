@@ -11,14 +11,10 @@
             "id": "2a2aff4b8a3f28dd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "log.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "log"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -95,7 +91,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "log.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +100,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for log"
+              "title": "Backlinks"
             }
           },
           {
@@ -114,12 +109,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "log.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from log"
+              "title": "Outgoing links"
             }
           },
           {
@@ -157,13 +151,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "log.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of log"
+              "title": "Outline"
             }
           }
         ]
@@ -186,17 +179,18 @@
   },
   "active": "2a2aff4b8a3f28dd",
   "lastOpenFiles": [
+    "log.md",
+    "log.md.tmp.22264.69861c026a4f",
+    "index.md.tmp.22264.36aae1a54c16",
+    "concepts/naming-conventions.md.tmp.22264.5277faffaf7d",
+    "concepts/naming-conventions.md.tmp.22264.e0a20d831309",
+    "sources/agosx-layer-l2-datamodel.md",
+    "sources/agosx-layer-l2-datamodel.md.tmp.22264.34842569f934",
+    "raw/Agos X - Layer L2.xlsx",
     "log.md.tmp.22264.c9f2fbcfe414",
     "index.md.tmp.22264.7daf62dd5e29",
     "index.md.tmp.22264.969105f9603e",
     "CLAUDE.md.tmp.22264.ab63ff2d3ba4",
-    "CLAUDE.md.tmp.22264.95862db303df",
-    "CLAUDE.md.tmp.22264.f0fcde7e2f2a",
-    "raw/dwh-code/macros/xml_utility/xml_to_data.sql",
-    "raw/dwh-code/macros/xml_utility",
-    "raw/dwh-code/tests/generic/try_cast_table_new.sql",
-    "raw/dwh-code/tests/generic/try_cast_table.sql",
-    "raw/dwh-code/tests/generic/primary_key_table.sql",
     "raw/dwh-code/README.md",
     "concepts/transcodifica-datatype-l0-l1.md",
     "dwh-code/README.md",
@@ -207,7 +201,6 @@
     "concepts/gestione-cancellazioni.md",
     "entities/layer-l1.md",
     "concepts/naming-conventions.md",
-    "log.md",
     "concepts/orchestrazione-control-m-vs-dbt-cloud.md",
     "index.md",
     "file-civetta-e-formati.md",
@@ -221,7 +214,6 @@
     "concepts/storicizzazione-l2-s1-s4.md",
     "concepts/storicizzazione-l1-cluster.md",
     "entities/cobol-copybook-mapping.md",
-    "entities/cfg-l1-datamask.md",
-    "entities/et-l0-load-logging.md"
+    "entities/cfg-l1-datamask.md"
   ]
 }

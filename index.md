@@ -12,12 +12,14 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 ## raw/
 - `Agos X - Caricamento layer L0-L1.docx` — doc ufficiale L0/L1 → [[agosx-caricamento-l0-l1]]
 - `Agos X - Caricamento layer L2.docx` — doc ufficiale L2/L3 → [[agosx-caricamento-l2]]
+- `Agos X - Layer L2.xlsx` — data model dettagliato L2/L3 (struttura ingerita, contenuto no) → [[agosx-layer-l2-datamodel]]
 - `guida_sviluppo.docx` — guida operativa interna v2.0 → [[guida-sviluppo]]
 - `llm-wiki-pattern.md` — idea/pattern alla base di questa wiki
 
 ## Sources
 - [[agosx-caricamento-l0-l1]] — sintesi doc ufficiale L0/L1
 - [[agosx-caricamento-l2]] — sintesi doc ufficiale L2/L3
+- [[agosx-layer-l2-datamodel]] — struttura/significato/uso del data model xlsx L2/L3
 - [[guida-sviluppo]] — sintesi guida operativa interna
 
 ## Entities
