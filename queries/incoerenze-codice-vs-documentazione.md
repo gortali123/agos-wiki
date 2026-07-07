@@ -55,6 +55,8 @@ Nel modello reale `variazioni_anagrafiche.sql`:
 
 Non è un errore, ma la sintesi del framework doc **sottostima la complessità reale** dell'implementazione incrementale — utile saperlo prima di usare la sola descrizione testuale per replicare la logica altrove.
 
+**Aggiornamento 2026-07-08**: la parte generalizzabile (`PROGRESSIVO_PK`, esclusa `PROGRESSIVO_CONTROPARTE`) è stata formalmente documentata in [[guida-sviluppo]] §5.1 come variante S1 — vedi [[storicizzazione-l2-s1-s4]] e [[bozza-doc-s1-main-senza-pk]]. Resta comunque aperto l'allineamento del **documento di framework ufficiale** (che descrive solo il caso semplice) — vedi [[todo-allineamento-documentazione]].
+
 ## 8. Conferme (il codice valida la documentazione, non solo la contraddice)
 
 Per onestà, molte parti sono state **confermate** dal codice, in particolare quelle della [[guida-sviluppo]]:
@@ -89,7 +91,7 @@ Verifica estesa (seconda passata, 2026-07-07) a: tutte le macro in `macros/gener
 | 4 | **Da allineare (bassa priorità)** | Aree funzionali reali (`CARTE`, `SALDI`, `SWORD`) vs elenco documentato, incluso il caso `CARTE`→schema `L2_PRODOTTO`. Da sistemare più avanti. |
 | 5 | **Da fare** | Documentare il pattern di naming schema L1 `L1_E_<codice>` (esterno) / `L1_O_<modulo>` (OCS), oggi assente da ogni documento. |
 | 6 | **Confermato** | Nome colonna reale corretto: `ts_updated_at` (non `ts_update_at` come nel documento ufficiale). |
-| 7 | **Da allineare** | La descrizione di `PROGRESSIVO_PK`/`PROGRESSIVO_CONTROPARTE` nel documento ufficiale va arricchita per riflettere la logica incrementale reale (non solo il caso full-refresh). |
+| 7 | **Parzialmente risolto (2026-07-08)** | `PROGRESSIVO_PK` (generalizzato, senza `PROGRESSIVO_CONTROPARTE`) ora documentato in guida sviluppo. Resta da allineare il documento di framework ufficiale. |
 | 8 | — | Sezione di conferme, nessuna azione. |
 | 9 | **Da verificare col team security** | Masking su L0 (`apply_privacy_to_l0_from_matrix`): non è chiaro se voluto o errore di implementazione. Non prendere posizione in wiki, TODO generico verso il team infra/sicurezza. |
 | 10 | **Da verificare col team security** | `remove_datamask()` mancante dal codice: stesso trattamento del punto 9, TODO generico verso il team. |

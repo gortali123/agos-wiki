@@ -2,7 +2,7 @@
 title: Guida Sviluppo AGOS-X DWH (source, interno)
 type: source
 tags: [internal, dev-guide, layer/L0, layer/L1, layer/L2, layer/L3]
-updated: 2026-07-07
+updated: 2026-07-08
 ---
 
 Documento operativo **interno** (non condiviso col cliente), v2.0. Per esplicito principio del progetto ([[naming-conventions]] a parte, vedi CLAUDE.md): non dovrebbe ripetere ciò che è nei documenti di framework, ma aggiungere dettagli pratici per gli sviluppatori (setup, comandi, checklist, macro).
@@ -20,6 +20,7 @@ Fonte: `raw/guida_sviluppo.docx`.
 - **Generazione modelli L1**: script `generate_models.ps1` (wrapper attorno alle macro `generate_source/yaml/model/snapshots` descritte nel doc ufficiale), con opzioni `--models`, `--modulo`, `--sorgente`, `--only`, `--force`.
 - **Gestione job dbt Cloud**: flusso `generate_jobs.ps1` → `jobs.yml` → sync con `dbt-jobs-as-code sync` → export con `fetch_dbt_jobs.py` / `fetch_dbt_dependencies.py`. Questo flusso dbt Cloud non è menzionato nei documenti ufficiali, che descrivono l'orchestrazione come compito di **Control-M** — vedi nota di inconsistenza in [[incoerenze-doc-framework-vs-guida-sviluppo]].
 - **L2 — riepilogo storicizzazioni** (S1-S4): tabella pratica con strategia/unique_key/campi tecnici, dettaglio SQL a blocchi per ciascun tipo, regola ordine colonne (storicizzazione subito dopo PK, `LASTMODIFIEDDATA` sempre in coda).
+- **L2 — S1, variante main senza PK propria (aggiunta 2026-07-08)**: nuova sottosezione subito dopo "S1 — SCD2", che documenta il pattern reale usato in `variazioni_anagrafiche.sql` per gestire una tabella main L1 la cui unica chiave certa è `ROWID` (nessuna PK funzionale univoca). Introduce il campo tecnico `PROGRESSIVO_PK` (disambiguazione a parità di chiave+timestamp modifica), estende `unique_key`/PK del modello, passa `order_extra='PROGRESSIVO_PK'` a `is_incremental_S1()`, e propaga `TS_FINE_VALIDITA` con una window function su tutti i record con lo stesso `TS_INIZIO_VALIDITA`. Esplicitamente esclude `PROGRESSIVO_CONTROPARTE`, che resta specifico della sola entità `VARIAZIONI_ANAGRAFICHE`. Colma esattamente il gap segnalato in [[incoerenze-codice-vs-documentazione]] (punto 7).
 - **L2 — checklist pre-rilascio**: tipi dato per prefisso, tracciato/ordine colonne, cluster/join SCD2, query_tag, niente `SELECT *`, no duplicazione config già in `dbt_project.yml`, `dbt.exe compile` obbligatorio.
 - **L3**: storicizzazioni S2/S3/S4 "analoghe a L2", più **S5** ("SCD2 mensile", non menzionato nel doc ufficiale L2/L3): macro dedicata che storicizza a granularità mensile confrontando hash del payload, con rami full-refresh e incrementale (merge). Sezione documentata in grande dettaglio con esempio numerico completo.
 - Diversi punti della sezione L3 sono esplicitamente aperti/incerti nel testo stesso ("S1 non previsto?", "Oppure invece di dt_osservazione la colonna rilevante...", "Se ci sono funzioni più complesse nel passaggio della chiave da L1 a L2 staging?").

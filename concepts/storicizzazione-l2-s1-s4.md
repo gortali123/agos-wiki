@@ -2,7 +2,7 @@
 title: Storicizzazione L2 (S1-S4)
 type: concept
 tags: [layer/L2, storicizzazione]
-updated: 2026-07-07
+updated: 2026-07-08
 ---
 
 Tipologie di storicizzazione per [[layer-l2]], mappate su materializzazioni DBT. Regole di dettaglio derivate da `Agos X - Linee_Guida_Layer_L2_Storicizzazione_20260304.pptx` (non ancora presente in `raw/` — fonte primaria non ingerita) più il dettaglio implementativo della [[guida-sviluppo]].
@@ -23,6 +23,10 @@ Due sottocasi:
 - Main L1 non storicizzata: `TS_INIZIO_VALIDITA` derivato dal campo timestamp funzionale (analisi tecnica), `TS_FINE_VALIDITA` calcolato a partire da esso.
 
 SQL a 3 blocchi: CTE base (dataset + validità) → CTE dedup (colonne + hash colonne di business, esclusi `LASTMODIFIEDDATA`/validità, + logica incrementale) → SELECT finale (ricalcolo `TS_FINE_VALIDITA`, LEFT JOIN ai lookup). Il modello accorpa intervalli di validità consecutivi senza variazioni nei campi di business, evitando proliferazione di versioni ridondanti. Bonifiche a record passati sempre via **nuovo record**, mai update di intervalli vecchi.
+
+### Variante: main L1 senza PK propria (PK = ROWID)
+
+Quando la tabella main L1 non ha una chiave funzionale univoca (solo `ROWID` tecnico), a parità di chiave + `TS_INIZIO_VALIDITA` possono esserci più record fisici duplicati. Pattern reale in `models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql` (`raw/dwh-code`): si introduce un campo tecnico `PROGRESSIVO_PK` (`ROW_NUMBER()` su chiave+timestamp modifica, ordinato per `ROWID`), che estende `unique_key`/PK del modello e viene passato come `order_extra` a `is_incremental_S1()`. `TS_FINE_VALIDITA` viene poi propagato con una window function a tutti i record con lo stesso `TS_INIZIO_VALIDITA`. **Aggiunto formalmente alla guida sviluppo il 2026-07-08** (§5.1, subito dopo "S1 — SCD2"), a partire dal blocco redatto in [[bozza-doc-s1-main-senza-pk]] — non più solo una bozza.
 
 ## S2 — Append giornalieri
 
