@@ -1,0 +1,225 @@
+{
+  "main": {
+    "id": "86faab8afe4d2f45",
+    "type": "split",
+    "children": [
+      {
+        "id": "9726dd5df34ba33b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2f534ede0de38185",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "queries/todo-allineamento-documentazione.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "todo-allineamento-documentazione"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "299a703d83179566",
+    "type": "split",
+    "children": [
+      {
+        "id": "a8d4ca0a9173ecf4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "848ff90b8d859f2b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "0fb529895f0adf27",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "24e4011b0d61b043",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "d10b8989480e73a0",
+    "type": "split",
+    "children": [
+      {
+        "id": "d37ce72c9066e458",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "30f9449ddd3eeec7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "queries/todo-allineamento-documentazione.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for todo-allineamento-documentazione"
+            }
+          },
+          {
+            "id": "7be35369262f4838",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "queries/todo-allineamento-documentazione.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from todo-allineamento-documentazione"
+            }
+          },
+          {
+            "id": "4b597578da749f78",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "e879aee6f8c5276c",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "6fd812cc5396485e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "queries/todo-allineamento-documentazione.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of todo-allineamento-documentazione"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "2f534ede0de38185",
+  "lastOpenFiles": [
+    "queries/incoerenze-codice-vs-documentazione.md",
+    "queries/incoerenze-doc-framework-vs-guida-sviluppo.md",
+    "concepts/gestione-cancellazioni.md",
+    "log.md.tmp.22264.38dcb30c390e",
+    "index.md.tmp.22264.1789381e9bc2",
+    "entities/layer-l1.md.tmp.22264.27ca70149d16",
+    "entities/cfg-l1-schema.md.tmp.22264.e9b4d4cc8570",
+    "concepts/orchestrazione-control-m-vs-dbt-cloud.md.tmp.22264.484539d7ff38",
+    "concepts/storicizzazione-l3-s5.md.tmp.22264.53a854bd2b01",
+    "entities/layer-l3.md.tmp.22264.13578ad27127",
+    "concepts/storicizzazione-l1-cluster.md.tmp.22264.c2a782bcbaaa",
+    "entities/layer-l2.md.tmp.22264.8176b1a351ef",
+    "entities/layer-l1.md.tmp.22264.f0c5ae4db335",
+    "queries/todo-allineamento-documentazione.md",
+    "dwh-code/README.md",
+    "entities/layer-l1.md",
+    "concepts/naming-conventions.md",
+    "log.md",
+    "concepts/orchestrazione-control-m-vs-dbt-cloud.md",
+    "index.md",
+    "file-civetta-e-formati.md",
+    "gestione-cancellazioni.md",
+    "concepts/parsing-cobol.md",
+    "concepts/gestione-errori-retry-l0.md",
+    "concepts/data-masking.md",
+    "concepts/file-civetta-e-formati.md",
+    "Untitled.canvas",
+    "concepts/data-quality-controlli.md",
+    "concepts/storicizzazione-l3-s5.md",
+    "concepts/storicizzazione-l2-s1-s4.md",
+    "concepts/storicizzazione-l1-cluster.md",
+    "entities/cobol-copybook-mapping.md",
+    "entities/cfg-l1-datamask.md",
+    "entities/et-l0-load-logging.md",
+    "entities/cfg-l1-cluster-sto.md",
+    "entities/cfg-l1-schema.md"
+  ]
+}

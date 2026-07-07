@@ -1,0 +1,3 @@
+[submodule "dwh-code"]
+	path = dwh-code
+	url = https://github.com/target-reply/my_dwh-x-dbt.git

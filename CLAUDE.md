@@ -7,6 +7,7 @@ Full background on the pattern this follows: see `raw/llm-wiki-pattern.md`.
 ## Layers
 
 - **raw/** — immutable source material: pasted docs, exported specs, meeting notes, links to code in `my_dwh-x-dbt` (referenced by path, not copied), screenshots, etc. Never edit files here except to add new ones.
+- **dwh-code/** — git submodule pointing at `https://github.com/target-reply/my_dwh-x-dbt` (a curated GitHub copy of relevant parts of the live GitLab dbt project: macros, L2/L3 models, a sample of L1 models — not necessarily everything). Treated like `raw/`: never edit, only read. Its presence lets wiki pages cite real, Obsidian-openable paths (e.g. `dwh-code/macros/add_datamask.sql`) instead of bare text paths. It is a pinned snapshot, not live — see staleness note below.
 - **entities/** — one page per concrete thing: a dbt model, a source table, a business entity (e.g. "ANAGR_CONTROPARTE"), a layer (L1/L2/L3), a person/team.
 - **concepts/** — one page per idea/pattern that cuts across entities: business rules, data lineage patterns, naming conventions, recurring transformations (e.g. "variazioni anagrafiche" logic), glossary terms.
 - **sources/** — one summary page per raw source ingested, with key takeaways and links to the entity/concept pages it touched.
@@ -27,7 +28,9 @@ Full background on the pattern this follows: see `raw/llm-wiki-pattern.md`.
   ---
   ```
 - Filenames: kebab-case, no spaces, matching the `title`.
-- When a source or answer touches code in `my_dwh-x-dbt`, cite the path (e.g. `models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql`) rather than copying large code blocks — the repo is the source of truth for code, the wiki is the source of truth for *synthesized understanding*.
+- When a source or answer touches code that exists in `dwh-code/` (the submodule), cite the path relative to it (e.g. `dwh-code/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql`) so it's a real, clickable path in Obsidian — rather than copying large code blocks. The repo is the source of truth for code, the wiki is the source of truth for *synthesized understanding*.
+- If code is referenced but not present in `dwh-code/` (e.g. it lives only in the live GitLab repo, not yet copied over), cite the path as plain text against `my_dwh-x-dbt` (no submodule link) and note that it isn't in the local snapshot.
+- After pulling submodule updates (`git submodule update --remote`), re-check any wiki page whose staleness note predates the update.
 - Keep pages honest about staleness: if a claim came from code, note the date you checked it; code changes without the wiki knowing.
 
 ## Workflows
@@ -68,5 +71,6 @@ Each `log.md` entry starts with a consistent prefix so it stays greppable:
 
 ## Notes specific to this project
 
-- The DWH project lives at `C:\Users\g.ortali\work\my_dwh-x-dbt` (dbt project, layers L1/L2/... under `models/`). Treat it as a live, evolving raw source — re-check paths before trusting old wiki claims about them.
+- The DWH project's live source of truth is the GitLab repo `dwh-x-dbt` (see `sources/guida-sviluppo.md` for clone URL). A curated GitHub copy — macros, L2/L3 models, and a sample of L1 models (not exhaustive) — is vendored into this wiki as the `dwh-code/` submodule from `https://github.com/target-reply/my_dwh-x-dbt`. Treat `dwh-code/` as a pinned snapshot: it can lag behind GitLab, and it deliberately doesn't include every L1 model. When a claim needs verifying against code that isn't in `dwh-code/`, say so rather than assuming it matches.
+- A separate local clone at `C:\Users\g.ortali\work\my_dwh-x-dbt` may also exist on this machine for direct grep/read access outside the vault — useful for verification even when not linked from wiki pages.
 - Domain is Italian financial services (Agos) — expect Italian naming (ANAGR_CONTROPARTE = anagrafica controparte, variazioni anagrafiche = counterparty registry change history). Keep glossary entries in `concepts/` for recurring Italian domain terms.
