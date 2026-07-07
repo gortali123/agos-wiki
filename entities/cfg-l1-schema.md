@@ -17,7 +17,7 @@ Il documento ufficiale L0-L1 descrive invece una struttura diversa (`NM_CAMPO`, 
 
 - Caricata solo quando il file di schema è stato aggiornato (evita duplicati); l'unicità dei record in caso di modifica è garantita da un campo tecnico timestamp (`ts_riferimento` nel codice reale), che offre anche tracciabilità storica delle modifiche al tracciato.
 - Per sorgenti senza file di schema nativo, viene creato e caricato una tantum manualmente, recuperando le info dai processi as-is.
-- Il data type finale usato in L1 è ottenuto da questa tabella tramite una macro di transcodifica dei data type sorgente → Snowflake.
+- Il data type finale usato in L1 è ottenuto da questa tabella tramite una macro di transcodifica dei data type sorgente → Snowflake — vedi [[transcodifica-datatype-l0-l1]].
 
 ## Collegato da
-[[layer-l0]], [[layer-l1]], [[agosx-caricamento-l0-l1]]
+[[layer-l0]], [[layer-l1]], [[agosx-caricamento-l0-l1]], [[transcodifica-datatype-l0-l1]]

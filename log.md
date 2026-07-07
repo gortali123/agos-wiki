@@ -34,6 +34,10 @@ Letta la parte rimanente di `dwh-code`: macro `generate_models/*` (incl. `transc
 
 Spostato il submodule `dwh-code` dentro `raw/dwh-code` (era a livello radice del vault), su richiesta dell'utente — coerente con la sua natura di sorgente immutabile. Aggiornati `.gitmodules`, i puntatori interni gitdir/worktree del submodule, `CLAUDE.md` e tutte le pagine wiki che citavano il path `dwh-code/` (ora `raw/dwh-code/`). Verificato che il submodule resta funzionante dopo lo spostamento (`git submodule status` OK).
 
+## [2026-07-08] setup | remote dwh-code cambiato da target-reply a gortali123
+
+Il remote GitHub del submodule `raw/dwh-code` è cambiato da `target-reply/my_dwh-x-dbt` a `gortali123/my_dwh-x-dbt` (stesso contenuto, verificato via `git ls-remote` prima dell'aggiornamento: stesso commit HEAD `95747d6`). Aggiornati `.gitmodules`, il remote `origin` dentro `raw/dwh-code`, e i riferimenti testuali in `CLAUDE.md` e `index.md`.
+
 ## [2026-07-08] query | risoluzione incoerenze codice vs documentazione (punti 9-11)
 
 L'utente ha risposto alle domande sui punti 9-11 di [[incoerenze-codice-vs-documentazione]]: punto 11 (Cluster D di storicizzazione L1) confermato reale, da aggiungere al documento di framework — aggiornata [[storicizzazione-l1-cluster]] e [[todo-allineamento-documentazione]]. Punti 9 (masking su L0 via `apply_privacy_to_l0_from_matrix`) e 10 (`remove_datamask()` mancante dal codice) lasciati aperti come TODO generico verso il team infra/sicurezza, senza prendere posizione in wiki — aggiornate [[data-masking]] e [[todo-allineamento-documentazione]] (nuova sezione "Security/masking").

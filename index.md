@@ -54,4 +54,4 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 
 ## Note
 
-Codice reale disponibile in `raw/dwh-code/` (submodule → `https://github.com/target-reply/my_dwh-x-dbt`, copia curata da `dwh-x-dbt`). Prima verifica incrociata doc/codice effettuata il 2026-07-07, vedi [[incoerenze-codice-vs-documentazione]] — copertura parziale (campione di macro/modelli), non un'esplorazione esaustiva.
+Codice reale disponibile in `raw/dwh-code/` (submodule → `https://github.com/gortali123/my_dwh-x-dbt`, copia curata da `dwh-x-dbt`). Prima verifica incrociata doc/codice effettuata il 2026-07-07, vedi [[incoerenze-codice-vs-documentazione]] — copertura parziale (campione di macro/modelli), non un'esplorazione esaustiva.
