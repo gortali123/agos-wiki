@@ -183,8 +183,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "3b79670d107d39b6",
+  "active": "848ff90b8d859f2b",
   "lastOpenFiles": [
+    "queries/ottimizzazione-variazioni-anagrafiche-day-scd2.md",
+    "queries/ottimizzazione-variazioni-anagrafiche-day-scd2.md.tmp.13612.e663e884bbae",
+    "queries/variazioni_anagrafiche_day_ottimizzato.sql",
+    "queries/variazioni_anagrafiche_day_ottimizzato.sql.tmp.13612.fe0852806966",
     "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
     "index.md.tmp.13612.8b05bf66d1ea",
     "queries/ottimizzazione-indirizzi-postalizzazione-scd2.md",
@@ -196,10 +200,7 @@
     "queries/todo-allineamento-documentazione.md",
     "queries/incoerenze-doc-framework-vs-guida-sviluppo.md",
     "queries/variazioni_anagrafiche_ottimizzato.sql",
-    "queries/variazioni_anagrafiche_ottimizzato.sql.tmp.18276.f0f57a195431",
     "queries/bozza-doc-s1-main-senza-pk.md",
-    "log.md.tmp.18276.2f796da30eab",
-    "index.md.tmp.18276.ecdbdcdf433c",
     "sources/agosx-layer-l2-datamodel.md",
     "sources/agosx-caricamento-l2.md",
     "queries/incoerenze-codice-vs-documentazione.md",

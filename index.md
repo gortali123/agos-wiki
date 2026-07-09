@@ -56,6 +56,7 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 - [[bozza-doc-s1-main-senza-pk]] — blocco doc S1 con main L1 priva di PK — applicato in guida sviluppo il 2026-07-08
 - [[ottimizzazione-variazioni-anagrafiche-scd2]] — proposta di design per evitare il rescan full-history in variazioni_anagrafiche (SCD2 su CCANALOG)
 - [[ottimizzazione-indirizzi-postalizzazione-scd2]] — stesso pattern applicato a indirizzi_postalizzazione (SCD2 su BAPRATAG), seconda istanza confermata
+- [[ottimizzazione-variazioni-anagrafiche-day-scd2]] — stesso pattern applicato a variazioni_anagrafiche_day (SCD2 giorno su variazioni_anagrafiche), terza istanza, con caveat sul ramo delta
 
 ## Note
 
