@@ -185,6 +185,7 @@
   },
   "active": "848ff90b8d859f2b",
   "lastOpenFiles": [
+    "queries/unique_key_table.sql.tmp.10596.18e5d27d4d57",
     "queries/tests/generic/try_cast_table_noocs.sql",
     "queries/tests/generic/try_cast_table_noocs.sql.tmp.10596.9c72b4b4925c",
     "queries/tests/generic/try_cast_table.sql",
@@ -195,7 +196,6 @@
     "queries/tests",
     "queries/unique_key_table.sql",
     "raw/dwh-code/tests/generic/unique_key_table.sql",
-    "raw/dwh-code/tests/generic/unique_key_table.sql.tmp.10596.906f7bfdc71e",
     "queries/bug-delete_l2-primo-run.md",
     "queries/ottimizzazione-variazioni-anagrafiche-day-scd2.md",
     "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
