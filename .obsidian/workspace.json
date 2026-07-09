@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
+                "file": "queries/ottimizzazione-indirizzi-postalizzazione-scd2.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ottimizzazione-variazioni-anagrafiche-scd2"
+              "title": "ottimizzazione-indirizzi-postalizzazione-scd2"
             }
           }
         ]
@@ -185,21 +185,21 @@
   },
   "active": "3b79670d107d39b6",
   "lastOpenFiles": [
+    "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
+    "index.md.tmp.13612.8b05bf66d1ea",
+    "queries/ottimizzazione-indirizzi-postalizzazione-scd2.md",
+    "queries/ottimizzazione-indirizzi-postalizzazione-scd2.md.tmp.13612.f577a55a08a5",
+    "queries/indirizzi_postalizzazione_ottimizzato.sql",
+    "queries/indirizzi_postalizzazione_ottimizzato.sql.tmp.13612.6cf2c11c043c",
     "log.md.tmp.18276.df8c87c6f4fa",
     "queries/ottimizzazione-variazioni-anagrafiche-scd2.md.tmp.18276.d0f4d0666ca5",
     "queries/todo-allineamento-documentazione.md",
-    "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
     "queries/incoerenze-doc-framework-vs-guida-sviluppo.md",
     "queries/variazioni_anagrafiche_ottimizzato.sql",
     "queries/variazioni_anagrafiche_ottimizzato.sql.tmp.18276.f0f57a195431",
     "queries/bozza-doc-s1-main-senza-pk.md",
     "log.md.tmp.18276.2f796da30eab",
     "index.md.tmp.18276.ecdbdcdf433c",
-    "queries/ottimizzazione-variazioni-anagrafiche-scd2.md.tmp.18276.ed11d88c2475",
-    "raw/dwh-code/macros/truncate_models.sql",
-    "raw/dwh-code/macros/materialization/ts_fine_validita.sql",
-    "raw/dwh-code/macros/materialization/scd2_foto_mensile.sql",
-    "raw/dwh-code/macros/materialization/last_day_past_month.sql",
     "sources/agosx-layer-l2-datamodel.md",
     "sources/agosx-caricamento-l2.md",
     "queries/incoerenze-codice-vs-documentazione.md",
@@ -220,7 +220,6 @@
     "concepts/data-quality-controlli.md",
     "concepts/data-masking.md",
     "sources/agosx-caricamento-l0-l1.md",
-    "2026-07-07.md",
     "Untitled 2.canvas",
     "Untitled 1.canvas",
     "Untitled.canvas"
