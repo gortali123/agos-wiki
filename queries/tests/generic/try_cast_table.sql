@@ -1,7 +1,8 @@
--- COPIA invariata di raw/dwh-code/tests/generic/try_cast_table.sql (nessuna modifica richiesta).
--- Inclusa qui solo per avere la cartella tests/ completa in queries/.
+-- PROPOSTA: aggiornamento di raw/dwh-code/tests/generic/try_cast_table.sql
+-- Rimosso il ramo rtrim_varchar / nullif(rtrim(...)) sulle colonne varchar: non piu necessario.
+-- Non testata su dati reali.
 
-{% test try_cast_table(model, validation_config=none, where_clause=none, accepted_values=none, rtrim_varchar=false) %}
+{% test try_cast_table(model, validation_config=none, where_clause=none, accepted_values=none) %}
 
 {% if execute %}
 
@@ -22,8 +23,7 @@
             {% set skip = validation_config.get(col_name) == 'skip' %}
             {% if not skip %}
               {% set validation_sql = validation_config.get(col_name) if validation_config.get(col_name) and validation_config.get(col_name) != 'skip' else none %}
-              {% set is_varchar = rtrim_varchar and 'varchar' in (col_def.data_type | lower) %}
-              {% set col_ref = "nullif(rtrim(" ~ (col_name | upper) ~ "), '')" if is_varchar else (col_name | upper) %}
+              {% set col_ref = col_name | upper %}
               {% if validation_sql %}
           {% set check_expr = validation_sql | replace(col_name, col_name | upper) %}
               {% else %}
