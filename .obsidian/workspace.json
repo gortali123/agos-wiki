@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "51922ff5b9ff0a2a",
+        "id": "0793b6507ec76944",
         "type": "tabs",
         "children": [
           {
-            "id": "2a2aff4b8a3f28dd",
+            "id": "3b79670d107d39b6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "queries/bozza-doc-s1-main-senza-pk.md",
+                "file": "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "bozza-doc-s1-main-senza-pk"
+              "title": "ottimizzazione-variazioni-anagrafiche-scd2"
             }
           }
         ]
@@ -183,24 +183,25 @@
       "bases:Create new base": false
     }
   },
-  "active": "2a2aff4b8a3f28dd",
+  "active": "3b79670d107d39b6",
   "lastOpenFiles": [
+    "log.md.tmp.18276.df8c87c6f4fa",
+    "queries/ottimizzazione-variazioni-anagrafiche-scd2.md.tmp.18276.d0f4d0666ca5",
+    "queries/todo-allineamento-documentazione.md",
+    "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
+    "queries/incoerenze-doc-framework-vs-guida-sviluppo.md",
+    "queries/variazioni_anagrafiche_ottimizzato.sql",
+    "queries/variazioni_anagrafiche_ottimizzato.sql.tmp.18276.f0f57a195431",
+    "queries/bozza-doc-s1-main-senza-pk.md",
+    "log.md.tmp.18276.2f796da30eab",
+    "index.md.tmp.18276.ecdbdcdf433c",
+    "queries/ottimizzazione-variazioni-anagrafiche-scd2.md.tmp.18276.ed11d88c2475",
     "raw/dwh-code/macros/truncate_models.sql",
     "raw/dwh-code/macros/materialization/ts_fine_validita.sql",
     "raw/dwh-code/macros/materialization/scd2_foto_mensile.sql",
     "raw/dwh-code/macros/materialization/last_day_past_month.sql",
-    "raw/dwh-code/macros/materialization/is_incremental_S1.sql",
-    "raw/dwh-code/macros/materialization/hash_cols.sql",
-    "raw/dwh-code/macros/materialization/get_dt_osservazione.sql",
-    "raw/dwh-code/macros/materialization/delete_month.sql",
-    "raw/dwh-code/macros/materialization",
-    "raw/dwh-code/macros/logic_delete/logic_delete_scd2.sql",
-    "raw/dwh-code/macros/logic_delete/logic_delete_merge.sql",
     "sources/agosx-layer-l2-datamodel.md",
-    "queries/bozza-doc-s1-main-senza-pk.md",
     "sources/agosx-caricamento-l2.md",
-    "queries/todo-allineamento-documentazione.md",
-    "queries/incoerenze-doc-framework-vs-guida-sviluppo.md",
     "queries/incoerenze-codice-vs-documentazione.md",
     "concepts/transcodifica-datatype-l0-l1.md",
     "entities/et-l0-load-logging.md",
@@ -222,7 +223,6 @@
     "2026-07-07.md",
     "Untitled 2.canvas",
     "Untitled 1.canvas",
-    "Untitled.canvas",
-    "log.md"
+    "Untitled.canvas"
   ]
 }
