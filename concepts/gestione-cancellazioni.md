@@ -27,5 +27,7 @@ Due step:
 
 Implementazione pratica (guida sviluppo): pre-hook `delete_l2('NOME_ARCHIVIO', ['PK_L2_1', ...], ['PK_L1_1', ...])` da aggiungere sui modelli S1/S2 quando la tabella main è Cluster A1/A2 o C. Conversioni automatiche per chiavi `DT_`/`TS_` in L2. Filtro `FL_DELETED = 'N'` da applicare sia sulla tabella main (WHERE) sia sulle tabelle in join (condizione di JOIN). Nota: la guida sviluppo lascia esplicitamente aperto il caso di funzioni più complesse nel passaggio chiave da L1 a L2 staging.
 
+**Bug noto**: `delete_l2` (`raw/dwh-code/macros/logic_delete/delete_l2.sql`) non ha un guard `{% if is_incremental() %}` — al primo run di un'entità (o dopo `--full-refresh`), `{{ this }}` non esiste ancora e il `DELETE FROM {{ this }}` del pre-hook fallisce. Diagnosi e fix proposto in [[bug-delete_l2-primo-run]]. Verificato su tutti i ~15 modelli che lo usano come pre-hook: nessuno lo condiziona lato chiamante.
+
 ## Collegato da
 [[layer-l0]], [[layer-l1]], [[layer-l2]], [[agosx-caricamento-l0-l1]], [[agosx-caricamento-l2]], [[guida-sviluppo]]

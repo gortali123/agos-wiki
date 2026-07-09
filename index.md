@@ -57,6 +57,7 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 - [[ottimizzazione-variazioni-anagrafiche-scd2]] — proposta di design per evitare il rescan full-history in variazioni_anagrafiche (SCD2 su CCANALOG)
 - [[ottimizzazione-indirizzi-postalizzazione-scd2]] — stesso pattern applicato a indirizzi_postalizzazione (SCD2 su BAPRATAG), seconda istanza confermata
 - [[ottimizzazione-variazioni-anagrafiche-day-scd2]] — stesso pattern applicato a variazioni_anagrafiche_day (SCD2 giorno su variazioni_anagrafiche), terza istanza, con caveat sul ramo delta
+- [[bug-delete_l2-primo-run]] — delete_l2 fallisce al primo run/full-refresh per mancanza del guard is_incremental()
 
 ## Note
 

@@ -65,3 +65,11 @@ Applicato a `indirizzi_postalizzazione.sql` lo stesso pattern già proposto per 
 ## [2026-07-09] query | ottimizzazione incrementale variazioni_anagrafiche_day (SCD2 giorno su variazioni_anagrafiche)
 
 Terza istanza dello stesso pattern di ottimizzazione, applicato a `variazioni_anagrafiche_day.sql`. Rispetto ai due casi precedenti ([[ottimizzazione-variazioni-anagrafiche-scd2]], [[ottimizzazione-indirizzi-postalizzazione-scd2]]) emersa una complicazione nuova: il ramo delta non può limitarsi alle righe nuove della fonte (`variazioni_anagrafiche`), deve includere tutte le righe dei `(controparte, giorno)` toccati per rideterminare correttamente il "vincitore" del giorno via `ROW_NUMBER` — la fonte qui è già un aggregato SCD2, non un evento a grana atomica con PK naturale. Vedi [[ottimizzazione-variazioni-anagrafiche-day-scd2]] e il codice in [[variazioni_anagrafiche_day_ottimizzato.sql|queries/variazioni_anagrafiche_day_ottimizzato.sql]]. Non implementata né testata su dati reali; dipende anche dall'ottimizzazione (non ancora implementata) del modello upstream.
+
+## [2026-07-09] query | bug delete_l2 al primo run/full-refresh
+
+Confermato: `delete_l2` (raw/dwh-code/macros/logic_delete/delete_l2.sql) non ha guard `is_incremental()`, quindi il `DELETE FROM {{ this }}` nel pre-hook fallisce al primo run di un'entità o dopo `--full-refresh`, quando la tabella target non esiste ancora. Verificato su tutti i ~15 modelli che lo usano come pre-hook (nessuno lo condiziona lato chiamante). Vedi [[bug-delete_l2-primo-run]] per diagnosi e fix proposto (guard dentro la macro). Aggiornato [[gestione-cancellazioni]] con nota del bug. Non verificato contro un run reale né discusso col team dwh-x-dbt.
+
+## [2026-07-09] query | fix delete_l2 pronto
+
+Aggiunto il codice della macro corretta ([[delete_l2_fix.sql|queries/delete_l2_fix.sql]]) come seguito di [[bug-delete_l2-primo-run]]: unica modifica il guard `{% if is_incremental() %}` attorno al DELETE, nessun cambio lato chiamante.
