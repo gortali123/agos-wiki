@@ -65,6 +65,7 @@ Proposte di modifica al codice `raw/dwh-code/`, non ancora applicate a monte in 
 - `develop/macros/generate_models/generate_source.sql` — generatore yml L0 aggiornato: emette `unique_key`/`primary_key` in base a `sorgente` invece di sempre `primary_key_table`, emette `try_cast` (nome rinominato)
 - `develop/macros/generate_models/generate_model.sql` — generatore SQL modelli L1: per colonne varchar su sorgenti OCS, valore vuoto dopo `RTRIM` sostituito con uno spazio singolo `' '` invece di `NULL` (`IFF(RTRIM(col)='',' ',RTRIM(col))` al posto di `NULLIF(RTRIM(col),'')`)
 - `develop/generate_models.ps1` — rimosso il check morto su `'---'` negli Step 2 (`generate_yaml`) e Step 4 (`generate_snapshots`): quelle due macro non hanno mai emesso quel separatore (solo `generate_model.sql`, Step 3, lo fa), il flush avveniva comunque tramite il trigger `- name:`. `generate_yaml.sql`, `generate_snapshots.sql`, `get_model_names.sql`, `cobol.sql` restano invariati in `raw/` — non avevano nulla da correggere
+- `develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql` — bug fix: `PROGRESSIVO_CONTROPARTE` risultava sempre `NULL` (mancava un `COALESCE(..., 0)` attorno al `MAX(H.OLD_PROGRESSIVO) OVER (...)` prima di sommare `ROW_NUMBER()`, perso nella riscrittura incrementale rispetto a `.old`)
 
 ## Note
 
