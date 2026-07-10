@@ -6,11 +6,8 @@ sources:
     tables:
       - name: aictfpdpl
         data_tests:
-          - try_cast_table:
-              arguments:
-                rtrim_varchar: true
-          - primary_key_table:
+          - try_cast_table
+          - unique_key_table:
               arguments:
                 pk_columns: [aictpdp_ide, aictpdp_prg_log]
-                rtrim_varchar: true
       - name: aictfpdpl_deleted

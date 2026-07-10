@@ -6,6 +6,7 @@ models:
       incremental_strategy: append
       pre_hook:
         - "{{ delete_l2('ccpsvt', ['CD_PRATICA', 'TP_PROCEDURA', 'DT_OSSERVAZIONE'], ['PSVT_PRATICA', 'PSVT_PROCEDURA', 'PSVT_DATA_STATO']) }}"
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "FLESSIBILITA_M"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

@@ -11,6 +11,7 @@ models:
         - CD_EMETTITORE
         - TS_INIZIO_VALIDITA
       pre_hook: "{{ delete_l2('craut', ['CD_AUTORIZZAZIONE', 'CD_EMETTITORE'], ['CRAUT_AUTORIZZAZIONE', 'CRAUT_EMETTITORE']) }}"
+      query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "CARTE_AUTORIZZATIVO"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

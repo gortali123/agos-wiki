@@ -6,7 +6,8 @@ models:
       materialized: incremental
       incremental_strategy: append
       unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
-      pre_hook: "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+      pre_hook: "{{ delete_month() }}"
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "INDICE_RISCHIO"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

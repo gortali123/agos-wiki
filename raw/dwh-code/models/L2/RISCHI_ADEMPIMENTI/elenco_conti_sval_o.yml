@@ -4,6 +4,7 @@ models:
   - name: elenco_conti_sval_o
     config:
       materialized: table
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "ELENCO_CONTI_SVAL_O"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

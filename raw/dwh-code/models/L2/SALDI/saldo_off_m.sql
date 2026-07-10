@@ -8,9 +8,9 @@ SELECT
     {{ custom_to_date('DREXT_DATA_ESTRAZIONE') }} AS DT_OSSERVAZIONE,
     {{ custom_to_decimal('DREXT_IMPORTO') }} AS EU_OFF_BALANCE
 FROM {{ ref('oxdrfext') }}
-WHERE {{ custom_to_date('DREXT_DATA_ESTRAZIONE') }} = LAST_DAY(DATEADD('month', -1, CURRENT_DATE()))
-    AND DREXT_TIPOLOGIA = 'CIM'
+WHERE DREXT_TIPOLOGIA = 'CIM'
     AND FL_DELETED = 'N'
+    /*AND {{ custom_to_date('DREXT_DATA_ESTRAZIONE') }} = LAST_DAY(DATEADD('month', -1, CURRENT_DATE()))*/
 UNION ALL
 SELECT
     DRPRA_PRATICA AS CD_PRATICA,
@@ -20,10 +20,10 @@ SELECT
     {{ custom_to_date('DRPRA_DATA_ESTRAZIONE') }} AS DT_OSSERVAZIONE,
     {{ custom_to_decimal('DRPRA_FINANZIATO_ORIG - DRPRA_SALDO') }} AS EU_OFF_BALANCE
 FROM {{ ref('oxdrfpra') }}
-WHERE {{ custom_to_date('DRPRA_DATA_ESTRAZIONE') }} = LAST_DAY(DATEADD('month', -1, CURRENT_DATE()))
-    AND DRPRA_TIPO = 'AN'
+WHERE DRPRA_TIPO = 'AN'
     AND FL_DELETED = 'N'
     AND (DRPRA_FINANZIATO_ORIG - DRPRA_SALDO) > 0
+    /*AND {{ custom_to_date('DRPRA_DATA_ESTRAZIONE') }} = LAST_DAY(DATEADD('month', -1, CURRENT_DATE()))*/
 
 {% if is_incremental() %}
 WHERE {{ custom_to_date('DT_OSSERVAZIONE') }} = {{ last_day_past_month() }}

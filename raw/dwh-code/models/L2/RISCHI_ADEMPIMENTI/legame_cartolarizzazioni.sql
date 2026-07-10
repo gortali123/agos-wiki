@@ -23,5 +23,5 @@ SELECT
     LASTMODIFIEDDATA
 FROM base
 {% if is_incremental() %}
-WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}
+WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}

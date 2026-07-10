@@ -7,6 +7,7 @@ models:
       incremental_strategy: merge
       unique_key: [CD_PROTOCOLLO, CD_RIGA, CD_EMETTITORE, TP_PROCEDURA, TS_INIZIO_VALIDITA]
       pre_hook: "{{ delete_l2('crvouf', ['CD_PROTOCOLLO', 'CD_RIGA', 'CD_EMETTITORE'], ['CRVOC_PROTOCOLLO', 'CRVOC_RIGA', 'CRVOC_EMETTITORE']) }}"
+      query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "CARTE_UTILIZZI"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

@@ -6,11 +6,8 @@ sources:
     tables:
       - name: aiecfparel
         data_tests:
-          - try_cast_table:
-              arguments:
-                rtrim_varchar: true
-          - primary_key_table:
+          - try_cast_table
+          - unique_key_table:
               arguments:
                 pk_columns: [aiparel_pratica, aiparel_progressivo, aiparel_prog_var]
-                rtrim_varchar: true
       - name: aiecfparel_deleted

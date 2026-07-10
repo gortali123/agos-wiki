@@ -263,6 +263,10 @@ models:
         +schema: L2_PRODOTTO
         +meta: {subject_area: "CARTE"}
         +tags: ["CARTE"]
+      GESTIONE_CREDITI:
+        +schema: L2_GESTIONE_CREDITI
+        +meta: {subject_area: "GESTIONE_CREDITI"}
+        +tags: ["GESTIONE_CREDITI"]
       ONBOARDING:
         +schema: L2_ONBOARDING
         +meta: {subject_area: "ONBOARDING"}
@@ -287,10 +291,6 @@ models:
         +schema: L2_SWORD
         +meta: {subject_area: "SWORD"}
         +tags: ["SWORD"]
-      GESTIONE_CREDITI:
-        +schema: L2_GESTIONE_CREDITI
-        +meta: {subject_area: "GESTIONE_CREDITI"}
-        +tags: ["GESTIONE_CREDITI"]
 
     L3:
       +meta: {layer: "L3"}

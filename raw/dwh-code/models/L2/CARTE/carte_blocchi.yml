@@ -5,7 +5,9 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
-      unique_key: [CD_PRATICA, TP_PROCEDURA, CD_PROGRESSIVO, CD_BLOCCO_OCS, TS_INSERIMENTO]
+      unique_key: [CD_PRATICA, TP_PROCEDURA, CD_PROGRESSIVO, CD_BLOCCO_OCS]
+      pre_hook: "{{ delete_l2('crcarblo', ['CD_PRATICA', 'TP_PROCEDURA', 'CD_PROGRESSIVO'], ['cab_pratica', 'cab_provenienza', 'cab_progressivo']) }}"
+      query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "CARTE_BLOCCHI"}'
     constraints:
       - type: primary_key
         warn_unenforced: false
@@ -19,8 +21,6 @@ models:
         data_type: NUMBER(8,0)
       - name: CD_BLOCCO_OCS
         data_type: VARCHAR(2)
-      - name: TS_INSERIMENTO
-        data_type: TIMESTAMP_NTZ
       - name: FL_BLOCCO_AUTOMATICO
         data_type: VARCHAR(1)
       - name: TP_BLOCCO
@@ -31,6 +31,8 @@ models:
         data_type: DATE
       - name: FL_ATTIVO
         data_type: VARCHAR(1)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
       - name: DT_INSERIMENTO
         data_type: DATE
       - name: ORA_INSERIMENTO

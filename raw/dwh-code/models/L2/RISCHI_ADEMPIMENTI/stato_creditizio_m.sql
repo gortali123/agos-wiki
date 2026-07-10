@@ -35,5 +35,5 @@ FROM CTE_MAIN AS M
 LEFT JOIN CTE_LEGAME_CONTROPARTE AS LCONT
     ON M.CD_PRATICA = LCONT.CD_PRATICA AND M.TP_PROCEDURA = LCONT.TP_PROCEDURA
 {% if is_incremental() %}
-  WHERE M.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+  WHERE M.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}

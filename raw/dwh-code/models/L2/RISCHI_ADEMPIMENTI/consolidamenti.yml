@@ -6,6 +6,7 @@ models:
       materialized: incremental
       incremental_strategy: append
       pre_hook: "{{ delete_l2('oxcofcoct', ['TP_PROC_CONSOLIDANTE', 'CD_PRATICA_CONSOLIDANTE'], ['CONST_PROV_PRA_NEW', 'CONST_NUM_PRA_NEW']) }}" # inserito solo le PK della main
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "CONSOLIDAMENTI"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

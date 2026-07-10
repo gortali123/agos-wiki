@@ -1,26 +1,31 @@
-{% test try_cast_table_new(model, skip_columns=none, accepted_values=none) %}
- 
+-- PROPOSTA: rename di raw/dwh-code/tests/generic/try_cast_table_new.sql -> try_cast_table_noocs.
+-- Solo il nome del test e' cambiato (try_cast_table_new -> try_cast_table_noocs), logica invariata.
+-- Non testata: da rinominare in my_dwh-x-dbt (tests/generic/) se approvato, aggiornando anche
+-- i riferimenti a try_cast_table_new nei .yml dei modelli che lo usano.
+
+{% test try_cast_table_noocs(model, skip_columns=none, accepted_values=none) %}
+
 {% if execute %}
- 
+
   {% set l1_model = model.identifier | replace('_source', '') %}
   {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', ('stg_' ~ l1_model)) | first %}
   {% if not l1_node %}
     {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
   {% endif %}
- 
+
   {% set skip_columns_lower = ((skip_columns or []) + ['ts_riferimento', 'ts_caricamento']) | map('lower') | list %}
   {% set accepted_values = accepted_values or {} %}
- 
+
   {% set l1_sql = l1_node.raw_code | upper %}
- 
+
   {# Estrai i nomi delle colonne dal SQL (quello dopo " AS ") #}
   {% set sql_upper = l1_sql | upper %}
   {% set select_idx = sql_upper.find('SELECT') %}
   {% set from_idx = sql_upper.find('FROM', select_idx) %}
- 
+
   {% if select_idx >= 0 and from_idx > select_idx %}
     {% set after_select = l1_sql[select_idx + 6:from_idx] %}
- 
+
     {% set expressions = [] %}
     {% set lines = after_select.split('\n') %}
     {% for line in lines %}
@@ -39,7 +44,7 @@
         {% endif %}
       {% endif %}
     {% endfor %}
- 
+
   {% else %}
     {% set expressions = [] %}
   {% endif %}
@@ -47,7 +52,7 @@
   {% if 'WHERE' in l1_sql %}
     {% set where_clause = l1_sql.split('WHERE')[1] %}
   {% endif %}
- 
+
   {% set cols_to_check = [] %}
   {% for col in expressions %}
     {% set col_from_l1 = l1_node.columns.get(col['name'] | lower) or l1_node.columns.get(col['name']) %}
@@ -55,7 +60,7 @@
     {% set exclude_vals = accepted_values.get(col_data_type) or [] %}
     {% do cols_to_check.append({'name': col['name'], 'expr': col['expr'], 'exclude_vals': exclude_vals}) %}
   {% endfor %}
- 
+
 with check_results as (
   select
     object_construct(
@@ -72,7 +77,7 @@ with check_results as (
   from {{ model }}
   {% if where_clause %}where {{ where_clause }}{% endif %}
 )
- 
+
 select
   '{{ run_started_at }}' as ts_started_at,
   'try_cast' as ds_nome_test,
@@ -82,7 +87,6 @@ select
   '{{ invocation_id }}' as cd_run_dbt
 from check_results
 where array_size(object_keys(failure_info)) > 0
- 
+
 {% endif %}
 {% endtest %}
- 

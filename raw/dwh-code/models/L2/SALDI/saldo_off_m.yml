@@ -5,7 +5,7 @@ models:
       materialized: incremental
       incremental_strategy: append
       query_tag: '{"app": "DBT", "schema": "L2_SALDI", "entita": "SALDO_OFF_M"}'
-      pre_hook: "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+      pre_hook: "{{ delete_month() }}"
     constraints:
       - type: primary_key
         warn_unenforced: false

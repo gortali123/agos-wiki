@@ -1,5 +1,6 @@
 {% macro delete_l2(source_name, tgt_keys, src_keys) %}
 {%- set source_table = ref(source_name) -%}
+{% if is_incremental() %}
 DELETE FROM {{ this }} tgt
 WHERE EXISTS (
   SELECT 1
@@ -21,4 +22,5 @@ WHERE EXISTS (
     {%- endif %}
   {%- endfor %}
 )
+{% endif %}
 {% endmacro %}

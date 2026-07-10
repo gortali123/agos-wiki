@@ -5,6 +5,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: merge
+      query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "CARTE_LIMITAZIONI_OPERATIVITA"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

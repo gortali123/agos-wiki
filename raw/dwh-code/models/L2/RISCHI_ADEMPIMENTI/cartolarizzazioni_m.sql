@@ -179,5 +179,5 @@ LEFT JOIN STATUS_LOAN SL
     ON SL.CD_PRATICA = LC.CD_PRATICA_CARTOLARIZZATA
    AND SL.DT_OSSERVAZIONE = LC.DT_OSSERVAZIONE
 {% if is_incremental() %} 
-WHERE LC.DT_OSSERVAZIONE = {{ last_day_past_month() }} 
+WHERE LC.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %} 

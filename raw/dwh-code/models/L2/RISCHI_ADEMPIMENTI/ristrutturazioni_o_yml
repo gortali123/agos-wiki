@@ -6,6 +6,7 @@ models:
       materialized: incremental
       incremental_strategy: append
       unique_key: [TP_RISTRUTTURAZIONE]
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "RISTRUTTURAZIONI_O"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

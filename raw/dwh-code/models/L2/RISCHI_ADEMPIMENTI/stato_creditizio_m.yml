@@ -5,9 +5,8 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
-      pre_hook: 
-        - "{{ delete_last_month('DT_OSSERVAZIONE') }}"
-        - "{{ delete_l2('oxdrfpra', ['CD_PRATICA', 'TP_PROCEDURA', 'DT_OSSERVAZIONE'], ['DRPRA_PRATICA', 'DRPRA_PROVENIENZA', 'DRPRA_DATA_ESTRAZIONE'])}}"
+      pre_hook: "{{ delete_month() }}"
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "STATO_CREDITIZIO_M"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

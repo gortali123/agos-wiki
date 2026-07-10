@@ -47,5 +47,5 @@ LEFT JOIN {{ ref('creccanecs') }} N
     AND N.FL_DELETED = 'N'
 WHERE T.FL_DELETED = 'N'
 {% if is_incremental() %} 
-AND DT_OSSERVAZIONE = {{ last_day_past_month() }} 
+AND DT_OSSERVAZIONE = {{ get_dt_osservazione() }} 
 {% endif %} 

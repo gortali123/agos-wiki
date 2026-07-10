@@ -1,4 +1,9 @@
-{% test primary_key_table(model, pk_columns, where_clause=none, rtrim_varchar=false) %}
+-- PROPOSTA: aggiornamento di raw/dwh-code/tests/generic/primary_key_table.sql
+-- Rimosso il ramo rtrim_varchar / nullif(rtrim(...)) sulle colonne varchar: non piu necessario.
+-- Il confronto sulla pk_columns usa ora direttamente la colonna, senza trim/nullif.
+-- Non testata su dati reali.
+
+{% test primary_key_table(model, pk_columns, where_clause=none) %}
 {{ config(severity='error') }}
 
 {% if execute %}
@@ -9,29 +14,12 @@
     {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
   {% endif %}
 
-  {# --- tipi colonne da l1_node per applicare rtrim sui varchar (come in generate_model) --- #}
-  {% set col_types = {} %}
-  {% if l1_node %}
-    {% for col_name, col_def in l1_node.columns.items() %}
-      {% do col_types.update({col_name | lower: col_def.data_type | lower}) %}
-    {% endfor %}
-  {% endif %}
-
-  {% set pk_expr = {} %}
-  {% for col in pk_columns %}
-    {% if rtrim_varchar and 'varchar' in col_types.get(col | lower, '') %}
-      {% do pk_expr.update({col: "nullif(rtrim(" ~ col ~ "), '')"}) %}
-    {% else %}
-      {% do pk_expr.update({col: col}) %}
-    {% endif %}
-  {% endfor %}
-
 with null_pks as (
 
   select
     object_construct(
       {% for col in pk_columns %}
-        '{{ col }}', iff({{ pk_expr[col] }} is null, 'null', null)
+        '{{ col }}', iff({{ col }} is null, 'null', null)
         {{ ',' if not loop.last else '' }}
       {% endfor %}
     ) as failure_info
@@ -40,7 +28,7 @@ with null_pks as (
     {% if where_clause %}and ({{ where_clause }}){% endif %}
     and (
       {% for col in pk_columns %}
-        {{ pk_expr[col] }} is null
+        {{ col }} is null
         {% if not loop.last %} or {% endif %}
       {% endfor %}
     )
@@ -52,7 +40,7 @@ duplicate_pks as (
   select distinct
     object_construct(
       {% for col in pk_columns %}
-        '{{ col }}', cast({{ pk_expr[col] }} as varchar)
+        '{{ col }}', cast({{ col }} as varchar)
         {{ ',' if not loop.last else '' }}
       {% endfor %}
     ) as failure_info
@@ -61,7 +49,7 @@ duplicate_pks as (
       *,
       count(*) over (partition by
         {% for col in pk_columns %}
-          {{ pk_expr[col] }}{% if not loop.last %},{% endif %}
+          {{ col }}{% if not loop.last %},{% endif %}
         {% endfor %}
       ) as pk_count
     from {{ model }}
