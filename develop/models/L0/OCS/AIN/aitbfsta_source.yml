@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aitbfsta
+        data_tests:
+          - try_cast
+          - unique_key:
+              arguments:
+                pk_columns: [aitbsta_stato]
+      - name: aitbfsta_deleted

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aiecfpard
+        data_tests:
+          - try_cast
+          - unique_key:
+              arguments:
+                pk_columns: [aiecpard_sezione, aiecpard_pratica, aiecpard_progressivo, aiecpard_riga]
+      - name: aiecfpard_deleted

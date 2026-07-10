@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aiecfpardl
+        data_tests:
+          - try_cast
+          - unique_key:
+              arguments:
+                pk_columns: [aipardl_sezione, aipardl_pratica, aipardl_progressivo, aipardl_riga, aipardl_prog_var]
+      - name: aiecfpardl_deleted

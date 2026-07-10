@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aictfpdp
+        data_tests:
+          - try_cast
+          - unique_key:
+              arguments:
+                pk_columns: [aictpdp_ide]
+      - name: aictfpdp_deleted

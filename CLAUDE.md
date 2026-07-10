@@ -7,13 +7,14 @@ Full background on the pattern this follows: see `raw/llm-wiki-pattern.md`.
 ## Layers
 
 - **raw/** — immutable source material: pasted docs, exported specs, meeting notes, links to code in `my_dwh-x-dbt` (referenced by path, not copied), screenshots, etc. Never edit files here except to add new ones.
-- **raw/dwh-code/** — plain vendored copy (regular tracked files, not a git submodule) of relevant parts of the `my_dwh-x-dbt` dbt project: macros, L2/L3 models, a sample of L1 models — not necessarily everything. Synced manually by the user from the live GitLab repo via `raw/dwh-code/sync-from-dwh-x-dbt.ps1`, then pushed to `https://github.com/gortali123/my_dwh-x-dbt` and re-copied here. Treated like the rest of `raw/`: never edit, only read. Its presence lets wiki pages cite real, Obsidian-openable paths (e.g. `raw/dwh-code/macros/add_datamask.sql`) instead of bare text paths. It is a pinned snapshot, not live — see staleness note below.
+- **raw/dwh-code/** — plain vendored copy (regular tracked files, not a git submodule) of relevant parts of the `my_dwh-x-dbt` dbt project: macros, L2/L3 models, a sample of L1 models — not necessarily everything. Synced manually by the user from the live GitLab repo via `sync-dwh-code.ps1` (repo root), then pushed to `https://github.com/gortali123/my_dwh-x-dbt` and re-copied here. Treated like the rest of `raw/`: never edit, only read. Its presence lets wiki pages cite real, Obsidian-openable paths (e.g. `raw/dwh-code/macros/add_datamask.sql`) instead of bare text paths. It is a pinned snapshot, not live — see staleness note below.
 - **entities/** — one page per concrete thing: a dbt model, a source table, a business entity (e.g. "ANAGR_CONTROPARTE"), a layer (L1/L2/L3), a person/team.
 - **concepts/** — one page per idea/pattern that cuts across entities: business rules, data lineage patterns, naming conventions, recurring transformations (e.g. "variazioni anagrafiche" logic), glossary terms.
 - **sources/** — one summary page per raw source ingested, with key takeaways and links to the entity/concept pages it touched.
 - **queries/** — saved answers to substantive questions the user asked, filed back as pages so the analysis compounds instead of disappearing into chat history.
+- **develop/** — proposed code changes (fixes, new models/macros, refactors) written by you at the user's request, mirroring `raw/dwh-code/`'s folder structure but containing only the files actually touched (e.g. `develop/macros/logic_delete/delete_l2.sql`). This is NOT part of `raw/` — it's mutable, LLM-authored, and represents work-in-progress destined to eventually be applied upstream in the live `dwh-x-dbt` repo (outside this wiki's control). Never write here silently; always as the output of a `develop` workflow run.
 - **index.md** — catalog of every page in the wiki, one line each, grouped by folder.
-- **log.md** — append-only chronological record of ingests/queries/lints.
+- **log.md** — append-only chronological record of ingests/queries/lints/develops.
 
 ## Conventions
 
@@ -60,6 +61,14 @@ Check for and report:
 - Concepts mentioned in multiple pages but lacking their own `concepts/` page.
 - Missing cross-references between clearly related pages.
 
+### Develop
+Triggered when the user asks for an addition or fix to the dbt code itself (a bug fix, a new model, a macro change) rather than a wiki page — e.g. "fix delete_l2 so it guards on is_incremental" or "write the S1 model for X".
+1. Read the relevant file(s) in `raw/dwh-code/` (or the live repo if not vendored) in full before touching anything.
+2. Write the changed/new file(s) under `develop/`, mirroring the same relative path as in `raw/dwh-code/` (e.g. a fix to `raw/dwh-code/macros/logic_delete/delete_l2.sql` goes to `develop/macros/logic_delete/delete_l2.sql`). Never edit `raw/dwh-code/` itself.
+3. If a `queries/` or `concepts/`/`entities/` page already documents the bug/gap being addressed, update it to point at the `develop/` file and note the change is proposed, not yet applied upstream.
+4. Append an entry to `log.md`. Note explicitly that the change lives only in `develop/` until the user manually ports it into the live `dwh-x-dbt` repo.
+5. Update `index.md` if a new `develop/` file is added (short "Develop" section, one line each, same style as the others).
+
 ## Log format
 
 Each `log.md` entry starts with a consistent prefix so it stays greppable:
@@ -67,6 +76,7 @@ Each `log.md` entry starts with a consistent prefix so it stays greppable:
 ## [YYYY-MM-DD] ingest | <source title>
 ## [YYYY-MM-DD] query | <question, short>
 ## [YYYY-MM-DD] lint
+## [YYYY-MM-DD] develop | <what changed, short>
 ```
 
 ## Notes specific to this project

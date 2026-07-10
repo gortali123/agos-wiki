@@ -54,6 +54,18 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 - [[incoerenze-codice-vs-documentazione]] — lint doc vs codice reale in raw/dwh-code
 - [[todo-allineamento-documentazione]] — TODO concrete per correggere i documenti di framework
 
+## Develop
+Proposte di modifica al codice `raw/dwh-code/`, non ancora applicate a monte in `dwh-x-dbt`.
+- `develop/tests/generic/unique_key.sql` — rename di `unique_key_table` (uniqueness-only, per source OCS)
+- `develop/tests/generic/primary_key.sql` — rename di `primary_key_table` (uniqueness + nullability, per source non-OCS con chiave reale)
+- `develop/tests/generic/try_cast.sql` — rename di `try_cast_table` (cast generico ricostruito dal `data_type` L1); `validation_config` con espressione custom rimosso, resta solo `skip_columns` (niente più override di espressione per colonna, solo skip/where_clause/accepted_values)
+- `develop/tests/generic/try_cast_from_sql.sql` — rename di `try_cast_table_noocs` (legge l'espressione reale da `raw_code` del modello L1, per colonne con trasformazioni non banali)
+- `develop/tests/adb_arc_try_cast.sql` — esempio di test singular scritto a mano (non generico), copre TUTTE le colonne di `adb_arc` hardcoded 1:1 sul modello L1, in aggiunta (doppia rete) a `try_cast_from_sql` che già le copre dinamicamente
+- `develop/models/L0/OCS/AIN/*.yml` (14 file), `develop/models/L0/ADOBE/*.yml` (15 file) — call site aggiornati ai nomi test rinominati; `adb_arc_source.yml` usa `try_cast_from_sql` (legge l'espressione reale dal SQL L1) invece del `try_cast` generico
+- `develop/macros/generate_models/generate_source.sql` — generatore yml L0 aggiornato: emette `unique_key`/`primary_key` in base a `sorgente` invece di sempre `primary_key_table`, emette `try_cast` (nome rinominato)
+- `develop/macros/generate_models/generate_model.sql` — generatore SQL modelli L1: per colonne varchar su sorgenti OCS, valore vuoto dopo `RTRIM` sostituito con uno spazio singolo `' '` invece di `NULL` (`IFF(RTRIM(col)='',' ',RTRIM(col))` al posto di `NULLIF(RTRIM(col),'')`)
+- `develop/generate_models.ps1` — rimosso il check morto su `'---'` negli Step 2 (`generate_yaml`) e Step 4 (`generate_snapshots`): quelle due macro non hanno mai emesso quel separatore (solo `generate_model.sql`, Step 3, lo fa), il flush avveniva comunque tramite il trigger `- name:`. `generate_yaml.sql`, `generate_snapshots.sql`, `get_model_names.sql`, `cobol.sql` restano invariati in `raw/` — non avevano nulla da correggere
+
 ## Note
 
 Codice reale disponibile come copia semplice in `raw/dwh-code/` (aggiornata manualmente dall'utente da `dwh-x-dbt` via `sync-from-dwh-x-dbt.ps1`, mirrorata anche su `https://github.com/gortali123/my_dwh-x-dbt`). Prima verifica incrociata doc/codice effettuata il 2026-07-07, vedi [[incoerenze-codice-vs-documentazione]] — copertura parziale (campione di macro/modelli), non un'esplorazione esaustiva.
