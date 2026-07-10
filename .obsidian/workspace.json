@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "queries/ottimizzazione-indirizzi-postalizzazione-scd2.md",
+                "file": "CLAUDE.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ottimizzazione-indirizzi-postalizzazione-scd2"
+              "title": "CLAUDE"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 479.50909423828125
   },
   "right": {
     "id": "d10b8989480e73a0",
@@ -185,24 +185,25 @@
   },
   "active": "848ff90b8d859f2b",
   "lastOpenFiles": [
+    "sync-dwh-code.ps1",
+    "sync-dwh-code.ps1.tmp.7180.d449829225f5",
+    "log.md.tmp.7180.0cb153c28ca0",
+    "index.md.tmp.7180.9b64755e2ce3",
+    "index.md.tmp.7180.bda66c48fa0d",
+    "concepts/gestione-cancellazioni.md.tmp.7180.83221060d89e",
+    "concepts/storicizzazione-l2-s1-s4.md.tmp.7180.a9461752c7b4",
+    "raw/llm-wiki-pattern.md",
+    "queries/bozza-doc-s1-main-senza-pk.md",
+    "queries/ottimizzazione-variazioni-anagrafiche-day-scd2.md",
+    "queries/ottimizzazione-indirizzi-postalizzazione-scd2.md",
     "queries/tests/generic/try_cast_table.sql.tmp.10596.105e2f844950",
     "queries/tests/generic/try_cast_table.sql.tmp.10596.d3c9abf7f8cb",
     "queries/unique_key_table.sql.tmp.10596.18e5d27d4d57",
     "queries/tests/generic/try_cast_table_noocs.sql",
-    "queries/tests/generic/try_cast_table_noocs.sql.tmp.10596.9c72b4b4925c",
-    "queries/tests/generic/try_cast_table.sql",
-    "queries/tests/generic/try_cast_table.sql.tmp.10596.98991a47dd9d",
-    "queries/tests/generic/primary_key_table.sql",
-    "queries/tests/generic/primary_key_table.sql.tmp.10596.dc1882b02398",
-    "queries/tests/generic",
-    "queries/tests",
     "queries/bug-delete_l2-primo-run.md",
-    "queries/ottimizzazione-variazioni-anagrafiche-day-scd2.md",
     "queries/ottimizzazione-variazioni-anagrafiche-scd2.md",
-    "queries/ottimizzazione-indirizzi-postalizzazione-scd2.md",
     "queries/todo-allineamento-documentazione.md",
     "queries/incoerenze-doc-framework-vs-guida-sviluppo.md",
-    "queries/bozza-doc-s1-main-senza-pk.md",
     "sources/agosx-layer-l2-datamodel.md",
     "sources/agosx-caricamento-l2.md",
     "queries/incoerenze-codice-vs-documentazione.md",
@@ -220,7 +221,6 @@
     "concepts/gestione-errori-retry-l0.md",
     "concepts/gestione-cancellazioni.md",
     "concepts/file-civetta-e-formati.md",
-    "concepts/data-quality-controlli.md",
     "Untitled 2.canvas",
     "Untitled 1.canvas",
     "Untitled.canvas"

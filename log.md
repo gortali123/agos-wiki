@@ -28,6 +28,10 @@ L'utente ha commentato le 8 incoerenze in [[incoerenze-codice-vs-documentazione]
 
 ## [2026-07-08] query | ottimizzazione performance variazioni_anagrafiche (SCD2 su CCANALOG)
 
+## [2026-07-10] lint
+
+Nessun orphan page, nessuna nuova contraddizione, citazioni codice spot-checked tutte valide (nota: `variazioni_anagrafiche_day.sql.old`/`.yml.old` presenti in `raw/dwh-code`, refactor recente non ancora commentato in wiki). Trovati 5 link pendenti in `index.md`, [[storicizzazione-l2-s1-s4]] e [[gestione-cancellazioni]] verso pagine `queries/` cancellate intenzionalmente dall'utente (bozza-doc-s1-main-senza-pk, ottimizzazione-variazioni-anagrafiche-scd2, ottimizzazione-indirizzi-postalizzazione-scd2, ottimizzazione-variazioni-anagrafiche-day-scd2, bug-delete_l2-primo-run). Confermato con l'utente: cancellazione intenzionale, pulita. Rimossi i riferimenti dalle 3 pagine coinvolte.
+
 Diagnosticato perché `variazioni_anagrafiche.sql` ricalcola `LEAD`/`LAG` (TS_FINE_VALIDITA + dedup hash) su tutta la storia di CCANALOG ad ogni run incrementale, prima che `is_incremental_S1` applichi il filtro: il filtro arriva dopo i window function, non prima. Proposta di design strutturale: sostituire con pattern "delta + last-open row dal target", ricalcolando i window function solo su un set minuscolo (1 riga aperta + poche nuove per controparte) e lasciando che il merge di dbt faccia UPDATE/INSERT in base all'unique_key esistente. Prima iterazione della proposta troppo complessa (7+ CTE, macro-wrapper inutili) — semplificata su richiesta dell'utente a 3 CTE (stesso numero dell'originale), senza macro nuove e senza `SELECT *`. Codice SQL completo scritto in [[variazioni_anagrafiche_ottimizzato.sql|queries/variazioni_anagrafiche_ottimizzato.sql]], dettaglio/diagnosi/punti aperti in [[ottimizzazione-variazioni-anagrafiche-scd2]]. Proposta non ancora implementata nel repo live né testata su dati reali.
 
 ## [2026-07-07] ingest | seconda passata su dwh-code (macro rimanenti + template)

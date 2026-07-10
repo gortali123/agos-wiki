@@ -26,7 +26,7 @@ SQL a 3 blocchi: CTE base (dataset + validità) → CTE dedup (colonne + hash co
 
 ### Variante: main L1 senza PK propria (PK = ROWID)
 
-Quando la tabella main L1 non ha una chiave funzionale univoca (solo `ROWID` tecnico), a parità di chiave + `TS_INIZIO_VALIDITA` possono esserci più record fisici duplicati. Pattern reale in `models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql` (`raw/dwh-code`): si introduce un campo tecnico `PROGRESSIVO_PK` (`ROW_NUMBER()` su chiave+timestamp modifica, ordinato per `ROWID`), che estende `unique_key`/PK del modello e viene passato come `order_extra` a `is_incremental_S1()`. `TS_FINE_VALIDITA` viene poi propagato con una window function a tutti i record con lo stesso `TS_INIZIO_VALIDITA`. **Aggiunto formalmente alla guida sviluppo il 2026-07-08** (§5.1, subito dopo "S1 — SCD2"), a partire dal blocco redatto in [[bozza-doc-s1-main-senza-pk]] — non più solo una bozza.
+Quando la tabella main L1 non ha una chiave funzionale univoca (solo `ROWID` tecnico), a parità di chiave + `TS_INIZIO_VALIDITA` possono esserci più record fisici duplicati. Pattern reale in `models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql` (`raw/dwh-code`): si introduce un campo tecnico `PROGRESSIVO_PK` (`ROW_NUMBER()` su chiave+timestamp modifica, ordinato per `ROWID`), che estende `unique_key`/PK del modello e viene passato come `order_extra` a `is_incremental_S1()`. `TS_FINE_VALIDITA` viene poi propagato con una window function a tutti i record con lo stesso `TS_INIZIO_VALIDITA`. **Aggiunto formalmente alla guida sviluppo il 2026-07-08** (§5.1, subito dopo "S1 — SCD2"). La bozza di lavoro è stata rimossa da `queries/` una volta applicata al documento.
 
 ## S2 — Append giornalieri
 
