@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aitbfatt
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aitbatt_attributo]
       - name: aitbfatt_deleted

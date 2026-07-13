@@ -1,8 +1,4 @@
--- PROPOSTA: aggiornamento di raw/dwh-code/tests/generic/try_cast_table.sql
--- Rimosso il ramo rtrim_varchar / nullif(rtrim(...)) sulle colonne varchar: non piu necessario.
--- Non testata su dati reali.
-
-{% test try_cast_table(model, validation_config=none, where_clause=none, accepted_values=none) %}
+{% test try_cast(model, skip_columns=none, where_clause=none, accepted_values=none) %}
 
 {% if execute %}
 
@@ -13,24 +9,16 @@
   {% endif %}
 
   {% set columns_from_source = adapter.get_columns_in_relation(model) | map(attribute='column') | map('lower') | list %}
-  {% set validation_config = validation_config or {} %}
+  {% set skip_columns_lower = (skip_columns or []) | map('lower') | list %}
   {% set accepted_values = accepted_values or {} %}
 
   {# --- Costruisci prima la lista delle colonne da renderizzare --- #}
   {% set cols_to_render = [] %}
       {% for col_name, col_def in l1_node.columns.items() %}
-          {% if col_name | lower in columns_from_source %}
-            {% set skip = validation_config.get(col_name) == 'skip' %}
-            {% if not skip %}
-              {% set validation_sql = validation_config.get(col_name) if validation_config.get(col_name) and validation_config.get(col_name) != 'skip' else none %}
-              {% set col_ref = col_name | upper %}
-              {% if validation_sql %}
-          {% set check_expr = validation_sql | replace(col_name, col_name | upper) %}
-              {% else %}
-          {% set check_expr = "try_cast(" ~ col_ref ~ " as " ~ col_def.data_type ~ ")" %}
-              {% endif %}
+          {% if col_name | lower in columns_from_source and col_name | lower not in skip_columns_lower %}
+            {% set col_ref = col_name | upper %}
+            {% set check_expr = "try_cast(" ~ col_ref ~ " as " ~ col_def.data_type ~ ")" %}
         {% do cols_to_render.append({'name': col_name | upper, 'col_ref': col_ref, 'check_expr': check_expr, 'data_type': col_def.data_type}) %}
-            {% endif %}
           {% endif %}
   {% endfor %}
 

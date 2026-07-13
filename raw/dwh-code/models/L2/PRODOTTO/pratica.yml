@@ -186,6 +186,10 @@ models:
         data_type: VARCHAR(1)
       - name: NM_GIORNI
         data_type: NUMBER(3,0)
+      - name: CD_INIZIATIVA_COMM
+        data_type: VARCHAR(12)
+      - name: FL_OFFERTA
+        data_type: VARCHAR(1)
       - name: FL_RIELAB_24
         data_type: VARCHAR(1)
       - name: FL_ESITO_DEF

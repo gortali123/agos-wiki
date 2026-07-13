@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aiecfpartl
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aipartl_sezione, aipartl_pratica, aipartl_progressivo, aipartl_prog_var]
       - name: aiecfpartl_deleted

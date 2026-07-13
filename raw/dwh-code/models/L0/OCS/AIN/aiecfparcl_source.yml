@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aiecfparcl
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aiparcl_pratica, aiparcl_progressivo, aiparcl_prog_var]
       - name: aiecfparcl_deleted

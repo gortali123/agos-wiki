@@ -6,4 +6,4 @@ sources:
     tables:
       - name: corporate
         data_tests:
-          - try_cast_table
+          - try_cast

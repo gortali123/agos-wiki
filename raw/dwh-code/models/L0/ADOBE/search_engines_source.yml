@@ -6,4 +6,4 @@ sources:
     tables:
       - name: search_engines
         data_tests:
-          - try_cast_table
+          - try_cast

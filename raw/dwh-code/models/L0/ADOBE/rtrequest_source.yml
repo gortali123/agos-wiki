@@ -6,4 +6,4 @@ sources:
     tables:
       - name: rtrequest
         data_tests:
-          - try_cast_table
+          - try_cast

@@ -115,8 +115,6 @@ cq_base AS (
 ),
 -- TODO eu_pv AS ( SELECT CD_PROCEDURA, CD_PRATICA, SUM(EU_TOTALE) AS EU_PROVVIGIONI
 --                 FROM re('provvigioni_e_rappel') WHERE TP_PROVVIGIONE = 'PV' GROUP BY 1,2 ),
--- TODO eu_ra AS ( SELECT CD_PROCEDURA, CD_PRATICA, SUM(EU_TOTALE) AS EU_RAPPEL
---                 FROM re('provvigioni_e_rappel') WHERE TP_PROVVIGIONE = 'RA' GROUP BY 1,2 ),
 {%- endset -%}
 
 {# ---- proiezione L2 -> L3: UNA RIGA PER VERSIONE (chiave, mese). 1a colonna = ts_col (DT_OSSERVAZIONE) ---- #}
@@ -158,7 +156,6 @@ SELECT
     EU_FRESH_CASH * SGN                                   AS EU_FRESH_CASH,
     EU_EROGATO * SGN                                      AS EU_EROGATO,
     EU_PREMIO_LORDO                                       AS EU_PREMIO_ASSICURAZIONE_LORDO,
-    CAST(NULL AS NUMBER(13,2))                            AS EU_RAPPEL,      -- TODO da provvigioni_e_rappel (TP='RA')
     CAST(NULL AS NUMBER(13,2))                            AS EU_PROVVIGIONE, -- TODO da provvigioni_e_rappel (TP='PV')
     EU_SPESE_TOT_IST * SGN                                AS EU_SPESE_TOT_IST,
     EU_TOT_CONTRIB_DA_INTER * SGN                         AS EU_TOT_CONTRIB_DA_INTER,
@@ -204,7 +201,6 @@ SELECT
     NULL AS EU_FRESH_CASH,
     NULL AS EU_EROGATO,
     NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
-    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
     CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
     NULL AS EU_SPESE_TOT_IST,
     NULL AS EU_TOT_CONTRIB_DA_INTER,
@@ -253,7 +249,6 @@ SELECT
     EU_FRESH_CASH * SGN                                       AS EU_FRESH_CASH,
     EU_EROGATO * SGN                                          AS EU_EROGATO,
     EU_PREMIO_LORDO                                           AS EU_PREMIO_ASSICURAZIONE_LORDO,
-    CAST(NULL AS NUMBER(13,2))                                AS EU_RAPPEL,
     CAST(NULL AS NUMBER(13,2))                                AS EU_PROVVIGIONE,
     NULL AS EU_SPESE_TOT_IST,
     NULL AS EU_TOT_CONTRIB_DA_INTER,
@@ -299,7 +294,6 @@ SELECT
     NULL AS EU_FRESH_CASH,
     NULL AS EU_EROGATO,
     NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
-    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
     CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
     NULL AS EU_SPESE_TOT_IST,
     NULL AS EU_TOT_CONTRIB_DA_INTER,
@@ -346,7 +340,6 @@ SELECT
     NULL AS EU_FRESH_CASH,
     NULL AS EU_EROGATO,
     NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
-    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
     CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
     NULL AS EU_SPESE_TOT_IST,
     NULL AS EU_TOT_CONTRIB_DA_INTER,
@@ -403,7 +396,6 @@ SELECT
     NULL AS EU_FRESH_CASH,
     NULL AS EU_EROGATO,
     NULL AS EU_PREMIO_ASSICURAZIONE_LORDO,
-    CAST(NULL AS NUMBER(13,2)) AS EU_RAPPEL,
     CAST(NULL AS NUMBER(13,2)) AS EU_PROVVIGIONE,
     NULL AS EU_SPESE_TOT_IST,
     NULL AS EU_TOT_CONTRIB_DA_INTER,

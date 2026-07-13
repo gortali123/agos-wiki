@@ -1,11 +1,4 @@
--- PROPOSTA: nuovo test generico dbt derivato da raw/dwh-code/tests/generic/primary_key_table.sql
--- Stessa struttura (stesso schema di output ts_started_at/ds_nome_test/ds_schema/ds_tabella/gn_failure_info/cd_run_dbt),
--- ma verifica SOLO l'unicita della chiave (rimossa la parte primary_key_null / null_pks).
--- Rimosso anche rtrim_varchar/nullif(rtrim(...)): inutile qui, era pensato per gestire i null su varchar
--- vuoti nel controllo primary_key_null, che questo test non fa piu.
--- Non testata: da copiare in my_dwh-x-dbt (tests/generic/) se approvata.
-
-{% test unique_key_table(model, pk_columns, where_clause=none) %}
+{% test primary_key(model, pk_columns, where_clause=none) %}
 {{ config(severity='error') }}
 
 {% if execute %}
@@ -16,7 +9,28 @@
     {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
   {% endif %}
 
-with duplicate_pks as (
+with null_pks as (
+
+  select
+    object_construct(
+      {% for col in pk_columns %}
+        '{{ col }}', iff({{ col }} is null, 'null', null)
+        {{ ',' if not loop.last else '' }}
+      {% endfor %}
+    ) as failure_info
+  from {{ model }}
+  where 1=1
+    {% if where_clause %}and ({{ where_clause }}){% endif %}
+    and (
+      {% for col in pk_columns %}
+        {{ col }} is null
+        {% if not loop.last %} or {% endif %}
+      {% endfor %}
+    )
+
+),
+
+duplicate_pks as (
 
   select distinct
     object_construct(
@@ -42,7 +56,18 @@ with duplicate_pks as (
 
 select
   '{{ run_started_at }}' as ts_started_at,
-  'unique_key_duplicate' as ds_nome_test,
+  'primary_key_null' as ds_nome_test,
+  '{{ l1_node.schema }}' as ds_schema,
+  '{{ model.identifier }}' as ds_tabella,
+  failure_info as gn_failure_info,
+  '{{ invocation_id }}' as cd_run_dbt
+from null_pks
+
+union all
+
+select
+  '{{ run_started_at }}' as ts_started_at,
+  'primary_key_duplicate' as ds_nome_test,
   '{{ l1_node.schema }}' as ds_schema,
   '{{ model.identifier }}' as ds_tabella,
   failure_info as gn_failure_info,

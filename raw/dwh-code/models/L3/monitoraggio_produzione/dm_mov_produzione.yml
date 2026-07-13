@@ -77,8 +77,6 @@ models:
         data_type: NUMBER(13,2)
       - name: EU_PREMIO_ASSICURAZIONE_LORDO
         data_type: NUMBER(13,2)
-      - name: EU_RAPPEL
-        data_type: NUMBER(13,2)
       - name: EU_PROVVIGIONE
         data_type: NUMBER(13,2)
       - name: EU_SPESE_TOT_IST

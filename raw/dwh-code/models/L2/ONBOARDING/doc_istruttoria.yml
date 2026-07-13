@@ -4,8 +4,6 @@ models:
     config:
       materialized: incremental
       incremental_strategy: insert_overwrite
-      contract:
-        enforced: false
     constraints:
       - type: primary_key
         warn_unenforced: false

@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aiecfpardl
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aipardl_sezione, aipardl_pratica, aipardl_progressivo, aipardl_riga, aipardl_prog_var]
       - name: aiecfpardl_deleted

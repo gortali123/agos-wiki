@@ -250,6 +250,6 @@ WHERE CL.TP_LINEA_DI_CREDITO = 'CREDIT_LINE'
 
 {{ scd2_foto_mensile(
     src_sql  = src_sql,
-    key_cols = ['TP_PROCEDURA, CD_PRATICA'],
+    key_cols = ['TP_PROCEDURA', 'CD_PRATICA'],
     ts_col   = 'DT_OSSERVAZIONE'
 ) }}

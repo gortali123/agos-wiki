@@ -174,6 +174,13 @@ cte_re2praba_co AS (
     WHERE DPRBA_PROVENIENZA = 'CO'
 ),
 
+cte_cctrcamp_co AS (
+    SELECT DISTINCT
+        TRCA_NUM_PRATICA
+    FROM {{ ref('cctrcamp') }}
+    WHERE TRCA_PROVENIENZA = 'CO'
+),
+
 TAB_FIN_CONSUMO AS (
     SELECT
         P.PLC_NUM_PRATICA                               AS CD_PRATICA,
@@ -273,7 +280,21 @@ TAB_FIN_CONSUMO AS (
         {{ ole_to_date('P.PLC_DAT_STATO_10') }}             AS DT_DBT,
         {{ ole_to_date('P.PLC_PRIMA_SCADENZA') }}           AS DT_PRIMA_SCADENZA,
         {{ ole_to_date('P.PLC_ULTIMA_SCADENZA') }}          AS DT_ULTIMA_SCADENZA,
-        CAST(NULL AS DATE)                              AS DT_CHIUSURA_ANZIANITA,
+        CASE
+            WHEN P.PLC_STATO = '30' AND P.PLC_ATTRIBUTO = 'RE'
+                THEN {{ ole_to_date('P.PLC_DAT_STATO_03') }}
+            WHEN P.PLC_STATO = '30' AND P.PLC_ATTRIBUTO = 'RT'
+                THEN {{ ole_to_date('P.PLC_DAT_STATO_03') }}
+            WHEN P.PLC_STATO = '51'
+                THEN {{ ole_to_date('P.PLC_DAT_STATO_05') }}
+            WHEN P.PLC_STATO = '55'
+                THEN {{ ole_to_date('P.PLC_DAT_STATO_07') }}
+            WHEN P.PLC_DATA_CESSIONE IS NOT NULL
+                THEN {{ custom_to_date('P.PLC_DATA_CESSIONE') }}
+            WHEN P.PLC_STATO = '95'
+                THEN {{ ole_to_date('P.PLC_DAT_STATO_08') }}
+            ELSE {{ ole_to_date('P.PLC_ULTIMA_SCADENZA') }}
+        END AS DT_CHIUSURA_ANZIANITA,
         PAFF.DT_PRIMA_SCADENZA_IST,
         PAFF.DT_ULTIMA_SCADENZA_IST,
         LOG.TS_COMUNICAZIONE_ESITO_DEF,
@@ -316,6 +337,9 @@ TAB_FIN_CONSUMO AS (
         CASE WHEN P.PLC_PRODOTTO IN ('02', '09', '16') THEN 'S' ELSE 'N'
         END                                             AS FL_REFIN_RECUPERO,
         OXS.TP_FIRMA,
+        CAST(P.PLC_INIZIATIVA_COMM AS VARCHAR(12))       AS CD_INIZIATIVA_COMM,
+        CASE WHEN CAMP_CO.TRCA_NUM_PRATICA IS NOT NULL THEN 'S' ELSE 'N'
+        END                                             AS FL_OFFERTA,
         ABB.FL_ABBUONO,
         CHI.FL_PERDITA_CESSIONE,
         SEC.FL_CARTOLARIZZATA,
@@ -372,6 +396,8 @@ TAB_FIN_CONSUMO AS (
         ON P.PLC_TIPO_PRODOTTO = 'PP'
         AND MKT_PP.CD_MACRO_PRODOTTO_2 = MPRO.CD_MACRO_PRODOTTO_2
         AND MKT_PP.TS_FINE_VALIDITA = TO_TIMESTAMP_NTZ('9999-12-31 00:00:00.000')
+    LEFT JOIN cte_cctrcamp_co AS CAMP_CO
+        ON P.PLC_INIZIATIVA_COMM = CAST(CAMP_CO.TRCA_NUM_PRATICA AS VARCHAR(12))
 ),
 
 -- ==============================================================
@@ -563,6 +589,13 @@ cte_re2praba_ca AS (
     WHERE DPRBA_PROVENIENZA = 'CA'
 ),
 
+cte_cctrcamp_ca AS (
+    SELECT DISTINCT
+        TRCA_NUM_PRATICA
+    FROM {{ ref('cctrcamp') }}
+    WHERE TRCA_PROVENIENZA = 'CA'
+),
+
 TAB_FIN_CARTA AS (
     SELECT
         CRCAR.CRCAR_KEY_N                           AS CD_PRATICA,
@@ -644,7 +677,17 @@ TAB_FIN_CARTA AS (
         NULL                                                AS DT_ESTINZIONE_ANTICIPATA,
         {{ ole_to_date('CRCAR.CRCAR_DATA_CHIUSURA') }}          AS DT_CHIUSURA_EFFETTIVA,
         {{ ole_to_date('CRCAR.CRCAR_DATA_MESSA_IN_MORA') }}     AS DT_MESSA_IN_MORA,
-        CAST(NULL AS DATE)                                  AS DT_CHIUSURA_ANZIANITA,
+        CASE
+            WHEN CRCAR.CRCAR_STATO = '35'
+                THEN {{ ole_to_date('CRCAR.CRCAR_ST_DATA_4') }}
+            WHEN RT.DT_RITIRATA IS NOT NULL
+                THEN RT.DT_RITIRATA
+            WHEN CC.DT_CESSIONE IS NOT NULL
+                THEN CC.DT_CESSIONE
+            WHEN PP.DT_PASSAGGIO_PERDITA IS NOT NULL
+                THEN PP.DT_PASSAGGIO_PERDITA
+            ELSE {{ ole_to_date('CRCAR.CRCAR_DATA_SCADENZA') }}
+        END AS DT_CHIUSURA_ANZIANITA,
         {{ ole_to_date('CRCAR.CRCAR_DATA_PRIMA_SCADENZA') }}    AS DT_PRIMA_SCADENZA,
         NULL                                                AS DT_PRIMA_SCADENZA_IST,
         NULL                                                AS DT_ULTIMA_SCADENZA,
@@ -690,6 +733,9 @@ TAB_FIN_CARTA AS (
         NULL                                                AS FL_PNF,
         NULL                                                AS FL_REFIN_RECUPERO,
         OXS.TP_FIRMA,
+        CAST(CRCAR.CRCAR_COD_INIZIATIVA  AS VARCHAR(12))     AS CD_INIZIATIVA_COMM,
+        CASE WHEN CAMP_CA.TRCA_NUM_PRATICA IS NOT NULL THEN 'S' ELSE 'N'
+        END                                             AS FL_OFFERTA,
         ABB.FL_ABBUONO,
         CES.FL_PERDITA_CESSIONE,
         SER.FL_PRODOTTO_ASSICURATIVO,
@@ -745,6 +791,8 @@ TAB_FIN_CARTA AS (
         ON MPRO.CD_MACRO_PRODOTTO_4 = 'REV_B2C'
         AND MKT_B2C.CD_MACRO_PRODOTTO_1 = MPRO.CD_MACRO_PRODOTTO_1
         AND MKT_B2C.TS_FINE_VALIDITA = TO_TIMESTAMP_NTZ('9999-12-31 00:00:00.000')
+    LEFT JOIN cte_cctrcamp_ca AS CAMP_CA
+        ON CRCAR.CRCAR_COD_INIZIATIVA = CAST(CAMP_CA.TRCA_NUM_PRATICA AS VARCHAR(12))
 ),
 
 -- ==============================================================
@@ -951,7 +999,21 @@ TAB_FIN_CQS AS (
         NULL AS DT_MESSA_IN_MORA,
         S96.DT_DBT AS DT_DBT,
         LOG.TS_COMUNICAZIONE_ESITO_DEF AS TS_COMUNICAZIONE_ESITO_DEF,
-        CAST(NULL AS DATE) AS DT_CHIUSURA_ANZIANITA,
+        CASE
+            WHEN A.QPR_STATO = '35'
+                THEN S35.DT_RESPINTA
+            WHEN A.QPR_STATO < '40' AND SRT.DT_RITIRATA IS NOT NULL
+                THEN SRT.DT_RITIRATA
+            WHEN A.QPR_STATO = '45'
+                THEN S45.DT_STORNATA
+            WHEN {{ custom_to_date('A.QPR_CED_DATA_ESTINZIONE') }} IS NOT NULL
+                THEN {{ custom_to_date('A.QPR_CED_DATA_ESTINZIONE') }}
+            WHEN {{ custom_to_date('A.QPR_DATA_CESSIONE') }} IS NOT NULL
+                THEN {{ custom_to_date('A.QPR_DATA_CESSIONE') }}
+            WHEN A.QPR_STATO = '97'
+                THEN S97.DT_PASSAGGIO_PERDITA
+            ELSE {{ custom_to_date('A.QPR_CED_ULTIMA_SCADENZA') }}
+        END AS DT_CHIUSURA_ANZIANITA,
         NULL AS DT_ULT_ACCODAMENTO,
         {{ custom_to_date('A.QPR_CED_PRIMA_SCADENZA') }} AS DT_PRIMA_SCADENZA,
         {{ custom_to_date('RAT.QRPAT_PRIMA_SCADENZA') }} AS DT_PRIMA_SCADENZA_IST,
@@ -973,6 +1035,8 @@ TAB_FIN_CQS AS (
         TAF.CQTBB_DESCRIZIONE AS DS_TABELLA_FINANZIARIA,
         FIR.OXSCPRA_MODALITA_FIRMA AS TP_FIRMA,
         CAST(NULL AS NUMBER(3)) AS NM_GIORNI,
+        NULL                                            AS CD_INIZIATIVA_COMM,
+        NULL                                            AS FL_OFFERTA,
         NULL AS FL_RIELAB_24,
         NULL AS FL_ESITO_DEF,
         NULL AS FL_FIRMA_DOPPIA,
@@ -1143,6 +1207,8 @@ SELECT
     DS_TABELLA_FINANZIARIA,
     TP_FIRMA,
     NM_GIORNI,
+    CD_INIZIATIVA_COMM,
+    FL_OFFERTA,
     FL_RIELAB_24,
     FL_ESITO_DEF,
     FL_FIRMA_DOPPIA,
@@ -1251,6 +1317,8 @@ SELECT
     DS_TABELLA_FINANZIARIA,
     TP_FIRMA,
     NM_GIORNI,
+    CD_INIZIATIVA_COMM,
+    FL_OFFERTA,
     FL_RIELAB_24,
     FL_ESITO_DEF,
     FL_FIRMA_DOPPIA,
@@ -1359,6 +1427,8 @@ SELECT
     DS_TABELLA_FINANZIARIA,
     TP_FIRMA,
     NM_GIORNI,
+    CD_INIZIATIVA_COMM,
+    FL_OFFERTA,
     FL_RIELAB_24,
     FL_ESITO_DEF,
     FL_FIRMA_DOPPIA,

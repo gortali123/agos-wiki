@@ -67,22 +67,22 @@
 
     {% do out.append('### sorgente: ' ~ (sorgente | default('unknown') | lower)) %}
     {% do out.append('### modulo: ' ~ (modulo | default('') | lower)) %}
-    {# rtrim sui varchar solo se sorgente OCS #}
-    {% set rtrim_flag = 'true' if (sorgente | upper) == 'OCS' else 'false' %}
+    {% set is_ocs = (sorgente | upper) == 'OCS' %}
 
     {% do out.append('      - name: ' ~ (t | lower)) %}
     {% do out.append('        data_tests:') %}
-    {% do out.append('          - try_cast_table:') %}
-    {% do out.append('              arguments:') %}
-    {% do out.append('                rtrim_varchar: ' ~ rtrim_flag) %}
+    {% do out.append('          - try_cast') %}
     {% if pk_cols %}
-    {% do out.append('          - primary_key_table:') %}
+      {% if is_ocs %}
+    {% do out.append('          - unique_key:') %}
+      {% else %}
+    {% do out.append('          - primary_key:') %}
+      {% endif %}
     {% do out.append('              arguments:') %}
     {% do out.append('                pk_columns: [' ~ (pk_cols | join(', ')) ~ ']') %}
-    {% do out.append('                rtrim_varchar: ' ~ rtrim_flag) %}
     {% endif %}
 
-    {% if (sorgente | upper) == 'OCS' %}
+    {% if is_ocs %}
     {% do out.append('      - name: ' ~ (t | lower) ~ '_deleted') %}
     {% endif %}
 

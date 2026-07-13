@@ -5,3 +5,4 @@ snapshots:
     relation: ref('stg_aitbfsta')
     config:
       unique_key: [aitbsta_stato]
+      

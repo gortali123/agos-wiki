@@ -6,7 +6,7 @@ sources:
     tables:
       - name: adb_arc
         data_tests:
-          - try_cast_table_noocs
-          - primary_key_table:
+          - try_cast_from_sql
+          - primary_key:
               arguments:
                 pk_columns: [datasurvey]

@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aictfpdpl
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aictpdp_ide, aictpdp_prg_log]
       - name: aictfpdpl_deleted

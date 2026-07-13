@@ -71,14 +71,16 @@
       {% do out.append('### model: ' ~ table) %}
     {% endif %}
 
+    {% set is_ocs = sorgente is not none and (sorgente | upper) == 'OCS' %}
+
     {% do out.append('select') %}
     {% do out.append("  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,") %}
     {% do out.append("  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,") %}
-    {% if cluster is not none and (cluster | upper) in ['A', 'A1', 'A2', 'C'] and (sorgente | upper) == 'OCS'%}
+    {% if cluster is not none and (cluster | upper) in ['A', 'A1', 'A2', 'C'] and is_ocs %}
       {% do out.append("  'N' as fl_deleted,") %}
       {% do out.append('  NULL::TIMESTAMP_NTZ as ts_deleted,') %}
     {% endif %}
-    {% if sorgente is not none and (sorgente | upper) == 'OCS' %}
+    {% if is_ocs %}
     {% do out.append('  sys_change_operation,') %}
     {% do out.append('  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,') %}
     {% endif %}
@@ -91,8 +93,10 @@
         {% set t = row[4] | string | trim %}
         {% set l = row[5] | string | trim %}
         {% set t_render = transcod_dtype(t, l) | trim %}
-        {% if 'varchar' in (t_render | lower) %}
-          {% set expr = '  TRY_CAST(NULLIF(RTRIM(' ~ c ~ '), \'\') AS ' ~ t_render ~ ') AS ' ~ (c | lower) %}
+        {% if 'varchar' in (t_render | lower) and is_ocs %}
+          {# OCS: rtrim del varchar; se il risultato e' stringa vuota, sostituita con uno spazio singolo
+             invece di NULL (era NULLIF(RTRIM(...), '') -> NULL, ora IFF(...) -> ' ') #}
+          {% set expr = '  TRY_CAST(IFF(RTRIM(' ~ c ~ ') = \'\', \' \', RTRIM(' ~ c ~ ')) AS ' ~ t_render ~ ') AS ' ~ (c | lower) %}
         {% else %}
           {% set expr = '  TRY_CAST(' ~ c ~ ' AS ' ~ t_render ~ ') AS ' ~ (c | lower) %}
         {% endif %}

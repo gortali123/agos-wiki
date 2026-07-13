@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aiecfpard
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aiecpard_sezione, aiecpard_pratica, aiecpard_progressivo, aiecpard_riga]
       - name: aiecfpard_deleted

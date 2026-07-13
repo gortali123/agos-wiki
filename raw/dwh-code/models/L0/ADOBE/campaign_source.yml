@@ -6,7 +6,7 @@ sources:
     tables:
       - name: campaign
         data_tests:
-          - try_cast_table
-          - primary_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [campaignid]

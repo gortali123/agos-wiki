@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aiecfpare
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aiecpare_pratica, aiecpare_progressivo]
       - name: aiecfpare_deleted

@@ -1,9 +1,4 @@
--- PROPOSTA: rename di raw/dwh-code/tests/generic/try_cast_table_new.sql -> try_cast_table_noocs.
--- Solo il nome del test e' cambiato (try_cast_table_new -> try_cast_table_noocs), logica invariata.
--- Non testata: da rinominare in my_dwh-x-dbt (tests/generic/) se approvato, aggiornando anche
--- i riferimenti a try_cast_table_new nei .yml dei modelli che lo usano.
-
-{% test try_cast_table_noocs(model, skip_columns=none, accepted_values=none) %}
+{% test try_cast_from_sql(model, skip_columns=none, accepted_values=none) %}
 
 {% if execute %}
 

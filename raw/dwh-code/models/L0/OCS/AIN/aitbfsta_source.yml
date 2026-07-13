@@ -6,8 +6,8 @@ sources:
     tables:
       - name: aitbfsta
         data_tests:
-          - try_cast_table
-          - unique_key_table:
+          - try_cast
+          - primary_key:
               arguments:
                 pk_columns: [aitbsta_stato]
       - name: aitbfsta_deleted
