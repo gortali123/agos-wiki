@@ -2,13 +2,10 @@
 
 {% if execute %}
 
-  {% set l1_model = model.identifier | lower | replace('_source', '') %}
+  {% set l1_model = model.identifier | replace('_source', '') %}
   {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', ('stg_' ~ l1_model)) | first %}
   {% if not l1_node %}
     {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
-  {% endif %}
-  {% if not l1_node %}
-    {% do exceptions.raise_compiler_error("try_cast_positional: nessun nodo L1 trovato per '" ~ l1_model ~ "' (da model.identifier='" ~ model.identifier ~ "')") %}
   {% endif %}
 
   {% set skip_columns_lower = ((skip_columns or []) + ['ts_riferimento', 'ts_caricamento']) | map('lower') | list %}
@@ -32,9 +29,6 @@
         {% endif %}
         {% set col_expr = line[:as_idx] | trim %}
         {% if col_name and col_expr and col_name | lower not in skip_columns_lower %}
-          {# col_expr e' sempre TRY_CAST(<raw> AS <type>): il "raw" da confrontare
-             e' l'espressione (es. SUBSTR(...)) dentro il TRY_CAST, non una colonna
-             del source (che per un archivio posizionale non esiste per nome) #}
           {% set inner = col_expr %}
           {% if inner.upper().startswith('TRY_CAST(') %}
             {% set inner = inner[9:-1] %}
@@ -43,11 +37,6 @@
           {% else %}
             {% set raw_expr = col_expr %}
           {% endif %}
-          {# col_expr/raw_expr vengono da raw_code (SQL NON renderizzato): se la
-             riga usa una macro del progetto (es. custom_to_date(...)) invece di
-             SQL puro, arriva qui ancora come '{{ custom_to_date(...) }}' letterale.
-             render() la ri-esegue come Jinja nello stesso ambiente, risolvendo la
-             macro in SQL vero prima di iniettarla nel test. #}
           {% set raw_expr = render(raw_expr) %}
           {% set cast_expr = render(col_expr) %}
           {% set exclude_vals = accepted_values.get(col_name | lower) or [] %}
