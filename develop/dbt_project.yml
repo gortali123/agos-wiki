@@ -314,7 +314,6 @@ snapshots:
       dbt_scd_id: id_scd
       dbt_updated_at: ts_updated_at
     +strategy: timestamp
-    +pre-hook: "{{ drop_on_full_refresh() }}"
     L1:
       +meta: {layer: "L1", cluster: "C"}
       +tags: ["L1"]
@@ -464,8 +463,11 @@ tests:
   +database: AGOS_DEV_16000  
   +schema: DBT_STORE_FAILURES
 
+on-run-start:
+  - "{{ drop_snapshots_on_full_refresh() }}"
+
 on-run-end:
   - "{{ log_run_results(results) }}"
-  - "{{ pop_test_log_records(results) }}" 
+  - "{{ pop_test_log_records(results) }}"
 
 
