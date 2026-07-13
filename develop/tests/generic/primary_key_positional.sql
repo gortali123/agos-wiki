@@ -3,10 +3,13 @@
 
 {% if execute %}
 
-  {% set l1_model = model.identifier | replace('_source', '') %}
+  {% set l1_model = model.identifier | lower | replace('_source', '') %}
   {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', ('stg_' ~ l1_model)) | first %}
   {% if not l1_node %}
     {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
+  {% endif %}
+  {% if not l1_node %}
+    {% do exceptions.raise_compiler_error("primary_key_positional: nessun nodo L1 trovato per '" ~ l1_model ~ "' (da model.identifier='" ~ model.identifier ~ "')") %}
   {% endif %}
 
   {% set pk_columns_lower = pk_columns | map('lower') | list %}
@@ -19,6 +22,7 @@
   {# ricostruisce, per ogni pk_column, l'espressione (es. SUBSTR(...)) usata dall'L1
      per derivarla dal source posizionale: la colonna non esiste per nome nel source #}
   {% set pk_exprs = [] %}
+  {% set all_cols_seen = [] %}
   {% if select_idx >= 0 and from_idx > select_idx %}
     {% set after_select = l1_sql[select_idx + 6:from_idx] %}
     {% for line in after_select.split('\n') %}
@@ -30,6 +34,9 @@
           {% set col_name = col_name.split('--')[0] | trim %}
         {% endif %}
         {% set col_expr = line[:as_idx] | trim %}
+        {% if col_name %}
+          {% do all_cols_seen.append(col_name) %}
+        {% endif %}
         {% if col_name | lower in pk_columns_lower %}
           {# col_expr viene da raw_code (SQL NON renderizzato): se la colonna e'
              derivata con una macro del progetto (es. custom_to_date(...)) invece
@@ -39,6 +46,13 @@
         {% endif %}
       {% endif %}
     {% endfor %}
+  {% endif %}
+
+  {% if pk_exprs | length == 0 %}
+    {% do exceptions.raise_compiler_error(
+      "primary_key_positional su '" ~ l1_model ~ "': nessuna colonna di raw_code combacia con pk_columns="
+      ~ pk_columns ~ ". Colonne trovate nel SELECT dell'L1: " ~ all_cols_seen
+    ) %}
   {% endif %}
 
   {% set where_clause_l1 = '' %}

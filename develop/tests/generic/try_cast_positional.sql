@@ -2,10 +2,13 @@
 
 {% if execute %}
 
-  {% set l1_model = model.identifier | replace('_source', '') %}
+  {% set l1_model = model.identifier | lower | replace('_source', '') %}
   {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', ('stg_' ~ l1_model)) | first %}
   {% if not l1_node %}
     {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
+  {% endif %}
+  {% if not l1_node %}
+    {% do exceptions.raise_compiler_error("try_cast_positional: nessun nodo L1 trovato per '" ~ l1_model ~ "' (da model.identifier='" ~ model.identifier ~ "')") %}
   {% endif %}
 
   {% set skip_columns_lower = ((skip_columns or []) + ['ts_riferimento', 'ts_caricamento']) | map('lower') | list %}
