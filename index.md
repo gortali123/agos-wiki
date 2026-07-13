@@ -2,7 +2,7 @@
 title: Index
 type: index
 tags: [meta]
-updated: 2026-07-10
+updated: 2026-07-13
 ---
 
 # Index
@@ -55,19 +55,21 @@ Catalog of every page in the wiki. Updated on every ingest/query.
 - [[todo-allineamento-documentazione]] — TODO concrete per correggere i documenti di framework
 
 ## Develop
-Proposte di modifica al codice `raw/dwh-code/`, non ancora applicate a monte in `dwh-x-dbt`.
-- `develop/tests/generic/unique_key.sql` — rename di `unique_key_table` (uniqueness-only, per source OCS)
-- `develop/tests/generic/primary_key.sql` — rename di `primary_key_table` (uniqueness + nullability, per source non-OCS con chiave reale)
-- `develop/tests/generic/try_cast.sql` — rename di `try_cast_table` (cast generico ricostruito dal `data_type` L1); `validation_config` con espressione custom rimosso, resta solo `skip_columns` (niente più override di espressione per colonna, solo skip/where_clause/accepted_values)
-- `develop/tests/generic/try_cast_from_sql.sql` — rename di `try_cast_table_noocs` (legge l'espressione reale da `raw_code` del modello L1, per colonne con trasformazioni non banali)
-- `develop/tests/adb_arc_try_cast.sql` — esempio di test singular scritto a mano (non generico), copre TUTTE le colonne di `adb_arc` hardcoded 1:1 sul modello L1, in aggiunta (doppia rete) a `try_cast_from_sql` che già le copre dinamicamente
-- `develop/models/L0/OCS/AIN/*.yml` (14 file), `develop/models/L0/ADOBE/*.yml` (15 file) — call site aggiornati ai nomi test rinominati; `adb_arc_source.yml` usa `try_cast_from_sql` (legge l'espressione reale dal SQL L1) invece del `try_cast` generico
-- `develop/macros/generate_models/generate_source.sql` — generatore yml L0 aggiornato: emette `unique_key`/`primary_key` in base a `sorgente` invece di sempre `primary_key_table`, emette `try_cast` (nome rinominato)
-- `develop/macros/generate_models/generate_model.sql` — generatore SQL modelli L1: per colonne varchar su sorgenti OCS, valore vuoto dopo `RTRIM` sostituito con uno spazio singolo `' '` invece di `NULL` (`IFF(RTRIM(col)='',' ',RTRIM(col))` al posto di `NULLIF(RTRIM(col),'')`)
-- `develop/generate_models.ps1` — rimosso il check morto su `'---'` negli Step 2 (`generate_yaml`) e Step 4 (`generate_snapshots`): quelle due macro non hanno mai emesso quel separatore (solo `generate_model.sql`, Step 3, lo fa), il flush avveniva comunque tramite il trigger `- name:`. `generate_yaml.sql`, `generate_snapshots.sql`, `get_model_names.sql`, `cobol.sql` restano invariati in `raw/` — non avevano nulla da correggere
-- `develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql` — bug fix: `PROGRESSIVO_CONTROPARTE` risultava sempre `NULL` (mancava un `COALESCE(..., 0)` attorno al `MAX(H.OLD_PROGRESSIVO) OVER (...)` prima di sommare `ROW_NUMBER()`, perso nella riscrittura incrementale rispetto a `.old`)
-- `develop/macros/materialization/drop_on_full_refresh.sql` — nuovo pre-hook per snapshot: droppa la relazione se `flags.FULL_REFRESH` **e** il nodo stesso è tra quelli effettivamente selezionati nell'invocazione (`model.unique_id in selected_resources`) — necessario perché `dbt snapshot` non applica in modo affidabile `--select`, quindi senza questo controllo `--full-refresh` droppa tutti gli snapshot del progetto invece di solo quelli passati. Perde comunque tutta la storia SCD2 accumulata (non ricostruibile dalla sola sorgente corrente)
-- `develop/dbt_project.yml` — aggiunto `+pre-hook: "{{ drop_on_full_refresh() }}"` a livello `snapshots: agosx:` (tutti gli snapshot del progetto, non solo OCS)
+Proposte di modifica al codice `raw/dwh-code/`. **Aggiornamento 2026-07-13**: dopo un re-sync di `raw/dwh-code/`, quasi tutte le voci sotto risultano ormai applicate a monte in `dwh-x-dbt` (confermato per confronto diretto col codice re-sincronizzato) — segnate `[APPLICATO]`. Eccezioni segnalate esplicitamente.
+- `develop/tests/generic/unique_key.sql` — rename di `unique_key_table` (uniqueness-only, per source OCS) `[APPLICATO]`
+- `develop/tests/generic/primary_key.sql` — rename di `primary_key_table` (uniqueness + nullability, per source non-OCS con chiave reale) `[APPLICATO]`
+- `develop/tests/generic/try_cast.sql` — rename di `try_cast_table` (cast generico ricostruito dal `data_type` L1); `validation_config` con espressione custom rimosso, resta solo `skip_columns` (niente più override di espressione per colonna, solo skip/where_clause/accepted_values) `[APPLICATO]`
+- `develop/tests/generic/try_cast_from_sql.sql` — rename di `try_cast_table_noocs` (legge l'espressione reale da `raw_code` del modello L1, per colonne con trasformazioni non banali) `[APPLICATO]`
+- `develop/tests/adb_arc_try_cast.sql` — esempio di test singular scritto a mano (non generico), copre TUTTE le colonne di `adb_arc` hardcoded 1:1 sul modello L1, in aggiunta (doppia rete) a `try_cast_from_sql` che già le copre dinamicamente. `[APPLICATO ma con BUG]`: nel re-sync il file è arrivato come `raw/dwh-code/tests/.adb_arc_try_cast.sql` (nome col punto iniziale, file nascosto) — dbt scarta i file nascosti in fase di discovery, quindi questo test oggi **non viene eseguito**, silenziosamente. Da correggere (rinominare senza punto) nel repo live.
+- `develop/models/L0/OCS/AIN/*.yml` (14 file), `develop/models/L0/ADOBE/*.yml` (15 file) — call site aggiornati ai nomi test rinominati; `adb_arc_source.yml` usa `try_cast_from_sql` (legge l'espressione reale dal SQL L1) invece del `try_cast` generico `[APPLICATO]`
+- `develop/macros/generate_models/generate_source.sql` — generatore yml L0 aggiornato: emette `unique_key`/`primary_key` in base a `sorgente` invece di sempre `primary_key_table`, emette `try_cast` (nome rinominato) `[APPLICATO]`
+- `develop/macros/generate_models/generate_model.sql` — generatore SQL modelli L1: per colonne varchar su sorgenti OCS, valore vuoto dopo `RTRIM` sostituito con uno spazio singolo `' '` invece di `NULL` (`IFF(RTRIM(col)='',' ',RTRIM(col))` al posto di `NULLIF(RTRIM(col),'')`) `[APPLICATO]`
+- `develop/generate_models.ps1` — rimosso il check morto su `'---'` negli Step 2 (`generate_yaml`) e Step 4 (`generate_snapshots`). `[NON APPLICATO]`: il re-sync mostra ancora il check morto in entrambi gli step (righe ~268 e ~418 di `raw/dwh-code/generate_models.ps1`) — non bloccante (il flush avviene comunque tramite il trigger `- name:`), ma la correzione proposta non è stata portata a monte.
+- `develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql` — bug fix: `PROGRESSIVO_CONTROPARTE` risultava sempre `NULL` (mancava un `COALESCE(..., 0)` attorno al `MAX(H.OLD_PROGRESSIVO) OVER (...)` prima di sommare `ROW_NUMBER()`, perso nella riscrittura incrementale rispetto a `.old`) `[APPLICATO]`
+- `develop/macros/materialization/drop_snapshots_on_full_refresh.sql` — droppa gli snapshot selezionati nell'invocazione corrente quando `flags.FULL_REFRESH` è vero, agganciato come `on-run-start` di progetto (non come pre-hook sullo snapshot: la materialization snapshot risolve esistenza/colonne del target prima di eseguire i pre-hook, quindi un drop lì disallinea lo stato interno e produce errori tipo "tried to drop relation ... but its type is null" / "snapshot target is missing configured columns" — riscontrati entrambi durante l'iterazione su questo macro). Perde comunque tutta la storia SCD2 accumulata (non ricostruibile dalla sola sorgente corrente) `[APPLICATO]`
+- `develop/dbt_project.yml` — aggiunto `on-run-start: "{{ drop_snapshots_on_full_refresh() }}"` a livello di progetto `[APPLICATO]`
+
+**Novità non derivanti da `develop/`**: il re-sync ha portato anche modelli L1 nuovi non ancora documentati in wiki — `raw/dwh-code/models/L1/CRIF/crifra_np041rt.sql` e `crifrc_np042rt.sql` (fonte CRIF, mai vista prima in nessuna pagina). Da ingerire quando l'utente lo richiede.
 
 ## Note
 

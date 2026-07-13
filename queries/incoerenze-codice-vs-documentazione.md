@@ -55,7 +55,9 @@ Nel modello reale `variazioni_anagrafiche.sql`:
 
 Non è un errore, ma la sintesi del framework doc **sottostima la complessità reale** dell'implementazione incrementale — utile saperlo prima di usare la sola descrizione testuale per replicare la logica altrove.
 
-**Aggiornamento 2026-07-08**: la parte generalizzabile (`PROGRESSIVO_PK`, esclusa `PROGRESSIVO_CONTROPARTE`) è stata formalmente documentata in [[guida-sviluppo]] §5.1 come variante S1 — vedi [[storicizzazione-l2-s1-s4]] e [[bozza-doc-s1-main-senza-pk]]. Resta comunque aperto l'allineamento del **documento di framework ufficiale** (che descrive solo il caso semplice) — vedi [[todo-allineamento-documentazione]].
+**Aggiornamento 2026-07-08**: la parte generalizzabile (`PROGRESSIVO_PK`, esclusa `PROGRESSIVO_CONTROPARTE`) è stata formalmente documentata in [[guida-sviluppo]] §5.1 come variante S1. Resta comunque aperto l'allineamento del **documento di framework ufficiale** (che descrive solo il caso semplice) — vedi [[todo-allineamento-documentazione]].
+
+**Aggiornamento 2026-07-13**: confermato applicato a monte (`raw/dwh-code/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql`) il fix per il bug che azzerava sempre `PROGRESSIVO_CONTROPARTE` a `NULL` (mancava un `COALESCE(..., 0)` attorno al `MAX(OLD_PROGRESSIVO) OVER (...)` per le controparti nuove/al primo run) — era stato proposto in `develop/` il 2026-07-10.
 
 ## 8. Conferme (il codice valida la documentazione, non solo la contraddice)
 
