@@ -40,8 +40,15 @@
           {% else %}
             {% set raw_expr = col_expr %}
           {% endif %}
+          {# col_expr/raw_expr vengono da raw_code (SQL NON renderizzato): se la
+             riga usa una macro del progetto (es. custom_to_date(...)) invece di
+             SQL puro, arriva qui ancora come '{{ custom_to_date(...) }}' letterale.
+             render() la ri-esegue come Jinja nello stesso ambiente, risolvendo la
+             macro in SQL vero prima di iniettarla nel test. #}
+          {% set raw_expr = render(raw_expr) %}
+          {% set cast_expr = render(col_expr) %}
           {% set exclude_vals = accepted_values.get(col_name | lower) or [] %}
-          {% do cols_to_check.append({'name': col_name, 'raw_expr': raw_expr, 'cast_expr': col_expr, 'exclude_vals': exclude_vals}) %}
+          {% do cols_to_check.append({'name': col_name, 'raw_expr': raw_expr, 'cast_expr': cast_expr, 'exclude_vals': exclude_vals}) %}
         {% endif %}
       {% endif %}
     {% endfor %}

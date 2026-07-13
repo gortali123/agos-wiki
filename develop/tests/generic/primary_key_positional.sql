@@ -31,7 +31,11 @@
         {% endif %}
         {% set col_expr = line[:as_idx] | trim %}
         {% if col_name | lower in pk_columns_lower %}
-          {% do pk_exprs.append({'name': col_name, 'expr': col_expr}) %}
+          {# col_expr viene da raw_code (SQL NON renderizzato): se la colonna e'
+             derivata con una macro del progetto (es. custom_to_date(...)) invece
+             di SQL puro, arriverebbe qui come '{{ custom_to_date(...) }}'
+             letterale. render() la ri-esegue come Jinja, risolvendola in SQL vero. #}
+          {% do pk_exprs.append({'name': col_name, 'expr': render(col_expr)}) %}
         {% endif %}
       {% endif %}
     {% endfor %}
