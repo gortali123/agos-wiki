@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: logerctc_pr339m
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['CD_LOG_ID', 'CD_CATENA', 'NM_PROGR_EVENTO']
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"CTC", "schema":"L1_E_CTC", "archivio":"LOGERCTC_PR339M"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_LOG_ID, CD_CATENA, NM_PROGR_EVENTO]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: CD_LOG_ID
+        data_type: number(12)
+      - name: CD_CATENA
+        data_type: number(12)
+      - name: NM_PROGR_EVENTO
+        data_type: number(12)
+      - name: CD_CONSORZIATO
+        data_type: number(12)
+      - name: CD_NDG
+        data_type: number(16)
+      - name: CD_FISCALE
+        data_type: varchar(16)
+      - name: DS_CONTROPARTE
+        data_type: varchar(80)
+      - name: CD_IDENT_CONTRATTO
+        data_type: varchar(18)
+      - name: DT_SEGNALAZIONE
+        data_type: date
+      - name: DS_WS
+        data_type: varchar(30)
+      - name: CD_MESSAGGIO
+        data_type: number(16)
+      - name: DS_FILE
+        data_type: varchar(50)
+      - name: TP_TABELLA
+        data_type: varchar(30)
+      - name: DS_CAMPO
+        data_type: varchar(30)
+      - name: CD_ERRORE
+        data_type: varchar(5)
+      - name: DS_ERRORE
+        data_type: varchar(200)
+      - name: TP_ERRORE
+        data_type: varchar(1)
+      - name: DS_FILLER_1
+        data_type: varchar(4)
+      - name: CD_UTENTE
+        data_type: varchar(10)
+      - name: DT_CREAZIONE
+        data_type: varchar(10)
+      - name: DS_FILLER_2
+        data_type: varchar(1)
+      - name: TM_CREAZIONE
+        data_type: varchar(8)
+      - name: CD_AMBITO
+        data_type: varchar(5)
+      - name: DS_FILLER_3
+        data_type: varchar(6)
