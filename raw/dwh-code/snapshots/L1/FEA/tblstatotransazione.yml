@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblstatotransazione
+    relation: ref('stg_tblstatotransazione')
+    config:
+      unique_key: [idstatotransazione]

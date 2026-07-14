@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ncp_tblleads
+    relation: ref('stg_ncp_tblleads')
+    config:
+      unique_key: [idlead]

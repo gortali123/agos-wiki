@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ncp_tblesitioperazionelead
+    relation: ref('stg_ncp_tblesitioperazionelead')
+    config:
+      unique_key: [idesitooperazionelead]

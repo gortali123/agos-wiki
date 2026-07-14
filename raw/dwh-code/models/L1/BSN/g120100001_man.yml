@@ -1,0 +1,91 @@
+version: 2
+
+models:
+  - name: g120100001_man
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B1"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"G120100001_MAN"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: codice_societa
+        data_type: VARCHAR(4)
+      - name: esercizio_contabile
+        data_type: VARCHAR(4)
+      - name: numero_documento
+        data_type: NUMBER(10,0)
+      - name: tipo_documento
+        data_type: VARCHAR(2)
+      - name: dt_registrazione
+        data_type: VARCHAR(10)
+      - name: dt_doc_riferimento
+        data_type: VARCHAR(10)
+      - name: numero_doc_riferimento
+        data_type: VARCHAR(16)
+      - name: settore_contabile
+        data_type: VARCHAR(4)
+      - name: dt_acquisizione
+        data_type: VARCHAR(10)
+      - name: userid_registrato
+        data_type: VARCHAR(12)
+      - name: nome_sessione
+        data_type: VARCHAR(12)
+      - name: tipo_conto
+        data_type: VARCHAR(1)
+      - name: chiave_contabile
+        data_type: VARCHAR(2)
+      - name: conto
+        data_type: VARCHAR(10)
+      - name: conto_cliente_fornitore
+        data_type: VARCHAR(10)
+      - name: causale_contabile
+        data_type: VARCHAR(20)
+      - name: segno_contabile
+        data_type: VARCHAR(1)
+      - name: importo_della_regist
+        data_type: VARCHAR(15)
+      - name: descrizione_di_testa
+        data_type: VARCHAR(25)
+      - name: descrizione_di_posiz
+        data_type: VARCHAR(50)
+      - name: codice_iva
+        data_type: VARCHAR(2)
+      - name: base_imponibile_iva
+        data_type: VARCHAR(15)
+      - name: documento_pareggio
+        data_type: VARCHAR(10)
+      - name: dt_pareggio
+        data_type: VARCHAR(10)
+      - name: tipo_ritenuta
+        data_type: VARCHAR(2)
+      - name: codice_ritenuta_acconto
+        data_type: VARCHAR(2)
+      - name: imponibile
+        data_type: VARCHAR(15)
+      - name: importo
+        data_type: VARCHAR(15)
+      - name: condizione
+        data_type: VARCHAR(4)
+      - name: dt_base
+        data_type: VARCHAR(10)
+      - name: giorni_1
+        data_type: NUMBER(8,0)
+      - name: modalita_pagamento
+        data_type: VARCHAR(1)
+      - name: cod_blocco_pagamento
+        data_type: VARCHAR(1)
+      - name: attribuzione
+        data_type: VARCHAR(18)
+      - name: dt_valuta
+        data_type: VARCHAR(10)
+      - name: chiave_rif_1
+        data_type: VARCHAR(12)
+      - name: chiave_rif_2
+        data_type: VARCHAR(12)
+      - name: periodo_contabile
+        data_type: VARCHAR(2)

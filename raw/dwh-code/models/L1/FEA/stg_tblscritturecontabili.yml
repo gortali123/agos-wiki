@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: stg_tblscritturecontabili
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idscritturacontabile
+        data_type: NUMBER(11,0)
+      - name: codice_societa
+        data_type: VARCHAR(4)
+      - name: tipo_documento
+        data_type: VARCHAR(2)
+      - name: data_registrazione_contabile
+        data_type: DATE
+      - name: periodo_contabile
+        data_type: VARCHAR(2)
+      - name: numero_documento_sap
+        data_type: VARCHAR(10)
+      - name: valuta_contabilizzazione
+        data_type: VARCHAR(5)
+      - name: segno_contabile
+        data_type: VARCHAR(2)
+      - name: conto_co_ge
+        data_type: VARCHAR(17)
+      - name: importo_movimento
+        data_type: NUMBER(38,10)
+      - name: data_valuta
+        data_type: DATE
+      - name: testo_riga_dettaglio
+        data_type: VARCHAR(50)
+      - name: codice_causale_contabile
+        data_type: VARCHAR(20)
+      - name: attribuzione_sap
+        data_type: VARCHAR(18)
+      - name: chiave_riferimento_1
+        data_type: VARCHAR(12)
+      - name: chiave_riferimento_2
+        data_type: VARCHAR(12)
+      - name: data_creazione_flusso
+        data_type: DATE
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

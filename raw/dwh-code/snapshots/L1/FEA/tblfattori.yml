@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblfattori
+    relation: ref('stg_tblfattori')
+    config:
+      unique_key: [idfattore]

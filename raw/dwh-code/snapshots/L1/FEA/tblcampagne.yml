@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblcampagne
+    relation: ref('stg_tblcampagne')
+    config:
+      unique_key: [idcampagna]

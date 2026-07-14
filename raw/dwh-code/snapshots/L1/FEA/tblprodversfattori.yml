@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblprodversfattori
+    relation: ref('stg_tblprodversfattori')
+    config:
+      unique_key: [idprodversfattore]

@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: report_p9
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"REPORT_P9"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: closing_date
+        data_type: VARCHAR(8)          # fix: era DATE
+      - name: risk_taker_entity
+        data_type: VARCHAR(5)          # fix: era NUMERIC(5,0)
+      - name: source_application
+        data_type: VARCHAR(12)
+      - name: transmission_frequency
+        data_type: VARCHAR(1)
+      - name: date_time_processing
+        data_type: VARCHAR(12)         # fix: era TIMESTAMP_NTZ
+      - name: record_type
+        data_type: VARCHAR(2)
+      - name: nature_flow
+        data_type: VARCHAR(1)          # fix: era VARCHAR(4) — SAS $1
+      - name: zone_reserved_ca
+        data_type: VARCHAR(2)          # fix: era VARCHAR(3) — SAS $2
+      - name: free_zone_01
+        data_type: VARCHAR(7)          # fix: era VARCHAR(3) — SAS/INFILE $7
+      - name: local_id_counterparty
+        data_type: VARCHAR(20)
+      - name: central_id_counterparty
+        data_type: VARCHAR(10)         # fix: era NUMERIC(10,0)
+      - name: overall_facility_reference
+        data_type: VARCHAR(30)
+      - name: facility_detail_line_reference
+        data_type: VARCHAR(30)
+      - name: mitigant_identifier
+        data_type: VARCHAR(40)
+      - name: product_identifier
+        data_type: VARCHAR(40)         # fix: era VARCHAR(10) — SAS $40
+      - name: reference_counterparty_provision
+        data_type: VARCHAR(40)         # fix: era VARCHAR(50) — SAS $40
+      - name: free_zone_02
+        data_type: VARCHAR(20)         # fix: era VARCHAR(40) — SAS $20
+      - name: nature_impairment
+        data_type: VARCHAR(1)
+      - name: scope_alloc_provision_haircut
+        data_type: VARCHAR(1)
+      - name: zone_reserved_grmd
+        data_type: VARCHAR(12)         # fix: era VARCHAR(16) — SAS $12
+      - name: free_zone_03
+        data_type: VARCHAR(20)         # fix: era VARCHAR(16) — INFILE $20 (modifica 03)
+      - name: amount_provision_haircut_sgn
+        data_type: VARCHAR(1)
+      - name: amount_provision_haircut_int
+        data_type: VARCHAR(16)         # fix: era NUMERIC(16,0)
+      - name: amount_provision_haircut_dec
+        data_type: VARCHAR(2)          # fix: era NUMERIC(2,0)
+      - name: amount_provision_prev_quart_sgn
+        data_type: VARCHAR(1)
+      - name: amount_provision_prev_quart_int
+        data_type: VARCHAR(16)         # fix: era NUMERIC(16,0)
+      - name: amount_provision_prev_quart_dec
+        data_type: VARCHAR(2)          # fix: era NUMERIC(2,0)
+      - name: curr_amount_provision_prev_quart
+        data_type: VARCHAR(3)
+      - name: pcco_provision_haircut
+        data_type: VARCHAR(12)
+      - name: banking_product_type
+        data_type: VARCHAR(6)

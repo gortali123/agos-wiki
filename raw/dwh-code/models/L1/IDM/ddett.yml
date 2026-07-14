@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: ddett
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      meta:
+        cluster: ["D"]
+      query_tag: '{"app":"DBT", "sorgente":"IDM", "schema":"L1_E_IDM", "archivio":"DDETT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [k0, pratica, documento, data_ora_ricezione, data_ora_caricamento, numero_di_pagine]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: k0
+        data_type: VARCHAR(50)
+      - name: canale
+        data_type: VARCHAR(35)
+      - name: scatola
+        data_type: NUMBER(10,0)
+      - name: pratica
+        data_type: VARCHAR(20)
+      - name: documento
+        data_type: VARCHAR(20)
+      - name: data_ora_ricezione
+        data_type: TIMESTAMP_NTZ
+      - name: data_ora_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sla
+        data_type: NUMBER(3,0)
+      - name: numero_di_pagine
+        data_type: NUMBER(5,0)

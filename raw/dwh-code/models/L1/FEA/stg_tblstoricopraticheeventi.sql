@@ -1,0 +1,25 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  COALESCE(TRY_CAST(data_modifica AS TIMESTAMP_NTZ), TRY_CAST(data_creazione AS TIMESTAMP_NTZ)) AS ts_coalesce_modif_creaz, --TRYCAST prima della COALESCE altrimenti non funziona correttamente
+  TRY_CAST(idStoricoPraticaEvento AS NUMBER(11,0)) AS idstoricopraticaevento,
+  TRY_CAST(idPreventivo AS NUMBER(11,0)) AS idpreventivo,
+  TRY_CAST(idProdottoVersione AS NUMBER(11,0)) AS idprodottoversione,
+  TRY_CAST(numero_contratto AS VARCHAR(45)) AS numero_contratto,
+  TRY_CAST(data_decorrenza AS DATE) AS data_decorrenza,
+  TRY_CAST(stato_pratica AS VARCHAR(45)) AS stato_pratica,
+  TRY_CAST(data_scadenza_prima_rata_periodo_1 AS DATE) AS data_scadenza_prima_rata_periodo_1,
+  TRY_CAST(numero_rate_periodo_1 AS NUMBER(6,0)) AS numero_rate_periodo_1,
+  TRY_CAST(numero_rate_periodo_2 AS NUMBER(6,0)) AS numero_rate_periodo_2,
+  TRY_CAST(data_scadenza_ultima_rata AS DATE) AS data_scadenza_ultima_rata,
+  TRY_CAST(importo_finanziato AS NUMBER(38,10)) AS importo_finanziato,
+  TRY_CAST(importo_rata_periodo_1 AS NUMBER(38,10)) AS importo_rata_periodo_1,
+  TRY_CAST(importo_rata_periodo_2 AS NUMBER(38,10)) AS importo_rata_periodo_2,
+  TRY_CAST(importo_capitale_residuo AS NUMBER(38,10)) AS importo_capitale_residuo,
+  TRY_CAST(base_calcolo AS NUMBER(38,10)) AS base_calcolo,
+  TRY_CAST(coperto_cpi AS NUMBER(1,0)) AS coperto_cpi,
+  TRY_CAST(note_presenza_cpi AS VARCHAR(50)) AS note_presenza_cpi,
+  TRY_CAST(data_accollo AS DATE) AS data_accollo,
+  TRY_CAST(data_creazione AS TIMESTAMP_NTZ) AS data_creazione,
+  TRY_CAST(data_modifica AS TIMESTAMP_NTZ) AS data_modifica
+from {{ source('source_l0','tblstoricopraticheeventi') }}

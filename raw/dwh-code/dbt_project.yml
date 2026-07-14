@@ -287,6 +287,10 @@ models:
         +schema: L2_PRODOTTO_M
         +meta: {subject_area: "PRODOTTO_M"}
         +tags: ["PRODOTTO_M"]
+      PROVVIGIONI_RAPPEL:
+        +schema: L2_PROVVIGIONI_RAPPEL
+        +meta: {subject_area: "PROVVIGIONI_RAPPEL"}
+        +tags: ["PROVVIGIONI_RAPPEL"]
       RISCHI_ADEMPIMENTI:
         +schema: L2_RISCHI_ADEMPIMENTI
         +meta: {subject_area: "RISCHI_ADEMPIMENTI"}
@@ -299,21 +303,21 @@ models:
         +schema: L2_SWORD
         +meta: {subject_area: "SWORD"}
         +tags: ["SWORD"]
-      PROVVIGIONI_RAPPEL:
-        +schema: L2_PROVVIGIONI_RAPPEL
-        +meta: {subject_area: "PROVVIGIONI_RAPPEL"}
-        +tags: ["PROVVIGIONI_RAPPEL"]
 
     L3:
       +meta: {layer: "L3"}
       basilea_core:
         +schema: L3_BASILEA
-        +meta: {sotto_processo: "basilea_core"}
-        +tags: ["basilea_core"]
+        +meta: {sotto_processo: "BASILEA_CORE"}
+        +tags: ["BASILEA_CORE"]
       monitoraggio_produzione:
         +schema: L3_MONITORING_PRODUZIONE
-        +meta: {sotto_processo: "monitoraggio_produzione"}
-        +tags: ["monitoraggio_produzione"]
+        +meta: {sotto_processo: "MONITORAGGIO_PRODUZIONE"}
+        +tags: ["MONITORAGGIO_PRODUZIONE"]
+      saldi:
+        +schema: L3_SALDI
+        +meta: {subject_area: "SALDI"}
+        +tags: ["SALDI"]
 
 snapshots:
   agosx:

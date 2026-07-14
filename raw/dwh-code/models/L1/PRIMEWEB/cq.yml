@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: cq
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"PRIMEWEB", "schema":"L1_E_PRIMEWEB", "archivio":"CQ"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: formrequestid
+        data_type: NUMBER(8,0)
+      - name: formrequeststate
+        data_type: VARCHAR(20)
+      - name: creationdate
+        data_type: VARCHAR(20)
+      - name: ipaddress
+        data_type: VARCHAR(18)
+      - name: mobile
+        data_type: VARCHAR(12)
+      - name: firstname
+        data_type: VARCHAR(50)
+      - name: lastname
+        data_type: VARCHAR(50)
+      - name: gender
+        data_type: VARCHAR(10)
+      - name: dateofbirth
+        data_type: VARCHAR(20)
+      - name: birthplace
+        data_type: VARCHAR(50)
+      - name: fiscalcode
+        data_type: VARCHAR(16)
+      - name: dugresidence
+        data_type: VARCHAR(10)
+      - name: addressresidence
+        data_type: VARCHAR(50)
+      - name: cityresidence
+        data_type: VARCHAR(50)
+      - name: provinceresidence
+        data_type: VARCHAR(2)
+      - name: zipcoderesidence
+        data_type: VARCHAR(5)
+      - name: phonenumber
+        data_type: VARCHAR(50)
+      - name: emailaddress
+        data_type: VARCHAR(255)
+      - name: applicanttype
+        data_type: VARCHAR(50)
+      - name: hiringdate
+        data_type: VARCHAR(20)
+      - name: openendedcontract
+        data_type: VARCHAR(12)
+      - name: companyname
+        data_type: VARCHAR(50)
+      - name: companytype
+        data_type: VARCHAR(50)
+      - name: companyvat
+        data_type: VARCHAR(11)
+      - name: publicistitutiontype
+        data_type: VARCHAR(50)
+      - name: datimark
+        data_type: VARCHAR(12)
+      - name: datipers
+        data_type: VARCHAR(12)
+      - name: amountfinanced
+        data_type: NUMBER(15,2)
+      - name: paymentsplit
+        data_type: NUMBER(8,0)
+      - name: netincome
+        data_type: VARCHAR(50)
+      - name: session_uid
+        data_type: VARCHAR(50)

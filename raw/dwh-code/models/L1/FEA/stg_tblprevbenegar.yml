@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: stg_tblprevbenegar
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idprevbenegar
+        data_type: NUMBER(11,0)
+      - name: idgaranzia
+        data_type: NUMBER(11,0)
+      - name: idprevbene
+        data_type: NUMBER(11,0)
+      - name: capitale
+        data_type: NUMBER(38,10)
+      - name: option_gar
+        data_type: VARCHAR(15)
+      - name: annuonetto
+        data_type: NUMBER(38,10)
+      - name: annuoaddizionale
+        data_type: NUMBER(38,10)
+      - name: annuoimponibile
+        data_type: NUMBER(38,10)
+      - name: annuotasse
+        data_type: NUMBER(38,10)
+      - name: annuolordo
+        data_type: NUMBER(38,10)
+      - name: fraznetto
+        data_type: NUMBER(38,10)
+      - name: frazaddizionale
+        data_type: NUMBER(38,10)
+      - name: frazimponibile
+        data_type: NUMBER(38,10)
+      - name: fraztasse
+        data_type: NUMBER(38,10)
+      - name: frazlordo
+        data_type: NUMBER(38,10)
+      - name: ratnetto
+        data_type: NUMBER(38,10)
+      - name: rataddizionale
+        data_type: NUMBER(38,10)
+      - name: ratimponibile
+        data_type: NUMBER(38,10)
+      - name: rattasse
+        data_type: NUMBER(38,10)
+      - name: ratlordo
+        data_type: NUMBER(38,10)
+      - name: imported
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tbldistintetransazioni
+    relation: ref('stg_tbldistintetransazioni')
+    config:
+      unique_key: [iddistintatransazione]

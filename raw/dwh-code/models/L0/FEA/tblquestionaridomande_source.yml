@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: tblquestionaridomande
+        data_tests:
+          - try_cast_from_sql:
+              arguments:
+                skip_columns: [ts_coalesce_modif_creaz]
+                accepted_values:
+                  date: ['0000-00-00']
+                  timestamp_ntz: ['0000-00-00','0000-00-00 00:00:00']
+          - primary_key:
+              arguments:
+                pk_columns: [idquestionariodomanda]

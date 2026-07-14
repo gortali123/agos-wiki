@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: collection
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      meta:
+        cluster: ["D"]
+      query_tag: '{"app":"DBT", "sorgente":"SAP", "schema":"L1_E_SAP", "archivio":"COLLECTION"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: codice_societa
+        data_type: VARCHAR(14)
+      - name: conto_co_ge
+        data_type: VARCHAR(10)
+      - name: saldo_dare_mensile
+        data_type: VARCHAR(21)
+      - name: saldo_avere_mensile
+        data_type: VARCHAR(21)
+      - name: saldo_tot_mensile
+        data_type: VARCHAR(21)
+      - name: saldo_accumulato
+        data_type: VARCHAR(21)
+      - name: data
+        data_type: VARCHAR(10)
+      - name: periodo
+        data_type: VARCHAR(3)

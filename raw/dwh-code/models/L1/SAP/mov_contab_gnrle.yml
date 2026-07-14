@@ -1,0 +1,100 @@
+version: 2
+
+models:
+  - name: mov_contab_gnrle
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SAP", "schema":"L1_E_SAP", "archivio":"MOV_CONTAB_GNRLE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [cd_societa, cd_esercizio_cont, cd_documento, cd_posizione_doc]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: cd_societa
+        data_type: VARCHAR(4)
+      - name: cd_esercizio_cont
+        data_type: VARCHAR(4)
+      - name: cd_documento
+        data_type: VARCHAR(10)
+      - name: cd_posizione_doc
+        data_type: VARCHAR(3)
+      - name: cd_tp_documento
+        data_type: VARCHAR(2)
+      - name: dt_contabile
+        data_type: DATE
+      - name: dt_doc_riferimento
+        data_type: DATE
+      - name: cd_doc_riferimento
+        data_type: VARCHAR(16)
+      - name: cd_settore_cont
+        data_type: VARCHAR(4)
+      - name: dt_acquisizione
+        data_type: DATE
+      - name: cd_utente_reg
+        data_type: VARCHAR(12)
+      - name: cd_sessione_batch
+        data_type: VARCHAR(12)
+      - name: cd_tipo_conto
+        data_type: VARCHAR(1)
+      - name: cd_key_contab
+        data_type: VARCHAR(2)
+      - name: cd_conto_contab
+        data_type: VARCHAR(10)
+      - name: cd_cc_cli
+        data_type: VARCHAR(10)
+      - name: cd_causale_contab
+        data_type: VARCHAR(20)
+      - name: cd_segno_contab
+        data_type: VARCHAR(1)
+      - name: eu_registrazione
+        data_type: NUMBER(15,2)
+      - name: ds_testata_doc
+        data_type: VARCHAR(25)
+      - name: ds_posizione
+        data_type: VARCHAR(50)
+      - name: cd_iva
+        data_type: VARCHAR(2)
+      - name: eu_base_imponibile
+        data_type: NUMBER(15,2)
+      - name: cd_documento_prg
+        data_type: NUMBER(10,0)
+      - name: dt_pareggio
+        data_type: DATE
+      - name: tp_ritenuta_acc
+        data_type: VARCHAR(2)
+      - name: cd_ritenuta_acc
+        data_type: VARCHAR(2)
+      - name: eu_imponibile_ra
+        data_type: NUMBER(15,2)
+      - name: eu_ritenuta_acc
+        data_type: NUMBER(15,2)
+      - name: cd_condizione_pag
+        data_type: VARCHAR(4)
+      - name: dt_base
+        data_type: DATE
+      - name: nm_giorni
+        data_type: NUMBER(3,0)
+      - name: cd_modalita_pag
+        data_type: VARCHAR(1)
+      - name: cd_blocco_pag
+        data_type: VARCHAR(1)
+      - name: cd_attribuzione
+        data_type: VARCHAR(18)
+      - name: dt_valuta
+        data_type: DATE
+      - name: cd_key_rif_1
+        data_type: VARCHAR(12)
+      - name: cd_key_rif_2
+        data_type: VARCHAR(12)
+      - name: cd_periodo_contab
+        data_type: VARCHAR(2)
+      - name: nm_elemento_wbs
+        data_type: NUMBER(8,0)
+      - name: ds_centro_costo
+        data_type: VARCHAR(10)

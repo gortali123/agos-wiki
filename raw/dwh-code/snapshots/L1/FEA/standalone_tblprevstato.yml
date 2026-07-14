@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: standalone_tblprevstato
+    relation: ref('stg_standalone_tblprevstato')
+    config:
+      unique_key: [idstato]

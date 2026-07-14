@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: report_c1
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"REPORT_C1"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: closing_date
+        data_type: VARCHAR(8)          # fix: era DATE
+      - name: risk_taker_entity
+        data_type: VARCHAR(5)          # fix: era NUMERIC(5,0)
+      - name: source_application
+        data_type: VARCHAR(12)
+      - name: transmission_frequency
+        data_type: VARCHAR(1)
+      - name: date_time_processing
+        data_type: VARCHAR(12)         # fix: era TIMESTAMP_NTZ
+      - name: record_type
+        data_type: VARCHAR(2)
+      - name: local_id_counterparty
+        data_type: VARCHAR(20)
+      - name: central_id_counterparty
+        data_type: VARCHAR(10)         # fix: era NUMERIC(10,0)
+      - name: counterparty_name
+        data_type: VARCHAR(40)
+      - name: address
+        data_type: VARCHAR(70)
+      - name: city
+        data_type: VARCHAR(30)
+      - name: postcode
+        data_type: VARCHAR(15)         # fix: era NUMERIC(15,0)
+      - name: basel_ext_counterparty_prtf
+        data_type: VARCHAR(3)          # fix: era NUMERIC(3,0)
+      - name: leveraged_funds_indicator
+        data_type: VARCHAR(1)
+      - name: economic_agent
+        data_type: VARCHAR(6)

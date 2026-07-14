@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: stg_tblprodotti
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idprodotto
+        data_type: NUMBER(11,0)
+      - name: codiceprod
+        data_type: VARCHAR(10)
+      - name: codconvenzione
+        data_type: VARCHAR(25)
+      - name: codiceramo
+        data_type: VARCHAR(2)
+      - name: dsprodotto
+        data_type: VARCHAR(250)
+      - name: idcompagnia
+        data_type: NUMBER(11,0)
+      - name: idramo
+        data_type: NUMBER(11,0)
+      - name: suffix
+        data_type: VARCHAR(20)
+      - name: suffix_2
+        data_type: VARCHAR(20)
+      - name: sigla_num
+        data_type: VARCHAR(30)
+      - name: righe_prevbene
+        data_type: NUMBER(6,0)
+      - name: famiglia_abilitazione
+        data_type: VARCHAR(1)
+      - name: disdetta_mesi
+        data_type: NUMBER(6,0)
+      - name: giorni_comporto
+        data_type: NUMBER(6,0)
+      - name: codice_ramo_compagnia
+        data_type: VARCHAR(7)
+      - name: key_lock
+        data_type: VARCHAR(100)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

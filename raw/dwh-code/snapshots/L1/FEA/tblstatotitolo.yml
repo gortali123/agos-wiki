@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblstatotitolo
+    relation: ref('stg_tblstatotitolo')
+    config:
+      unique_key: [idstatotitolo]

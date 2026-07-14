@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_tblestratticontoattivi
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idestrattocontoattivo
+        data_type: NUMBER(11,0)
+      - name: idnodo
+        data_type: NUMBER(11,0)
+      - name: periodo_inizio
+        data_type: DATE
+      - name: periodo_fine
+        data_type: DATE
+      - name: numero_transazioni
+        data_type: NUMBER(6,0)
+      - name: importo
+        data_type: NUMBER(38,10)
+      - name: idscritturacontabile_01d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_01d
+        data_type: DATE
+      - name: idscritturacontabile_01a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_01a
+        data_type: DATE
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

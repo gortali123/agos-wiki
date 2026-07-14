@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: a1_input_42800
+        data_tests:
+          - try_cast

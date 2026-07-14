@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ncp_tblstatilead
+    relation: ref('stg_ncp_tblstatilead')
+    config:
+      unique_key: [idstatolead]

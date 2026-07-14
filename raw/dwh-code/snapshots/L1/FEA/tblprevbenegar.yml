@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblprevbenegar
+    relation: ref('stg_tblprevbenegar')
+    config:
+      unique_key: [idprevbenegar]

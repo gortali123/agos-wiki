@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: zodalist
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SAP", "schema":"L1_E_SAP", "archivio":"ZODALIST"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: societa
+        data_type: VARCHAR(4)
+      - name: fornitore
+        data_type: VARCHAR(10)
+      - name: descr_fornitore
+        data_type: VARCHAR(35)
+      - name: p_i_fornitore
+        data_type: VARCHAR(11)
+      - name: conto_co_ge
+        data_type: VARCHAR(10)
+      - name: descr_co_ge
+        data_type: VARCHAR(20)
+      - name: elemento_wbs
+        data_type: VARCHAR(24)
+      - name: descr_wbs
+        data_type: VARCHAR(40)
+      - name: doc_acquisti
+        data_type: VARCHAR(10)
+      - name: posizione_oda
+        data_type: NUMBER(38,10)
+      - name: cdc
+        data_type: VARCHAR(10)
+      - name: descr_cdc
+        data_type: VARCHAR(20)
+      - name: gruppo_acquisti
+        data_type: VARCHAR(3)
+      - name: descr_gruppo_acquisti
+        data_type: VARCHAR(18)
+      - name: numero_rda
+        data_type: VARCHAR(10)
+      - name: codice_canc
+        data_type: VARCHAR(1)
+      - name: testo_breve
+        data_type: VARCHAR(50)
+      - name: materiale
+        data_type: VARCHAR(18)
+      - name: tipo_di_materiale
+        data_type: VARCHAR(4)
+      - name: creato_da
+        data_type: VARCHAR(12)
+      - name: st_elab
+        data_type: VARCHAR(2)
+      - name: rilasciato_da
+        data_type: VARCHAR(12)
+      - name: punto_di_scarico
+        data_type: VARCHAR(25)
+      - name: data_doc
+        data_type: VARCHAR(10)
+      - name: data_creazione
+        data_type: VARCHAR(10)
+      - name: data_cons
+        data_type: VARCHAR(10)
+      - name: data_rilascio
+        data_type: VARCHAR(10)
+      - name: valore_netto
+        data_type: NUMBER(38,10)
+      - name: valore_iva
+        data_type: NUMBER(38,10)
+      - name: val_lor_oda
+        data_type: NUMBER(38,10)
+      - name: quantita
+        data_type: NUMBER(38,10)
+      - name: tipo_doc_d_acquisto
+        data_type: VARCHAR(4)
+      - name: pos_resi
+        data_type: VARCHAR(1)
+      - name: timestamp
+        data_type: VARCHAR(19)

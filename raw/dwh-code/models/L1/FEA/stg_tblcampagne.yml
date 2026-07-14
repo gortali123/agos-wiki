@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: stg_tblcampagne
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idcampagna
+        data_type: NUMBER(11,0)
+      - name: codcampagna
+        data_type: VARCHAR(45)
+      - name: dsbreve
+        data_type: VARCHAR(100)
+      - name: dslunga
+        data_type: VARCHAR(255)
+      - name: datainizio
+        data_type: DATE
+      - name: datafine
+        data_type: DATE
+      - name: abilitato
+        data_type: NUMBER(1,0)
+      - name: eliminato
+        data_type: NUMBER(1,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: codcampagnacompagnia
+        data_type: VARCHAR(45)
+      - name: imported
+        data_type: NUMBER(1,0)
+      - name: referencecampagna
+        data_type: VARCHAR(45)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

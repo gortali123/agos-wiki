@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: telaio_per_agos
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SAP", "schema":"L1_E_SAP", "archivio":"TELAIO_PER_AGOS"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: vin17
+        data_type: VARCHAR(30)
+      - name: co2_value
+        data_type: NUMBER(10,0)
+      - name: brand_text
+        data_type: VARCHAR(50)
+      - name: model_text
+        data_type: VARCHAR(50)
+      - name: vehicle_segment
+        data_type: VARCHAR(50)
+      - name: bodystyle
+        data_type: VARCHAR(50)
+      - name: fueltype
+        data_type: VARCHAR(30)
+      - name: eu_vehicle_class
+        data_type: VARCHAR(10)
+      - name: regs
+        data_type: NUMBER(10,0)
+      - name: reg_month
+        data_type: NUMBER(10,0)
+      - name: info_tech
+        data_type: VARCHAR(1000)

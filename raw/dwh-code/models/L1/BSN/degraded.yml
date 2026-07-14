@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: degraded
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"DEGRADED"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: r_sna
+        data_type: VARCHAR(200)
+      - name: r_idf
+        data_type: VARCHAR(200)
+      - name: eu_svalz
+        data_type: VARCHAR(200)

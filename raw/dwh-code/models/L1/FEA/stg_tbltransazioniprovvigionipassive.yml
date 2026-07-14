@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: stg_tbltransazioniprovvigionipassive
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idtransazioneprovvigionepassiva
+        data_type: NUMBER(11,0)
+      - name: idtransazione
+        data_type: NUMBER(11,0)
+      - name: idnodo
+        data_type: NUMBER(11,0)
+      - name: idprodottoversione
+        data_type: NUMBER(11,0)
+      - name: idestrattocontopassivo
+        data_type: NUMBER(11,0)
+      - name: data_valuta
+        data_type: DATE
+      - name: tipo_provvigione
+        data_type: VARCHAR(10)
+      - name: percentuale_provvigione
+        data_type: NUMBER(38,10)
+      - name: premio_imponibile
+        data_type: NUMBER(38,10)
+      - name: importo_provvigione
+        data_type: NUMBER(38,10)
+      - name: tipo_transazione
+        data_type: NUMBER(11,0)
+      - name: idscritturacontabile_01d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_01d
+        data_type: DATE
+      - name: idscritturacontabile_01a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_01a
+        data_type: DATE
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

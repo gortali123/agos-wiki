@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: casehistory
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"CASEHISTORY"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: isdeleted
+        data_type: BOOLEAN
+      - name: case_externalkey__c
+        data_type: VARCHAR(255)
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: field
+        data_type: VARCHAR(255)
+      - name: datatype
+        data_type: VARCHAR(255)
+      - name: oldvalue
+        data_type: VARCHAR(255)
+      - name: newvalue
+        data_type: VARCHAR(255)

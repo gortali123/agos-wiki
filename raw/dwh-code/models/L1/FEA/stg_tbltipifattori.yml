@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_tbltipifattori
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idtipofattore
+        data_type: NUMBER(11,0)
+      - name: dstipofattore
+        data_type: VARCHAR(50)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

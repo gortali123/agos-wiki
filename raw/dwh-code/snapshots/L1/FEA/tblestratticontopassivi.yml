@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblestratticontopassivi
+    relation: ref('stg_tblestratticontopassivi')
+    config:
+      unique_key: [idestrattocontopassivo]

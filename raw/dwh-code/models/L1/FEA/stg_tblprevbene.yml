@@ -1,0 +1,189 @@
+version: 2
+
+models:
+  - name: stg_tblprevbene
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idprevbene
+        data_type: NUMBER(11,0)
+      - name: idpreventivo
+        data_type: NUMBER(11,0)
+      - name: ndg
+        data_type: VARCHAR(50)
+      - name: cognome
+        data_type: VARCHAR(150)
+      - name: nome
+        data_type: VARCHAR(150)
+      - name: data_nascita
+        data_type: DATE
+      - name: sesso
+        data_type: VARCHAR(1)
+      - name: descr_prof
+        data_type: VARCHAR(250)
+      - name: classe_rischio
+        data_type: NUMBER(6,0)
+      - name: dirigente
+        data_type: NUMBER(6,0)
+      - name: indirizzo_residenza
+        data_type: VARCHAR(250)
+      - name: num_civico_residenza
+        data_type: VARCHAR(6)
+      - name: cap_residenza
+        data_type: VARCHAR(10)
+      - name: citta_residenza
+        data_type: VARCHAR(150)
+      - name: provincia_residenza
+        data_type: VARCHAR(4)
+      - name: eredi_legittimi
+        data_type: NUMBER(6,0)
+      - name: beneficiari
+        data_type: NUMBER(6,0)
+      - name: bfc_id1
+        data_type: NUMBER(6,0)
+      - name: bfc_nome_ragsoc1
+        data_type: VARCHAR(100)
+      - name: bfc_luogo1
+        data_type: VARCHAR(150)
+      - name: bfc_data1
+        data_type: DATE
+      - name: bfc_cf_piva1
+        data_type: VARCHAR(25)
+      - name: bfc_percentuale1
+        data_type: NUMBER(6,0)
+      - name: bfc_id2
+        data_type: NUMBER(6,0)
+      - name: bfc_nome_ragsoc2
+        data_type: VARCHAR(100)
+      - name: bfc_luogo2
+        data_type: VARCHAR(150)
+      - name: bfc_data2
+        data_type: DATE
+      - name: bfc_cf_piva2
+        data_type: VARCHAR(25)
+      - name: bfc_percentuale2
+        data_type: NUMBER(6,0)
+      - name: bfc_id3
+        data_type: NUMBER(6,0)
+      - name: bfc_nome_ragsoc3
+        data_type: VARCHAR(100)
+      - name: bfc_luogo3
+        data_type: VARCHAR(150)
+      - name: bfc_data3
+        data_type: DATE
+      - name: bfc_cf_piva3
+        data_type: VARCHAR(25)
+      - name: bfc_percentuale3
+        data_type: NUMBER(6,0)
+      - name: qa1
+        data_type: NUMBER(2,0)
+      - name: qa1_ds
+        data_type: VARCHAR
+      - name: qb1_ds1
+        data_type: VARCHAR
+      - name: qb1_ds2
+        data_type: VARCHAR
+      - name: qb1_ds3
+        data_type: VARCHAR
+      - name: qc1
+        data_type: NUMBER(2,0)
+      - name: qc1_ds
+        data_type: VARCHAR
+      - name: qe1_1
+        data_type: NUMBER(2,0)
+      - name: qe1_2
+        data_type: NUMBER(2,0)
+      - name: qe1_ds1
+        data_type: VARCHAR
+      - name: qe1_ds2
+        data_type: VARCHAR
+      - name: qf1
+        data_type: NUMBER(2,0)
+      - name: qf1_ds1_1
+        data_type: VARCHAR
+      - name: qf1_ds1_2
+        data_type: VARCHAR
+      - name: qf1_ds2_1
+        data_type: VARCHAR
+      - name: qf1_ds2_2
+        data_type: VARCHAR
+      - name: qf1_ds3_1
+        data_type: VARCHAR
+      - name: qf1_ds3_2
+        data_type: VARCHAR
+      - name: qf1_ds4_1
+        data_type: VARCHAR
+      - name: qf1_ds4_2
+        data_type: VARCHAR
+      - name: qf1_ds5_1
+        data_type: VARCHAR
+      - name: qf1_ds5_2
+        data_type: VARCHAR
+      - name: qg1
+        data_type: NUMBER(2,0)
+      - name: qg1_ds1
+        data_type: VARCHAR
+      - name: qg1_ds2
+        data_type: VARCHAR
+      - name: qh1
+        data_type: NUMBER(2,0)
+      - name: qh1_ds1
+        data_type: VARCHAR
+      - name: qi1
+        data_type: NUMBER(2,0)
+      - name: qi1_ds1
+        data_type: VARCHAR
+      - name: qi2
+        data_type: NUMBER(2,0)
+      - name: qi2_ds1
+        data_type: VARCHAR
+      - name: qi3
+        data_type: NUMBER(2,0)
+      - name: qi3_ds1
+        data_type: VARCHAR
+      - name: qi4
+        data_type: NUMBER(2,0)
+      - name: qi4_ds1
+        data_type: VARCHAR
+      - name: qi5
+        data_type: NUMBER(2,0)
+      - name: qi5_ds1
+        data_type: VARCHAR
+      - name: qi6
+        data_type: NUMBER(2,0)
+      - name: qi6_ds1
+        data_type: VARCHAR
+      - name: qi7
+        data_type: NUMBER(2,0)
+      - name: qi7_ds1
+        data_type: VARCHAR
+      - name: qi8
+        data_type: NUMBER(2,0)
+      - name: qi8_ds1
+        data_type: VARCHAR
+      - name: qi9
+        data_type: NUMBER(2,0)
+      - name: qi9_ds1
+        data_type: VARCHAR
+      - name: qi10
+        data_type: NUMBER(2,0)
+      - name: qi10_ds1
+        data_type: VARCHAR
+      - name: tipo_bene
+        data_type: NUMBER(11,0)
+      - name: premio_bene
+        data_type: NUMBER(38,10)
+      - name: imported
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

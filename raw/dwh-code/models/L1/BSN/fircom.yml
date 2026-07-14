@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: fircom
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"FIRCOM"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id_tiers
+        data_type: VARCHAR(11)
+      - name: nom_tiers
+        data_type: VARCHAR(100)
+      - name: statut_tiers
+        data_type: VARCHAR(1)
+      - name: cpt
+        data_type: VARCHAR(5)
+      - name: categ_cp_tiers
+        data_type: VARCHAR(150)
+      - name: pays_res
+        data_type: VARCHAR(2)
+      - name: pays_nat
+        data_type: VARCHAR(2)
+      - name: pays_ctrl
+        data_type: VARCHAR(2)
+      - name: code_pays_risque
+        data_type: VARCHAR(2)
+      - name: run_ca
+        data_type: VARCHAR(5)
+      - name: libelle_run
+        data_type: VARCHAR(60)
+      - name: note
+        data_type: VARCHAR(400)
+      - name: date_note
+        data_type: VARCHAR(19)
+      - name: siris_id_groupe
+        data_type: VARCHAR(11)
+      - name: nom_groupe
+        data_type: VARCHAR(150)

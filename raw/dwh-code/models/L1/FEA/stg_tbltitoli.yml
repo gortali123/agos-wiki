@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: stg_tbltitoli
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idtitolo
+        data_type: NUMBER(11,0)
+      - name: idprodottoversione
+        data_type: NUMBER(11,0)
+      - name: idcertificato
+        data_type: VARCHAR(250)
+      - name: cod_agenzia
+        data_type: VARCHAR(45)
+      - name: ramo
+        data_type: VARCHAR(45)
+      - name: numerocertificato
+        data_type: VARCHAR(250)
+      - name: sub_agenzia
+        data_type: VARCHAR(45)
+      - name: dataeffetto
+        data_type: DATE
+      - name: datascadenza
+        data_type: DATE
+      - name: contr_nome_ragsoc
+        data_type: VARCHAR(250)
+      - name: codprodotto
+        data_type: VARCHAR(250)
+      - name: descrizione_titolo
+        data_type: VARCHAR(250)
+      - name: datavaluta
+        data_type: DATE
+      - name: datapagamento
+        data_type: DATE
+      - name: premionetto
+        data_type: NUMBER(38,10)
+      - name: premioaddizionale
+        data_type: NUMBER(38,10)
+      - name: premioimponibile
+        data_type: NUMBER(38,10)
+      - name: premiotasse
+        data_type: NUMBER(38,10)
+      - name: premiolordo
+        data_type: NUMBER(38,10)
+      - name: premio_commissioni
+        data_type: NUMBER(38,10)
+      - name: tipopagamento
+        data_type: VARCHAR(25)
+      - name: statotitolo
+        data_type: NUMBER(11,0)
+      - name: tipooperazione
+        data_type: NUMBER(11,0)
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

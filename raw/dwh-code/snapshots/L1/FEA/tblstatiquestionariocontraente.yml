@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblstatiquestionariocontraente
+    relation: ref('stg_tblstatiquestionariocontraente')
+    config:
+      unique_key: [idstatoquestionariocontraente]

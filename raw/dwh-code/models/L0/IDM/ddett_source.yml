@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: ddett
+        data_tests:
+          - try_cast_from_sql
+          - primary_key:
+              arguments:
+                pk_columns: [k0, pratica, documento, data_ora_ricezione, data_ora_caricamento, numero_di_pagine]

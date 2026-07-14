@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: contact
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"CONTACT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: isdeleted
+        data_type: BOOLEAN
+      - name: account_externalkey__c
+        data_type: VARCHAR(255)
+      - name: ispersonaccount
+        data_type: BOOLEAN
+      - name: lastname
+        data_type: VARCHAR(255)
+      - name: firstname
+        data_type: VARCHAR(255)
+      - name: salutation
+        data_type: VARCHAR(40)
+      - name: middlename
+        data_type: VARCHAR(255)
+      - name: suffix
+        data_type: VARCHAR(255)
+      - name: name
+        data_type: VARCHAR(255)
+      - name: recordtype_name
+        data_type: VARCHAR(255)
+      - name: phone
+        data_type: VARCHAR(40)
+      - name: mobilephone
+        data_type: VARCHAR(40)
+      - name: homephone
+        data_type: VARCHAR(40)
+      - name: otherphone
+        data_type: VARCHAR(40)
+      - name: email
+        data_type: VARCHAR(255)
+      - name: title
+        data_type: VARCHAR(255)
+      - name: birthdate
+        data_type: TIMESTAMP_NTZ
+      - name: owner_federationidentifier
+        data_type: VARCHAR(255)
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastmodifieddate
+        data_type: TIMESTAMP_NTZ
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastactivitydate
+        data_type: TIMESTAMP_NTZ
+      - name: lastvieweddate
+        data_type: TIMESTAMP_NTZ
+      - name: lastreferenceddate
+        data_type: TIMESTAMP_NTZ
+      - name: ruolo__c
+        data_type: VARCHAR(255)
+      - name: noteconcorrenza__c
+        data_type: VARCHAR(32768)

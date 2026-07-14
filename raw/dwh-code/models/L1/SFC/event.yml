@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: event
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"EVENT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: esitoevento__c
+        data_type: VARCHAR(255)
+      - name: iniziativa__r_idiniziativa__c
+        data_type: VARCHAR(255)
+      - name: iniziativa__r_name
+        data_type: VARCHAR(255)
+      - name: noteesito__c
+        data_type: VARCHAR(255)
+      - name: erogazioneevento__c
+        data_type: VARCHAR(255)
+      - name: isalldayevent
+        data_type: BOOLEAN
+      - name: description
+        data_type: VARCHAR(32000)
+      - name: owner_federationidentifier
+        data_type: VARCHAR(255)
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: startdatetime
+        data_type: TIMESTAMP_NTZ
+      - name: enddatetime
+        data_type: TIMESTAMP_NTZ
+      - name: what_account_externalkey__c
+        data_type: VARCHAR(255)
+      - name: what_membriiniziativa__r_name
+        data_type: VARCHAR(255)
+      - name: account_externalkey__c
+        data_type: VARCHAR(255)
+      - name: recordtype_name
+        data_type: VARCHAR(255)
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastmodifieddate
+        data_type: TIMESTAMP_NTZ

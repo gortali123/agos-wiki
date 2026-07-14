@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_tblstatotransazione
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idstatotransazione
+        data_type: NUMBER(11,0)
+      - name: dsstatotransazione
+        data_type: VARCHAR(250)
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

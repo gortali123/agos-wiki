@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: collection_indiretti
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      meta:
+        cluster: ["D"]
+      query_tag: '{"app":"DBT", "sorgente":"SAP", "schema":"L1_E_SAP", "archivio":"COLLECTION_INDIRETTI"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: codice_societa
+        data_type: VARCHAR(14)
+      - name: centro_costo
+        data_type: VARCHAR(10)
+      - name: saldo_tot_mensile
+        data_type: VARCHAR(21)
+      - name: data
+        data_type: VARCHAR(10)
+      - name: periodo
+        data_type: VARCHAR(3)

@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: stg_tblnodi
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idnodo
+        data_type: NUMBER(11,0)
+      - name: dsnodo
+        data_type: VARCHAR(250)
+      - name: codnodo
+        data_type: VARCHAR(20)
+      - name: idnodopadre
+        data_type: NUMBER(11,0)
+      - name: idtiponodo
+        data_type: NUMBER(6,0)
+      - name: compagnia
+        data_type: NUMBER(6,0)
+      - name: tiponodobanca
+        data_type: VARCHAR(10)
+      - name: areanodo
+        data_type: VARCHAR(10)
+      - name: abi
+        data_type: VARCHAR(10)
+      - name: cab
+        data_type: VARCHAR(5)
+      - name: indirizzo
+        data_type: VARCHAR(250)
+      - name: comune
+        data_type: VARCHAR(150)
+      - name: prov
+        data_type: VARCHAR(4)
+      - name: cap
+        data_type: VARCHAR(10)
+      - name: file_cert
+        data_type: VARCHAR(255)
+      - name: alias_cert
+        data_type: VARCHAR(45)
+      - name: pwd_cert
+        data_type: VARCHAR(45)
+      - name: numeratoreflusso
+        data_type: NUMBER(11,0)
+      - name: telefono
+        data_type: VARCHAR(60)
+      - name: fax
+        data_type: VARCHAR(60)
+      - name: nome_resp
+        data_type: VARCHAR(150)
+      - name: cognome_resp
+        data_type: VARCHAR(150)
+      - name: email_resp
+        data_type: VARCHAR(255)
+      - name: nodo_cf_iva
+        data_type: VARCHAR(30)
+      - name: codserviceesterno
+        data_type: VARCHAR(20)
+      - name: dsserviceesterno
+        data_type: VARCHAR(100)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

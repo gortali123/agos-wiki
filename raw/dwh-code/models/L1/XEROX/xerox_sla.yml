@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: xerox_sla
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      meta:
+        cluster: ["D"]
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [itemnum, itemdate, codicepratica, onlineperagosdataora, dataoraconsegnata]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: itemnum
+        data_type: NUMBER(10,0)
+      - name: itemdate
+        data_type: TIMESTAMP_NTZ
+      - name: codicepratica
+        data_type: VARCHAR(25)
+      - name: numeropagine
+        data_type: NUMBER(5,0)
+      - name: tipoarchiviazione
+        data_type: VARCHAR(25)
+      - name: tipopratica
+        data_type: VARCHAR(100)
+      - name: azionesufile
+        data_type: VARCHAR(15)
+      - name: dataoraflusso
+        data_type: TIMESTAMP_NTZ
+      - name: onlineperagosdataora
+        data_type: TIMESTAMP_NTZ
+      - name: onlineperagos
+        data_type: VARCHAR(5)
+      - name: dataoraconsegnata
+        data_type: TIMESTAMP_NTZ
+      - name: sla
+        data_type: NUMBER(2,0)

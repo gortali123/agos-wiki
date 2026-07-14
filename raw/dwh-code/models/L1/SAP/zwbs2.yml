@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: zwbs2
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SAP", "schema":"L1_E_SAP", "archivio":"ZWBS2"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: chiave_univoca_record
+        data_type: VARCHAR(21)
+      - name: societa
+        data_type: VARCHAR(4)
+      - name: esercizio
+        data_type: VARCHAR(4)
+      - name: periodo
+        data_type: NUMBER(38,10)
+      - name: voce_di_costo
+        data_type: VARCHAR(10)
+      - name: descr_voce_di_costo
+        data_type: VARCHAR(40)
+      - name: conto_controp
+        data_type: VARCHAR(10)
+      - name: definiz_conto_controp
+        data_type: VARCHAR(35)
+      - name: elemento_wbs
+        data_type: VARCHAR(24)
+      - name: definizione_oggetto
+        data_type: VARCHAR(60)
+      - name: documento_acquisti
+        data_type: VARCHAR(10)
+      - name: testo_ord_acq
+        data_type: VARCHAR(40)
+      - name: posizione
+        data_type: NUMBER(38,10)
+      - name: tp_doc
+        data_type: VARCHAR(2)
+      - name: num_documento
+        data_type: VARCHAR(10)
+      - name: num_doc_di_riferimento
+        data_type: VARCHAR(10)
+      - name: materiale
+        data_type: VARCHAR(18)
+      - name: utente
+        data_type: VARCHAR(12)
+      - name: defin_voce_di_costo
+        data_type: VARCHAR(20)
+      - name: cdc
+        data_type: VARCHAR(10)
+      - name: descr_centro_di_costo
+        data_type: VARCHAR(40)
+      - name: fornitore
+        data_type: VARCHAR(10)
+      - name: nome_1
+        data_type: VARCHAR(35)
+      - name: definizione
+        data_type: VARCHAR(50)
+      - name: val_div_ca
+        data_type: VARCHAR(20)
+      - name: div_ca
+        data_type: VARCHAR(5)
+      - name: acquistato_il
+        data_type: VARCHAR(10)
+      - name: data_doc
+        data_type: VARCHAR(10)
+      - name: data_reg
+        data_type: VARCHAR(10)
+      - name: data_valuta
+        data_type: VARCHAR(10)
+      - name: umr
+        data_type: VARCHAR(3)
+      - name: val_div_t
+        data_type: VARCHAR(20)
+      - name: val_div_o
+        data_type: VARCHAR(20)
+      - name: val_var_dr
+        data_type: VARCHAR(20)
+      - name: val_var_dca
+        data_type: VARCHAR(20)
+      - name: qta_acq
+        data_type: VARCHAR(20)

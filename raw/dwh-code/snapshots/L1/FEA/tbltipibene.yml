@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tbltipibene
+    relation: ref('stg_tbltipibene')
+    config:
+      unique_key: [idtipobene]

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: pp_campaign
+    relation: ref('stg_pp_campaign')
+    config:
+      unique_key: [campaignid]

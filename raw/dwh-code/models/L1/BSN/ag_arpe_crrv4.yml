@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: ag_arpe_crrv4
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"AG_ARPE_CRRV4"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: societa
+        data_type: NUMBER(38,10)
+      - name: dominio
+        data_type: VARCHAR(4)
+      - name: periodo
+        data_type: VARCHAR(7)
+      - name: pcco
+        data_type: VARCHAR(8)
+      - name: nato
+        data_type: VARCHAR(7)
+      - name: conto
+        data_type: VARCHAR(10)
+      - name: valuta
+        data_type: VARCHAR(3)
+      - name: saldo
+        data_type: NUMBER(38,10)

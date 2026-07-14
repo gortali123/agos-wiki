@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: fin_att
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"FIN_ATT"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: cd_soc_contb_sap
+        data_type: VARCHAR(4)
+      - name: tp_prod_sap
+        data_type: VARCHAR(3)
+      - name: cd_operazione_sap
+        data_type: VARCHAR(13)
+      - name: dt_osservazione
+        data_type: DATE
+      - name: eu_iniziale_fin
+        data_type: NUMBER(20,2)
+      - name: eu_nominale
+        data_type: NUMBER(20,2)
+      - name: dt_iniz_vali
+        data_type: DATE
+      - name: dt_fine_vali
+        data_type: DATE

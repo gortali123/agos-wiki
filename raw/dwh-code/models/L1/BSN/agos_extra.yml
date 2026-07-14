@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: agos_extra
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"AGOS_EXTRA"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ndg
+        data_type: VARCHAR(16)
+      - name: numero_posizione
+        data_type: VARCHAR(29)
+      - name: numero_partita
+        data_type: VARCHAR(15)
+      - name: voce_orig
+        data_type: VARCHAR(5)
+      - name: s_voce_orig
+        data_type: VARCHAR(2)
+      - name: voce_derivata
+        data_type: VARCHAR(5)
+      - name: s_voce_derivata
+        data_type: VARCHAR(2)
+      - name: campo_01297
+        data_type: VARCHAR(3)
+      - name: importo
+        data_type: NUMBER(18,2)

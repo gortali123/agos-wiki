@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: microdata_sla
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      meta:
+        cluster: ["D"]
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [docid_md]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: docid_md
+        data_type: VARCHAR(20)
+      - name: codicepratica
+        data_type: VARCHAR(20)
+      - name: numeropagine
+        data_type: NUMBER(5,0)
+      - name: canaledoc
+        data_type: VARCHAR(30)
+      - name: dataricezione
+        data_type: TIMESTAMP_NTZ
+      - name: datacaricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sla_in_gg
+        data_type: NUMBER(10)

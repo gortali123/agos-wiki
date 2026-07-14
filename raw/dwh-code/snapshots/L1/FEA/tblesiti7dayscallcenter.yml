@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblesiti7dayscallcenter
+    relation: ref('stg_tblesiti7dayscallcenter')
+    config:
+      unique_key: [idesito7dayscallcenter]

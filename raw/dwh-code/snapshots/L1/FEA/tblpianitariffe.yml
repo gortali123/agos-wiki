@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblpianitariffe
+    relation: ref('stg_tblpianitariffe')
+    config:
+      unique_key: [idpianotariffa]

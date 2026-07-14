@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: iniziativa__c
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"INIZIATIVA__C"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: owner_federationidentifier
+        data_type: VARCHAR(255)
+      - name: isdeleted
+        data_type: BOOLEAN
+      - name: name
+        data_type: VARCHAR(255)
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastmodifieddate
+        data_type: TIMESTAMP_NTZ
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: datainizio__c
+        data_type: DATE
+      - name: datafine__c
+        data_type: DATE
+      - name: descrizione__c
+        data_type: VARCHAR(32768)
+      - name: idiniziativa__c
+        data_type: VARCHAR(255)
+      - name: rete__c
+        data_type: VARCHAR(255)
+      - name: stato__c
+        data_type: VARCHAR(255)

@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: elapsedtime
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['idprocess', 'convenzionato']
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"PRIMEWEB", "schema":"L1_E_PRIMEWEB", "archivio":"ELAPSEDTIME"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [idprocess, convenzionato]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: idprocess
+        data_type: NUMBER(38,0)
+      - name: ecommerce_process_code
+        data_type: VARCHAR(50)
+      - name: data
+        data_type: DATE
+      - name: convenzionato
+        data_type: NUMBER(38,0)
+      - name: numeroordine
+        data_type: VARCHAR(50)
+      - name: esitopratica
+        data_type: VARCHAR(20)
+      - name: numeropratica
+        data_type: NUMBER(38,0)
+      - name: init
+        data_type: VARCHAR(10)
+      - name: tabellafinanziaria
+        data_type: VARCHAR(10)
+      - name: avviosmart
+        data_type: VARCHAR(10)
+      - name: otpverifica
+        data_type: VARCHAR(10)
+      - name: otprinuncia
+        data_type: VARCHAR(10)
+      - name: avvioclassico
+        data_type: VARCHAR(10)
+      - name: inserimentodatipersonali
+        data_type: VARCHAR(10)
+      - name: creazionepratica
+        data_type: VARCHAR(10)
+      - name: postcreazionepratica
+        data_type: VARCHAR(10)
+      - name: modalitariconoscimentosubmit
+        data_type: VARCHAR(10)
+      - name: spidconferma
+        data_type: VARCHAR(10)
+      - name: estremidocumentosubmit
+        data_type: VARCHAR(10)
+      - name: initfirmaupload
+        data_type: VARCHAR(10)
+      - name: uploaddocumento
+        data_type: VARCHAR(10)
+      - name: redirectfirma
+        data_type: VARCHAR(10)
+      - name: contrattoinfocert
+        data_type: VARCHAR(10)
+      - name: contrattoagos
+        data_type: VARCHAR(10)
+      - name: firma
+        data_type: VARCHAR(10)
+      - name: total
+        data_type: VARCHAR(10)

@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_ncp_tblesitioperazionelead
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idesitooperazionelead
+        data_type: NUMBER(6,0)
+      - name: idtipooperazionelead
+        data_type: NUMBER(6,0)
+      - name: ds_esito_operazione
+        data_type: VARCHAR(45)
+      - name: ordine_esito_operazione
+        data_type: NUMBER(6,0)
+      - name: eliminato
+        data_type: NUMBER(1,0)

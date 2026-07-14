@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: fircom_2
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"FIRCOM_2"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id_tiers
+        data_type: VARCHAR(11)
+      - name: nom_tiers
+        data_type: VARCHAR(100)
+      - name: nom_court_tiers
+        data_type: VARCHAR(100)
+      - name: code_secteur_act
+        data_type: VARCHAR(10)
+      - name: code_cat_contrepartie
+        data_type: VARCHAR(5)
+      - name: alias_type
+        data_type: VARCHAR(20)
+      - name: identifiant_alias
+        data_type: VARCHAR(20)

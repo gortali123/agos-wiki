@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ncp_tbltipilead
+    relation: ref('stg_ncp_tbltipilead')
+    config:
+      unique_key: [idtipolead]

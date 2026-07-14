@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblnodiusers
+    relation: ref('stg_tblnodiusers')
+    config:
+      unique_key: [idnodousers]

@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_tblquestionaridomande
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idquestionariodomanda
+        data_type: NUMBER(11,0)
+      - name: idquestionario
+        data_type: NUMBER(11,0)
+      - name: codice_domanda
+        data_type: NUMBER(6,0)
+      - name: tipo
+        data_type: NUMBER(3,0)
+      - name: ds_domanda
+        data_type: VARCHAR
+      - name: ds_domanda_dettaglio
+        data_type: VARCHAR
+      - name: ordine_domanda
+        data_type: NUMBER(6,0)
+      - name: data_inizio_validita
+        data_type: DATE
+      - name: data_fine_validita
+        data_type: DATE
+      - name: eliminato
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

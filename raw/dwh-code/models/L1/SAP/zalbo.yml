@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: zalbo
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      meta:
+        cluster: ["D"]
+      query_tag: '{"app":"DBT", "sorgente":"SAP", "schema":"L1_E_SAP", "archivio":"ZALBO"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: societa
+        data_type: VARCHAR(4)
+      - name: company_registration_number
+        data_type: VARCHAR(16)
+      - name: organization_name
+        data_type: VARCHAR(35)
+      - name: address
+        data_type: VARCHAR(35)
+      - name: postal_code
+        data_type: VARCHAR(10)
+      - name: city
+        data_type: VARCHAR(35)
+      - name: state_country
+        data_type: VARCHAR(20)
+      - name: country
+        data_type: VARCHAR(3)
+      - name: email_address
+        data_type: VARCHAR(50)
+      - name: phone_number
+        data_type: VARCHAR(16)
+      - name: username
+        data_type: VARCHAR(16)
+      - name: external_code
+        data_type: VARCHAR(10)
+      - name: vat_number
+        data_type: VARCHAR(16)
+      - name: account_management
+        data_type: VARCHAR(1)
+      - name: esercizio
+        data_type: VARCHAR(4)
+      - name: fatturato_ytd_es_in_corso
+        data_type: VARCHAR(20)
+      - name: ordinato_ytd_es_in_corso
+        data_type: VARCHAR(20)
+      - name: es_in_corso_1
+        data_type: VARCHAR(4)
+      - name: fatturato_ytd_es_1
+        data_type: VARCHAR(20)
+      - name: ordinato_ytd_es_1
+        data_type: VARCHAR(20)
+      - name: es_in_corso_2
+        data_type: VARCHAR(4)
+      - name: fatturato_ytd_es_2
+        data_type: VARCHAR(20)
+      - name: ordinato_ytd_es_2
+        data_type: VARCHAR(20)
+      - name: timestamp
+        data_type: VARCHAR(19)

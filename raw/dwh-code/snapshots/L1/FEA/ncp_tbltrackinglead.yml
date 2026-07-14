@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ncp_tbltrackinglead
+    relation: ref('stg_ncp_tbltrackinglead')
+    config:
+      unique_key: [idtrackinglead]

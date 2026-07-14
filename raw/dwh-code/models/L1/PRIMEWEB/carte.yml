@@ -1,0 +1,170 @@
+version: 2
+
+models:
+  - name: carte
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"PRIMEWEB", "schema":"L1_E_PRIMEWEB", "archivio":"CARTE"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: formrequestid
+        data_type: NUMBER(8,0)
+      - name: formrequeststate
+        data_type: VARCHAR(20)
+      - name: creationdate
+        data_type: VARCHAR(20)
+      - name: ipaddress
+        data_type: VARCHAR(20)
+      - name: mobile
+        data_type: VARCHAR(18)
+      - name: card
+        data_type: VARCHAR(20)
+      - name: digitalsign
+        data_type: VARCHAR(20)
+      - name: cd_pratica
+        data_type: NUMBER(16,0)
+      - name: dn_dnnomecli
+        data_type: VARCHAR(50)
+      - name: dn_dncognomecli
+        data_type: VARCHAR(50)
+      - name: cd_cdsexcli
+        data_type: VARCHAR(2)
+      - name: nm_nmtelrescli
+        data_type: VARCHAR(20)
+      - name: nm_nmtelcontcli
+        data_type: VARCHAR(20)
+      - name: cd_cdemailcli
+        data_type: VARCHAR(150)
+      - name: cd_cdfisccli
+        data_type: VARCHAR(20)
+      - name: cd_cdattcli
+        data_type: VARCHAR(2)
+      - name: fl_dati_mark
+        data_type: VARCHAR(5)
+      - name: fl_dati_pers
+        data_type: VARCHAR(30)
+      - name: fl_in_pepcli
+        data_type: VARCHAR(10)
+      - name: dt_dtnascitacli
+        data_type: VARCHAR(20)
+      - name: cd_cdcittadcli
+        data_type: VARCHAR(10)
+      - name: cd_cdprvnascli
+        data_type: VARCHAR(4)
+      - name: dn_dnlocnascli
+        data_type: VARCHAR(100)
+      - name: cd_cdstatocivcli
+        data_type: VARCHAR(4)
+      - name: cd_cdtpabicli
+        data_type: VARCHAR(4)
+      - name: im_imaffittocli
+        data_type: NUMBER(8,0)
+      - name: dug
+        data_type: VARCHAR(50)
+      - name: dn_dnindirizzocli
+        data_type: VARCHAR(100)
+      - name: cd_cdcaprescli
+        data_type: VARCHAR(30)
+      - name: cd_cdprvrescli
+        data_type: VARCHAR(30)
+      - name: dn_dnlocrescli
+        data_type: VARCHAR(100)
+      - name: dt_dtrescli
+        data_type: VARCHAR(30)
+      - name: dugpre
+        data_type: VARCHAR(50)
+      - name: dn_dnindirizzoprecli
+        data_type: VARCHAR(100)
+      - name: cd_cdcapresprecli
+        data_type: VARCHAR(30)
+      - name: cd_cdprvresprecli
+        data_type: VARCHAR(30)
+      - name: dn_dnlocresprecli
+        data_type: VARCHAR(100)
+      - name: cd_cdocccli
+        data_type: VARCHAR(30)
+      - name: cd_cdcontrcli
+        data_type: VARCHAR(30)
+      - name: im_imreddcli
+        data_type: NUMBER(11,2)
+      - name: nm_nmmenscli
+        data_type: NUMBER(8,0)
+      - name: cd_cdtppagcli
+        data_type: VARCHAR(20)
+      - name: iban
+        data_type: VARCHAR(45)
+      - name: dugsoccli
+        data_type: VARCHAR(50)
+      - name: dn_dnragsoccli
+        data_type: VARCHAR(100)
+      - name: dn_dnindsoccli
+        data_type: VARCHAR(100)
+      - name: dn_dnprovsoccli
+        data_type: VARCHAR(30)
+      - name: dn_dnlocsoccli
+        data_type: VARCHAR(100)
+      - name: nm_nmtelsoccli
+        data_type: VARCHAR(50)
+      - name: nm_nmmeseattcli
+        data_type: NUMBER(8,0)
+      - name: nm_nmannoattcli
+        data_type: NUMBER(8,0)
+      - name: d1
+        data_type: VARCHAR(80)
+      - name: r1
+        data_type: VARCHAR(80)
+      - name: d2
+        data_type: VARCHAR(80)
+      - name: r2
+        data_type: VARCHAR(80)
+      - name: d3
+        data_type: VARCHAR(80)
+      - name: r3
+        data_type: VARCHAR(80)
+      - name: d4
+        data_type: VARCHAR(80)
+      - name: r4
+        data_type: VARCHAR(80)
+      - name: d5
+        data_type: VARCHAR(80)
+      - name: r5
+        data_type: VARCHAR(80)
+      - name: d6
+        data_type: VARCHAR(80)
+      - name: r6
+        data_type: VARCHAR(80)
+      - name: d7
+        data_type: VARCHAR(80)
+      - name: r7
+        data_type: VARCHAR(80)
+      - name: d8
+        data_type: VARCHAR(80)
+      - name: r8
+        data_type: VARCHAR(80)
+      - name: d9
+        data_type: VARCHAR(80)
+      - name: r9
+        data_type: VARCHAR(80)
+      - name: d10
+        data_type: VARCHAR(80)
+      - name: r10
+        data_type: VARCHAR(80)
+      - name: prycmcext
+        data_type: VARCHAR(4)
+      - name: prycmctpo
+        data_type: VARCHAR(4)
+      - name: pryplftpo
+        data_type: VARCHAR(4)
+      - name: session_uid
+        data_type: VARCHAR(50)
+      - name: cd_broker
+        data_type: VARCHAR(20)
+      - name: id_campagna
+        data_type: NUMBER(3,0)
+      - name: descrizione_campagna
+        data_type: VARCHAR(167)

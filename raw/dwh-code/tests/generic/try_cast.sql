@@ -12,7 +12,6 @@
   {% set skip_columns_lower = (skip_columns or []) | map('lower') | list %}
   {% set accepted_values = accepted_values or {} %}
 
-  {# --- Costruisci prima la lista delle colonne da renderizzare --- #}
   {% set cols_to_render = [] %}
       {% for col_name, col_def in l1_node.columns.items() %}
           {% if col_name | lower in columns_from_source and col_name | lower not in skip_columns_lower %}

@@ -1,0 +1,178 @@
+version: 2
+
+models:
+  - name: case
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"CASE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: casenumber
+        data_type: NUMBER(38,0)
+      - name: recordtype_name
+        data_type: VARCHAR(255)
+      - name: sottocategoriapicklist__c
+        data_type: VARCHAR(255)
+      - name: tipologiapicklist__c
+        data_type: VARCHAR(255)
+      - name: motivo__c
+        data_type: VARCHAR(255)
+      - name: motivocontatto__c
+        data_type: VARCHAR(255)
+      - name: status
+        data_type: VARCHAR(255)
+      - name: motivosospensione__c
+        data_type: VARCHAR(255)
+      - name: statoprecedente__c
+        data_type: VARCHAR(255)
+      - name: sottostato__c
+        data_type: VARCHAR(255)
+      - name: esito__c
+        data_type: VARCHAR(255)
+      - name: motivazione__c
+        data_type: VARCHAR(255)
+      - name: origin
+        data_type: VARCHAR(255)
+      - name: priority
+        data_type: VARCHAR(255)
+      - name: subject
+        data_type: VARCHAR(255)
+      - name: description
+        data_type: VARCHAR(3200)
+      - name: comments
+        data_type: VARCHAR(255)
+      - name: richiedente__c
+        data_type: VARCHAR(255)
+      - name: account_externalkey__c
+        data_type: VARCHAR(255)
+      - name: nomeaccount__c
+        data_type: VARCHAR(255)
+      - name: asset_externalkey__c
+        data_type: VARCHAR(255)
+      - name: parent_externalkey__c
+        data_type: VARCHAR(255)
+      - name: owner_federationidentifier
+        data_type: VARCHAR(255)
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: entitlement_name
+        data_type: VARCHAR(255)
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: closeddate
+        data_type: TIMESTAMP_NTZ
+      - name: convenzionatofiliale__c
+        data_type: VARCHAR(255)
+      - name: procedura__c
+        data_type: VARCHAR(255)
+      - name: assicurazione__c
+        data_type: VARCHAR(255)
+      - name: compagniaassicurativa__c
+        data_type: VARCHAR(255)
+      - name: tipologiapolizza__c
+        data_type: VARCHAR(255)
+      - name: autoritdivigilanzacoinvolta__c
+        data_type: VARCHAR(255)
+      - name: bancadati__c
+        data_type: VARCHAR(255)
+      - name: beneficiarioliquidazione__c
+        data_type: VARCHAR(255)
+      - name: ibanbeneficiario__c
+        data_type: VARCHAR(255)
+      - name: importo__c
+        data_type: NUMBER(13,5)
+      - name: importofattura__c
+        data_type: NUMBER(13,5)
+      - name: modalitdierogazione__c
+        data_type: VARCHAR(255)
+      - name: causale__c
+        data_type: VARCHAR(255)
+      - name: decessodormiente__c
+        data_type: BOOLEAN
+      - name: consultatacaci__c
+        data_type: BOOLEAN
+      - name: dataevento__c
+        data_type: DATE
+      - name: datadecorrenza__c
+        data_type: DATE
+      - name: sceltacliente__c
+        data_type: VARCHAR(255)
+      - name: esclusivitcompagnia__c
+        data_type: VARCHAR(255)
+      - name: linksospettocliccato__c
+        data_type: VARCHAR(255)
+      - name: esitoanalisimovimenti__c
+        data_type: VARCHAR(255)
+      - name: coinvolgimentoautoritgiudiziaria__c
+        data_type: BOOLEAN
+      - name: negoziazioneassistita__c
+        data_type: BOOLEAN
+      - name: emailcliente__c
+        data_type: VARCHAR(255)
+      - name: emailrichiedente__c
+        data_type: VARCHAR(255)
+      - name: cognomerichiedente__c
+        data_type: VARCHAR(255)
+      - name: nomerichiedente__c
+        data_type: VARCHAR(255)
+      - name: cognomeclientenoncensito__c
+        data_type: VARCHAR(255)
+      - name: nomeclientenoncensito__c
+        data_type: VARCHAR(255)
+      - name: nota1__c
+        data_type: VARCHAR(255)
+      - name: nota2__c
+        data_type: VARCHAR(255)
+      - name: noteantifrode__c
+        data_type: VARCHAR(4000)
+      - name: notedichiusura__c
+        data_type: VARCHAR(4000)
+      - name: notedisospensione__c
+        data_type: VARCHAR(32768)
+      - name: giorniinsospeso__c
+        data_type: NUMBER(2,0)
+      - name: temposospensioneingiorni__c
+        data_type: VARCHAR(255)
+      - name: suggerimentofornito__c
+        data_type: VARCHAR(255)
+      - name: informazioniaggiuntive__c
+        data_type: VARCHAR(255)
+      - name: valoreeconomicodelreclamo__c
+        data_type: VARCHAR(255)
+      - name: tipologiarichiesta__c
+        data_type: VARCHAR(255)
+      - name: tipologiaproponente__c
+        data_type: VARCHAR(255)
+      - name: areaaziendale__c
+        data_type: VARCHAR(255)
+      - name: statoreso__c
+        data_type: VARCHAR(255)
+      - name: verificavariazione__c
+        data_type: VARCHAR(255)
+      - name: spesedastornare__c
+        data_type: VARCHAR(255)
+      - name: dataritorno__c
+        data_type: DATE
+      - name: dataregistrazioneritorno__c
+        data_type: DATE
+      - name: utenteregistrazioneritorno__c
+        data_type: VARCHAR(255)
+      - name: taskcreati__c
+        data_type: BOOLEAN
+      - name: milestonetdlcompletata__c
+        data_type: BOOLEAN
+      - name: milestonestatus
+        data_type: VARCHAR(30)

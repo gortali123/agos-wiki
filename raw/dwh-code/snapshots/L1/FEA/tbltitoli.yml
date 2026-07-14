@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tbltitoli
+    relation: ref('stg_tbltitoli')
+    config:
+      unique_key: [idtitolo]

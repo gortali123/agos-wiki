@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: rrf
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"RRF"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: r_idf
+        data_type: VARCHAR(200)
+      - name: sh_icr_reval
+        data_type: VARCHAR(200)

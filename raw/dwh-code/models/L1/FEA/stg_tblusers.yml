@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: stg_tblusers
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idusers
+        data_type: NUMBER(11,0)
+      - name: username
+        data_type: VARCHAR(20)
+      - name: cognome
+        data_type: VARCHAR(150)
+      - name: nome
+        data_type: VARCHAR(150)
+      - name: email
+        data_type: VARCHAR(250)
+      - name: tipouser
+        data_type: NUMBER(6,0)
+      - name: bloccato
+        data_type: NUMBER(6,0)
+      - name: idramo
+        data_type: NUMBER(6,0)
+      - name: user_sesso
+        data_type: VARCHAR(1)
+      - name: user_cf_iva
+        data_type: VARCHAR(30)
+      - name: user_data_nascita
+        data_type: DATE
+      - name: user_citta_nascita
+        data_type: VARCHAR(150)
+      - name: user_provincia_nascita
+        data_type: VARCHAR(4)
+      - name: user_telefono
+        data_type: VARCHAR(30)
+      - name: user_fax
+        data_type: VARCHAR(30)
+      - name: user_cellulare
+        data_type: VARCHAR(30)
+      - name: user_note
+        data_type: VARCHAR
+      - name: codice_zona
+        data_type: VARCHAR(3)
+      - name: codice_profilo_racf
+        data_type: VARCHAR(10)
+      - name: user_force_chg_pwd
+        data_type: NUMBER(6,0)
+      - name: user_dataultimoaccesso
+        data_type: TIMESTAMP_NTZ
+      - name: codice_uog
+        data_type: VARCHAR(45)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

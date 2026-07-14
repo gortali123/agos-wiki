@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: azioneselezionata__c
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"AZIONESELEZIONATA__C"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: catalogoazioni__r_name
+        data_type: VARCHAR(255)
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: descrizione__c
+        data_type: VARCHAR(300)
+      - name: iniziativa__r_idiniziativa__c
+        data_type: VARCHAR(255)
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastmodifieddate
+        data_type: TIMESTAMP_NTZ
+      - name: name
+        data_type: VARCHAR(255)
+      - name: rete__c
+        data_type: VARCHAR(255)

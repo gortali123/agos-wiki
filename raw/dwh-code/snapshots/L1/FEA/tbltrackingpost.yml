@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tbltrackingpost
+    relation: ref('stg_tbltrackingpost')
+    config:
+      unique_key: [idtrackingpost]

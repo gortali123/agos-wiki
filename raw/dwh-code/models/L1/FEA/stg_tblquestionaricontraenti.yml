@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: stg_tblquestionaricontraenti
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idquestionariocontraente
+        data_type: NUMBER(11,0)
+      - name: idanagraficaprospect
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: idstatoquestionariocontraente
+        data_type: NUMBER(11,0)
+      - name: codice_cliente
+        data_type: VARCHAR(45)
+      - name: cognome
+        data_type: VARCHAR(150)
+      - name: nome
+        data_type: VARCHAR(150)
+      - name: codice_fiscale
+        data_type: VARCHAR(30)
+      - name: data_nascita
+        data_type: DATE
+      - name: sesso
+        data_type: VARCHAR(1)
+      - name: provincia_nascita
+        data_type: VARCHAR(4)
+      - name: citta_nascita
+        data_type: VARCHAR(150)
+      - name: indirizzo_residenza
+        data_type: VARCHAR(250)
+      - name: citta_residenza
+        data_type: VARCHAR(150)
+      - name: provincia_residenza
+        data_type: VARCHAR(4)
+      - name: cap_residenza
+        data_type: VARCHAR(10)
+      - name: email
+        data_type: VARCHAR(250)
+      - name: cognome_nome_operatore
+        data_type: VARCHAR(250)
+      - name: idquestionario
+        data_type: NUMBER(11,0)
+      - name: risposte
+        data_type: VARCHAR
+      - name: esito
+        data_type: VARCHAR
+      - name: tipo_invio_stampa
+        data_type: NUMBER(3,0)
+      - name: modifica_operatore
+        data_type: NUMBER(1,0)
+      - name: operatore_verificato
+        data_type: NUMBER(1,0)
+      - name: ndg_convenzionato
+        data_type: VARCHAR(45)
+      - name: ragione_sociale_convenzionato
+        data_type: VARCHAR(150)
+      - name: codice_agos_utente
+        data_type: VARCHAR(45)
+      - name: nome_utente
+        data_type: VARCHAR(150)
+      - name: cognome_utente
+        data_type: VARCHAR(150)
+      - name: codice_controparte_associato_utente
+        data_type: VARCHAR(45)
+      - name: data_export_doc
+        data_type: TIMESTAMP_NTZ
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

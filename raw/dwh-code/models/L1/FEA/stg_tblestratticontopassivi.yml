@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_tblestratticontopassivi
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idestrattocontopassivo
+        data_type: NUMBER(11,0)
+      - name: idnodo
+        data_type: NUMBER(11,0)
+      - name: periodo_inizio
+        data_type: DATE
+      - name: periodo_fine
+        data_type: DATE
+      - name: numero_transazioni
+        data_type: NUMBER(6,0)
+      - name: importo
+        data_type: NUMBER(38,10)
+      - name: data_export_provvigioni
+        data_type: TIMESTAMP_NTZ
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

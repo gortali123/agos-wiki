@@ -1,0 +1,151 @@
+version: 2
+
+models:
+  - name: stg_tbltransazioni
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idtransazione
+        data_type: NUMBER(11,0)
+      - name: idtitolo
+        data_type: NUMBER(11,0)
+      - name: datatransazione
+        data_type: TIMESTAMP_NTZ
+      - name: esito
+        data_type: VARCHAR(45)
+      - name: idstatotransazione
+        data_type: NUMBER(11,0)
+      - name: idtitoloaxa
+        data_type: VARCHAR(250)
+      - name: cod_agenzia
+        data_type: VARCHAR(45)
+      - name: ramo
+        data_type: VARCHAR(45)
+      - name: numerocertificato
+        data_type: VARCHAR(250)
+      - name: sub_agenzia
+        data_type: VARCHAR(45)
+      - name: data_presentazione
+        data_type: DATE
+      - name: dataeffetto
+        data_type: DATE
+      - name: datascadenza
+        data_type: DATE
+      - name: datavaluta
+        data_type: DATE
+      - name: contr_nome_ragsoc
+        data_type: VARCHAR(250)
+      - name: codprodotto
+        data_type: VARCHAR(250)
+      - name: descrizione_titolo
+        data_type: VARCHAR(250)
+      - name: premionetto
+        data_type: NUMBER(38,10)
+      - name: premioaddizionale
+        data_type: NUMBER(38,10)
+      - name: premioimponibile
+        data_type: NUMBER(38,10)
+      - name: premiotasse
+        data_type: NUMBER(38,10)
+      - name: premiolordo
+        data_type: NUMBER(38,10)
+      - name: premio_commissioni
+        data_type: NUMBER(38,10)
+      - name: tipopagamento
+        data_type: VARCHAR(5)
+      - name: iban
+        data_type: VARCHAR(45)
+      - name: tipooperazione
+        data_type: NUMBER(11,0)
+      - name: iddistintatransazione
+        data_type: NUMBER(11,0)
+      - name: dataassociazionedistinta
+        data_type: TIMESTAMP_NTZ
+      - name: headertransazione
+        data_type: VARCHAR(250)
+      - name: subheadertransazione
+        data_type: VARCHAR(250)
+      - name: data_insoluto
+        data_type: DATE
+      - name: data_caricamento_insoluto
+        data_type: TIMESTAMP_NTZ
+      - name: rejectcode
+        data_type: VARCHAR(250)
+      - name: rejectresoncode
+        data_type: VARCHAR(250)
+      - name: idscritturacontabile_01d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_01d
+        data_type: DATE
+      - name: idscritturacontabile_01a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_01a
+        data_type: DATE
+      - name: idscritturacontabile_02d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_02d
+        data_type: DATE
+      - name: idscritturacontabile_02a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_02a
+        data_type: DATE
+      - name: idscritturacontabile_03d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_03d
+        data_type: DATE
+      - name: idscritturacontabile_03a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_03a
+        data_type: DATE
+      - name: idscritturacontabile_04d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_04d
+        data_type: DATE
+      - name: idscritturacontabile_04a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_04a
+        data_type: DATE
+      - name: idscritturacontabile_05d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_05d
+        data_type: DATE
+      - name: idscritturacontabile_05a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_05a
+        data_type: DATE
+      - name: idscritturacontabile_06d
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_06d
+        data_type: DATE
+      - name: idscritturacontabile_06a
+        data_type: NUMBER(11,0)
+      - name: data_scrittura_contabile_06a
+        data_type: DATE
+      - name: idtransazioneprovvigionepassiva
+        data_type: NUMBER(11,0)
+      - name: data_transazione_provvigione_passiva
+        data_type: DATE
+      - name: idtransazioneprovvigioneattiva
+        data_type: NUMBER(11,0)
+      - name: data_transazione_provvigione_attiva
+        data_type: DATE
+      - name: idtransazioneprovvigionepassivainsoluto
+        data_type: NUMBER(11,0)
+      - name: data_transazione_provvigione_passiva_insoluto
+        data_type: DATE
+      - name: idtransazioneprovvigioneattivainsoluto
+        data_type: NUMBER(11,0)
+      - name: data_transazione_provvigione_attiva_insoluto
+        data_type: DATE
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

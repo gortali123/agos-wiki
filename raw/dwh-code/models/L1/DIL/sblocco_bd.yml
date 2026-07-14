@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: sblocco_bd
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['pr_id_config_sblocco']
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"DIL", "schema":"L1_E_DIL", "archivio":"SBLOCCO_BD"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [pr_id_config_sblocco]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: pr_id_config_sblocco
+        data_type: NUMBER(10,0)
+      - name: cd_banca_dati
+        data_type: VARCHAR(2)
+      - name: in_sblocco_auto
+        data_type: VARCHAR(1)
+      - name: nm_max_rcht_sblocco
+        data_type: NUMBER(10,0)
+      - name: nm_max_mint_sblocco
+        data_type: NUMBER(10,0)
+      - name: dn_email_alert
+        data_type: VARCHAR(100)
+      - name: cd_optlock
+        data_type: NUMBER(10,0)
+      - name: cd_user_inse
+        data_type: VARCHAR(32)
+      - name: cd_trans_inse
+        data_type: VARCHAR(32)
+      - name: ts_inse
+        data_type: TIMESTAMP_NTZ

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tbltipifattori
+    relation: ref('stg_tbltipifattori')
+    config:
+      unique_key: [idtipofattore]

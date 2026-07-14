@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: stg_tblprodottiversioni
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idprodottoversione
+        data_type: NUMBER(11,0)
+      - name: idprodotto
+        data_type: NUMBER(11,0)
+      - name: codiceversione
+        data_type: VARCHAR(45)
+      - name: dsversione
+        data_type: VARCHAR(100)
+      - name: abilitato
+        data_type: NUMBER(1,0)
+      - name: eliminato
+        data_type: NUMBER(1,0)
+      - name: codiceversionecompagnia
+        data_type: VARCHAR(45)
+      - name: idramo
+        data_type: NUMBER(11,0)
+      - name: modpagamento
+        data_type: VARCHAR(30)
+      - name: frequenzeammesse
+        data_type: VARCHAR(30)
+      - name: isvap
+        data_type: NUMBER(1,0)
+      - name: idclasse
+        data_type: NUMBER(11,0)
+      - name: dsversionelunga
+        data_type: VARCHAR(255)
+      - name: datacreazione
+        data_type: TIMESTAMP_NTZ
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: dataultimamodifica
+        data_type: TIMESTAMP_NTZ
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: tipibene
+        data_type: VARCHAR(30)
+      - name: script_commerciale
+        data_type: VARCHAR(255)
+      - name: scheda_prodotto
+        data_type: VARCHAR(255)
+      - name: invio_doc_precontrattuale
+        data_type: NUMBER(1,0)
+      - name: imported
+        data_type: NUMBER(1,0)
+      - name: is_standalone
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

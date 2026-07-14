@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblpolstato
+    relation: ref('stg_tblpolstato')
+    config:
+      unique_key: [idstatopol]

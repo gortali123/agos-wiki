@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblanagrafica
+    relation: ref('stg_tblanagrafica')
+    config:
+      unique_key: [id_anagrafica]

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblnodi
+    relation: ref('stg_tblnodi')
+    config:
+      unique_key: [idnodo]

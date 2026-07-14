@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: equ101
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"EQU101"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: label
+        data_type: VARCHAR(10)
+      - name: variable
+        data_type: VARCHAR(41)
+      - name: format
+        data_type: VARCHAR(7)
+      - name: long
+        data_type: NUMBER(38,0)
+      - name: pos
+        data_type: NUMBER(38,0)
+      - name: val1
+        data_type: VARCHAR(30)
+      - name: val2
+        data_type: VARCHAR(30)
+      - name: val3
+        data_type: VARCHAR(30)

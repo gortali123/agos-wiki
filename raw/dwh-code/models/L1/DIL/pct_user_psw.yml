@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: pct_user_psw
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"DIL", "schema":"L1_E_DIL", "archivio":"PCT_USER_PSW"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ds_colonna
+        data_type: VARCHAR

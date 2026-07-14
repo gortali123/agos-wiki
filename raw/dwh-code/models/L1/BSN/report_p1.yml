@@ -1,0 +1,186 @@
+version: 2
+
+models:
+  - name: report_p1
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"REPORT_P1"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: local_id_counterparty
+        data_type: VARCHAR(20)
+      - name: central_id_counterparty
+        data_type: VARCHAR(10)          # fix: era NUMERIC(10,0)
+      - name: product_identifier
+        data_type: VARCHAR(40)
+      - name: risk_type
+        data_type: VARCHAR(6)
+      - name: commitment_transaction_nature
+        data_type: VARCHAR(12)
+      - name: date_start_commitment
+        data_type: VARCHAR(8)           # fix: era DATE
+      - name: date_end_commitment
+        data_type: VARCHAR(8)           # fix: era DATE
+      - name: amount_mtm_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: amount_amortised_cost_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: amount_not_due_coupons_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: nominal_amount_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: seniority_tranche_vehicle
+        data_type: VARCHAR(3)
+      - name: tranche_rating
+        data_type: VARCHAR(5)
+      - name: source_tranche_rating
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: sts_securitization_ind
+        data_type: VARCHAR(1)
+      - name: banking_product_type
+        data_type: VARCHAR(6)
+      - name: indicator_product_schedule
+        data_type: VARCHAR(3)
+      - name: unique_contract_ref
+        data_type: VARCHAR(40)
+      - name: unique_contract_element_ref
+        data_type: VARCHAR(40)
+      - name: contract_initial_amount_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: init_effective_interest_rate_sgn
+        data_type: VARCHAR(1)
+      - name: init_effective_interest_rate_int
+        data_type: VARCHAR(4)           # fix: era NUMERIC(4,0)
+      - name: init_effective_interest_rate_dec
+        data_type: VARCHAR(5)           # fix: era NUMERIC(5,0)
+      - name: type_interest_rate
+        data_type: VARCHAR(1)
+      - name: reference_index
+        data_type: VARCHAR(12)
+      - name: freq_interest_payments
+        data_type: VARCHAR(1)
+      - name: first_repayment_date
+        data_type: VARCHAR(8)           # fix: era DATE
+      - name: qty_fin_sec
+        data_type: VARCHAR(10)          # fix: era NUMERIC(10,0)
+      - name: type_identif_marketable_secur
+        data_type: VARCHAR(1)           # fix: era NUMERIC(1,0)
+      - name: init_unit_purchase_price_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: init_unit_purchase_price_dec
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: asset_mobilisation_indicator
+        data_type: VARCHAR(1)           # fix: era NUMERIC(1,0)
+      - name: issuance_date_security
+        data_type: VARCHAR(8)           # fix: era DATE
+      - name: maturity_date_security
+        data_type: VARCHAR(8)           # fix: era DATE
+      - name: pcco_value_principal_1
+        data_type: VARCHAR(12)
+      - name: value_principal_1_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: pcco_related_debts_receivables
+        data_type: VARCHAR(12)
+      - name: amnt_rel_debts_receivables_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: business_obj_closing_date
+        data_type: VARCHAR(1)
+      - name: amount_acq_cost_sgn
+        data_type: VARCHAR(1)
+      - name: amount_acq_cost_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: amount_acq_cost_dec
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: quoted_asset_indicator
+        data_type: VARCHAR(1)
+      - name: crdt_qlt_step_sec_tranche_origin
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: p1_21_47_sgn
+        data_type: VARCHAR(1)
+      - name: p1_21_47_int
+        data_type: VARCHAR(4)           # fix: era NUMERIC(4,0)
+      - name: p1_21_47_dec
+        data_type: VARCHAR(5)           # fix: era NUMERIC(5,0)
+      - name: p1_21_48
+        data_type: VARCHAR(7)
+      - name: p1_21_49_sgn
+        data_type: VARCHAR(1)
+      - name: p1_21_49_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: p1_21_49_dec
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: p1_21_50
+        data_type: VARCHAR(3)
+      - name: p1_21_51_sgn
+        data_type: VARCHAR(1)
+      - name: p1_21_51_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: p1_21_51_dec
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: p1_21_52
+        data_type: VARCHAR(3)
+      - name: p1_21_53_sgn
+        data_type: VARCHAR(1)
+      - name: p1_21_53_int
+        data_type: VARCHAR(16)          # fix: era NUMERIC(16,0)
+      - name: p1_21_53_dec
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: p1_21_54
+        data_type: VARCHAR(3)
+      - name: in_high_quality_liquid_asset
+        data_type: VARCHAR(1)
+      - name: tx_commitment_transaction_nat
+        data_type: VARCHAR(12)
+      - name: engine_treatment
+        data_type: VARCHAR(2)           # fix: era NUMERIC(2,0)
+      - name: srt_securitized_receivables_ind
+        data_type: VARCHAR(1)
+      - name: attachment_point_sgn
+        data_type: VARCHAR(1)
+      - name: attachment_point_int
+        data_type: VARCHAR(4)           # fix: era NUMERIC(4,0)
+      - name: attachment_point_dec
+        data_type: VARCHAR(5)           # fix: era NUMERIC(5,0)
+      - name: detachment_point_sgn
+        data_type: VARCHAR(1)
+      - name: detachment_point_int
+        data_type: VARCHAR(4)           # fix: era NUMERIC(4,0)
+      - name: detachment_point_dec
+        data_type: VARCHAR(5)           # fix: era NUMERIC(5,0)
+      - name: basel_2_weigh_commit_iaa_rba_sgn
+        data_type: VARCHAR(1)
+      - name: basel_2_weigh_commit_iaa_rba_int
+        data_type: VARCHAR(4)           # fix: era NUMERIC(4,0)
+      - name: basel_2_weigh_commit_iaa_rba_dec
+        data_type: VARCHAR(5)           # fix: era NUMERIC(5,0)
+      - name: securitization_method
+        data_type: VARCHAR(7)
+      - name: sme_securitization_reason
+        data_type: VARCHAR(2)
+      - name: credit_status
+        data_type: VARCHAR(1)           # fix: era NUMERIC(1,0)
+      - name: in_equity_security
+        data_type: VARCHAR(1)
+      - name: freq_revision_int_rate_unit_time
+        data_type: VARCHAR(1)
+      - name: freq_revision_int_rate_number
+        data_type: VARCHAR(3)           # fix: era NUMERIC(3,0)
+      - name: additive_profit_margin_sgn
+        data_type: VARCHAR(1)
+      - name: additive_profit_margin_int
+        data_type: VARCHAR(4)           # fix: era NUMERIC(4,0)
+      - name: additive_profit_margin_dec
+        data_type: VARCHAR(5)           # fix: era NUMERIC(5,0)
+      - name: interest_calculation_basis
+        data_type: VARCHAR(7)
+      - name: multiplicative_profit_margin_sgn
+        data_type: VARCHAR(1)
+      - name: multiplicative_profit_margin_int
+        data_type: VARCHAR(4)           # fix: era NUMERIC(4,0)
+      - name: multiplicative_profit_margin_dec
+        data_type: VARCHAR(5)           # fix: era NUMERIC(5,0)

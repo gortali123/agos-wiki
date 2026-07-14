@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblmotivistati
+    relation: ref('stg_tblmotivistati')
+    config:
+      unique_key: [idmotivostato]

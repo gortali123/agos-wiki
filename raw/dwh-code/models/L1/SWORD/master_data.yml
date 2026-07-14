@@ -1,0 +1,19 @@
+version: 2
+ 
+models:
+  - name: master_data
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+    columns:
+      - name: TS_RIFERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: TS_CARICAMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: DT_WFS_LAST_MODIFIED
+        data_type: DATE
+      - name: GN_VALUE
+        data_type: VARIANT
+
+   

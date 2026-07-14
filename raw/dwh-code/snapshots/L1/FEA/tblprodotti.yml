@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblprodotti
+    relation: ref('stg_tblprodotti')
+    config:
+      unique_key: [idprodotto]

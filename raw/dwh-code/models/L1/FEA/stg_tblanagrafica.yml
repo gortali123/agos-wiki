@@ -1,0 +1,139 @@
+version: 2
+
+models:
+  - name: stg_tblanagrafica
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: id_anagrafica
+        data_type: NUMBER(38,10)
+      - name: tipo
+        data_type: VARCHAR(2)
+      - name: cognome
+        data_type: VARCHAR(150)
+      - name: nome_ragsoc
+        data_type: VARCHAR(150)
+      - name: data_nascita
+        data_type: DATE
+      - name: anno_nascita
+        data_type: NUMBER(4,0)
+      - name: citta_nascita
+        data_type: VARCHAR(150)
+      - name: sesso
+        data_type: VARCHAR(1)
+      - name: cf_iva
+        data_type: VARCHAR(30)
+      - name: indirizzo
+        data_type: VARCHAR(250)
+      - name: telefono
+        data_type: VARCHAR(30)
+      - name: cap
+        data_type: VARCHAR(10)
+      - name: citta
+        data_type: VARCHAR(150)
+      - name: provincia
+        data_type: VARCHAR(4)
+      - name: cittadinanza
+        data_type: VARCHAR(150)
+      - name: provincia_nascita
+        data_type: VARCHAR(4)
+      - name: nazione_nascita
+        data_type: VARCHAR(150)
+      - name: nazione_residenza
+        data_type: VARCHAR(150)
+      - name: cellulare
+        data_type: VARCHAR(30)
+      - name: email
+        data_type: VARCHAR(150)
+      - name: indirizzo_domicilio
+        data_type: VARCHAR(250)
+      - name: citta_domicilio
+        data_type: VARCHAR(150)
+      - name: provincia_domicilio
+        data_type: VARCHAR(4)
+      - name: cap_domicilio
+        data_type: VARCHAR(10)
+      - name: nazione_domicilio
+        data_type: VARCHAR(150)
+      - name: professione
+        data_type: VARCHAR(200)
+      - name: documento_id_tipo
+        data_type: NUMBER(2,0)
+      - name: documento_id_numero
+        data_type: VARCHAR(40)
+      - name: documento_id_data_rilascio
+        data_type: DATE
+      - name: documento_id_data_scadenza
+        data_type: DATE
+      - name: documento_id_ente_codice
+        data_type: NUMBER(2,0)
+      - name: documento_id_ente_localita_rilascio
+        data_type: VARCHAR(150)
+      - name: documento_id_ente_provincia_rilascio
+        data_type: VARCHAR(100)
+      - name: documento_id_ente_stato_rilascio
+        data_type: VARCHAR(100)
+      - name: eliminato
+        data_type: NUMBER(1,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: id_agos
+        data_type: VARCHAR(45)
+      - name: telefono_ufficio
+        data_type: VARCHAR(30)
+      - name: flag_tratt_marketing
+        data_type: NUMBER(1,0)
+      - name: stato_tratt_marketing
+        data_type: NUMBER(2,0)
+      - name: imported
+        data_type: NUMBER(1,0)
+      - name: accountid_dwh
+        data_type: VARCHAR(10)
+      - name: datacreazionebatch
+        data_type: TIMESTAMP_NTZ
+      - name: flag_dati_sensibili
+        data_type: NUMBER(1,0)
+      - name: presso_residenza
+        data_type: VARCHAR(255)
+      - name: info_edificio_residenza
+        data_type: VARCHAR(255)
+      - name: presso_domicilio
+        data_type: VARCHAR(255)
+      - name: info_edificio_domicilio
+        data_type: VARCHAR(255)
+      - name: idcliente_eura
+        data_type: VARCHAR(18)
+      - name: data_aggiornamento_tratt_marketing
+        data_type: TIMESTAMP_NTZ
+      - name: flag_aggiornamento_tratt_marketing
+        data_type: NUMBER(1,0)
+      - name: filename_modulo_tratt_dati
+        data_type: VARCHAR(250)
+      - name: flag_tratt_privacy
+        data_type: NUMBER(1,0)
+      - name: flag_presenza_registrazione
+        data_type: NUMBER(1,0)
+      - name: data_registrazione
+        data_type: TIMESTAMP_NTZ
+      - name: ruolo_controparte
+        data_type: VARCHAR(45)
+      - name: flag_tratt_privacy_vendita
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

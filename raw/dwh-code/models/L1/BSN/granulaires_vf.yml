@@ -1,0 +1,274 @@
+version: 2
+
+models:
+  - name: granulaires_vf
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"GRANULAIRES_VF"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: enreg
+        data_type: VARCHAR(2)
+      - name: datearrete
+        data_type: DATE
+      - name: scenariofll
+        data_type: VARCHAR(100)
+      - name: retcorp
+        data_type: VARCHAR(10)
+      - name: bilan
+        data_type: VARCHAR(10)
+      - name: flagimpaye
+        data_type: NUMBER(38,10)
+      - name: nbjoursimpayes
+        data_type: NUMBER(38,10)
+      - name: nivintragroupe
+        data_type: NUMBER(38,10)
+      - name: idcontrat
+        data_type: VARCHAR(55)
+      - name: type
+        data_type: VARCHAR(12)
+      - name: bookcode
+        data_type: NUMBER(38,10)
+      - name: idtiers
+        data_type: VARCHAR(18)
+      - name: valuedate
+        data_type: DATE
+      - name: datematurite
+        data_type: DATE
+      - name: datepremieramort
+        data_type: DATE
+      - name: importcf
+        data_type: VARCHAR(1)
+      - name: devise
+        data_type: VARCHAR(3)
+      - name: tauxorigine
+        data_type: NUMBER(38,10)
+      - name: tauxcontrat
+        data_type: NUMBER(38,10)
+      - name: typeamortissement
+        data_type: VARCHAR(1)
+      - name: periodiciteamort
+        data_type: NUMBER(38,10)
+      - name: periodiciteinteret
+        data_type: VARCHAR(1)
+      - name: codepd
+        data_type: VARCHAR(12)
+      - name: codelgd
+        data_type: VARCHAR(12)
+      - name: codeccf
+        data_type: VARCHAR(12)
+      - name: codera
+        data_type: VARCHAR(8)
+      - name: codemodelelgd
+        data_type: VARCHAR(4)
+      - name: systemesource
+        data_type: VARCHAR(22)
+      - name: idgarant
+        data_type: NUMBER(38,10)
+      - name: codegarantiereelle
+        data_type: VARCHAR(1)
+      - name: bucket
+        data_type: VARCHAR(6)
+      - name: ptfbaletiers
+        data_type: VARCHAR(5)
+      - name: paysrisque
+        data_type: VARCHAR(2)
+      - name: secteuractivite
+        data_type: VARCHAR(6)
+      - name: categoriecontrepartie
+        data_type: VARCHAR(5)
+      - name: pddatetiers
+        data_type: NUMBER(38,10)
+      - name: codeape
+        data_type: VARCHAR(8)
+      - name: idnat
+        data_type: VARCHAR(24)
+      - name: methodonotation
+        data_type: VARCHAR(4)
+      - name: idgrouperisque
+        data_type: NUMBER(38,10)
+      - name: topchiffreaffaire
+        data_type: VARCHAR(1)
+      - name: typeacteur
+        data_type: VARCHAR(26)
+      - name: niveauregulation
+        data_type: VARCHAR(20)
+      - name: segmentnotation
+        data_type: VARCHAR(1)
+      - name: typerisque
+        data_type: VARCHAR(6)
+      - name: famillesurete
+        data_type: VARCHAR(1)
+      - name: ptfope
+        data_type: NUMBER(38,10)
+      - name: refcontrat
+        data_type: VARCHAR(22)
+      - name: refelemcontrat
+        data_type: VARCHAR(22)
+      - name: classififrs9
+        data_type: VARCHAR(3)
+      - name: classiffr
+        data_type: VARCHAR(3)
+      - name: idtechcontrat
+        data_type: VARCHAR(22)
+      - name: typesurimmo
+        data_type: VARCHAR(1)
+      - name: devisesurete
+        data_type: VARCHAR(1)
+      - name: statutforebearance
+        data_type: NUMBER(38,10)
+      - name: pddateencours
+        data_type: NUMBER(38,10)
+      - name: pdorigine
+        data_type: NUMBER(38,10)
+      - name: subordination
+        data_type: NUMBER(38,10)
+      - name: flagsuretereelle
+        data_type: NUMBER(38,10)
+      - name: rangsurete
+        data_type: VARCHAR(1)
+      - name: methodobaloise
+        data_type: NUMBER(38,10)
+      - name: npe
+        data_type: NUMBER(38,10)
+      - name: flaggarantieperso
+        data_type: NUMBER(38,10)
+      - name: leasing
+        data_type: VARCHAR(1)
+      - name: revolving
+        data_type: VARCHAR(1)
+      - name: noteoriginecorpo
+        data_type: VARCHAR(1)
+      - name: notedate
+        data_type: VARCHAR(11)
+      - name: zonelibreappcomptable
+        data_type: VARCHAR(41)
+      - name: valeurresiduelle
+        data_type: NUMBER(38,10)
+      - name: expo
+        data_type: NUMBER(38,10)
+      - name: ead
+        data_type: NUMBER(38,10)
+      - name: eclfinal
+        data_type: NUMBER(38,10)
+      - name: ecl1an
+        data_type: NUMBER(38,10)
+      - name: eclmaturite
+        data_type: NUMBER(38,10)
+      - name: ecl_brut
+        data_type: NUMBER(38,10)
+      - name: ecl_flc
+        data_type: NUMBER(38,10)
+      - name: ecl_post_fll
+        data_type: NUMBER(38,10)
+      - name: ecl_post_evt
+        data_type: NUMBER(38,10)
+      - name: ecl_1an_flc
+        data_type: NUMBER(38,10)
+      - name: ecl_maturite_flc
+        data_type: NUMBER(38,10)
+      - name: ecl_1an_post_fll
+        data_type: NUMBER(38,10)
+      - name: ecl_maturite_post_fll
+        data_type: NUMBER(38,10)
+      - name: base_calcul_provision
+        data_type: NUMBER(38,10)
+      - name: dim15
+        data_type: VARCHAR(400)
+      - name: dim16
+        data_type: VARCHAR(400)
+      - name: attribute_7
+        data_type: VARCHAR(400)
+      - name: flag_evt01_e
+        data_type: VARCHAR(400)
+      - name: flag_evt03
+        data_type: VARCHAR(400)
+      - name: flag_evt04
+        data_type: VARCHAR(400)
+      - name: flag_evt06
+        data_type: VARCHAR(400)
+      - name: flag_evt07
+        data_type: VARCHAR(400)
+      - name: ndim18
+        data_type: VARCHAR(400)
+      - name: dim12
+        data_type: VARCHAR(400)
+      - name: dim13
+        data_type: VARCHAR(400)
+      - name: bucket_post_flc
+        data_type: VARCHAR(400)
+      - name: bucket_post_fll
+        data_type: VARCHAR(400)
+      - name: motif_degradation_flc
+        data_type: VARCHAR(400)
+      - name: niveau_choc_structurel_pd
+        data_type: VARCHAR(50)
+      - name: niveau_choc_conjoncturel_pd
+        data_type: VARCHAR(50)
+      - name: niveau_choc_structurel_lgd
+        data_type: VARCHAR(50)
+      - name: niveau_choc_conjoncturel_lgd
+        data_type: VARCHAR(50)
+      - name: flag_choc_degradation
+        data_type: VARCHAR(1)
+      - name: description_scenariofll
+        data_type: VARCHAR(800)
+      - name: duree_initiale_pret
+        data_type: VARCHAR(6)
+      - name: lieu_invest_bien
+        data_type: VARCHAR(10)
+      - name: dest_fin
+        data_type: NUMBER(38,10)
+      - name: date_val_cnm
+        data_type: VARCHAR(10)
+      - name: mod_ent
+        data_type: VARCHAR(2)
+      - name: famille_meth_notation
+        data_type: VARCHAR(5)
+      - name: grille_notation
+        data_type: VARCHAR(25)
+      - name: indicateur_type_restruct
+        data_type: NUMBER(38,10)
+      - name: date_rest_risque
+        data_type: VARCHAR(10)
+      - name: indicateur_poci
+        data_type: NUMBER(38,10)
+      - name: modalite_remb_creance
+        data_type: NUMBER(38,10)
+      - name: maturite_credit
+        data_type: VARCHAR(5)
+      - name: duree_residuelle_credit
+        data_type: VARCHAR(6)
+      - name: duree_ecoulee_credit
+        data_type: VARCHAR(6)
+      - name: code_pd_corp_tiers_principal
+        data_type: VARCHAR(15)
+      - name: code_meth_pd_origine
+        data_type: VARCHAR(15)
+      - name: pd_lt_date
+        data_type: NUMBER(38,10)
+      - name: pd_lt_origine
+        data_type: NUMBER(38,10)
+      - name: pd_ifrs9_12m
+        data_type: NUMBER(38,10)
+      - name: top_watch_list
+        data_type: VARCHAR(3)
+      - name: date_entree_wl
+        data_type: VARCHAR(10)
+      - name: ifrs9_ccf_12m
+        data_type: NUMBER(38,10)
+      - name: ifrs9_lgd_12m
+        data_type: NUMBER(38,10)
+      - name: pd_ifrs9_12m_incptn
+        data_type: NUMBER(38,10)
+      - name: pd_ifrs9_lftm_incptn
+        data_type: NUMBER(38,10)
+      - name: top_lcre
+        data_type: VARCHAR(3)
+      - name: date_eng_renouv
+        data_type: VARCHAR(10)

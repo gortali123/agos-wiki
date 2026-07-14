@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_tblstatiquestionariocontraente
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idstatoquestionariocontraente
+        data_type: NUMBER(11,0)
+      - name: ds_stato
+        data_type: VARCHAR(45)
+      - name: order_stato
+        data_type: NUMBER(6,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

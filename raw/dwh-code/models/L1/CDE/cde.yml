@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: cde
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id_row
+        data_type: NUMBER(38,0)
+      - name: ds_filename
+        data_type: VARCHAR
+      - name: value
+        data_type: VARIANT

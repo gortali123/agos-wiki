@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblquestionariprodotti
+    relation: ref('stg_tblquestionariprodotti')
+    config:
+      unique_key: [idquestionarioprodotto]

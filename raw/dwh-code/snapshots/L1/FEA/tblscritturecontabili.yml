@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblscritturecontabili
+    relation: ref('stg_tblscritturecontabili')
+    config:
+      unique_key: [idscritturacontabile]

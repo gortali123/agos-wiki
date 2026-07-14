@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: cnt_campagna
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BANCO", "schema":"L1_E_BANCO", "archivio":"CNT_CAMPAGNA"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: CD_BANCA
+        data_type: VARCHAR(5)
+      - name: CD_AZIONE
+        data_type: NUMERIC(10,0)
+      - name: CD_NDG
+        data_type: VARCHAR(16)
+      - name: CD_FISCALE
+        data_type: VARCHAR(16)
+      - name: CD_CANALE
+        data_type: VARCHAR(5)
+      - name: CD_CAMPO_CODE
+        data_type: VARCHAR(15)
+      - name: CD_CAMP_SEL
+        data_type: VARCHAR(5)
+      - name: CD_CAMP_EXEC
+        data_type: VARCHAR(5)
+      - name: CD_CAMP_DES
+        data_type: VARCHAR(50)
+      - name: DT_INIZIO_VAL
+        data_type: VARCHAR(8)
+      - name: DT_FINE_VAL
+        data_type: VARCHAR(8)
+      - name: CD_SPORTELLO
+        data_type: VARCHAR(8)
+      - name: VALORE
+        data_type: NUMERIC(18,3)
+      - name: NOTA_CODE
+        data_type: VARCHAR(19)
+

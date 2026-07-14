@@ -1,0 +1,28 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  COALESCE(TRY_CAST(data_modifica AS TIMESTAMP_NTZ), TRY_CAST(data_creazione AS TIMESTAMP_NTZ)) AS ts_coalesce_modif_creaz, --TRYCAST prima della COALESCE altrimenti non funziona correttamente
+  TRY_CAST(idPrevbenegar AS NUMBER(11,0)) AS idprevbenegar,
+  TRY_CAST(idGaranzia AS NUMBER(11,0)) AS idgaranzia,
+  TRY_CAST(idPrevBene AS NUMBER(11,0)) AS idprevbene,
+  TRY_CAST(capitale AS NUMBER(38,10)) AS capitale,
+  TRY_CAST(option_gar AS VARCHAR(15)) AS option_gar,
+  TRY_CAST(annuoNetto AS NUMBER(38,10)) AS annuonetto,
+  TRY_CAST(annuoAddizionale AS NUMBER(38,10)) AS annuoaddizionale,
+  TRY_CAST(annuoImponibile AS NUMBER(38,10)) AS annuoimponibile,
+  TRY_CAST(annuoTasse AS NUMBER(38,10)) AS annuotasse,
+  TRY_CAST(annuoLordo AS NUMBER(38,10)) AS annuolordo,
+  TRY_CAST(frazNetto AS NUMBER(38,10)) AS fraznetto,
+  TRY_CAST(frazAddizionale AS NUMBER(38,10)) AS frazaddizionale,
+  TRY_CAST(frazImponibile AS NUMBER(38,10)) AS frazimponibile,
+  TRY_CAST(frazTasse AS NUMBER(38,10)) AS fraztasse,
+  TRY_CAST(frazLordo AS NUMBER(38,10)) AS frazlordo,
+  TRY_CAST(ratNetto AS NUMBER(38,10)) AS ratnetto,
+  TRY_CAST(ratAddizionale AS NUMBER(38,10)) AS rataddizionale,
+  TRY_CAST(ratImponibile AS NUMBER(38,10)) AS ratimponibile,
+  TRY_CAST(ratTasse AS NUMBER(38,10)) AS rattasse,
+  TRY_CAST(ratLordo AS NUMBER(38,10)) AS ratlordo,
+  TRY_CAST(imported AS NUMBER(1,0)) AS imported,
+  TRY_CAST(data_creazione AS TIMESTAMP_NTZ) AS data_creazione,
+  TRY_CAST(data_modifica AS TIMESTAMP_NTZ) AS data_modifica
+from {{ source('source_l0','tblprevbenegar') }}

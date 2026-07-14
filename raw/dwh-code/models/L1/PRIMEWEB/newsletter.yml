@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: newsletter
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"PRIMEWEB", "schema":"L1_E_PRIMEWEB", "archivio":"NEWSLETTER"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: urliscrizione
+        data_type: VARCHAR(150)
+      - name: privacy
+        data_type: VARCHAR(5)
+      - name: email
+        data_type: VARCHAR(150)
+      - name: app
+        data_type: VARCHAR(50)
+      - name: ip
+        data_type: VARCHAR(18)
+      - name: data
+        data_type: VARCHAR(15)

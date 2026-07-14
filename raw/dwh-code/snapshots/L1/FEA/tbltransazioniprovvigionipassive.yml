@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tbltransazioniprovvigionipassive
+    relation: ref('stg_tbltransazioniprovvigionipassive')
+    config:
+      unique_key: [idtransazioneprovvigionepassiva]

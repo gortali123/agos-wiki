@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblusers
+    relation: ref('stg_tblusers')
+    config:
+      unique_key: [idusers]

@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: membroiniziativa__c
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"MEMBROINIZIATIVA__C"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: account_externalkey__c
+        data_type: VARCHAR(255)
+      - name: name
+        data_type: VARCHAR(255)
+      - name: iniziativa__r_idiniziativa__c
+        data_type: VARCHAR(255)
+      - name: stato__c
+        data_type: VARCHAR(255)
+      - name: statoiniziativa__c
+        data_type: VARCHAR(255)
+      - name: scadenzainiziativa__c
+        data_type: DATE
+      - name: esitodealer__c
+        data_type: VARCHAR(255)
+      - name: myrecordiniziativa__c
+        data_type: VARCHAR(255)
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastmodifieddate
+        data_type: TIMESTAMP_NTZ
+      - name: nomeinziativa__c
+        data_type: VARCHAR(255)
+      - name: rete__c
+        data_type: VARCHAR(255)

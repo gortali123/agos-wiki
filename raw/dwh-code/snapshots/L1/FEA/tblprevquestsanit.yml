@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblprevquestsanit
+    relation: ref('stg_tblprevquestsanit')
+    config:
+      unique_key: [idpreventivo, idprodottoversionequestsanit]

@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: blocco_bd
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['pr_id_config_blocco']
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"DIL", "schema":"L1_E_DIL", "archivio":"BLOCCO_BD"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [pr_id_config_blocco]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: pr_id_config_blocco
+        data_type: NUMBER(10,0)
+      - name: cd_banca_dati
+        data_type: VARCHAR(2)
+      - name: in_blocco_auto
+        data_type: VARCHAR(1)
+      - name: nm_minuti
+        data_type: NUMBER(10,0)
+      - name: nm_max_rcht_errore
+        data_type: NUMBER(10,0)
+      - name: nm_max_rcht_attiv
+        data_type: NUMBER(10,0)
+      - name: dn_email_alert
+        data_type: VARCHAR(100)
+      - name: cd_optlock
+        data_type: NUMBER(10,0)
+      - name: cd_user_inse
+        data_type: VARCHAR(32)
+      - name: cd_trans_inse
+        data_type: VARCHAR(32)
+      - name: ts_inse
+        data_type: TIMESTAMP_NTZ

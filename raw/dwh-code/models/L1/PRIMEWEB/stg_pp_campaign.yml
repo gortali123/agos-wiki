@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_pp_campaign
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"PRIMEWEB", "schema":"L1_E_PRIMEWEB", "archivio":"PP_CAMPAIGN"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: campaignid
+        data_type: VARCHAR(8)
+      - name: name
+        data_type: VARCHAR(100)
+      - name: brokercode
+        data_type: VARCHAR(2)
+      - name: category
+        data_type: VARCHAR(100)
+      - name: type
+        data_type: VARCHAR(100)
+      - name: role
+        data_type: VARCHAR(36)
+      - name: active
+        data_type: VARCHAR(5)
+      - name: setsubsidiaryfromzipcode
+        data_type: VARCHAR(5)

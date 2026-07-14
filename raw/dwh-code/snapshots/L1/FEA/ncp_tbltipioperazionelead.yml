@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ncp_tbltipioperazionelead
+    relation: ref('stg_ncp_tbltipioperazionelead')
+    config:
+      unique_key: [idtipooperazionelead]

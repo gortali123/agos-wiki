@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_tblgroupdistintetransazioni
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idgroupdistintatrans
+        data_type: NUMBER(11,0)
+      - name: idstatogroupdistintatrans
+        data_type: NUMBER(11,0)
+      - name: datainviogroupdistintatrans
+        data_type: TIMESTAMP_NTZ
+      - name: numerodistintetrans
+        data_type: NUMBER(11,0)
+      - name: totaledistintetrans
+        data_type: NUMBER(38,10)
+      - name: headergroupdistintatrans
+        data_type: VARCHAR(250)
+      - name: file_groupdistintatrans
+        data_type: VARCHAR(250)
+      - name: file_ricevutagroupdistintatrans
+        data_type: VARCHAR(250)
+      - name: data_ricevutagroupdistintatrans
+        data_type: TIMESTAMP_NTZ
+      - name: idusers_carricevutagroupdistintatrans
+        data_type: VARCHAR(45)
+      - name: tipooperazione
+        data_type: NUMBER(11,0)
+      - name: idparametripagamento
+        data_type: NUMBER(11,0)
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

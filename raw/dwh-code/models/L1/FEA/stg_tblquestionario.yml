@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: stg_tblquestionario
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idquestionario
+        data_type: NUMBER(11,0)
+      - name: idanagraficaprospect
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: opzione_prodotto
+        data_type: NUMBER(3,0)
+      - name: esito
+        data_type: VARCHAR
+      - name: motivo_esito
+        data_type: VARCHAR
+      - name: risposta_1
+        data_type: VARCHAR
+      - name: risposta_2
+        data_type: VARCHAR
+      - name: risposta_3
+        data_type: VARCHAR
+      - name: risposta_4
+        data_type: VARCHAR
+      - name: risposta_5
+        data_type: VARCHAR
+      - name: risposta_6
+        data_type: VARCHAR
+      - name: risposta_7
+        data_type: VARCHAR
+      - name: risposta_8
+        data_type: VARCHAR
+      - name: risposta_9
+        data_type: VARCHAR
+      - name: risposta_10
+        data_type: VARCHAR
+      - name: is_cross_selling
+        data_type: NUMBER(1,0)
+      - name: xsell_tipo_prodotto
+        data_type: VARCHAR(45)
+      - name: xsell_codice_societa
+        data_type: VARCHAR(45)
+      - name: xsell_codice_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_codice_carta
+        data_type: VARCHAR(45)
+      - name: xsell_codice_stato_pratica_lista_pratiche
+        data_type: VARCHAR(45)
+      - name: xsell_codice_stato_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_data_caricamento_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_data_stampa_contratto
+        data_type: VARCHAR(45)
+      - name: xsell_data_approvazione_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_data_decorrenza
+        data_type: VARCHAR(45)
+      - name: xsell_data_liquidazione
+        data_type: VARCHAR(45)
+      - name: xsell_codice_settore
+        data_type: VARCHAR(45)
+      - name: xsell_tipo_settore
+        data_type: VARCHAR(45)
+      - name: xsell_importo_finanziato
+        data_type: VARCHAR(45)
+      - name: xsell_importo_rata
+        data_type: VARCHAR(45)
+      - name: xsell_numero_mesi_dilazione
+        data_type: VARCHAR(45)
+      - name: xsell_numero_rate
+        data_type: VARCHAR(45)
+      - name: xsell_codice_assicurazione
+        data_type: VARCHAR(45)
+      - name: xsell_importo_fido_attuale
+        data_type: VARCHAR(45)
+      - name: xsell_codice_pim
+        data_type: VARCHAR(45)
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

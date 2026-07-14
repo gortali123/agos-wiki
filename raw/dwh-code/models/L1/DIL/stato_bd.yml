@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stato_bd
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['pr_id_stato_bd']
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"DIL", "schema":"L1_E_DIL", "archivio":"STATO_BD"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [pr_id_stato_bd]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: pr_id_stato_bd
+        data_type: NUMBER(10,0)
+      - name: cd_banca_dati
+        data_type: VARCHAR(2)
+      - name: in_attiva
+        data_type: VARCHAR(1)
+      - name: cd_optlock
+        data_type: NUMBER(10,0)
+      - name: cd_user_inse
+        data_type: VARCHAR(32)
+      - name: cd_trans_inse
+        data_type: VARCHAR(32)
+      - name: ts_inse
+        data_type: TIMESTAMP_NTZ

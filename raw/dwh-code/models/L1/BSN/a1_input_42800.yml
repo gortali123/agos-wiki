@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: a1_input_42800
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"A1_INPUT_42800"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: variable
+        data_type: VARCHAR(4000)
+      - name: zone
+        data_type: VARCHAR(4000)
+      - name: val01
+        data_type: VARCHAR(4000)
+      - name: val02
+        data_type: VARCHAR(4000)
+      - name: val03
+        data_type: VARCHAR(4000)
+      - name: val04
+        data_type: VARCHAR(4000)
+      - name: val05
+        data_type: VARCHAR(4000)
+      - name: val06
+        data_type: VARCHAR(4000)
+      - name: val07
+        data_type: VARCHAR(4000)
+      - name: val08
+        data_type: VARCHAR(4000)
+      - name: val11
+        data_type: VARCHAR(4000)
+      - name: val12
+        data_type: VARCHAR(4000)
+      - name: val13
+        data_type: VARCHAR(4000)
+      - name: val14
+        data_type: VARCHAR(4000)
+      - name: val15
+        data_type: VARCHAR(4000)
+      - name: val16
+        data_type: VARCHAR(4000)

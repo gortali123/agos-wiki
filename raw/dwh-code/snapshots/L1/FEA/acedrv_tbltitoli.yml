@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: acedrv_tbltitoli
+    relation: ref('stg_acedrv_tbltitoli')
+    config:
+      unique_key: [idtitolo]

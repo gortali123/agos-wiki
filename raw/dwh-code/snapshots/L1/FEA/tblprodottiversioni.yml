@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblprodottiversioni
+    relation: ref('stg_tblprodottiversioni')
+    config:
+      unique_key: [idprodottoversione]

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblprevquestmodcomp
+    relation: ref('stg_tblprevquestmodcomp')
+    config:
+      unique_key: [idpreventivo, idprodottoversionequestmodcomp]

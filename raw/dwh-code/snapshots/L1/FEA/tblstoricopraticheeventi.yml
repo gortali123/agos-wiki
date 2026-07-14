@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblstoricopraticheeventi
+    relation: ref('stg_tblstoricopraticheeventi')
+    config:
+      unique_key: [idstoricopraticaevento]

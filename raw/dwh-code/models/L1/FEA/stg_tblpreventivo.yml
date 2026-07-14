@@ -1,0 +1,655 @@
+version: 2
+
+models:
+  - name: stg_tblpreventivo
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idpreventivo
+        data_type: NUMBER(11,0)
+      - name: numero
+        data_type: NUMBER(11,0)
+      - name: idprodotto
+        data_type: NUMBER(6,0)
+      - name: dataexportbroker
+        data_type: TIMESTAMP_NTZ
+      - name: dataexportace
+        data_type: TIMESTAMP_NTZ
+      - name: numero_polizza
+        data_type: VARCHAR(45)
+      - name: idnodoemissionepolizza
+        data_type: NUMBER(11,0)
+      - name: iduseremissionepolizza
+        data_type: NUMBER(11,0)
+      - name: dataemissionepolizza
+        data_type: TIMESTAMP_NTZ
+      - name: idnodo
+        data_type: NUMBER(11,0)
+      - name: idusers
+        data_type: NUMBER(11,0)
+      - name: stato
+        data_type: NUMBER(6,0)
+      - name: stato_pol
+        data_type: VARCHAR(1)
+      - name: idstatopostchiusura
+        data_type: NUMBER(11,0)
+      - name: idstatopost
+        data_type: NUMBER(6,0)
+      - name: datainviocompagnia
+        data_type: DATE
+      - name: datarispostacompagnia
+        data_type: DATE
+      - name: sbloccato
+        data_type: NUMBER(6,0)
+      - name: iduser_sblocco
+        data_type: NUMBER(11,0)
+      - name: tariffa_manuale
+        data_type: NUMBER(6,0)
+      - name: eliminato
+        data_type: NUMBER(6,0)
+      - name: tacito_rinnovo
+        data_type: NUMBER(6,0)
+      - name: rc_contraente
+        data_type: NUMBER(6,0)
+      - name: coassicura
+        data_type: NUMBER(6,0)
+      - name: quota_trattenuta
+        data_type: NUMBER(38,10)
+      - name: ds_quota1
+        data_type: VARCHAR(100)
+      - name: quota1
+        data_type: NUMBER(38,10)
+      - name: ds_quota2
+        data_type: VARCHAR(100)
+      - name: quota2
+        data_type: NUMBER(38,10)
+      - name: ds_quota3
+        data_type: VARCHAR(100)
+      - name: quota3
+        data_type: NUMBER(38,10)
+      - name: ds_quota4
+        data_type: VARCHAR(100)
+      - name: quota4
+        data_type: NUMBER(38,10)
+      - name: ds_quota5
+        data_type: VARCHAR(100)
+      - name: quota5
+        data_type: NUMBER(38,10)
+      - name: sostituisce
+        data_type: NUMBER(6,0)
+      - name: sostituisce1
+        data_type: VARCHAR(150)
+      - name: sostituisce2
+        data_type: VARCHAR(150)
+      - name: sostituisce3
+        data_type: VARCHAR(150)
+      - name: data_effetto
+        data_type: DATE
+      - name: data_scadenza
+        data_type: DATE
+      - name: frazionamento
+        data_type: NUMBER(6,0)
+      - name: regolazione_premio
+        data_type: NUMBER(6,0)
+      - name: prima_quietanza
+        data_type: NUMBER(6,0)
+      - name: gg_rateo
+        data_type: NUMBER(11,0)
+      - name: annuonetto
+        data_type: NUMBER(38,10)
+      - name: annuoaddizionale
+        data_type: NUMBER(38,10)
+      - name: annuoimponibile
+        data_type: NUMBER(38,10)
+      - name: annuotasse
+        data_type: NUMBER(38,10)
+      - name: annuolordo
+        data_type: NUMBER(38,10)
+      - name: fraznetto
+        data_type: NUMBER(38,10)
+      - name: frazaddizionale
+        data_type: NUMBER(38,10)
+      - name: frazimponibile
+        data_type: NUMBER(38,10)
+      - name: fraztasse
+        data_type: NUMBER(38,10)
+      - name: frazlordo
+        data_type: NUMBER(38,10)
+      - name: ratnetto
+        data_type: NUMBER(38,10)
+      - name: rataddizionale
+        data_type: NUMBER(38,10)
+      - name: ratimponibile
+        data_type: NUMBER(38,10)
+      - name: rattasse
+        data_type: NUMBER(38,10)
+      - name: ratlordo
+        data_type: NUMBER(38,10)
+      - name: infmalnetto
+        data_type: NUMBER(38,10)
+      - name: infmaladdizionale
+        data_type: NUMBER(38,10)
+      - name: infmalimponibile
+        data_type: NUMBER(38,10)
+      - name: infmaltasse
+        data_type: NUMBER(38,10)
+      - name: infmallordo
+        data_type: NUMBER(38,10)
+      - name: assnetto
+        data_type: NUMBER(38,10)
+      - name: assaddizionale
+        data_type: NUMBER(38,10)
+      - name: assimponibile
+        data_type: NUMBER(38,10)
+      - name: asstasse
+        data_type: NUMBER(38,10)
+      - name: asslordo
+        data_type: NUMBER(38,10)
+      - name: tutnetto
+        data_type: NUMBER(38,10)
+      - name: tutaddizionale
+        data_type: NUMBER(38,10)
+      - name: tutimponibile
+        data_type: NUMBER(38,10)
+      - name: tuttasse
+        data_type: NUMBER(38,10)
+      - name: tutlordo
+        data_type: NUMBER(38,10)
+      - name: propatnetto
+        data_type: NUMBER(38,10)
+      - name: propataddizionale
+        data_type: NUMBER(38,10)
+      - name: propatimponibile
+        data_type: NUMBER(38,10)
+      - name: propattasse
+        data_type: NUMBER(38,10)
+      - name: propatlordo
+        data_type: NUMBER(38,10)
+      - name: totnetto
+        data_type: NUMBER(38,10)
+      - name: totaddizionale
+        data_type: NUMBER(38,10)
+      - name: totimponibile
+        data_type: NUMBER(38,10)
+      - name: tottasse
+        data_type: NUMBER(38,10)
+      - name: totlordo
+        data_type: NUMBER(38,10)
+      - name: infmalnetto_succ
+        data_type: NUMBER(38,10)
+      - name: infmaladdizionale_succ
+        data_type: NUMBER(38,10)
+      - name: infmalimponibile_succ
+        data_type: NUMBER(38,10)
+      - name: infmaltasse_succ
+        data_type: NUMBER(38,10)
+      - name: infmallordo_succ
+        data_type: NUMBER(38,10)
+      - name: assnetto_succ
+        data_type: NUMBER(38,10)
+      - name: assaddizionale_succ
+        data_type: NUMBER(38,10)
+      - name: assimponibile_succ
+        data_type: NUMBER(38,10)
+      - name: asstasse_succ
+        data_type: NUMBER(38,10)
+      - name: asslordo_succ
+        data_type: NUMBER(38,10)
+      - name: tutnetto_succ
+        data_type: NUMBER(38,10)
+      - name: tutaddizionale_succ
+        data_type: NUMBER(38,10)
+      - name: tutimponibile_succ
+        data_type: NUMBER(38,10)
+      - name: tuttasse_succ
+        data_type: NUMBER(38,10)
+      - name: tutlordo_succ
+        data_type: NUMBER(38,10)
+      - name: propatnetto_succ
+        data_type: NUMBER(38,10)
+      - name: propataddizionale_succ
+        data_type: NUMBER(38,10)
+      - name: propatimponibile_succ
+        data_type: NUMBER(38,10)
+      - name: propattasse_succ
+        data_type: NUMBER(38,10)
+      - name: propatlordo_succ
+        data_type: NUMBER(38,10)
+      - name: totnetto_succ
+        data_type: NUMBER(38,10)
+      - name: totaddizionale_succ
+        data_type: NUMBER(38,10)
+      - name: totimponibile_succ
+        data_type: NUMBER(38,10)
+      - name: tottasse_succ
+        data_type: NUMBER(38,10)
+      - name: totlordo_succ
+        data_type: NUMBER(38,10)
+      - name: id_contraente
+        data_type: NUMBER(11,0)
+      - name: provvigioni
+        data_type: NUMBER(38,10)
+      - name: tasso_provvigioni
+        data_type: NUMBER(11,0)
+      - name: tasso_commissioni
+        data_type: NUMBER(11,0)
+      - name: commissioni
+        data_type: NUMBER(38,10)
+      - name: banktransactionid
+        data_type: VARCHAR(45)
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: tipo_copertura
+        data_type: NUMBER(3,0)
+      - name: opzione_prodotto
+        data_type: NUMBER(3,0)
+      - name: provvigioni_variabile
+        data_type: NUMBER(38,10)
+      - name: provvigioni_fisso
+        data_type: NUMBER(38,10)
+      - name: idcampagna
+        data_type: NUMBER(11,0)
+      - name: data_effetto_copertura
+        data_type: DATE
+      - name: tipo_pagamento
+        data_type: NUMBER(3,0)
+      - name: tipo_recapito_certificato
+        data_type: NUMBER(3,0)
+      - name: contr_iban
+        data_type: VARCHAR(45)
+      - name: documenti_inviati
+        data_type: NUMBER(1,0)
+      - name: documenti_verificati
+        data_type: NUMBER(1,0)
+      - name: idnodocheckdocumenti
+        data_type: NUMBER(11,0)
+      - name: idusercheckdocumenti
+        data_type: NUMBER(11,0)
+      - name: datacheckdocumenti
+        data_type: TIMESTAMP_NTZ
+      - name: email_recapito
+        data_type: VARCHAR(255)
+      - name: email_invio_doc_precontrattuale
+        data_type: VARCHAR(255)
+      - name: data_validita
+        data_type: DATE
+      - name: tipo_recapito_doc_precontrattuale
+        data_type: NUMBER(3,0)
+      - name: indirizzo_invio_doc_precontrattuale
+        data_type: NUMBER(1,0)
+      - name: indirizzo_recapito
+        data_type: NUMBER(1,0)
+      - name: cod_auth_carta
+        data_type: VARCHAR(100)
+      - name: data_invio_doc_precontrattuale
+        data_type: DATE
+      - name: data_variazione_stato
+        data_type: TIMESTAMP_NTZ
+      - name: imported
+        data_type: NUMBER(1,0)
+      - name: data_cancellazione
+        data_type: DATE
+      - name: idpreventivo_collegato
+        data_type: NUMBER(11,0)
+      - name: indirizzo_certificato
+        data_type: VARCHAR(250)
+      - name: provincia_certificato
+        data_type: VARCHAR(4)
+      - name: citta_certificato
+        data_type: VARCHAR(150)
+      - name: cap_certificato
+        data_type: VARCHAR(10)
+      - name: nazione_certificato
+        data_type: VARCHAR(150)
+      - name: indirizzo_doc_precontrattuale
+        data_type: VARCHAR(250)
+      - name: provincia_doc_precontrattuale
+        data_type: VARCHAR(4)
+      - name: citta_doc_precontrattuale
+        data_type: VARCHAR(150)
+      - name: cap_doc_precontrattuale
+        data_type: VARCHAR(10)
+      - name: nazione_doc_precontrattuale
+        data_type: VARCHAR(150)
+      - name: prev_call_center_new
+        data_type: NUMBER(1,0)
+      - name: dataultimamodificabatch
+        data_type: TIMESTAMP_NTZ
+      - name: datacreazionebatch
+        data_type: TIMESTAMP_NTZ
+      - name: professione_preventivo
+        data_type: VARCHAR(200)
+      - name: modalitacontatto
+        data_type: NUMBER(11,0)
+      - name: prev_cognome
+        data_type: VARCHAR
+      - name: prev_nome_ragsoc
+        data_type: VARCHAR
+      - name: prev_cf_iva
+        data_type: VARCHAR
+      - name: prev_id_agos
+        data_type: VARCHAR
+      - name: flag_concorso_ace
+        data_type: NUMBER(1,0)
+      - name: cellulare_concorso_ace
+        data_type: VARCHAR(30)
+      - name: email_concorso_ace
+        data_type: VARCHAR(150)
+      - name: causale_cancellazione
+        data_type: VARCHAR(200)
+      - name: rata_finanziamento
+        data_type: NUMBER(38,10)
+      - name: carta_credito_numero
+        data_type: VARCHAR(250)
+      - name: carta_credito_validita_mese
+        data_type: VARCHAR(250)
+      - name: carta_credito_validita_anno
+        data_type: VARCHAR(250)
+      - name: umr
+        data_type: VARCHAR(45)
+      - name: data_export_vendita_caci
+        data_type: TIMESTAMP_NTZ
+      - name: numero_leeds
+        data_type: VARCHAR(45)
+      - name: tipo_recapito_doc_precontrattuale_new
+        data_type: NUMBER(3,0)
+      - name: email_recapito_doc_precontrattuale_new
+        data_type: VARCHAR(255)
+      - name: indirizzo_recapito_doc_precontrattuale_new
+        data_type: NUMBER(1,0)
+      - name: indirizzo_doc_precontrattuale_new
+        data_type: VARCHAR(250)
+      - name: provincia_doc_precontrattuale_new
+        data_type: VARCHAR(4)
+      - name: citta_doc_precontrattuale_new
+        data_type: VARCHAR(150)
+      - name: cap_doc_precontrattuale_new
+        data_type: VARCHAR(10)
+      - name: nazione_doc_precontrattuale_new
+        data_type: VARCHAR(150)
+      - name: idprecontrattuale
+        data_type: NUMBER(11,0)
+      - name: data_invio_doc_precontrattuale_new
+        data_type: TIMESTAMP_NTZ
+      - name: data_export_precon_metlife
+        data_type: TIMESTAMP_NTZ
+      - name: durata_finanziamento
+        data_type: NUMBER(6,0)
+      - name: giorno_pagamento
+        data_type: NUMBER(2,0)
+      - name: esito_1_quest_mod_comp
+        data_type: NUMBER(1,0)
+      - name: esito_2_quest_mod_comp
+        data_type: NUMBER(1,0)
+      - name: flag_presa_visione_modulo_tratt_dati
+        data_type: NUMBER(1,0)
+      - name: motivo_stato
+        data_type: NUMBER(3,0)
+      - name: first_billing
+        data_type: NUMBER(1,0)
+      - name: first_billing_date
+        data_type: DATE
+      - name: next_billing_date
+        data_type: DATE
+      - name: data_umr
+        data_type: TIMESTAMP_NTZ
+      - name: campo_umr
+        data_type: VARCHAR(250)
+      - name: chiuso_insoluto
+        data_type: NUMBER(5,0)
+      - name: note_riaddebito
+        data_type: VARCHAR
+      - name: note_chiusura
+        data_type: VARCHAR
+      - name: data_richiesta_disdetta
+        data_type: DATE
+      - name: data_effetto_cancellazione
+        data_type: DATE
+      - name: idanagraficaprospect
+        data_type: NUMBER(11,0)
+      - name: contr_tipo
+        data_type: VARCHAR(2)
+      - name: contr_cognome
+        data_type: VARCHAR(150)
+      - name: contr_nome_ragsoc
+        data_type: VARCHAR(150)
+      - name: contr_data_nascita
+        data_type: DATE
+      - name: contr_anno_nascita
+        data_type: NUMBER(4,0)
+      - name: contr_citta_nascita
+        data_type: VARCHAR(150)
+      - name: contr_sesso
+        data_type: VARCHAR(1)
+      - name: contr_cf_iva
+        data_type: VARCHAR(30)
+      - name: contr_indirizzo
+        data_type: VARCHAR(250)
+      - name: contr_telefono
+        data_type: VARCHAR(30)
+      - name: contr_cap
+        data_type: VARCHAR(10)
+      - name: contr_citta
+        data_type: VARCHAR(150)
+      - name: contr_provincia
+        data_type: VARCHAR(4)
+      - name: contr_cittadinanza
+        data_type: VARCHAR(150)
+      - name: contr_provincia_nascita
+        data_type: VARCHAR(4)
+      - name: contr_nazione_nascita
+        data_type: VARCHAR(150)
+      - name: contr_nazione_residenza
+        data_type: VARCHAR(150)
+      - name: contr_cellulare
+        data_type: VARCHAR(30)
+      - name: contr_email
+        data_type: VARCHAR(150)
+      - name: contr_indirizzo_domicilio
+        data_type: VARCHAR(250)
+      - name: contr_citta_domicilio
+        data_type: VARCHAR(150)
+      - name: contr_provincia_domicilio
+        data_type: VARCHAR(4)
+      - name: contr_cap_domicilio
+        data_type: VARCHAR(10)
+      - name: contr_nazione_domicilio
+        data_type: VARCHAR(150)
+      - name: contr_professione
+        data_type: VARCHAR(200)
+      - name: contr_documento_id_tipo
+        data_type: NUMBER(2,0)
+      - name: contr_documento_id_numero
+        data_type: VARCHAR(40)
+      - name: contr_documento_id_data_rilascio
+        data_type: DATE
+      - name: contr_documento_id_data_scadenza
+        data_type: DATE
+      - name: contr_documento_id_ente_codice
+        data_type: NUMBER(2,0)
+      - name: contr_documento_id_ente_localita_rilascio
+        data_type: VARCHAR(150)
+      - name: contr_documento_id_ente_provincia_rilascio
+        data_type: VARCHAR(100)
+      - name: contr_documento_id_ente_stato_rilascio
+        data_type: VARCHAR(100)
+      - name: contr_telefono_ufficio
+        data_type: VARCHAR(30)
+      - name: contr_flag_tratt_marketing
+        data_type: NUMBER(1,0)
+      - name: contr_stato_tratt_marketing
+        data_type: NUMBER(2,0)
+      - name: contr_flag_dati_sensibili
+        data_type: NUMBER(1,0)
+      - name: contr_presso_residenza
+        data_type: VARCHAR(255)
+      - name: contr_info_edificio_residenza
+        data_type: VARCHAR(255)
+      - name: contr_presso_domicilio
+        data_type: VARCHAR(255)
+      - name: contr_info_edificio_domicilio
+        data_type: VARCHAR(255)
+      - name: contr_data_aggiornamento_tratt_marketing
+        data_type: TIMESTAMP_NTZ
+      - name: contr_flag_aggiornamento_tratt_marketing
+        data_type: NUMBER(1,0)
+      - name: contr_filename_modulo_tratt_dati
+        data_type: VARCHAR(250)
+      - name: contr_flag_tratt_privacy
+        data_type: NUMBER(1,0)
+      - name: contr_flag_presenza_registrazione
+        data_type: NUMBER(1,0)
+      - name: contr_data_registrazione
+        data_type: TIMESTAMP_NTZ
+      - name: contr_ruolo_controparte
+        data_type: VARCHAR(45)
+      - name: contr_flag_tratt_privacy_vendita
+        data_type: NUMBER(1,0)
+      - name: is_cross_selling
+        data_type: NUMBER(1,0)
+      - name: xsell_tipo_prodotto
+        data_type: VARCHAR(45)
+      - name: xsell_codice_societa
+        data_type: VARCHAR(45)
+      - name: xsell_codice_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_codice_carta
+        data_type: VARCHAR(45)
+      - name: xsell_codice_stato_pratica_lista_pratiche
+        data_type: VARCHAR(45)
+      - name: xsell_codice_stato_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_data_caricamento_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_data_stampa_contratto
+        data_type: VARCHAR(45)
+      - name: xsell_data_approvazione_pratica
+        data_type: VARCHAR(45)
+      - name: xsell_data_decorrenza
+        data_type: VARCHAR(45)
+      - name: xsell_data_liquidazione
+        data_type: VARCHAR(45)
+      - name: xsell_codice_settore
+        data_type: VARCHAR(45)
+      - name: xsell_tipo_settore
+        data_type: VARCHAR(45)
+      - name: xsell_importo_finanziato
+        data_type: VARCHAR(45)
+      - name: xsell_importo_rata
+        data_type: VARCHAR(45)
+      - name: xsell_numero_mesi_dilazione
+        data_type: VARCHAR(45)
+      - name: xsell_numero_rate
+        data_type: VARCHAR(45)
+      - name: xsell_codice_assicurazione
+        data_type: VARCHAR(45)
+      - name: xsell_importo_fido_attuale
+        data_type: VARCHAR(45)
+      - name: xsell_codice_pim
+        data_type: VARCHAR(45)
+      - name: idnodomodificacrossselling
+        data_type: NUMBER(11,0)
+      - name: idusermodificacrossselling
+        data_type: NUMBER(11,0)
+      - name: dataultimamodificacrossselling
+        data_type: TIMESTAMP_NTZ
+      - name: quest_mod_comp_changed
+        data_type: NUMBER(11,0)
+      - name: data_recesso
+        data_type: DATE
+      - name: idquestionario
+        data_type: NUMBER(11,0)
+      - name: appuntamento_in_filiale
+        data_type: NUMBER(1,0)
+      - name: iduserappuntamentoinfiliale
+        data_type: NUMBER(11,0)
+      - name: data_appuntamento_in_filiale
+        data_type: TIMESTAMP_NTZ
+      - name: sr_prev_quotato_inviata
+        data_type: NUMBER(1,0)
+      - name: idnodoannullopolizza
+        data_type: NUMBER(11,0)
+      - name: iduserannullopolizza
+        data_type: NUMBER(11,0)
+      - name: dataannullopolizza
+        data_type: TIMESTAMP_NTZ
+      - name: data_export_call_center_7days
+        data_type: TIMESTAMP_NTZ
+      - name: is_recall_filiale
+        data_type: NUMBER(1,0)
+      - name: idlead
+        data_type: NUMBER(11,0)
+      - name: app_post_vend_data_effetto_evento
+        data_type: DATE
+      - name: app_post_vend_tipo_evento
+        data_type: VARCHAR(45)
+      - name: app_post_vend_numero_contratto
+        data_type: VARCHAR(45)
+      - name: app_post_vend_data_decorrenza
+        data_type: DATE
+      - name: app_post_vend_stato_pratica
+        data_type: VARCHAR(45)
+      - name: app_post_vend_data_scadenza_prima_rata
+        data_type: DATE
+      - name: app_post_vend_numero_rate_periodo_1
+        data_type: NUMBER(6,0)
+      - name: app_post_vend_numero_rate_periodo_2
+        data_type: NUMBER(6,0)
+      - name: app_post_vend_data_scadenza_ultima_rata
+        data_type: DATE
+      - name: app_post_vend_importo_finanziato
+        data_type: NUMBER(38,10)
+      - name: app_post_vend_importo_rata_attuale
+        data_type: NUMBER(38,10)
+      - name: app_post_vend_base_calcolo
+        data_type: NUMBER(38,10)
+      - name: app_post_vend_importo_versamento_aggiuntivo
+        data_type: NUMBER(38,10)
+      - name: pratica_evento_numero_contratto
+        data_type: VARCHAR(45)
+      - name: pratica_evento_data_decorrenza
+        data_type: DATE
+      - name: pratica_evento_stato_pratica
+        data_type: VARCHAR(45)
+      - name: pratica_evento_data_scadenza_prima_rata_periodo_1
+        data_type: DATE
+      - name: pratica_evento_numero_rate_periodo_1
+        data_type: NUMBER(6,0)
+      - name: pratica_evento_numero_rate_periodo_2
+        data_type: NUMBER(6,0)
+      - name: pratica_evento_data_scadenza_ultima_rata
+        data_type: DATE
+      - name: pratica_evento_importo_finanziato
+        data_type: NUMBER(38,10)
+      - name: pratica_evento_importo_rata_periodo_1
+        data_type: NUMBER(38,10)
+      - name: pratica_evento_importo_rata_periodo_2
+        data_type: NUMBER(38,10)
+      - name: pratica_evento_importo_capitale_residuo
+        data_type: NUMBER(38,10)
+      - name: pratica_evento_base_calcolo
+        data_type: NUMBER(38,10)
+      - name: pratica_evento_coperto_cpi
+        data_type: NUMBER(1,0)
+      - name: pratica_evento_note_presenza_cpi
+        data_type: VARCHAR(50)
+      - name: pratica_evento_presenza_tcm
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: DATE
+      - name: data_modifica
+        data_type: DATE

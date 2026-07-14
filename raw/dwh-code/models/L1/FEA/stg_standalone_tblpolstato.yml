@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_standalone_tblpolstato
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"FEA", "schema":"L1_E_FEA", "archivio":"STANDALONE_TBLPOLSTATO"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idstatopol
+        data_type: VARCHAR(1)
+      - name: dsstatopol
+        data_type: VARCHAR(50)
+      - name: ordinepol
+        data_type: NUMBER(6,0)
+      - name: codstatopolagos
+        data_type: VARCHAR(3)
+      - name: dsstatopolagos
+        data_type: VARCHAR(30)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

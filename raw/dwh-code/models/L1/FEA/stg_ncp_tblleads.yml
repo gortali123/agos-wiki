@@ -1,0 +1,127 @@
+version: 2
+
+models:
+  - name: stg_ncp_tblleads
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idlead
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: iduserncp
+        data_type: NUMBER(11,0)
+      - name: contattabile
+        data_type: NUMBER(1,0)
+      - name: data_check_contattabile
+        data_type: TIMESTAMP_NTZ
+      - name: data_contattabile
+        data_type: DATE
+      - name: pratica_liquidata
+        data_type: NUMBER(1,0)
+      - name: id_agos_cliente
+        data_type: VARCHAR(45)
+      - name: nome_cliente
+        data_type: VARCHAR(150)
+      - name: cognome_cliente
+        data_type: VARCHAR(150)
+      - name: idstatolead
+        data_type: NUMBER(6,0)
+      - name: idtipooperazionelead
+        data_type: NUMBER(6,0)
+      - name: idesitooperazionelead
+        data_type: NUMBER(6,0)
+      - name: idtipolead
+        data_type: NUMBER(6,0)
+      - name: invitation_id
+        data_type: NUMBER(11,0)
+      - name: data_nascita
+        data_type: DATE
+      - name: cellulare
+        data_type: VARCHAR(30)
+      - name: telefono
+        data_type: VARCHAR(30)
+      - name: indirizzo_residenza
+        data_type: VARCHAR(250)
+      - name: indirizzo_domicilio
+        data_type: VARCHAR(250)
+      - name: cf_iva
+        data_type: VARCHAR(30)
+      - name: stato_civile
+        data_type: VARCHAR(45)
+      - name: situazione_lavorativa
+        data_type: VARCHAR(100)
+      - name: contratto_impiego
+        data_type: VARCHAR(100)
+      - name: reddito
+        data_type: NUMBER(38,10)
+      - name: data_liquidazione_consumo_estrazione
+        data_type: DATE
+      - name: tipo_bene_finanziato_estrazione
+        data_type: VARCHAR(45)
+      - name: ds_bene_acquistato_estrazione
+        data_type: VARCHAR
+      - name: stato_pratica_estrazione
+        data_type: VARCHAR(45)
+      - name: importo_bene_estrazione
+        data_type: NUMBER(38,10)
+      - name: importo_finanziato_estrazione
+        data_type: NUMBER(38,10)
+      - name: codice_ncp
+        data_type: VARCHAR(45)
+      - name: filiale_riferimento
+        data_type: VARCHAR(45)
+      - name: codice_pratica_consumo_estrazione
+        data_type: VARCHAR(45)
+      - name: campagna
+        data_type: VARCHAR(100)
+      - name: delivery
+        data_type: VARCHAR(45)
+      - name: data_estrazione
+        data_type: TIMESTAMP_NTZ
+      - name: consenso_profilazione
+        data_type: NUMBER(1,0)
+      - name: data_liquidazione_revolving
+        data_type: DATE
+      - name: codice_pratica_revolving
+        data_type: VARCHAR(45)
+      - name: codice_pratica_consumo_penultima
+        data_type: VARCHAR(45)
+      - name: data_liquidazione_consumo_penultima
+        data_type: DATE
+      - name: tipo_bene_finanziato_penultima
+        data_type: VARCHAR(45)
+      - name: ds_bene_acquistato_penultima
+        data_type: VARCHAR
+      - name: stato_pratica_penultima
+        data_type: VARCHAR(45)
+      - name: codice_pratica_consumo_terzultima
+        data_type: VARCHAR(45)
+      - name: data_liquidazione_consumo_terzultima
+        data_type: DATE
+      - name: tipo_bene_finanziato_terzultima
+        data_type: VARCHAR(45)
+      - name: ds_bene_acquistato_terzultima
+        data_type: VARCHAR
+      - name: stato_pratica_terzultima
+        data_type: VARCHAR(45)
+      - name: eliminato
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

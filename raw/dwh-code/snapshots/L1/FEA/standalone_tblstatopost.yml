@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: standalone_tblstatopost
+    relation: ref('stg_standalone_tblstatopost')
+    config:
+      unique_key: [idstatopost]

@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: stg_acedrv_tbltitoli
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idtitolo
+        data_type: NUMBER(11,0)
+      - name: idpreventivo
+        data_type: NUMBER(11,0)
+      - name: datacreazione
+        data_type: TIMESTAMP_NTZ
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: dataultimamodifica
+        data_type: TIMESTAMP_NTZ
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: idtipooperazione
+        data_type: VARCHAR(4)
+      - name: dataemissionetitolo
+        data_type: DATE
+      - name: datascadenzatitolo
+        data_type: DATE
+      - name: statotitolo
+        data_type: NUMBER(6,0)
+      - name: tipopagamento
+        data_type: NUMBER(6,0)
+      - name: datapagamento
+        data_type: DATE
+      - name: premiolordo
+        data_type: NUMBER(38,10)
+      - name: tasse
+        data_type: NUMBER(38,10)
+      - name: provvigioni
+        data_type: NUMBER(38,10)
+      - name: eliminato
+        data_type: NUMBER(6,0)
+      - name: tasso_provvigioni
+        data_type: NUMBER(11,0)
+      - name: tasso_commissioni
+        data_type: NUMBER(11,0)
+      - name: commissioni
+        data_type: NUMBER(38,10)
+      - name: dataeffettocopertura
+        data_type: DATE
+      - name: datascadenzacopertura
+        data_type: DATE
+      - name: dataexportbroker
+        data_type: TIMESTAMP_NTZ
+      - name: dataexportace
+        data_type: TIMESTAMP_NTZ
+      - name: imported
+        data_type: NUMBER(1,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ

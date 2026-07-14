@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblquestionaricontraentidettaglio
+    relation: ref('stg_tblquestionaricontraentidettaglio')
+    config:
+      unique_key: [idquestionariocontraentedettaglio]

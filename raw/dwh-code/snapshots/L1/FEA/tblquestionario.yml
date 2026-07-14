@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblquestionario
+    relation: ref('stg_tblquestionario')
+    config:
+      unique_key: [idquestionario]

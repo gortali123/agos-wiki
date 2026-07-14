@@ -3,8 +3,17 @@ WITH COMBINED AS (
     -- ramo 1: righe nuove/modificate dal source (solo il delta)
     SELECT
         CC.AL_CODICE AS CD_CONTROPARTE,
-        {{ custom_to_timestamp_ntz('CC.AL_DATA_MODIFICA', 'CC.AL_ORA_MODIFICA') }}
-            AS TS_INIZIO_VALIDITA,
+        -- Il primo record storico di ogni controparte (il piu' vecchio) usa
+        -- AL_DATA_INSERIMENTO a mezzanotte come TS_INIZIO_VALIDITA invece di
+        -- AL_DATA_MODIFICA/AL_ORA_MODIFICA.
+        CASE
+            WHEN ROW_NUMBER() OVER (
+                     PARTITION BY CC.AL_CODICE
+                     ORDER BY CC.AL_DATA_MODIFICA, CC.AL_ORA_MODIFICA, CC.ROWID
+                 ) = 1
+                THEN COALESCE({{ custom_to_timestamp_ntz('CC.AL_DATA_INSERIMENTO') }}, {{ custom_to_timestamp_ntz('CC.AL_DATA_MODIFICA', 'CC.AL_ORA_MODIFICA') }})
+            ELSE {{ custom_to_timestamp_ntz('CC.AL_DATA_MODIFICA', 'CC.AL_ORA_MODIFICA') }}
+        END AS TS_INIZIO_VALIDITA,
         CC.AL_TIPO_ANAGRAFICA AS TP_CONTROPARTE,
         CC.AL_FORMA_GIURIDICA AS CD_FORMA_GIURIDICA,
         CC.AL_CODICE_FISCALE AS CD_FISCALE,

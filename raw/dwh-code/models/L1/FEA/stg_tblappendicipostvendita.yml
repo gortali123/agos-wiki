@@ -1,0 +1,107 @@
+version: 2
+
+models:
+  - name: stg_tblappendicipostvendita
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_coalesce_modif_creaz
+        data_type: TIMESTAMP_NTZ
+      - name: idappendicepostvendita
+        data_type: NUMBER(11,0)
+      - name: idpreventivo
+        data_type: NUMBER(11,0)
+      - name: idprodottoversione
+        data_type: NUMBER(11,0)
+      - name: idusercreazione
+        data_type: NUMBER(11,0)
+      - name: idnodocreazione
+        data_type: NUMBER(11,0)
+      - name: data_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: idusermodifica
+        data_type: NUMBER(11,0)
+      - name: idnodomodifica
+        data_type: NUMBER(11,0)
+      - name: data_modifica
+        data_type: TIMESTAMP_NTZ
+      - name: data_effetto_evento
+        data_type: DATE
+      - name: tipo_evento
+        data_type: VARCHAR(45)
+      - name: numero_contratto
+        data_type: VARCHAR(45)
+      - name: data_decorrenza
+        data_type: DATE
+      - name: stato_pratica
+        data_type: VARCHAR(45)
+      - name: data_scadenza_prima_rata
+        data_type: DATE
+      - name: numero_rate_periodo_1
+        data_type: NUMBER(6,0)
+      - name: numero_rate_periodo_2
+        data_type: NUMBER(6,0)
+      - name: data_scadenza_ultima_rata
+        data_type: DATE
+      - name: importo_finanziato
+        data_type: NUMBER(38,10)
+      - name: importo_rata_attuale
+        data_type: NUMBER(38,10)
+      - name: base_calcolo
+        data_type: NUMBER(38,10)
+      - name: importo_versamento_aggiuntivo
+        data_type: NUMBER(38,10)
+      - name: data_accollo
+        data_type: DATE
+      - name: idstatopost
+        data_type: NUMBER(11,0)
+      - name: idstatopostchiusura
+        data_type: NUMBER(11,0)
+      - name: data_cancellazione
+        data_type: TIMESTAMP_NTZ
+      - name: data_richiesta_cancellazione
+        data_type: DATE
+      - name: data_effetto_cancellazione
+        data_type: DATE
+      - name: data_effetto
+        data_type: DATE
+      - name: data_scadenza
+        data_type: DATE
+      - name: frazionamento
+        data_type: NUMBER(6,0)
+      - name: annuonetto
+        data_type: NUMBER(38,10)
+      - name: annuoaddizionale
+        data_type: NUMBER(38,10)
+      - name: annuoimponibile
+        data_type: NUMBER(38,10)
+      - name: annuotasse
+        data_type: NUMBER(38,10)
+      - name: annuolordo
+        data_type: NUMBER(38,10)
+      - name: fraznetto
+        data_type: NUMBER(38,10)
+      - name: frazaddizionale
+        data_type: NUMBER(38,10)
+      - name: frazimponibile
+        data_type: NUMBER(38,10)
+      - name: fraztasse
+        data_type: NUMBER(38,10)
+      - name: frazlordo
+        data_type: NUMBER(38,10)
+      - name: totnetto
+        data_type: NUMBER(38,10)
+      - name: totaddizionale
+        data_type: NUMBER(38,10)
+      - name: totimponibile
+        data_type: NUMBER(38,10)
+      - name: tottasse
+        data_type: NUMBER(38,10)
+      - name: totlordo
+        data_type: NUMBER(38,10)

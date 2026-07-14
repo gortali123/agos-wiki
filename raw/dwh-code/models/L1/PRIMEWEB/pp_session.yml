@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: pp_session
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"PRIMEWEB", "schema":"L1_E_PRIMEWEB", "archivio":"PP_SESSION"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: formrequestid
+        data_type: NUMBER(8,0)
+      - name: creationdate
+        data_type: VARCHAR(20)
+      - name: ipaddress
+        data_type: VARCHAR(20)
+      - name: mobile
+        data_type: VARCHAR(18)
+      - name: brokercode
+        data_type: VARCHAR(12)
+      - name: formsessionid
+        data_type: VARCHAR(36)
+      - name: sessionuid
+        data_type: VARCHAR(50)
+      - name: amount
+        data_type: NUMBER(10,2)
+      - name: rate
+        data_type: VARCHAR(10)
+      - name: layout
+        data_type: VARCHAR(10)
+      - name: referrer
+        data_type: VARCHAR(500)
+      - name: campaignid
+        data_type: VARCHAR(8)

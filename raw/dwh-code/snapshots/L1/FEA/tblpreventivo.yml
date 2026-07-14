@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: tblpreventivo
+    relation: ref('stg_tblpreventivo')
+    config:
+      unique_key: [idpreventivo]

@@ -1,0 +1,106 @@
+version: 2
+
+models:
+  - name: report_m1
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"REPORT_M1"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: closing_date
+        data_type: VARCHAR(8)
+      - name: risk_taker_entity
+        data_type: VARCHAR(5)          # fix: era NUMERIC(5,0)
+      - name: source_application
+        data_type: VARCHAR(12)
+      - name: transmission_frequency
+        data_type: VARCHAR(1)
+      - name: date_time_processing
+        data_type: VARCHAR(12)         # fix: era TIMESTAMP_NTZ
+      - name: record_type
+        data_type: VARCHAR(2)
+      - name: local_id_counter
+        data_type: VARCHAR(20)
+      - name: central_id_counter
+        data_type: VARCHAR(10)         # fix: era NUMERIC(10,0)
+      - name: overall_facility_ref
+        data_type: VARCHAR(30)
+      - name: facility_detail_line_ref
+        data_type: VARCHAR(30)
+      - name: mitigant_id
+        data_type: VARCHAR(40)
+      - name: nato
+        data_type: VARCHAR(12)
+      - name: local_id_guarantor
+        data_type: VARCHAR(20)
+      - name: central_id_guarantor
+        data_type: VARCHAR(10)         # fix: era NUMERIC(10,0)
+      - name: place_deposit_real_estate
+        data_type: VARCHAR(1)          # fix: era NUMERIC(1,0)
+      - name: scope_mitigant
+        data_type: VARCHAR(1)
+      - name: legal_nature_migrant
+        data_type: VARCHAR(7)
+      - name: init_amount_sgn
+        data_type: VARCHAR(1)
+      - name: init_amount_int
+        data_type: VARCHAR(16)         # fix: era NUMERIC(16,0)
+      - name: init_amount_dec
+        data_type: VARCHAR(2)          # fix: era NUMERIC(2,0)
+      - name: curr_mitigant
+        data_type: VARCHAR(3)
+      - name: date_coming_into_effect
+        data_type: VARCHAR(8)          # fix: era DATE
+      - name: date_expiring
+        data_type: VARCHAR(8)          # fix: era DATE
+      - name: eligibility_mitigant
+        data_type: VARCHAR(1)
+      - name: country_gov_law
+        data_type: VARCHAR(2)
+      - name: freq_revaluation_mitigant
+        data_type: VARCHAR(5)          # fix: era NUMERIC(5,0)
+      - name: margin_call_trigg_thres_sgn
+        data_type: VARCHAR(1)
+      - name: margin_call_trigg_thres_int
+        data_type: VARCHAR(16)         # fix: era NUMERIC(16,0)
+      - name: margin_call_trigg_thres_dec
+        data_type: VARCHAR(2)          # fix: era NUMERIC(2,0)
+      - name: curr_margin_call_trigg_thres
+        data_type: VARCHAR(3)
+      - name: basel_2_stock_index_id
+        data_type: VARCHAR(1)
+      - name: maturity_securities
+        data_type: VARCHAR(8)          # fix: era DATE
+      - name: nationality_securities
+        data_type: VARCHAR(2)
+      - name: settlemente_period_20days
+        data_type: VARCHAR(1)
+      - name: settlemente_period_x2
+        data_type: VARCHAR(1)
+      - name: min_amount_margin_call_trans_sgn
+        data_type: VARCHAR(1)
+      - name: min_amount_margin_call_trans_int
+        data_type: VARCHAR(16)         # fix: era NUMERIC(16,0)
+      - name: min_amount_margin_call_trans_dec
+        data_type: VARCHAR(2)          # fix: era NUMERIC(2,0)
+      - name: cur_min_amount_margin_call_trans
+        data_type: VARCHAR(3)
+      - name: banking_product_type
+        data_type: VARCHAR(6)          # non presente in SAS mask — invariato
+      - name: revised_amount_int
+        data_type: VARCHAR(16)         # fix: era NUMERIC(16,0)
+      - name: dispute_ind_margin_exchanged
+        data_type: VARCHAR(1)          # non presente in SAS mask — invariato
+      - name: pcco_value_principal_1
+        data_type: VARCHAR(12)         # non presente in SAS mask — invariato
+      - name: value_principal_1_sgn
+        data_type: VARCHAR(1)          # non presente in SAS mask — invariato
+      - name: value_principal_1_int
+        data_type: VARCHAR(16)         # fix: era NUMERIC(16,0)
+      - name: value_principal_1_dec
+        data_type: VARCHAR(2)          # fix: era NUMERIC(2,0)

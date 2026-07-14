@@ -1,0 +1,77 @@
+version: 2
+
+models:
+  - name: flux_cre_provision
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      meta:
+        cluster: ["D"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"FLUX_CRE_PROVISION"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: energ
+        data_type: VARCHAR(2)
+      - name: ideng
+        data_type: VARCHAR(40)
+      - name: cdapplieng
+        data_type: VARCHAR(12)
+      - name: nmsysges
+        data_type: VARCHAR(20)
+      - name: cdctreres
+        data_type: VARCHAR(7)
+      - name: cdct
+        data_type: VARCHAR(40)
+      - name: cdedc
+        data_type: VARCHAR(40)
+      - name: cdbilhb
+        data_type: VARCHAR(1)
+      - name: cdarpmt
+        data_type: VARCHAR(1)
+      - name: cdappcmpt
+        data_type: VARCHAR(40)
+      - name: cdindact
+        data_type: VARCHAR(1)
+      - name: cdtyprest
+        data_type: VARCHAR(2)
+      - name: cdmodtit
+        data_type: VARCHAR(1)
+      - name: cdfct
+        data_type: VARCHAR(3)
+      - name: cdclasifrs9
+        data_type: VARCHAR(3)
+      - name: cdclasloc
+        data_type: VARCHAR(3)
+      - name: cdbuck
+        data_type: VARCHAR(2)
+      - name: cdrefscen
+        data_type: VARCHAR(10)
+      - name: txpd
+        data_type: VARCHAR(15)
+      - name: cdbuckprec
+        data_type: VARCHAR(2)
+      - name: mtproveclorig
+        data_type: VARCHAR(19)
+      - name: cddev
+        data_type: VARCHAR(3)
+      - name: mtprovprecorig
+        data_type: VARCHAR(19)
+      - name: cddevprovpre
+        data_type: VARCHAR(3)
+      - name: mtvarprovorig
+        data_type: VARCHAR(19)
+      - name: cdsensvarorig
+        data_type: VARCHAR(1)
+      - name: mtprovecleuro
+        data_type: VARCHAR(19)
+      - name: mtprovpreceuro
+        data_type: VARCHAR(19)
+      - name: mtvarproveuro
+        data_type: VARCHAR(19)
+      - name: cdsensvareuro
+        data_type: VARCHAR(1)
+      - name: filler
+        data_type: VARCHAR(50)
