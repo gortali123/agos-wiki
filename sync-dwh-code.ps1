@@ -92,6 +92,8 @@ Mirror-Folder "models\L3"
 # --- Models: solo i sample richiesti per L0/L1 ---
 Mirror-Folder "models\L0\ADOBE"
 Mirror-Folder "models\L1\ADOBE"
+Mirror-Folder "models\L0\CTC"
+Mirror-Folder "models\L1\CTC"
 Mirror-Folder "models\L0\OCS\AIN"
 Mirror-Folder "models\L1\OCS\AIN"
 
