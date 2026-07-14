@@ -1,0 +1,96 @@
+version: 2
+models:
+  - name: proforma_prv_rap
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      #query_tag: '{"app": "DBT", "schema": "L2_MAIN", "entita": "PROFORMA_PRV_RAP"}'
+      pre_hook:
+        - "{{ delete_l2('ccfatprv', ['CD_DESTINATARIO', 'PR_DESTINATARIO'], ['FTPRV_CODICE', 'FTPRV_PROGRESSIVO']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_DESTINATARIO, PR_DESTINATARIO, TS_INSERIMENTO]
+    columns:
+      - name: CD_DESTINATARIO
+        data_type: NUMBER(9)
+      - name: PR_DESTINATARIO
+        data_type: NUMBER(4)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: TP_FATTURA
+        data_type: CHAR(2)
+      - name: CD_DOC_LIQUIDAZIONE
+        data_type: NUMBER(9)
+      - name: CD_GESTIONE_BOLLO
+        data_type: CHAR(1)
+      - name: FL_PAGAMENTO_SOSPESO
+        data_type: CHAR(1)
+      - name: DT_INIZIO_COMPETENZA
+        data_type: NUMBER(5)
+      - name: DT_FINE_COMPETENZA
+        data_type: NUMBER(5)
+      - name: DT_FATTURA
+        data_type: NUMBER(5)
+      - name: DT_REGISTRAZIONE
+        data_type: NUMBER(5)
+      - name: DT_SOPRAVVENIENZA
+        data_type: NUMBER(8)
+      - name: DT_PAGAMENTO
+        data_type: NUMBER(5)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: TP_PRODOTTO_PRV
+        data_type: CHAR(2)
+      - name: TP_DESTINATARIO
+        data_type: CHAR(2)
+      - name: CD_FILIALE
+        data_type: CHAR(3)
+      - name: EU_TOTALE_PROVVIGIONE
+        data_type: NUMBER(11,2)
+      - name: EU_DA_PAGARE
+        data_type: NUMBER(11,2)
+      - name: FL_PROVV_AGG_A1
+        data_type: CHAR(1)
+      - name: FL_ACCANTONATA
+        data_type: CHAR(1)
+      - name: FL_ANTICIPO
+        data_type: CHAR(1)
+      - name: FL_FATTURA_ZERO
+        data_type: CHAR(1)
+      - name: FL_ESTERNA
+        data_type: CHAR(1)
+      - name: CD_NUM_FATT_RID
+        data_type: NUMBER(7)
+      - name: CD_NUM_FATT
+        data_type: CHAR(12)
+      - name: CD_NUM_REG
+        data_type: NUMBER(7)
+      - name: CD_BANCA_PAGAMENTO
+        data_type: NUMBER(7)
+      - name: TP_PAGAMENTO
+        data_type: CHAR(2)
+      - name: TP_FATTURA_RICEVUTA
+        data_type: CHAR(1)
+      - name: EU_ENASARCO_INTERM
+        data_type: NUMBER(11,2)
+      - name: EU_ENASARCO_SOCIETA
+        data_type: NUMBER(11,2)
+      - name: CD_NUM_LOTTO
+        data_type: NUMBER(9)
+      - name: PR_POSTEL
+        data_type: NUMBER(9)
+      - name: TP_CATENA
+        data_type: CHAR(2)
+      - name: TP_MATURAZIONE
+        data_type: CHAR(1)
+      - name: CD_DESTINATARIO_PAG
+        data_type: NUMBER(9)
+      - name: TP_DESTINARATIO_PAG
+        data_type: CHAR(2)
+      - name: CD_EER
+        data_type: CHAR(5)
+      - name: CD_EER_ATTIVITA
+        data_type: CHAR(3)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

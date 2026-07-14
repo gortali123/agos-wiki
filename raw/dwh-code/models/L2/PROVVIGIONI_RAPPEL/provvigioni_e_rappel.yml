@@ -1,0 +1,148 @@
+version: 2
+models:
+  - name: provvigioni_e_rappel
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      #query_tag: '{"app": "DBT", "schema": "L2_MAIN", "entita": "PROVVIGIONI_E_RAPPEL"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, CD_PROTOCOLLO, CD_PROTOCOLLO_RIGA, PR_PROTOCOLLO, CD_CESPITE, CD_SERVIZIO, CD_EMETTITORE, CD_PRODOTTO, CD_CAMPAGNA, NM_ANNOMESE_MATURAZIONE, TP_PROVVIGIONE, TP_PREMIO, CD_INTERMEDIARIO, TP_INTERMEDIARIO, FL_STORNO]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: CD_PROTOCOLLO
+        data_type: NUMBER(9)
+      - name: CD_PROTOCOLLO_RIGA
+        data_type: NUMBER(4)
+      - name: PR_PROTOCOLLO
+        data_type: NUMBER(3)
+      - name: CD_CESPITE
+        data_type: NUMBER(3)
+      - name: CD_SERVIZIO
+        data_type: VARCHAR(5)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_CAMPAGNA
+        data_type: VARCHAR(3)
+      - name: NM_ANNOMESE_MATURAZIONE
+        data_type: NUMBER(6)
+      - name: TP_PROVVIGIONE
+        data_type: VARCHAR(2)
+      - name: TP_PREMIO
+        data_type: VARCHAR(4)
+      - name: CD_INTERMEDIARIO
+        data_type: NUMBER(9)
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR(2)
+      - name: FL_STORNO
+        data_type: VARCHAR(1)
+      - name: DT_COMPETENZA
+        data_type: DATE
+      - name: FL_RETTIFICA
+        data_type: VARCHAR(1)
+      - name: EU_IMPORTO_1
+        data_type: NUMBER(13,2)
+      - name: CD_BASE_CALCOLO_1
+        data_type: VARCHAR(1)
+      - name: PC_CALCOLO_1
+        data_type: NUMBER(6,3)
+      - name: CD_INDICE_RIF_1
+        data_type: VARCHAR(3)
+      - name: EU_IMPONIBILE_1
+        data_type: NUMBER(13,2)
+      - name: EU_IMPORTO_2
+        data_type: NUMBER(13,2)
+      - name: CD_BASE_CALCOLO_2
+        data_type: VARCHAR(1)
+      - name: PC_CALCOLO_2
+        data_type: NUMBER(6,3)
+      - name: CD_INDICE_RIF_2
+        data_type: VARCHAR(3)
+      - name: EU_IMPONIBILE_2
+        data_type: NUMBER(13,2)
+      - name: TP_IMPORTO
+        data_type: VARCHAR(2)
+      - name: EU_IMPORTO_FISSO
+        data_type: NUMBER(13,2)
+      - name: EU_TOTALE
+        data_type: NUMBER(13,2)
+      - name: DT_CALCOLO
+        data_type: DATE
+      - name: DT_MATURAZIONE
+        data_type: DATE
+      - name: DT_LIQUIDAZIONE
+        data_type: DATE
+      - name: TP_CATEGORIA_PROVV
+        data_type: VARCHAR(3)
+      - name: PR_CATENA
+        data_type: NUMBER(3)
+      - name: CD_DESTINATARIO
+        data_type: NUMBER(9)
+      - name: TP_DESTINATARIO
+        data_type: VARCHAR(2)
+      - name: FL_DA_LIQUIDARE
+        data_type: VARCHAR(1)
+      - name: CD_DOC_LIQUIDAZIONE
+        data_type: NUMBER(9)
+      - name: CD_PERIODICITA_CALC_RAPP
+        data_type: VARCHAR(1)
+      - name: CD_PERIODICITA_LIQ_RAPP
+        data_type: VARCHAR(1)
+      - name: TP_OPERAZIONE
+        data_type: VARCHAR(2)
+      - name: PR_OPERAZIONE
+        data_type: NUMBER(11)
+      - name: CD_DESTINATARIO_PAG
+        data_type: NUMBER(9)
+      - name: TP_DESTINATARIO_PAG
+        data_type: VARCHAR(2)
+      - name: TP_CATEGORIA_COR
+        data_type: VARCHAR(3)
+      - name: CD_CORRETTIVO_COR
+        data_type: VARCHAR(3)
+      - name: TP_CHK_COR
+        data_type: VARCHAR(3)
+      - name: PC_1_COR
+        data_type: NUMBER(6,3)
+      - name: PC_2_COR
+        data_type: NUMBER(6,3)
+      - name: PC_F_COR
+        data_type: NUMBER(6,3)
+      - name: EU_IMP_MIN_COR
+        data_type: NUMBER(13,2)
+      - name: EU_IMP_MAX_COR
+        data_type: NUMBER(13,2)
+      - name: EU_IMPORTO_RIF
+        data_type: NUMBER(13,2)
+      - name: PR_FATTURA_DETT
+        data_type: NUMBER(3)
+      - name: FL_DETTAGLIO_SERVIZI
+        data_type: VARCHAR(1)
+      - name: FL_BLOCCO_RICALCOLO
+        data_type: VARCHAR(1)
+      - name: CD_INTERM_RIF
+        data_type: NUMBER(9)
+      - name: TP_INTERM_RIF
+        data_type: VARCHAR(2)
+      - name: DT_SOPRAVVENIENZA
+        data_type: NUMBER(8)
+      - name: NM_PERIODO_MATURAZ
+        data_type: NUMBER(3)
+      - name: TP_PERIODO_MATURAZ
+        data_type: VARCHAR(1)
+      - name: TP_MATURAZIONE
+        data_type: VARCHAR(1)
+      - name: PR_CUMULO
+        data_type: NUMBER(9)
+      - name: TP_PROCEDURA_RIF
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA_RIF
+        data_type: NUMBER(12)
+      - name: NM_ORDIN_LEASING
+        data_type: NUMBER(2)

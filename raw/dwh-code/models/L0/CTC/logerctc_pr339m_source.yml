@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: logerctc_pr339m
+        data_tests:
+          - try_cast_positional
+          - primary_key_positional:
+              arguments:
+                pk_columns: ['CD_LOG_ID','CD_CATENA','NM_PROGR_EVENTO']

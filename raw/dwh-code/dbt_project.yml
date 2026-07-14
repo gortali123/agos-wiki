@@ -299,6 +299,10 @@ models:
         +schema: L2_SWORD
         +meta: {subject_area: "SWORD"}
         +tags: ["SWORD"]
+      PROVVIGIONI_RAPPEL:
+        +schema: L2_PROVVIGIONI_RAPPEL
+        +meta: {subject_area: "PROVVIGIONI_RAPPEL"}
+        +tags: ["PROVVIGIONI_RAPPEL"]
 
     L3:
       +meta: {layer: "L3"}
