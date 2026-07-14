@@ -3,9 +3,6 @@ WITH COMBINED AS (
     -- ramo 1: righe nuove/modificate dal source (solo il delta)
     SELECT
         CC.AL_CODICE AS CD_CONTROPARTE,
-        -- Il primo record storico di ogni controparte (il piu' vecchio) usa
-        -- AL_DATA_INSERIMENTO a mezzanotte come TS_INIZIO_VALIDITA invece di
-        -- AL_DATA_MODIFICA/AL_ORA_MODIFICA.
         CASE
             WHEN ROW_NUMBER() OVER (
                      PARTITION BY CC.AL_CODICE
