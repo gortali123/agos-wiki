@@ -114,6 +114,42 @@ cambia formato:
 - Celle placeholder (`---`, `-`, `nan`, vuote, `NA` per le CHIAVI) -> campo
   vuoto.
 
+## Se l'output non è quello atteso
+
+Non concludere subito "niente sorgente/PK, foglio non generabile" solo
+perché `dm.py sheet` restituisce TAB/COL/RT vuoti o senza `FLAG_PK` per
+un'entità che dovrebbe averne (es. compare nel catalogo con sorgenti/cluster
+noti, o altre entità dello stesso foglio hanno dati reali). Prima di
+scartare l'entità, leggi il foglio grezzo con openpyxl:
+
+```python
+import openpyxl
+wb = openpyxl.load_workbook('raw/<file>.xlsx', read_only=True)
+ws = wb['NOME_ENTITA']
+for i, row in enumerate(ws.iter_rows(values_only=True)):
+    print(i, row)
+```
+
+Casi tipici trovati così, entrambi da correggere (nel parser se è un bug
+generale, altrimenti solo nella lettura di quel foglio):
+- **Bug del parser**: header con colonne duplicate senza prefisso `MODULO`
+  (es. due blocchi sorgente TIG-CO/TIG-CA su un foglio a procedura singola)
+  — verifica che `detect_procedures` prenda la prima occorrenza di
+  `SORGENTE TABELLA`/`SORGENTE CAMPI`/`REGOLA TECNICA`/`CHIAVI DI AGGANCIO`,
+  non l'ultima. Se trovi un bug che si applica in generale, correggilo in
+  `scripts/dm.py` (non un fix a mano solo per quel foglio) e segnalalo.
+- **Errore di compilazione nello sheet**: colonne shiftate rispetto
+  all'header dichiarato (es. il nome tabella reale finito nella colonna
+  `SORGENTE CAMPI` invece che in `SORGENTE TABELLA`, e il vero nome colonna
+  finito in `REGOLA FUNZIONALE`). Se lo shift è sistematico su tutte le
+  righe del foglio, ricostruisci la mappatura corretta e segnalalo
+  (`-- WARN` nel codice generato); non è "inventare", è leggere colonne
+  spostate in modo verificabile riga per riga.
+
+Solo se dopo questo controllo il foglio risulta genuinamente privo di
+sorgente/PK per ogni campo (nessuna tabella indicata da nessuna parte, non
+solo nelle colonne standard) è corretto trattarlo come non generabile.
+
 ## Uso standalone
 
 Se l'utente sta solo consultando il data model (niente generazione),

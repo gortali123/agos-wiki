@@ -74,3 +74,6 @@
 - [accessi](develop/models/L2/AREA_RISERVATA/accessi.sql) — ACCESSI (DIGITAL), proposto
 - [iscritti](develop/models/L2/AREA_RISERVATA/iscritti.sql) — ISCRITTI (DIGITAL), proposto
 - [abilitazioni_push](develop/models/L2/AREA_RISERVATA/abilitazioni_push.sql) — ABILITAZIONI_PUSH (DIGITAL), proposto
+- [sessioni](develop/models/L2/FORM_E_PREVENTIVATORI/sessioni.sql) — SESSIONI (DIGITAL), proposto, recuperata dopo fix bug dm-reader
+- [ana_iniziative_commerciali](develop/models/L2/FORM_E_PREVENTIVATORI/ana_iniziative_commerciali.sql) — ANA_INIZIATIVE_COMMERCIALI (DIGITAL), proposto, ricostruita da uno shift di colonna nello sheet
+- [contact_history](develop/models/L2/MAIN/contact_history.sql) — CONTACT_HISTORY (CONTATTI), proposto, recuperata dopo secondo fix bug dm-reader (blocco MODULO)

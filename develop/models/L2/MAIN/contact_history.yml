@@ -1,0 +1,40 @@
+version: 2
+models:
+  - name: contact_history
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_CONTATTI", "entita": "CONTACT_HISTORY"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_CONTROPARTE, CD_CANALE, TS_COMUNICAZIONE]
+    columns:
+      - name: CD_CONTROPARTE
+        data_type: VARCHAR(16)
+      - name: CD_CANALE
+        data_type: VARCHAR(10)
+      - name: TS_COMUNICAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_SORGENTE
+        data_type: VARCHAR(20)
+      - name: CD_THREAD
+        data_type: VARCHAR(50)
+      - name: CD_MESSAGE
+        data_type: VARCHAR(50)
+      - name: CD_BROADLOG
+        data_type: VARCHAR(50)
+      - name: NM_VERSIONE
+        data_type: NUMBER(3,0)
+      - name: TP_COMUNICAZIONE
+        data_type: VARCHAR(20)
+      - name: DS_COMUNICAZIONE
+        data_type: VARCHAR(100)
+      - name: CD_UTENTE_CREAZIONE
+        data_type: VARCHAR(20)
+      - name: TS_CREAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_MODIFICA
+        data_type: VARCHAR(20)
+      - name: TS_MODIFICA
+        data_type: TIMESTAMP_NTZ

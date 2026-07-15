@@ -1,0 +1,32 @@
+version: 2
+models:
+  - name: sessioni
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_DIGITAL", "entita": "SESSIONI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_SESSIONE, TP_PROCEDURA]
+    columns:
+      - name: CD_SESSIONE
+        data_type: VARCHAR(100)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TS_CREAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_IP_ADDRESS
+        data_type: VARCHAR(50)
+      - name: FL_MOBILE
+        data_type: VARCHAR(1)
+      - name: CD_INIZIATIVA_COMMERCIALE
+        data_type: VARCHAR(20)
+      - name: EU_IMPORTO_RICHIESTO
+        data_type: NUMBER(15,2)
+      - name: NM_RATE
+        data_type: NUMBER(5)
+      - name: CD_CAMPAGNA
+        data_type: VARCHAR(50)
+      - name: TP_LAYOUT
+        data_type: VARCHAR(1)

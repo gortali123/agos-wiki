@@ -291,15 +291,19 @@ def detect_procedures(header, proc_row):
             tab_col = src_col = rt_col = key_col = None
             next_mod = next((k for k in range(i + 1, len(header))
                              if isinstance(header[k], str) and header[k].startswith('MODULO')), len(header))
+            # Prima occorrenza vince: alcuni fogli hanno un secondo blocco
+            # colonne (es. 'SORGENTE TABELLA FEA L1') dentro lo stesso range
+            # senza un proprio header 'MODULO', che altrimenti sovrascrive
+            # il blocco giusto.
             for j in range(i, next_mod):
                 hj = str(header[j]) if pd.notna(header[j]) else ''
-                if 'SORGENTE TABELLA' in hj:
+                if 'SORGENTE TABELLA' in hj and tab_col is None:
                     tab_col = j
-                elif 'SORGENTE CAMPI' in hj:
+                elif 'SORGENTE CAMPI' in hj and src_col is None:
                     src_col = j
-                elif hj == 'REGOLA TECNICA':
+                elif hj == 'REGOLA TECNICA' and rt_col is None:
                     rt_col = j
-                elif 'CHIAVI DI AGGANCIO' in hj:
+                elif 'CHIAVI DI AGGANCIO' in hj and key_col is None:
                     key_col = j
             pname = str(proc_row.iloc[i]).strip() if pd.notna(proc_row.iloc[i]) else ''
             if not pname or pname == '---' or pname.startswith("Y'") or 'compilare' in pname.lower():
@@ -311,18 +315,21 @@ def detect_procedures(header, proc_row):
     if blocks:
         return blocks
 
-    # Fallback: procedura singola
+    # Fallback: procedura singola. Se l'header ripete queste etichette piu'
+    # volte senza prefisso MODULO (es. blocchi doppi TIG-CO/TIG-CA su un
+    # foglio a procedura unica), vince la PRIMA occorrenza: le colonne
+    # successive sono blocchi ridondanti/vuoti, non un'altra procedura.
     tab_col = src_col = rt_col = key_col = None
     for j, h in enumerate(header):
         if not isinstance(h, str):
             continue
-        if 'SORGENTE TABELLA' in h:
+        if 'SORGENTE TABELLA' in h and tab_col is None:
             tab_col = j
-        elif 'SORGENTE CAMPI' in h:
+        elif 'SORGENTE CAMPI' in h and src_col is None:
             src_col = j
-        elif 'REGOLA TECNICA' in h:
+        elif 'REGOLA TECNICA' in h and rt_col is None:
             rt_col = j
-        elif 'CHIAVI DI AGGANCIO' in h:
+        elif 'CHIAVI DI AGGANCIO' in h and key_col is None:
             key_col = j
     pname = 'P1'
     if tab_col is not None:
