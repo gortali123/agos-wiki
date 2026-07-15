@@ -47,4 +47,14 @@
 
 ## Develop
 
-(nessuna voce ancora)
+- [dm_ca_campioni](develop/models/L3/campioni_accettazione/dm_ca_campioni.sql) — DM_CA_CAMPIONI, proposto, non ancora portato upstream
+- [dm_co_campioni](develop/models/L3/campioni_accettazione/dm_co_campioni.sql) — DM_CO_CAMPIONI, proposto, non ancora portato upstream
+- [dm_ca_imp_rata](develop/models/L3/campioni_accettazione/dm_ca_imp_rata.sql) — DM_CA_IMP_RATA, proposto, non ancora portato upstream
+- [dm_ca_matrix_inat](develop/models/L3/campioni_accettazione/dm_ca_matrix_inat.sql) — DM_CA_MATRIX_INAT, proposto, non ancora portato upstream
+- [dm_ca_tab_blocchi](develop/models/L3/campioni_accettazione/dm_ca_tab_blocchi.sql) — DM_CA_TAB_BLOCCHI, proposto, non ancora portato upstream
+- [dm_ca_matrix_utlz](develop/models/L3/campioni_accettazione/dm_ca_matrix_utlz.sql) — DM_CA_MATRIX_UTLZ, proposto, non ancora portato upstream
+- [dm_ca_mod_ripagamento](develop/models/L3/campioni_accettazione/dm_ca_mod_ripagamento.sql) — DM_CA_MOD_RIPAGAMENTO, proposto, non ancora portato upstream
+- [dm_ca_matrix](develop/models/L3/campioni_accettazione/dm_ca_matrix.sql) — DM_CA_MATRIX, proposto, non ancora portato upstream
+- [dm_ca_target](develop/models/L3/campioni_accettazione/dm_ca_target.sql) — DM_CA_TARGET, proposto, non ancora portato upstream
+- [dm_co_target](develop/models/L3/campioni_accettazione/dm_co_target.sql) — DM_CO_TARGET, proposto, non ancora portato upstream
+- [dm_co_matrix](develop/models/L3/campioni_accettazione/dm_co_matrix.sql) — DM_CO_MATRIX, proposto, non ancora portato upstream

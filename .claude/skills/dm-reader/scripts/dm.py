@@ -264,14 +264,16 @@ def load_sheet(name, file=None):
 
 def locate_columns(header):
     """Indici delle colonne campo fisse. Solleva KeyError con nome leggibile
-    se manca una colonna richiesta (foglio non in formato entita')."""
+    se manca una colonna richiesta (foglio non in formato entita').
+    Alcuni fogli (es. sotto-processo Campioni) usano 'TYPE' al posto di
+    'FORMATO': entrambe le etichette sono accettate."""
     cols = {}
-    for key, label in (('nome', 'NOME CAMPO'), ('pk', 'FLAG_PK'),
-                        ('fmt', 'FORMATO'), ('len', 'LENGTH')):
-        try:
-            cols[key] = header.index(label)
-        except ValueError:
-            raise KeyError(label)
+    for key, labels in (('nome', ('NOME CAMPO',)), ('pk', ('FLAG_PK',)),
+                        ('fmt', ('FORMATO', 'TYPE')), ('len', ('LENGTH',))):
+        idx = next((header.index(l) for l in labels if l in header), None)
+        if idx is None:
+            raise KeyError(labels[0])
+        cols[key] = idx
     cols['dec'] = next((i for i, h in enumerate(header)
                         if isinstance(h, str) and 'DECIMAL' in h.upper()), None)
     return cols

@@ -1,0 +1,27 @@
+version: 2
+models:
+  - name: dm_ca_mod_ripagamento
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: VARCHAR(10)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CA_MOD_RIPAG_DT_PRIMA_SCAD
+        data_type: DATE
+      - name: CA_MOD_RIPAG_DT_RIFERIMENTO
+        data_type: DATE
+      - name: CA_MOD_RIPAG_IN_MULTICHOICE
+        data_type: VARCHAR(10)
+      - name: CA_MOD_RIPAG_NM_RIPAGAMENTO_##
+        data_type: NUMBER(10,0)
+      - name: CA_MOD_RIPAG_NM_MESI
+        data_type: NUMBER(10,0)

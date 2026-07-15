@@ -1,0 +1,25 @@
+version: 2
+models:
+  - name: dm_ca_matrix_inat
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: VARCHAR(10)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CA_MATRIX_INAT_DT_CARICAMENTO_SCORE_V2
+        data_type: DATE
+      - name: CA_MATRIX_INAT_FL_INUTILIZZO##
+        data_type: CHAR(1)
+      - name: CA_MATRIX_INAT_LOG_STATI
+        data_type: VARCHAR(10)
+      - name: CA_MATRIX_INAT_NM_MESI
+        data_type: NUMBER(10,0)

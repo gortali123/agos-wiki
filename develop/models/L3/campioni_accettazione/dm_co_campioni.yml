@@ -1,0 +1,39 @@
+version: 2
+models:
+  - name: dm_co_campioni
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: VARCHAR(10)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: TS_ESTINZIONE_ANTICIPATA
+        data_type: DATE
+      - name: SCORE_DATA_DI_INSERIMENTO
+        data_type: DATE
+      - name: DT_PERDITA_CESSIONE
+        data_type: DATE
+      - name: DT_STORNO
+        data_type: DATE
+      - name: SCORE_DATA_DI_VARIAZIONE
+        data_type: DATE
+      - name: SETTORE
+        data_type: VARCHAR(10)
+      - name: CD_STATO
+        data_type: VARCHAR(10)
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: DT_ESTINZIONE
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA
+        data_type: DATE

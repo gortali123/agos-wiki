@@ -1,0 +1,53 @@
+version: 2
+models:
+  - name: dm_ca_campioni
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: VARCHAR(10)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: EU_IMPORTO
+        data_type: NUMBER(15,2)
+      - name: TS_ESITO
+        data_type: DATE
+      - name: CD_CLEINTE
+        data_type: VARCHAR(10)
+      - name: DT_CHIUSURA_CARTA
+        data_type: DATE
+      - name: CD_CHIUSURA_CARTA
+        data_type: VARCHAR(10)
+      - name: TP_BLOCCO
+        data_type: CHAR(2)
+      - name: DT_ACQUISTO
+        data_type: DATE
+      - name: CD_STATO
+        data_type: VARCHAR(10)
+      - name: FL_PERDITA_CESSIONE
+        data_type: CHAR(1)
+      - name: DT_PRIMO_UTILIZZO
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: DT_PERDITA_CESSIONE
+        data_type: DATE
+      - name: TS_COMUNICAZIONE_ESITO_DEF
+        data_type: DATE
+      - name: TS_CARICAMENTO
+        data_type: DATE
+      - name: DT_SCADENZA_PRIMA_RATA
+        data_type: DATE
+      - name: SETTORE
+        data_type: VARCHAR(10)
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA
+        data_type: DATE

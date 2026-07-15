@@ -1,0 +1,31 @@
+version: 2
+models:
+  - name: dm_co_target
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: VARCHAR(10)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CO_TARGET_DT_CALA_FINE_##
+        data_type: DATE
+      - name: CO_TARGET_DT_MORA_FINE_##
+        data_type: DATE
+      - name: CO_TARGET_DT_CALA_INIZ_##
+        data_type: DATE
+      - name: CO_TARGET_DT_MORA_INIZ_##
+        data_type: DATE
+      - name: CO_TARGET_NM_MESI_VALUTAZIONE
+        data_type: NUMBER(10,0)
+      - name: CO_TARGET_NM_WORST_ACCO##
+        data_type: NUMBER(10,0)
+      - name: CO_TARGET_NM_WORST##
+        data_type: NUMBER(10,0)
