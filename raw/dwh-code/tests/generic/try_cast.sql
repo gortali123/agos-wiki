@@ -15,9 +15,7 @@
   {% set cols_to_render = [] %}
       {% for col_name, col_def in l1_node.columns.items() %}
           {% if col_name | lower in columns_from_source and col_name | lower not in skip_columns_lower %}
-            {% set col_ref = col_name | upper %}
-            {% set check_expr = "try_cast(" ~ col_ref ~ " as " ~ col_def.data_type ~ ")" %}
-        {% do cols_to_render.append({'name': col_name | upper, 'col_ref': col_ref, 'check_expr': check_expr, 'data_type': col_def.data_type}) %}
+        {% do cols_to_render.append({'name': col_name | upper, 'data_type': col_def.data_type}) %}
           {% endif %}
   {% endfor %}
 
@@ -25,13 +23,12 @@ with cast_results as (
   select
     object_construct(
       {% for col in cols_to_render %}
-          {% set col_type_lower = col['data_type'] | lower %}
-          {% set exclude_for_col = accepted_values.get(col_type_lower) or [] %}
+          {% set exclude_for_col = accepted_values.get(col.data_type | lower) or [] %}
           '{{ col.name }}', iff(
-            {{ col.col_ref }} is not null
-            and {{ col.check_expr }} is null
-            {% if exclude_for_col | length > 0 %}and {{ col.col_ref }} not in ({% for val in exclude_for_col %}'{{ val }}'{{ ',' if not loop.last else '' }}{% endfor %}){% endif %},
-            cast({{ col.col_ref }} as varchar),
+            {{ col.name }} is not null
+            and try_cast({{ col.name }} as {{ col.data_type }}) is null
+            {% if exclude_for_col | length > 0 %}and {{ col.name }} not in ({% for val in exclude_for_col %}'{{ val }}'{{ ',' if not loop.last else '' }}{% endfor %}){% endif %},
+            cast({{ col.name }} as varchar),
             null
           ){{ ',' if not loop.last else '' }}
       {% endfor %}

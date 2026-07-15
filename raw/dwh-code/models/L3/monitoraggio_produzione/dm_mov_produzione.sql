@@ -7,7 +7,14 @@
 -- Numerose incongruenze/typo del data model annotate con -- FIX / -- WARN.
 
 WITH prat_unpivot AS (
-    SELECT *
+    SELECT
+        TP_PROCEDURA,      -- VARCHAR(2)   : SELECT/WHERE/JOIN (CO, CA, CQ)
+        CD_PRATICA,        -- NUMBER(16,0) : SELECT/JOIN (CO, CA, CQ)
+        EU_FINANZIATO,     -- NUMBER(13,2) : misure CO e CQ
+        CD_PRODOTTO,       -- VARCHAR(2)   : filtro WHERE ramo CO
+        CD_EMETTITORE,     -- NUMBER(3,0)  : filtro WHERE ramo CA
+        DT_MOVIMENTO,      -- generata dall'UNPIVOT
+        TP_MOVIMENTO       -- generata dall'UNPIVOT
     FROM {{ ref('pratica') }}
     UNPIVOT (DT_MOVIMENTO FOR TP_MOVIMENTO IN (DT_CARICAMENTO, DT_ESITO, DT_RESPINTA, DT_RITIRATA, DT_DECORRENZA, DT_STORNATA))
     WHERE DT_MOVIMENTO IS NOT NULL

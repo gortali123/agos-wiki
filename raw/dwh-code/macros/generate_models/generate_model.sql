@@ -94,8 +94,6 @@
         {% set l = row[5] | string | trim %}
         {% set t_render = transcod_dtype(t, l) | trim %}
         {% if 'varchar' in (t_render | lower) and is_ocs %}
-          {# OCS: rtrim del varchar; se il risultato e' stringa vuota, sostituita con uno spazio singolo
-             invece di NULL (era NULLIF(RTRIM(...), '') -> NULL, ora IFF(...) -> ' ') #}
           {% set expr = '  TRY_CAST(IFF(RTRIM(' ~ c ~ ') = \'\', \' \', RTRIM(' ~ c ~ ')) AS ' ~ t_render ~ ') AS ' ~ (c | lower) %}
         {% else %}
           {% set expr = '  TRY_CAST(' ~ c ~ ' AS ' ~ t_render ~ ') AS ' ~ (c | lower) %}

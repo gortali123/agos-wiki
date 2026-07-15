@@ -35,9 +35,16 @@
 {# ---- CTE di appoggio: anteposte dalla macro, terminate da virgola ---- #}
 {%- set pre_ctes -%}
 prat_unpivot AS (
-    SELECT *
+    SELECT
+        DT_OSSERVAZIONE,   -- ts_col : JOIN (consumo_m/cqs_m/sa_agg) + output CO/CA/CQ
+        TP_PROCEDURA,      -- SELECT/WHERE/JOIN (CO, CA, CQ)
+        CD_PRATICA,        -- SELECT/JOIN (CO, CA, CQ)
+        EU_FINANZIATO,     -- EMFN_BASE (CO) e base imponibile (CQ)
+        CD_PRODOTTO,       -- filtro WHERE ramo CO
+        CD_EMETTITORE,     -- filtro WHERE ramo CA
+        DT_MOVIMENTO,      -- generata dall'UNPIVOT
+        TP_MOVIMENTO       -- generata dall'UNPIVOT
     FROM {{ ref('pratica_m') }}
-    --FROM AGOS_DEV_16000.L2_PRODOTTO_M.PRATICA_M_TEST
     UNPIVOT (DT_MOVIMENTO FOR TP_MOVIMENTO IN (DT_CARICAMENTO, DT_ESITO, DT_RESPINTA, DT_RITIRATA, DT_DECORRENZA, DT_STORNATA))
     WHERE DT_MOVIMENTO IS NOT NULL
     -- WARN: il data model usa set di date UNPIVOT incoerenti tra i campi; usato il set completo (6 date)
@@ -354,7 +361,6 @@ SELECT
     NULL AS EU_TOT_CONTRIB_DA_INTER,
     NULL AS EU_SPESE_RICORRENTI_TOT
 FROM {{ ref('carte_utilizzi') }} a
---FROM AGOS_DEV_16000.L2_PRODOTTO.CARTE_UTILIZZI_TEST a
 LEFT JOIN {{ ref('carta_m') }} b
     ON a.TP_PROCEDURA = b.TP_PROCEDURA
     AND a.CD_PRATICA   = b.CD_PRATICA

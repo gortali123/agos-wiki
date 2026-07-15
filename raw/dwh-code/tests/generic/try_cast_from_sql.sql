@@ -11,50 +11,37 @@
   {% set skip_columns_lower = ((skip_columns or []) + ['ts_riferimento', 'ts_caricamento']) | map('lower') | list %}
   {% set accepted_values = accepted_values or {} %}
 
-  {% set l1_sql = l1_node.raw_code | upper %}
-
-  {# Estrai i nomi delle colonne dal SQL (quello dopo " AS ") #}
+  {% set l1_sql = l1_node.raw_code %}
   {% set sql_upper = l1_sql | upper %}
   {% set select_idx = sql_upper.find('SELECT') %}
   {% set from_idx = sql_upper.find('FROM', select_idx) %}
 
+  {% set cols_to_check = [] %}
   {% if select_idx >= 0 and from_idx > select_idx %}
     {% set after_select = l1_sql[select_idx + 6:from_idx] %}
-
-    {% set expressions = [] %}
-    {% set lines = after_select.split('\n') %}
-    {% for line in lines %}
+    {% for line in after_select.split('\n') %}
       {% set line_upper = line | upper %}
       {% if ' AS ' in line_upper %}
         {% set as_idx = line_upper.rfind(' AS ') %}
-        {% if as_idx >= 0 %}
-          {% set col_name = line[as_idx + 4:] | trim | replace(',', '') %}
-          {% if '--' in col_name %}
-            {% set col_name = col_name.split('--')[0] | trim %}
-          {% endif %}
-          {% set col_expr = line[:as_idx] | trim %}
-          {% if col_name and col_expr and col_name | lower not in skip_columns_lower %}
-            {% do expressions.append({'name': col_name, 'expr': col_expr}) %}
-          {% endif %}
+        {% set col_name = line[as_idx + 4:] | trim | replace(',', '') %}
+        {% if '--' in col_name %}
+          {% set col_name = col_name.split('--')[0] | trim %}
+        {% endif %}
+        {% set col_expr = line[:as_idx] | trim %}
+        {% if col_name and col_expr and col_name | lower not in skip_columns_lower %}
+          {% set col_from_l1 = l1_node.columns.get(col_name | lower) or l1_node.columns.get(col_name) %}
+          {% set col_data_type = col_from_l1.data_type | lower if col_from_l1 else '' %}
+          {% set exclude_vals = accepted_values.get(col_data_type) or [] %}
+          {% do cols_to_check.append({'name': col_name, 'expr': col_expr, 'exclude_vals': exclude_vals}) %}
         {% endif %}
       {% endif %}
     {% endfor %}
-
-  {% else %}
-    {% set expressions = [] %}
   {% endif %}
+
   {% set where_clause = '' %}
-  {% if 'WHERE' in l1_sql %}
+  {% if 'WHERE' in sql_upper %}
     {% set where_clause = l1_sql.split('WHERE')[1] %}
   {% endif %}
-
-  {% set cols_to_check = [] %}
-  {% for col in expressions %}
-    {% set col_from_l1 = l1_node.columns.get(col['name'] | lower) or l1_node.columns.get(col['name']) %}
-    {% set col_data_type = col_from_l1.data_type | lower if col_from_l1 else '' %}
-    {% set exclude_vals = accepted_values.get(col_data_type) or [] %}
-    {% do cols_to_check.append({'name': col['name'], 'expr': col['expr'], 'exclude_vals': exclude_vals}) %}
-  {% endfor %}
 
 with check_results as (
   select

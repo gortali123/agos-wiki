@@ -5,10 +5,14 @@ models:
     config:
       materialized: incremental
       incremental_strategy: merge
-      unique_key: ['CD_LOG_ID,CD_CATENA,NM_PROGR_EVENTO']
+      unique_key: ['CD_LOG_ID', 'CD_CATENA', 'NM_PROGR_EVENTO']
       meta:
         cluster: ["A2"]
       query_tag: '{"app":"DBT", "sorgente":"CTC", "schema":"L1_E_CTC", "archivio":"LOGERCTC_PR339M"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_LOG_ID, CD_CATENA, NM_PROGR_EVENTO]
     columns:
       - name: ts_riferimento
         data_type: TIMESTAMP_NTZ

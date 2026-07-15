@@ -5,3 +5,5 @@ sources:
     schema: L0
     tables:
       - name: cnt_campagna
+        data_tests:
+          - try_cast_positional

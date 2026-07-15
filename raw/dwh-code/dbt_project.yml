@@ -310,6 +310,10 @@ models:
         +schema: L3_BASILEA
         +meta: {sotto_processo: "BASILEA_CORE"}
         +tags: ["BASILEA_CORE"]
+      saldi:
+        +schema: L3_CAMPIONI
+        +meta: {subject_area: "CAMPIONI"}
+        +tags: ["CAMPIONI"]
       monitoraggio_produzione:
         +schema: L3_MONITORING_PRODUZIONE
         +meta: {sotto_processo: "MONITORAGGIO_PRODUZIONE"}

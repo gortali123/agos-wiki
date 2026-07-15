@@ -39,7 +39,9 @@
           {% endif %}
           {% set raw_expr = render(raw_expr) %}
           {% set cast_expr = render(col_expr) %}
-          {% set exclude_vals = accepted_values.get(col_name | lower) or [] %}
+          {% set col_from_l1 = l1_node.columns.get(col_name | lower) or l1_node.columns.get(col_name) %}
+          {% set col_data_type = col_from_l1.data_type | lower if col_from_l1 else '' %}
+          {% set exclude_vals = accepted_values.get(col_data_type) or [] %}
           {% do cols_to_check.append({'name': col_name, 'raw_expr': raw_expr, 'cast_expr': cast_expr, 'exclude_vals': exclude_vals}) %}
         {% endif %}
       {% endif %}

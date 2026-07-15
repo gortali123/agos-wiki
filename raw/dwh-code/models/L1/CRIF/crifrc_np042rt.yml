@@ -9,6 +9,10 @@ models:
       meta:
         cluster: ["A2"]
       query_tag: '{"app":"DBT", "sorgente":"CRIF", "schema":"L1_E_CRIF", "archivio":"CRIFRC_NP042RT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRODOTTO]
     columns:
       - name: ts_riferimento
         data_type: TIMESTAMP_NTZ
