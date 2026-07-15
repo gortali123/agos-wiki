@@ -22,7 +22,6 @@ Traccia unica delle incongruenze rilevate tra le tre fonti di verità del proget
 | 9 | Due implementazioni pattern S1 coesistenti | ⚠️ bespoke + macro condivisa | — | ⚠️ documenta solo il bespoke | Aperta (2026-07-14) |
 | 10 | Sentinella finestra aperta: TIMESTAMP (L2/S1) vs DATE (L3/S5) | ⚠️ due tipi diversi | — | ⚠️ non documentato come intenzionale | Aperta (2026-07-14) |
 | 11 | Bug applicativi minori (vari) | ⚠️ vedi dettaglio | — | — | Aperta (2026-07-14) |
-| 12 | Copertura skill vs codice (develop-l2/l3, dm-reader) | ✅ coerente | ✅ coerente | — | Verificata, nessuna incongruenza (2026-07-15) |
 
 Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; — = fonte non coinvolta in questa voce.
 
@@ -111,11 +110,15 @@ Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; �
 - `variazioni_anagrafiche_day.sql` si autodichiara nell'header come proposta di riscrittura non testata su dati reali — da verificare se è la versione realmente deployata.
 - `models/L0/` copre solo ADOBE, CTC, OCS (manca CRIF, presente invece in L1) — snapshot vendorizzato parziale, non un bug del progetto reale ma un limite di questo wiki (vedi nota in [[repo-dwh-x-dbt]]).
 
-### 12. Copertura skill vs codice: nessuna incongruenza rilevata (verificata 2026-07-15)
+## Verifiche eseguite (nessuna incongruenza rilevata)
+
+Voci escluse dalla tabella sopra perché confermano coerenza, non un gap — tenute qui come traccia di cosa è già stato controllato e quando, da non riverificare da zero al prossimo lint.
+
+### Copertura skill vs codice (verificata 2026-07-15)
 
 - Confrontate le convenzioni descritte in `.claude/skills/develop-l2/SKILL.md` e `develop-l3/SKILL.md` (macro `custom_to_decimal`/`custom_to_date`/`custom_to_timestamp_ntz`, sentinella `TO_TIMESTAMP_NTZ('9999-12-31 00:00:00.000')`, ordine campi con `LASTMODIFIEDDATA` in coda, pattern S1-S4/S2-S4) contro `raw/dwh-code/macros/` e `raw/dwh-code/models/`: coerenti.
 - `dm-reader/SKILL.md` non fa claim sul codice dbt (solo parsing Excel): nessun disallineamento applicabile.
-- Riverificare a ogni lint successivo, specialmente dopo modifiche alle skill o resync di `raw/dwh-code/`.
+- Riverificare solo se cambiano le skill o dopo un resync di `raw/dwh-code/`.
 
 ## Cosa NON è ancora stato verificato
 

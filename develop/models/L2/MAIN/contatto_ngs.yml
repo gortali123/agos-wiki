@@ -1,0 +1,44 @@
+version: 2
+models:
+  - name: contatto_ngs
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_CONTATTI", "entita": "CONTATTO_NGS"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_CONTATTO]
+    columns:
+      - name: CD_CONTATTO
+        data_type: NUMBER(13)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_STATO_PREV
+        data_type: CHAR(2)
+      - name: DS_STATO_PREV
+        data_type: CHAR(2)
+      - name: DT_PREVENTIVO
+        data_type: DATE
+      - name: CD_ATTRIBUTO
+        data_type: CHAR(2)
+      - name: CD_ORIGINE_CONTATTO
+        data_type: CHAR(3)
+      - name: CD_CANALE_ACQ
+        data_type: CHAR(3)
+      - name: DS_SPORTELLO
+        data_type: CHAR(20)
+      - name: CD_CAMPAGNA
+        data_type: NUMBER(11)
+      - name: DS_CAMPAGNA
+        data_type: VARCHAR(30)
+      - name: TP_TASSO
+        data_type: NUMBER(5)
+      - name: FL_ASSICURAZIONE
+        data_type: CHAR(1)
+      - name: FL_PREVENTIVO
+        data_type: CHAR(1)

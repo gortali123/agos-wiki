@@ -58,3 +58,19 @@
 - [dm_ca_target](develop/models/L3/campioni_accettazione/dm_ca_target.sql) — DM_CA_TARGET, proposto, non ancora portato upstream
 - [dm_co_target](develop/models/L3/campioni_accettazione/dm_co_target.sql) — DM_CO_TARGET, proposto, non ancora portato upstream
 - [dm_co_matrix](develop/models/L3/campioni_accettazione/dm_co_matrix.sql) — DM_CO_MATRIX, proposto, non ancora portato upstream
+- [v_event_log](develop/views/logs/v_event_log.sql) — vista LOGS.V_EVENT_LOG corretta (rimosso filtro che nascondeva gli SKIPPED, timestamp con fallback), proposta
+- [v_last_run_status](develop/views/logs/v_last_run_status.sql) — vista di monitoring ultimo stato model/test per tabella, proposta
+- [log_run_results](develop/macros/log/log_run_results.sql) — fix macro logging (nm_execution_time con default(0) per evitare JSON invalido sugli SKIPPED), proposto
+- [appuntamento](develop/models/L2/MAIN/appuntamento.sql) — APPUNTAMENTO (CONTATTI), proposto — PK e 4 RT con gap gravi nel data model, vedi WARN inline
+- [contatto_ngs](develop/models/L2/MAIN/contatto_ngs.sql) — CONTATTO_NGS (CONTATTI), proposto
+- [preventivi](develop/models/L2/MAIN/preventivi.sql) — PREVENTIVI (CONTATTI), proposto
+- [survey_input](develop/models/L2/VOC/survey_input.sql) — SURVEY_INPUT (CONTATTI/VOC), proposto
+- [survey_output](develop/models/L2/VOC/survey_output.sql) — SURVEY_OUTPUT (CONTATTI/VOC), proposto
+- [recensioni](develop/models/L2/VOC/recensioni.sql) — RECENSIONI (CONTATTI/VOC), proposto
+- [ana_versioni_form](develop/models/L2/FORM_E_PREVENTIVATORI/ana_versioni_form.sql) — ANA_VERSIONI_FORM (DIGITAL), proposto
+- [form](develop/models/L2/FORM_E_PREVENTIVATORI/form.sql) — FORM (DIGITAL), proposto
+- [ana_campagne_tig](develop/models/L2/FORM_E_PREVENTIVATORI/ana_campagne_tig.sql) — ANA_CAMPAGNE_TIG (DIGITAL), proposto
+- [riconoscimento](develop/models/L2/TRACCIATURA_DIGITAL/riconoscimento.sql) — RICONOSCIMENTO (DIGITAL), proposto
+- [accessi](develop/models/L2/AREA_RISERVATA/accessi.sql) — ACCESSI (DIGITAL), proposto
+- [iscritti](develop/models/L2/AREA_RISERVATA/iscritti.sql) — ISCRITTI (DIGITAL), proposto
+- [abilitazioni_push](develop/models/L2/AREA_RISERVATA/abilitazioni_push.sql) — ABILITAZIONI_PUSH (DIGITAL), proposto

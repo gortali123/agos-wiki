@@ -1,0 +1,75 @@
+version: 2
+models:
+  - name: appuntamento
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_APPUNTAMENTO, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_CONTATTI", "entita": "APPUNTAMENTO"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_APPUNTAMENTO, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_APPUNTAMENTO
+        data_type: NUMBER(18)
+      - name: PR_APPUNTAMENTO
+        data_type: NUMBER(9)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_CLIENTE
+        data_type: NUMBER(18)
+      - name: CD_PRATICA
+        data_type: NUMBER(18)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_FILIALE
+        data_type: VARCHAR(10)
+      - name: TS_PRESA_APPUNTAMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: TS_APPUNTAMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: TS_APPUNTAMENTO_EFFETTIVO
+        data_type: TIMESTAMP_NTZ
+      - name: NM_DURATA_APPUNTAMENTO
+        data_type: NUMBER(9)
+      - name: CD_SLOT_APPUNTAMENTO
+        data_type: NUMBER(1)
+      - name: CD_TIPO_APPUNTAMENTO
+        data_type: VARCHAR(10)
+      - name: DS_MOTIVO_APPUNTAMENTO
+        data_type: VARCHAR(255)
+      - name: TP_MODALITA_PRESA_APPUNTAMENTO
+        data_type: VARCHAR(50)
+      - name: CD_MODALITA_CONTATTO
+        data_type: VARCHAR(10)
+      - name: DS_MODALITA_CONTATTO
+        data_type: VARCHAR(255)
+      - name: CD_UTENTE_APPUNTAMENTO
+        data_type: VARCHAR(10)
+      - name: CD_STATO_APPUNTAMENTO
+        data_type: VARCHAR(20)
+      - name: DS_STATO_APPUNTAMENTO
+        data_type: VARCHAR(255)
+      - name: CD_ESITO_APPUNTAMENTO
+        data_type: VARCHAR(10)
+      - name: DS_ESITO_APPUNTAMENTO
+        data_type: VARCHAR(255)
+      - name: FL_NOSHOW
+        data_type: VARCHAR(1)
+      - name: FL_POSTICIPO
+        data_type: VARCHAR(1)
+      - name: FL_FUNNEL
+        data_type: VARCHAR(1)
+      - name: FL_CALL_CENTER
+        data_type: VARCHAR(1)
+      - name: NM_RISORSE_DISPONIBILI_SLOT
+        data_type: NUMBER(5)
+      - name: NM_APPUNTAMENTI_SLOT
+        data_type: NUMBER(5)
+      - name: FL_SOVRA_ALLOCAZIONE
+        data_type: VARCHAR(1)
+      - name: FL_GIORNO_FESTIVO
+        data_type: VARCHAR(1)

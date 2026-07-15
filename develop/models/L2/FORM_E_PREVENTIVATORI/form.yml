@@ -1,0 +1,61 @@
+version: 2
+models:
+  - name: form
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_FORM, TP_FORM, TP_PROCEDURA, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_DIGITAL", "entita": "FORM"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_FORM, TP_FORM, TP_PROCEDURA, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_FORM
+        data_type: VARCHAR(100)
+      - name: TP_FORM
+        data_type: VARCHAR(2)
+      - name: CD_SESSIONE
+        data_type: VARCHAR(100)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: CD_BROKER
+        data_type: VARCHAR(20)
+      - name: CD_FILIALE
+        data_type: VARCHAR(10)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TP_STATO_FORM
+        data_type: VARCHAR(20)
+      - name: DS_ESITO_FORM
+        data_type: VARCHAR(50)
+      - name: TS_CREAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_IP_ADDRESS
+        data_type: VARCHAR(50)
+      - name: FL_MOBILE
+        data_type: VARCHAR(1)
+      - name: EU_IMPORTO_FINANZIATO
+        data_type: NUMBER(15,2)
+      - name: NM_RATE
+        data_type: NUMBER(5)
+      - name: FL_CONSENSO_MARKETING
+        data_type: VARCHAR(1)
+      - name: FL_CONSENSO_DATI_PERS
+        data_type: VARCHAR(1)
+      - name: FL_FIRMA_DIGITALE
+        data_type: VARCHAR(1)
+      - name: CD_CAMPAGNA
+        data_type: VARCHAR(50)
+      - name: CD_MERCHANT
+        data_type: VARCHAR(50)
+      - name: DS_PRODOTTO_FINANZIATO
+        data_type: VARCHAR(50)
+      - name: CD_TIPO_PAGAMENTO
+        data_type: VARCHAR(2)
+      - name: CD_IBAN
+        data_type: VARCHAR(45)

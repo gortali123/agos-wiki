@@ -33,9 +33,9 @@ with models_last_run as (
         max(ds_schema) as ds_schema,
         max(ts_started_at) as ts_ultimo_test,
         case
-            when count(case when upper(ds_status) = 'FAIL' then 1 end) > 0 then 'fail'
-            when count(case when upper(ds_status) = 'WARN' then 1 end) > 0 then 'warn'
-            else 'pass'
+            when count(case when upper(ds_status) = 'FAIL' then 1 end) > 0 then 'FAIL'
+            when count(case when upper(ds_status) = 'WARN' then 1 end) > 0 then 'WARN'
+            else 'PASS'
         end as ds_status_test,
         sum(nm_failures) as nm_failures
     from test_last_run

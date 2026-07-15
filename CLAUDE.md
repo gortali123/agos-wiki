@@ -60,6 +60,7 @@ Check for and report:
 - Claims that look stale vs. current repo state (e.g. an entity page describing a model that has since changed — spot check the actual file).
 - Concepts mentioned in multiple pages but lacking their own `concepts/` page.
 - Missing cross-references between clearly related pages.
+- **Always rework `queries/inconsistenze.md` as part of every lint**, not just on the first pass: re-verify each open row against current `raw/dwh-code/`, mark rows resolved (with date) if fixed upstream, add newly found ones. Only rows that are genuine mismatches between two or more of Codice/Skill/Doc belong in the inconsistencies table — a check that confirms everything agrees is not an inconsistency and goes in the page's "Verifiche eseguite" section instead, not in the table.
 
 ### Develop
 Triggered when the user asks for an addition or fix to the dbt code itself (a bug fix, a new model, a macro change) rather than a wiki page — e.g. "fix delete_l2 so it guards on is_incremental" or "write the S1 model for X".
