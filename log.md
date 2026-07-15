@@ -1,5 +1,8 @@
 # Log
 
+## [2026-07-15] develop | pulizia develop/ dopo sync raw/dwh-code
+Utente ha risincronizzato `raw/dwh-code/` dalla repo live. Verificati gli 11 file presenti in `develop/`: 9 risultavano identici alla versione ora in `raw/dwh-code/` (portati upstream), i restanti 2 (`cnt_campagna.sql`, `variazioni_anagrafiche.sql`) avevano fix diverse/più complete rispetto a quanto proposto in `develop/`. Confermato dall'utente: eliminati tutti gli 11 file e le directory vuote sotto `develop/`.
+
 ## [2026-07-14] ingest | Caricamento layer L0-L1
 Ingerito `raw/Agos X - Caricamento layer L0-L1.docx`. Creata pagina sources/caricamento-layer-l0-l1.md e concetti collegati (storicizzazione L1, cancellazioni, naming, cobol-parsing).
 
