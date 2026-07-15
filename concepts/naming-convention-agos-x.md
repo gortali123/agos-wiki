@@ -5,7 +5,7 @@ tags: [naming-convention, layer/L2, glossario]
 updated: 2026-07-14
 ---
 
-Convenzioni di naming per il DWH Agos X, raccolte da tre fonti che si sovrappongono solo parzialmente: [[caricamento-layer-l2]], [[guida-sviluppo]], e la xlsx [[layer-l2-xlsx-reference]] (foglio "Nomenclatura Campi"). Le divergenze tra fonti sono segnalate esplicitamente qui e riportate in [[inconsistenze-doc-vs-codice]].
+Convenzioni di naming per il DWH Agos X, raccolte da tre fonti che si sovrappongono solo parzialmente: [[caricamento-layer-l2]], [[guida-sviluppo]], e la xlsx [[layer-l2-xlsx-reference]] (foglio "Nomenclatura Campi"). Le divergenze tra fonti sono segnalate esplicitamente qui e riportate in [[inconsistenze]].
 
 ## Schemi e tabelle
 
@@ -29,7 +29,7 @@ Non è chiaro se le due liste siano state scritte in momenti diversi (una supers
 
 ## Valori dei flag (FL_): S/N vs Y/N
 
-La xlsx è esplicita: "Rigorosamente a 2 valori. **'S' o 'N'**". Nel codice reale e nei tre docx, il flag più usato in assoluto (`FL_DELETED`) usa sistematicamente **'Y'/'N'**, non 'S'/'N'. Vedi [[cancellazioni-fl-deleted]] e [[inconsistenze-doc-vs-codice]].
+La xlsx è esplicita: "Rigorosamente a 2 valori. **'S' o 'N'**". Nel codice reale e nei tre docx, il flag più usato in assoluto (`FL_DELETED`) usa sistematicamente **'Y'/'N'**, non 'S'/'N'. Vedi [[cancellazioni-fl-deleted]] e [[inconsistenze]].
 
 ## Colonne tecniche fuori convenzione
 
@@ -46,7 +46,7 @@ Questi sono probabilmente accettati come "colonne tecniche di framework" più ch
 - Nei docx, le aree funzionali L2 sono nomi estesi: `ANAGR_CONTROPARTE`, `ANAGR_COMMERCIALE`, `ANTIFRODE`, `ANTIRICICLAGGIO`, `ASSICURAZIONI`, `BUDGET`, `CONTATTI`, `DIGITAL`, `GESTIONE_CREDITI`, `HR`, `ONBOARDING`, `PRODOTTO`, `PRODOTTO_M`, `PAGAMENTI_CONTABILITA`, `PROVVIGIONI_RAPPEL`, `RISCHI_ADEMPIMENTI`, `SCORE_BANCHE_DATI` — e corrispondono 1:1 alle cartelle in `raw/dwh-code/models/L2/`.
 - Nella xlsx (foglio "Nomenclatura SubjectArea Tabell"), le subject area hanno sigle a 3+3 lettere diverse: `ANA_CNT` (Anagrafica Controparte), `PRD_CRT` (Carte), `ADP_SLD` (Saldi), `SDE_ANT` (Antifrode), ecc., con schema risultante tipo `L2_ANA_CNT` — **diverso** dallo schema realmente usato nel codice (es. `L2_ANAGR_CONTROPARTE` per cartella `ANAGR_CONTROPARTE`, quando il `query_tag` è popolato correttamente).
 
-Sembrano due tassonomie di naming per lo stesso concetto, non riconciliate. Vedi [[inconsistenze-doc-vs-codice]].
+Sembrano due tassonomie di naming per lo stesso concetto, non riconciliate. Vedi [[inconsistenze]].
 
 ## Collegamenti
 
@@ -54,4 +54,4 @@ Sembrano due tassonomie di naming per lo stesso concetto, non riconciliate. Vedi
 - [[caricamento-layer-l2]], [[guida-sviluppo]]
 - [[cancellazioni-fl-deleted]]
 - [[progressivo-pk-e-progressivo-controparte]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

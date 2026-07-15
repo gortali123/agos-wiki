@@ -37,7 +37,7 @@ Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio S
 - **S3 (append mensile)**: `primary_key: [PK, DT_OSSERVAZIONE]`, `pre_hook: delete_month()`, blocco incrementale su `DT_OSSERVAZIONE = get_dt_osservazione()`. Nessuna cancellazione fisica.
 - **S4 (attualizzato)**: `insert_overwrite`, full overwrite ogni run.
 - Conversioni dtype L1→L2: `custom_to_timestamp_ntz`, `custom_to_date`, `custom_to_time`, `custom_to_decimal(col, precision, decimal)` (OCS sempre `decimal=2`), `ole_to_timestamp`, `timestamp_to_ole`, `ole_to_date`, `date_to_ole`.
-- Cancellazioni: filtro `FL_DELETED = 'N'` in lettura (nota: qui il documento usa `'N'` come valore da mantenere, implicitamente `Y` = cancellato — coerente con gli altri due documenti ma **da verificare contro la convenzione xlsx `S`/`N` per i flag**, vedi [[inconsistenze-doc-vs-codice]]) + `pre_hook: delete_l2('ARCHIVIO', [PK_L2...], [PK_L1...])`.
+- Cancellazioni: filtro `FL_DELETED = 'N'` in lettura (nota: qui il documento usa `'N'` come valore da mantenere, implicitamente `Y` = cancellato — coerente con gli altri due documenti ma **da verificare contro la convenzione xlsx `S`/`N` per i flag**, vedi [[inconsistenze]]) + `pre_hook: delete_l2('ARCHIVIO', [PK_L2...], [PK_L1...])`.
 - Query tag obbligatorio: `'{"app": "DBT", "schema": "L2_<AREA>", "entita": "<NOME>"}'`.
 - Checklist pre-rilascio: tipi dato per prefisso (TS_/DT_/EU_), tracciato e ordine colonne allineati all'analisi tecnica, cluster/join SCD2 coerenti col `Catalogo Entità` della xlsx, mai `SELECT *`, non duplicare in yml quanto già in `dbt_project.yml`, `dbt.exe compile` pulito prima della MR.
 
@@ -50,7 +50,7 @@ Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio S
 
 - La sezione S1 variante ROWID e la sezione S5 sono le più recenti/dettagliate del documento e non hanno ancora un doppione nei due file di analisi tecnica — probabile che siano state aggiunte dopo.
 - Diversi punti aperti segnalati esplicitamente nel testo: "Se ci sono funzioni più complesse nel passaggio della chiave da L1 a L2 staging?" (5.3 Cancellazioni), "S1 non previsto?" (L3).
-- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 — vedi [[inconsistenze-doc-vs-codice]].
+- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 — vedi [[inconsistenze]].
 
 ## Collegamenti
 
@@ -60,4 +60,4 @@ Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio S
 - [[progressivo-pk-e-progressivo-controparte]]
 - [[cancellazioni-fl-deleted]]
 - [[caricamento-layer-l0-l1]], [[caricamento-layer-l2]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

@@ -14,10 +14,10 @@ Meccanismo di data classification descritto in [[caricamento-layer-l2]], basato 
 
 ## Inconsistenza verificata (2026-07-14)
 
-I docx documentano anche una macro **`remove_datamask()`** per rimuovere puntualmente un tag da una colonna. **Questa macro non esiste nel codice** (`raw/dwh-code/macros/`): esiste solo `add_datamask()` (set). L'unica cosa vagamente simile è uno statement `UNSET MASKING POLICY` dentro `apply_privacy_to_l0_from_matrix.sql`, ma è parte del setup one-time della policy stessa, non una macro riusabile per rimuovere il masking da una colonna specifica. Vedi [[inconsistenze-doc-vs-codice]].
+I docx documentano anche una macro **`remove_datamask()`** per rimuovere puntualmente un tag da una colonna. **Questa macro non esiste nel codice** (`raw/dwh-code/macros/`): esiste solo `add_datamask()` (set). L'unica cosa vagamente simile è uno statement `UNSET MASKING POLICY` dentro `apply_privacy_to_l0_from_matrix.sql`, ma è parte del setup one-time della policy stessa, non una macro riusabile per rimuovere il masking da una colonna specifica. Vedi [[inconsistenze]].
 
 ## Collegamenti
 
 - [[caricamento-layer-l2]]
 - [[macro-catalogo-dbt]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

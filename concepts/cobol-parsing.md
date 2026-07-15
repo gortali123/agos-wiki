@@ -13,10 +13,10 @@ Soluzione per interpretare record COBOL a lunghezza fissa provenienti da sistemi
 
 ## Inconsistenza verificata (2026-07-14)
 
-Il docx presenta `decode_overpunch` come se fosse una macro DBT alla pari delle altre (accanto a `cobol_parse_columns`). **Non è una macro dbt**: è una **UDF Snowflake** (`AGOS_DEV_16000.L0.DECODE_OVERPUNCH`), invocata da dentro `cobol_parse_columns` ma la cui implementazione non è vendorizzata in `raw/dwh-code/macros/` (vive come oggetto Snowflake, probabilmente definito altrove, non in questo snapshot). Non è un errore funzionale ma una imprecisione di modellazione nella documentazione — chi legge il docx si aspetterebbe di trovarla come file `.sql` tra le macro. Vedi [[inconsistenze-doc-vs-codice]].
+Il docx presenta `decode_overpunch` come se fosse una macro DBT alla pari delle altre (accanto a `cobol_parse_columns`). **Non è una macro dbt**: è una **UDF Snowflake** (`AGOS_DEV_16000.L0.DECODE_OVERPUNCH`), invocata da dentro `cobol_parse_columns` ma la cui implementazione non è vendorizzata in `raw/dwh-code/macros/` (vive come oggetto Snowflake, probabilmente definito altrove, non in questo snapshot). Non è un errore funzionale ma una imprecisione di modellazione nella documentazione — chi legge il docx si aspetterebbe di trovarla come file `.sql` tra le macro. Vedi [[inconsistenze]].
 
 ## Collegamenti
 
 - [[caricamento-layer-l0-l1]]
 - [[macro-catalogo-dbt]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

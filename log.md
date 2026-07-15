@@ -1,5 +1,8 @@
 # Log
 
+## [2026-07-15] lint
+Lint completo della wiki: nessun orfano, nessuna contraddizione tra pagine, nessuna staleness rilevata vs `raw/dwh-code/` (spot-check su l2-carte, l2-provvigioni-rappel, cancellazioni-fl-deleted, macro citate), nessuna incongruenza skill-vs-codice (develop-l2/develop-l3/dm-reader coerenti col codice vendorizzato). Tutte le 11 voci di [[inconsistenze]] confermate ancora valide (nessuna risolta). Individuati 2 concetti ricorrenti senza pagina propria: creata [[query-tag-monitoring]] (estratta da storicizzazione-l2-s1-s4, linkata da l2-carte/l2-provvigioni-rappel) e [[lastmodifieddata]] (consolidata da caricamento-layer-l2/macro-catalogo-dbt/cancellazioni-fl-deleted). Discusso e adottato il pattern di tracking incongruenze: pagina unica `queries/inconsistenze.md` (rinominata da `inconsistenze-doc-vs-codice.md`) con tabella riassuntiva a 3 colonne Codice/Skill/Doc in cima e dettaglio narrativo sotto (12 voci, inclusa la verifica skill-vs-codice); voci non cancellate ma marcate risolte con data quando superate. Aggiornati tutti i wikilink nella wiki al nuovo nome pagina.
+
 ## [2026-07-15] develop | pulizia develop/ dopo sync raw/dwh-code
 Utente ha risincronizzato `raw/dwh-code/` dalla repo live. Verificati gli 11 file presenti in `develop/`: 9 risultavano identici alla versione ora in `raw/dwh-code/` (portati upstream), i restanti 2 (`cnt_campagna.sql`, `variazioni_anagrafiche.sql`) avevano fix diverse/più complete rispetto a quanto proposto in `develop/`. Confermato dall'utente: eliminati tutti gli 11 file e le directory vuote sotto `develop/`.
 

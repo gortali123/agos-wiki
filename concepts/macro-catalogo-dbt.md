@@ -5,7 +5,7 @@ tags: [dbt, macro, layer/L0, layer/L1, layer/L2, layer/L3]
 updated: 2026-07-14
 ---
 
-Catalogo delle macro DBT presenti in `raw/dwh-code/macros/` (49 file .sql, 62 macro), verificato contro `raw/dwh-code/` in data 2026-07-14. Le macro documentate nei tre file `raw/` sono confermate quasi tutte presenti, con alcune differenze di naming — vedi [[inconsistenze-doc-vs-codice]].
+Catalogo delle macro DBT presenti in `raw/dwh-code/macros/` (49 file .sql, 62 macro), verificato contro `raw/dwh-code/` in data 2026-07-14. Le macro documentate nei tre file `raw/` sono confermate quasi tutte presenti, con alcune differenze di naming — vedi [[inconsistenze]].
 
 ## Conversioni dtype (`macros/dtype_conversion/`)
 
@@ -19,7 +19,7 @@ Catalogo delle macro DBT presenti in `raw/dwh-code/macros/` (49 file .sql, 62 ma
 
 ## Storicizzazione (`macros/materialization/`)
 
-- `is_incremental_S1(partition_by, ts_inizio='TS_INIZIO_VALIDITA', ts_fine='TS_FINE_VALIDITA', lastmodified='LASTMODIFIEDDATA', hashed_cols='HASHED_COLS', order_extra='')` — filtro incrementale S1: prende righe nuove/modificate (`LASTMODIFIEDDATA` più recente del max in target, o finestra di validità appena chiusa) + `QUALIFY` che collassa hash consecutivi identici per partizione. Sentinelle hardcoded: `1900-01-01` (floor) e `9999-12-31 00:00:00.000` (infinito, TIMESTAMP).
+- `is_incremental_S1(partition_by, ts_inizio='TS_INIZIO_VALIDITA', ts_fine='TS_FINE_VALIDITA', lastmodified='LASTMODIFIEDDATA', hashed_cols='HASHED_COLS', order_extra='')` — filtro incrementale S1: prende righe nuove/modificate (`LASTMODIFIEDDATA` più recente del max in target, o finestra di validità appena chiusa — vedi [[lastmodifieddata]]) + `QUALIFY` che collassa hash consecutivi identici per partizione. Sentinelle hardcoded: `1900-01-01` (floor) e `9999-12-31 00:00:00.000` (infinito, TIMESTAMP).
 - `ts_fine_validita(partition_by, ts_inizio_validita='TS_INIZIO_VALIDITA', order_extra=none)` — `LEAD()` per calcolare la fine finestra, sentinella TIMESTAMP `9999-12-31 00:00:00.000`.
 - `hash_cols(cols)` — hash di riga generico via `MD5(CONCAT_WS('|', COALESCE(CAST(col AS VARCHAR),''), ...))` (diverso da `HASH()` nativo usato in `scd2_foto_mensile`/`_scd2_hash`).
 - `delete_month(column='DT_OSSERVAZIONE', date_expr=get_dt_osservazione())` — pre-hook che cancella la partizione mensile prima del reload. **Bug noto**: il parametro `column` è accettato ma ignorato — la DELETE usa sempre il letterale `DT_OSSERVAZIONE` indipendentemente da cosa viene passato.
@@ -32,7 +32,7 @@ Catalogo delle macro DBT presenti in `raw/dwh-code/macros/` (49 file .sql, 62 ma
 ## Cancellazioni logiche (`macros/logic_delete/`)
 
 - `delete_l2(source_name, tgt_keys, src_keys)` — cancellazione fisica in L2, solo dentro `is_incremental()`. Confronto chiavi posizionale (`tgt_keys`/`src_keys` liste parallele, nessuna validazione di lunghezza); conversione automatica per colonne `DT_`/`TS_` via `custom_to_date`/`custom_to_timestamp_ntz`.
-- `logic_delete_merge()` — post-hook per modelli L1 cluster A/A1/A2: `UPDATE ... SET fl_deleted='Y', ts_deleted=del.lastmodifieddata` da tabella companion `<archivio>_deleted`. **Nome nel codice differisce dal nome nei docx** (`logical_delete_merge`) — vedi [[inconsistenze-doc-vs-codice]].
+- `logic_delete_merge()` — post-hook per modelli L1 cluster A/A1/A2: `UPDATE ... SET fl_deleted='Y', ts_deleted=del.lastmodifieddata` da tabella companion `<archivio>_deleted`. **Nome nel codice differisce dal nome nei docx** (`logical_delete_merge`) — vedi [[inconsistenze]].
 - `logic_delete_scd2()` — post-hook per modelli L1 cluster C (snapshot), in transazione esplicita `BEGIN/COMMIT`: step 1 flag `fl_deleted='Y'` sui rowid cancellati, step 2 chiude la finestra aperta (`ts_fine_validita`/`ts_deleted` = lastmodifieddata del feed cancellazioni) per il record con `MAX(ts_fine_validita)` di quel rowid. **Nome differisce dai docx** (`logical_delete_scd2`).
 
 ## Generazione modelli (`macros/generate_models/`)
@@ -53,7 +53,7 @@ Questi script sono la controparte DBT-macro degli script PowerShell `generate_mo
 
 - `add_datamask()` — post-hook, legge `model.columns[*].meta.masking` e applica `ALTER TABLE ... SET TAG AGOS_DEV_16000.TAGS.sensitivity = '<valore>'`.
 - `apply_privacy_to_l0_from_matrix(results)` — setup one-time: crea tag/masking policy (`policy_mask_by_sensitivity`, valori ammessi `DOLLAR`/`SPACES`/`ZEROS`, bypass per ruolo `DEVELOPER`), applica la matrice `var('l0_privacy_matrix')` direttamente su L0.
-- **`remove_datamask()` non esiste nel codice** nonostante sia documentato nei docx — vedi [[inconsistenze-doc-vs-codice]].
+- **`remove_datamask()` non esiste nel codice** nonostante sia documentato nei docx — vedi [[inconsistenze]].
 
 Vedi [[data-masking-agos-x]] per la pagina dedicata.
 
@@ -88,4 +88,4 @@ Inoltre: `create_probit_udf()` (UDF Python `PROBIT` via scipy per trasformazioni
 - [[cancellazioni-fl-deleted]]
 - [[data-masking-agos-x]]
 - [[cobol-parsing]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

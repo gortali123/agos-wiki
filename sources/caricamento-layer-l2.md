@@ -19,7 +19,7 @@ Sintesi di `raw/Agos X - Caricamento layer L2.docx` ("Agos X – Processo di Loa
 - Aree funzionali L2 documentate: ANAGR_CONTROPARTE, ANAGR_COMMERCIALE, ANTIFRODE, ANTIRICICLAGGIO, ASSICURAZIONI, BUDGET, CONTATTI, DIGITAL, GESTIONE_CREDITI, HR, ONBOARDING, PRODOTTO, PRODOTTO_M, PAGAMENTI_CONTABILITA, PROVVIGIONI_RAPPEL, RISCHI_ADEMPIMENTI, SCORE_BANCHE_DATI.
 - Tabelle: `L2: <nome>_<frequenza>`, `L3: <tipo_oggetto>_<nome_tabella>_<frequenza>`. Frequenze: `_W` sett., `_M` mensile, `_T` trim., `_Q` quadrim., `_S` semestrale, `_Y` annuale, `_O` on demand, nessun suffisso = giornaliera.
 - Tipo oggetto (prefisso): Vista `V_`, Vista materializzata `VM_`, Datamart `DM_`, Flusso di output `FL_OUT_`, Tabella di processo `PRC_`. Function `FN_`, Stored procedure `PR_`.
-- Prefissi campo documentati qui: `CD_` Codice, `ID_` Identificativo, `DS_` Descrizione, `NM_` Misure/KPI, `DT_` Data, `TS_` Timestamp, `FL_` Flag, `TP_` Tipo, `EU_` Importo euro, `PC_` Percentuale, `SK_` Smart key, `GN_` generico. **Nota**: la lista campi nella xlsx `Nomenclatura Campi` non ha `ID_` né `SK_`, ma ha `PR_` (Progressivo) assente da questa lista — vedi [[naming-convention-agos-x]] e [[inconsistenze-doc-vs-codice]].
+- Prefissi campo documentati qui: `CD_` Codice, `ID_` Identificativo, `DS_` Descrizione, `NM_` Misure/KPI, `DT_` Data, `TS_` Timestamp, `FL_` Flag, `TP_` Tipo, `EU_` Importo euro, `PC_` Percentuale, `SK_` Smart key, `GN_` generico. **Nota**: la lista campi nella xlsx `Nomenclatura Campi` non ha `ID_` né `SK_`, ma ha `PR_` (Progressivo) assente da questa lista — vedi [[naming-convention-agos-x]] e [[inconsistenze]].
 
 ## Storicizzazione L2 (S1-S4)
 
@@ -32,7 +32,7 @@ Vedi pagina dedicata [[storicizzazione-l2-s1-s4]] per il dettaglio implementativ
 | S3 (append mensile) | incremental, append | DT_OSSERVAZIONE, LASTMODIFIEDDATA |
 | S4 (attualizzato) | incremental, insert_overwrite | — |
 
-Regola d'ordine colonne: campi di storicizzazione subito dopo la PK funzionale, `LASTMODIFIEDDATA` sempre in coda.
+Regola d'ordine colonne: campi di storicizzazione subito dopo la PK funzionale, `LASTMODIFIEDDATA` sempre in coda (vedi [[lastmodifieddata]]).
 
 ## Gestione duplicazioni di chiave (PROGRESSIVO_PK)
 
@@ -63,7 +63,7 @@ Due step: filtro in lettura (`FL_DELETED = Y` escluso) + cancellazione fisica po
 
 - Rimanda a un documento esterno non vendorizzato: `Agos X - Linee_Guida_Layer_L2_Storicizzazione_20260304.pptx`.
 - Sezione data quality segnalata come non definitiva ("Ulteriori dettagli saranno integrati durante la fase progettuale dedicata alla data quality").
-- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 — vedi [[inconsistenze-doc-vs-codice]].
+- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 — vedi [[inconsistenze]].
 
 ## Collegamenti
 
@@ -73,4 +73,4 @@ Due step: filtro in lettura (`FL_DELETED = Y` escluso) + cancellazione fisica po
 - [[cancellazioni-fl-deleted]]
 - [[naming-convention-agos-x]]
 - [[data-masking-agos-x]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

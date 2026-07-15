@@ -39,7 +39,7 @@ Sintesi di `raw/Agos X - Caricamento layer L0-L1.docx` ("Agos X – Processo di 
 
 - Il capitolo "L1: Raccolta dei log" è segnalato nel documento stesso come **obsoleto** ("da aggiornare sulla base della discussione con Snowflake — questione concorrenza").
 - Diversi rimandi a documenti esterni non vendorizzati in questo wiki: `Loading_Flow_L0_L1.pdf`, `Agos X - Requisiti Agos Integrazione OCS-DWHX_20260226.pdf`, `L1_TRY_CAST_Flow.pdf`.
-- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 (vedi [[inconsistenze-doc-vs-codice]] per i risultati del confronto).
+- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 (vedi [[inconsistenze]] per i risultati del confronto).
 
 ## Collegamenti
 
@@ -48,4 +48,4 @@ Sintesi di `raw/Agos X - Caricamento layer L0-L1.docx` ("Agos X – Processo di 
 - [[cancellazioni-fl-deleted]]
 - [[naming-convention-agos-x]]
 - [[cobol-parsing]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

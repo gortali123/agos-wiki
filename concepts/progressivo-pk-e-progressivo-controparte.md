@@ -38,4 +38,4 @@ Il file contiene un header che lo dichiara esplicitamente una **proposta di risc
 
 - [[caricamento-layer-l2]], [[guida-sviluppo]]
 - [[storicizzazione-l2-s1-s4]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

@@ -31,6 +31,8 @@
 - [PROGRESSIVO_PK e PROGRESSIVO_CONTROPARTE](concepts/progressivo-pk-e-progressivo-controparte.md)
 - [Data masking Agos X](concepts/data-masking-agos-x.md)
 - [Parsing COBOL](concepts/cobol-parsing.md)
+- [query_tag per monitoring](concepts/query-tag-monitoring.md) — copertura reale incompleta/errata nel codice
+- [LASTMODIFIEDDATA](concepts/lastmodifieddata.md) — ruoli: ordine colonne, filtro incrementale, cancellazioni
 
 ## Sources
 
@@ -41,7 +43,7 @@
 
 ## Queries
 
-- [Inconsistenze tra documentazione e codice](queries/inconsistenze-doc-vs-codice.md) — 11 inconsistenze verificate, ordinate per impatto
+- [Inconsistenze: codice vs skill vs documentazione](queries/inconsistenze.md) — tabella riassuntiva + 12 voci di dettaglio
 
 ## Develop
 

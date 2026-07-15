@@ -15,7 +15,7 @@ Area funzionale L2 più documentata del progetto. Modelli (`raw/dwh-code/models/
 - **`indirizzi_postalizzazione`** — S1, TS_INIZIO/FINE_VALIDITA ereditati direttamente dalla sorgente L1 (diversamente da `variazioni_anagrafiche` che li ricalcola).
 - **`segnalazioni_anagrafiche`** — S2, `pre_hook: delete_l2` con chiave composta a 4 colonne (la più lunga vista nell'area). Ha `NM_ORA_INSERIMENTO_RECORD` che devia dalla naming convention (NM_ per un valore orario).
 
-Nessun modello dell'area ha `query_tag` valorizzato — vedi [[storicizzazione-l2-s1-s4]] e [[inconsistenze-doc-vs-codice]].
+Nessun modello dell'area ha `query_tag` valorizzato — vedi [[storicizzazione-l2-s1-s4]] e [[inconsistenze]].
 
 File orfani nella cartella: `variazioni_anagrafiche.sql.old`, `variazioni_anagrafiche_day.sql.old`.
 
@@ -24,4 +24,4 @@ File orfani nella cartella: `variazioni_anagrafiche.sql.old`, `variazioni_anagra
 - [[layer-l2]]
 - [[storicizzazione-l2-s1-s4]]
 - [[progressivo-pk-e-progressivo-controparte]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]

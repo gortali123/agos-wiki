@@ -27,4 +27,4 @@ Pattern nuovo, implementato dalla macro `scd2_foto_mensile` (vedi [[macro-catalo
 - [[guida-sviluppo]]
 - [[macro-catalogo-dbt]]
 - [[storicizzazione-l2-s1-s4]]
-- [[inconsistenze-doc-vs-codice]]
+- [[inconsistenze]]
