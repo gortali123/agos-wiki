@@ -6,7 +6,7 @@
 
     {% set query %}
         -- YYYYMM
-        CALL AGOS_DEV_16000.L3_BASILEA.PR_GENERATE_REPORT_FONDI_MASTERSCALE('{{last_month}}')
+        CALL {{ env_var('DBT_DATABASE') }}.L3_BASILEA.PR_GENERATE_REPORT_FONDI_MASTERSCALE('{{last_month}}')
 
     {% endset %}
 

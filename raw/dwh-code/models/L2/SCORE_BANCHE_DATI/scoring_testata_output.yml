@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: scoring_testata_output
+    description: >
+      Estrazione da payload XML StrategyOneResponse (landing CDE). ASSUNZIONI da validare: ref('cde') come landing + LASTMODIFIEDDATA esposta; filtro ProcessCode='SCORING' (lo xsd dichiara fixed 'SCOREX'); TS_INSERIMENTO=CURRENT_TIMESTAMP() (non presente nel data model); CD_SEGMENTAZIONE da Categories/SEGMENTAZIONE (assunta unica per documento).
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "SCORING_TESTATA_OUTPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: CD_PROCESSVERSION
+        data_type: NUMBER
+      - name: CD_LAYOUTVERSION
+        data_type: NUMBER
+      - name: CD_INTERROGAZIONE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: CD_CONTESTO
+        data_type: VARCHAR
+      - name: CD_SCORING_CODICE_FUNZIONE
+        data_type: VARCHAR
+      - name: CD_ESITO_SCORE
+        data_type: VARCHAR
+      - name: CD_ESITO_SCORE_DECISIONE
+        data_type: VARCHAR
+      - name: CD_ESITO_SCORE_FASCIA
+        data_type: VARCHAR
+      - name: DS_ESITO_SCORE_MESSAGGIO
+        data_type: VARCHAR
+      - name: CD_SEGMENTAZIONE
+        data_type: VARCHAR

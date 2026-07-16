@@ -1,6 +1,6 @@
 {% set nm_manual_adj_query %}
     SELECT NM_MANUAL_ADJ
-    FROM AGOS_DEV_16000.TECH.MANUAL_ADJUSTMENT_O
+    FROM {{ env_var('DBT_DATABASE') }}.TECH.MANUAL_ADJUSTMENT_O
     WHERE CD_MANUAL_ADJ = 'ADN'
       AND TS_FINE_VALIDITA = {{ custom_to_date("'99991231'") }}
     LIMIT 1
@@ -78,8 +78,8 @@ WITH BASE AS (
         CAST( {{ custom_to_decimal('cc.PVKCO_PERDITA_ATTESA',       precision=13, decimal=2) }} AS NUMBER(13,2))  AS EU_EL_GROSS_SRT,
         CAST( {{ custom_to_decimal('cc.PVKCO_PERDITA_ATTESA_FLOOR', precision=13, decimal=2) }} AS NUMBER(13,2))  AS EU_EL_FLOOR_GROSS_SRT
 
-    FROM AGOS_DEV_16000.L1_O_BAS.IFBLFPVKCO_TEST AS cc
-    LEFT JOIN AGOS_DEV_16000.TECH.LOOKUP_SRT_O AS l
+    FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFPVKCO_TEST AS cc
+    LEFT JOIN {{ env_var('DBT_DATABASE') }}.TECH.LOOKUP_SRT_O AS l
         ON cc.PVKCO_CDSECUR = l.CD_SECUR
         -- da aggiungere condizione sulla data di osservazione nella lookup per ricavare le pratiche SRT più recenti, questo dipenderà dalla storicizzazione della tabella. 
     WHERE cc.PVKCO_DATA_ESTRAZIONE = LAST_DAY(DATEADD(MONTH, -4, CURRENT_DATE()))
@@ -110,9 +110,9 @@ cte_cap AS (
         CORR_CALC AS EU_CORRELATION,
         CASE
             WHEN CC.NM_PD_FLOOR <> 1
-            THEN NM_LGD_FLOOR * AGOS_DEV_16000.TECH.PROBNORM(
-                     POWER(1 - cc.CORR_CALC, -0.5) * AGOS_DEV_16000.TECH.PROBIT(cc.NM_PD_FLOOR)
-                   + POWER(cc.CORR_CALC / (1 - cc.CORR_CALC), 0.5) * AGOS_DEV_16000.TECH.PROBIT(0.999)
+            THEN NM_LGD_FLOOR * {{ env_var('DBT_DATABASE') }}.TECH.PROBNORM(
+                     POWER(1 - cc.CORR_CALC, -0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT(cc.NM_PD_FLOOR)
+                   + POWER(cc.CORR_CALC / (1 - cc.CORR_CALC), 0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT(0.999)
                  ) - cc.NM_PD_FLOOR * cc.NM_LGD_FLOOR
             ELSE NULL
         END AS CAPITAL_REQUIREMENT,

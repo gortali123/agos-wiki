@@ -17,7 +17,7 @@
     {% set all_cfg_sql %}
       with max_ts as (
         select ds_archivio, max(ts_riferimento) as max_ts
-        from AGOS_DEV_16000.TECH.CFG_L1_SCHEMA
+        from {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_SCHEMA
         where ds_archivio in ({{ in_clause }})
         group by ds_archivio
       )
@@ -30,7 +30,7 @@
         s.ds_length_col,
         s.fl_is_nullable,
         s.fl_is_primary_key
-      from AGOS_DEV_16000.TECH.CFG_L1_SCHEMA s
+      from {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_SCHEMA s
       inner join max_ts on s.ds_archivio = max_ts.ds_archivio and s.ts_riferimento = max_ts.max_ts
       where s.ds_archivio in ({{ in_clause }})
       order by s.ds_archivio, s.nm_campo::NUMERIC

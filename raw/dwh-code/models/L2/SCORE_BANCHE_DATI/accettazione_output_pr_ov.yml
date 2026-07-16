@@ -1,0 +1,37 @@
+version: 2
+models:
+  - name: accettazione_output_pr_ov
+    description: >
+      Entita' L2 ACCETTAZIONE_OUTPUT_PR_OV (SA SCORING), grana per regola (PR) o override (OV).
+      UNION ALL di due rami: PR dai gruppi piatti REGOLA001..300 in Richiesta/Variables (una riga
+      per gruppo valorizzato); OV dal nodo ripetuto OVERRIDE (CODICE_OVR/DESCRIZIONE_OVR).
+      Valorizzazione colonne come da SORGENTE CAMPI L1 del foglio. PR_REGOLA: progressivo gruppo
+      per PR, ROW_NUMBER tecnico per OV.
+      ASSUNZIONI: landing=ref('cde'); ProcessCode 'TARGATO'; TS_INSERIMENTO=TS_RIFERIMENTO L1.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "ACCETTAZIONE_OUTPUT_PR_OV"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, TP_REGOLA, PR_REGOLA, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: TP_REGOLA
+        data_type: VARCHAR(2)
+      - name: PR_REGOLA
+        data_type: VARCHAR(3)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_REGOLA
+        data_type: VARCHAR
+      - name: DS_REGOLA
+        data_type: VARCHAR
+      - name: DS_ESITO_REGOLA
+        data_type: VARCHAR
+      - name: CD_FIRMA_REGOLA
+        data_type: VARCHAR
+      - name: DS_MESSAGGIO_REGOLA
+        data_type: VARCHAR

@@ -13,7 +13,7 @@
     {% set all_cfg_sql %}
       with max_ts as (
         select ds_archivio, max(ts_riferimento) as max_ts
-        from AGOS_DEV_16000.TECH.CFG_L1_SCHEMA
+        from {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_SCHEMA
         where ds_archivio in ({{ in_clause }})
         group by ds_archivio
       )
@@ -29,11 +29,11 @@
         c.cd_cluster,
         m.ds_masking_rule,
         m.fl_active
-      from AGOS_DEV_16000.TECH.CFG_L1_SCHEMA s
+      from {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_SCHEMA s
       inner join max_ts on s.ds_archivio = max_ts.ds_archivio and s.ts_riferimento = max_ts.max_ts
-      left join AGOS_DEV_16000.TECH.CFG_L1_CLUSTER_STO c
+      left join {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_CLUSTER_STO c
         on c.ds_archivio = s.ds_archivio
-      left join AGOS_DEV_16000.TECH.CFG_L1_DATAMASK m
+      left join {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_DATAMASK m
         on m.ds_archivio = s.ds_archivio
         and m.ds_column_name = s.ds_column_name
       where s.ds_archivio in ({{ in_clause }})

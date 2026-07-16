@@ -18,7 +18,7 @@
         SF_DATA_TYPE,
         TYPE_RECORD,
         DECIMAL_SCALE
-    FROM  AGOS_DEV_16000.TECH.CFG_COBOL_COPYBOOK_MAPPING
+    FROM  {{ env_var('DBT_DATABASE') }}.TECH.CFG_COBOL_COPYBOOK_MAPPING
     WHERE SOURCE_TABLE = '{{ source_table }}'
       AND SF_COLUMN_NAME IS NOT NULL
     ORDER BY COPYBOOK_NAME, START_POSITION
@@ -46,7 +46,7 @@
         WHEN {{ condition }} THEN
             {% if data_type | upper == 'FLOAT' %}
             CAST(
-                AGOS_DEV_16000.L0.DECODE_OVERPUNCH(
+                {{ env_var('DBT_DATABASE') }}.L0.DECODE_OVERPUNCH(
                     SUBSTR({{ content_column }}, {{ start_pos }}, {{ length }}),{{ decimal_scale }}
                 )
             AS {{ data_type }})

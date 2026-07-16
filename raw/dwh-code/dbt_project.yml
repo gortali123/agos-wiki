@@ -41,7 +41,7 @@ models:
     +contract:
       enforced: true
     +on_schema_change: "append_new_columns"
-    +database: AGOS_DEV_16000
+    +database: "{{ env_var('DBT_DATABASE') }}"
     L1:
       +meta: {layer: "L1"}
       +tags: ["L1"]
@@ -299,6 +299,10 @@ models:
         +schema: L2_SALDI
         +meta: {subject_area: "SALDI"}
         +tags: ["SALDI"]
+      SCORE_BANCHE_DATI:
+        +schema: L2_SCORE_BANCHE_DATI
+        +meta: {subject_area: "SCORE_BANCHE_DATI"}
+        +tags: ["SCORE_BANCHE_DATI"]
       SWORD:
         +schema: L2_SWORD
         +meta: {subject_area: "SWORD"}
@@ -306,19 +310,19 @@ models:
 
     L3:
       +meta: {layer: "L3"}
-      basilea_core:
+      BASILEA_CORE:
         +schema: L3_BASILEA
         +meta: {sotto_processo: "BASILEA_CORE"}
         +tags: ["BASILEA_CORE"]
-      saldi:
+      CAMPIONI:
         +schema: L3_CAMPIONI
         +meta: {subject_area: "CAMPIONI"}
         +tags: ["CAMPIONI"]
-      monitoraggio_produzione:
+      MONITORAGGIO_PRODUZIONE:
         +schema: L3_MONITORING_PRODUZIONE
         +meta: {sotto_processo: "MONITORAGGIO_PRODUZIONE"}
         +tags: ["MONITORAGGIO_PRODUZIONE"]
-      saldi:
+      SALDI:
         +schema: L3_SALDI
         +meta: {subject_area: "SALDI"}
         +tags: ["SALDI"]
@@ -326,7 +330,7 @@ models:
 snapshots:
   agosx:
     +transient: false
-    +database: AGOS_DEV_16000
+    +database: "{{ env_var('DBT_DATABASE') }}"
     +dbt_valid_to_current: "to_timestamp('9999-12-31')"
     +snapshot_meta_column_names:
       dbt_valid_from: ts_inizio_validita
@@ -480,7 +484,7 @@ snapshots:
 tests:
   +severity: warn
   +store_failures_as: table
-  +database: AGOS_DEV_16000  
+  +database: "{{ env_var('DBT_DATABASE') }}"  
   +schema: DBT_STORE_FAILURES
 
 on-run-start:

@@ -15,7 +15,7 @@
 {% set python_version = results.columns[0].values()[0] %}
 {% set create_udf %}
 
-CREATE OR REPLACE FUNCTION AGOS_DEV_16000.L0.PROBIT(p DOUBLE)
+CREATE OR REPLACE FUNCTION {{ env_var('DBT_DATABASE') }}.L0.PROBIT(p DOUBLE)
 RETURNS DOUBLE
 LANGUAGE PYTHON
 RUNTIME_VERSION = '{{ python_version }}'

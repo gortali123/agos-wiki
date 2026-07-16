@@ -1,0 +1,40 @@
+version: 2
+models:
+  - name: prescreening_output_pr
+    description: >
+      Entita' L2 PRESCREENING_OUTPUT_PR (SA SCORING), grana per Policy Rule di soggetto.
+      Sorgente: landing XML CDE, payload StrategyOneResponse, ProcessCode = 'PRESCREENING'.
+      Sotto Categories, Applicant e POLICY_RULES sono tag fratelli non annidati: ogni
+      POLICY_RULES eredita il RUOLO dall'ultimo Applicant visto (FLATTEN grezzo + LAST_VALUE
+      IGNORE NULLS ordinato su INDEX). ASSUNZIONE da validare su payload reale: associazione
+      "ultimo Applicant visto".
+      Altre ASSUNZIONI: (1) landing CDE = ref('cde'); (2) filtro ProcessCode = 'PRESCREENING'
+      (xsd fixed="PRESCREENINGX": verificare il valore reale); (3) storicizzazione S2 con
+      TS_INSERIMENTO da TS_RIFERIMENTO della L1, incrementale append su TS_RIFERIMENTO;
+      (4) DS_POLICY ha tipo NUMBER nel data model ma la RF (POLICY_DESCRIZIONE) e' testuale:
+      probabile refuso, tipizzato NUMBER come da data model ma da verificare.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "PRESCREENING_OUTPUT_PR"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_RUOLO, CD_POLICY, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: CD_POLICY
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: DS_POLICY
+        data_type: NUMBER(38,0)
+      - name: CD_POLICY_ESITO
+        data_type: VARCHAR
+      - name: CD_POLICY_FIRMA
+        data_type: VARCHAR
+      - name: DS_POLICY_MESSAGGIO
+        data_type: VARCHAR

@@ -2,7 +2,7 @@
 
 {% set create_proc %}
 
-CREATE OR REPLACE PROCEDURE AGOS_DEV_16000.L3_BASILEA.PR_GENERATE_REPORT_FONDI_MASTERSCALE(
+CREATE OR REPLACE PROCEDURE {{ env_var('DBT_DATABASE') }}.L3_BASILEA.PR_GENERATE_REPORT_FONDI_MASTERSCALE(
     anno_mese_rif  VARCHAR
 )
 RETURNS VARCHAR
@@ -259,7 +259,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE        
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}' AND FL_DEFAULT = 'N'
         UNION ALL
         SELECT 
@@ -290,7 +290,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}' AND FL_DEFAULT = 'N'
     )
     ,AGGREGAZIONE AS (
@@ -366,7 +366,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE        
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}' AND FL_DEFAULT = 'S'
         UNION ALL
         SELECT 
@@ -397,7 +397,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}' AND FL_DEFAULT = 'S'
     )
     ,AGGREGAZIONE AS (
@@ -465,7 +465,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE        
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}'
         UNION ALL
         SELECT 
@@ -496,7 +496,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}'
     )
     ,AGGREGAZIONE AS (
@@ -563,7 +563,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE        
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CO_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}'
         UNION ALL
         SELECT 
@@ -594,7 +594,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_CAPITAL_REQUIREMENT,
             EU_CORRELATION,
             PC_ELBE_SCORE
-        FROM AGOS_DEV_16000.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
+        FROM {{ env_var('DBT_DATABASE') }}.L3_BASILEA.DM_BASILEA_CA_VAR_PV_K_M
         WHERE DT_ESTRAZIONE = DATE'{fine_mese_rif}'
     )
     SELECT 
@@ -626,7 +626,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
     file_prefix = f'Fondi_MasterScale'  
 
     # 3. Salva su /tmp e carica sullo stage S3
-    stage_path = '@AGOS_DEV_16000.L0.STG_OUTPUT_DEV/BASILEA/FONDI_MASTERSCALE'
+    stage_path = '@{{ env_var('DBT_DATABASE') }}.L0.STG_OUTPUT_DEV/BASILEA/FONDI_MASTERSCALE'
     file_name = f'{file_prefix}_{anno_mese_rif}.xls'
     tmp_path  = f'/tmp/{file_name}'
 

@@ -3,7 +3,7 @@
     {{ return('') }}
   {% endif %}
 
-  {% set db = 'AGOS_DEV_16000' %}
+  {% set db = env_var('DBT_DATABASE') %}
   {% set sch_log = 'LOGS' %}
   {% set sch_store_fail = 'DBT_STORE_FAILURES' %}
 

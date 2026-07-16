@@ -5,7 +5,7 @@
   {% if execute and (model_names | length) == 0 %}
     {% set tables_sql %}
       select distinct ds_archivio
-      from AGOS_DEV_16000.TECH.CFG_L1_SCHEMA
+      from {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_SCHEMA
       where ds_archivio is not null
       {% if modulo is not none and modulo != '' %}
         and UPPER(cd_modulo) = '{{ modulo | upper }}'

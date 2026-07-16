@@ -1,0 +1,1285 @@
+version: 2
+models:
+  - name: accettazione_input
+    description: >
+      Entita' L2 ACCETTAZIONE_INPUT (SA SCORING), grana per Applicant.
+      Sorgente: landing XML CDE, StrategyOneRequest, ProcessCode='TARGATO'.
+      Campi da Header, Richiesta/Variables (pratica) e APPLICANT/Variables (soggetto).
+      ASSUNZIONI: landing=ref('cde'); ProcessCode 'TARGATO' (xsd fixed puo' differire, verificare);
+      TS_INSERIMENTO=TS_RIFERIMENTO L1, incrementale append su TS_RIFERIMENTO;
+      TP_NTERMEDIARIO: nome colonna con refuso mantenuto dal data model.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "ACCETTAZIONE_INPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_RUOLO, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: CD_INTERROGAZIONE
+        data_type: VARCHAR
+      - name: CD_USER_CODE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_PRATICA
+        data_type: VARCHAR
+      - name: CD_SCIPAFI_ESITO
+        data_type: VARCHAR
+      - name: FL_SCIPAFI_FLAG
+        data_type: VARCHAR
+      - name: CD_RBA_CODICE_ESITO
+        data_type: VARCHAR
+      - name: CD_FIRCOSOFT_ESITO
+        data_type: VARCHAR
+      - name: CD_ESITO_PRESCREENING
+        data_type: VARCHAR
+      - name: CD_CTCPOS_STATO
+        data_type: VARCHAR
+      - name: CD_EURISC_CRIF_STATO
+        data_type: VARCHAR
+      - name: CD_CERVED_CGSX_STATO
+        data_type: VARCHAR
+      - name: FL_RIVALUTAZIONE_ARIF
+        data_type: VARCHAR
+      - name: FL_RIVALUTAZIONE_PRESCREENING_KO
+        data_type: VARCHAR
+      - name: CD_SCIPAFI_OUTPUT
+        data_type: VARCHAR
+      - name: FL_CALL_CERVED_SI_NO_DB
+        data_type: VARCHAR
+      - name: FL_CALL_EURISC_SI_NO_DB
+        data_type: VARCHAR
+      - name: CD_AREA_RISCHIO_CDE_LIGHT
+        data_type: VARCHAR
+      - name: CD_SCIPAFI_STATO
+        data_type: VARCHAR
+      - name: EU_RATA_MAX_SOSTENIBILE
+        data_type: NUMBER(16,2)
+      - name: CD_CONTESTO
+        data_type: VARCHAR
+      - name: CD_SCORING_CODICE_FUNZIONE
+        data_type: VARCHAR
+      - name: FL_RIVALUTAZIONE_FLG_CTC
+        data_type: VARCHAR
+      - name: FL_RIVALUTAZIONE_FLG_PROTESTI
+        data_type: VARCHAR
+      - name: FL_RIVALUTAZIONE_FLG_CAI
+        data_type: VARCHAR
+      - name: CD_AIDRIAN_STATO
+        data_type: VARCHAR
+      - name: CD_CAI_STATO
+        data_type: VARCHAR
+      - name: CD_PRATICHE_IN_VOLO
+        data_type: VARCHAR
+      - name: FL_SOVRAINDEBITAMENTO
+        data_type: VARCHAR
+      - name: FL_DIFFICOLTA_FINANZ_TEMPORANEA
+        data_type: VARCHAR
+      - name: FL_DIFFICOLTA_FINANZ_STRUTTURALE
+        data_type: VARCHAR
+      - name: FL_FORBORNE_NATIVE
+        data_type: VARCHAR
+      - name: PC_PROB_DEFAULT_BASILEA
+        data_type: NUMBER(16)
+      - name: NM_STAGE_IFRS9
+        data_type: NUMBER(16)
+      - name: NM_RATE_1PERIODO
+        data_type: NUMBER(16)
+      - name: NM_RATE_2PERIODO
+        data_type: NUMBER(16)
+      - name: CD_MODALITA_PAGAMENTO
+        data_type: VARCHAR
+      - name: CD_TABELLA_FINANZIARIA
+        data_type: VARCHAR
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_FINANZIATO
+        data_type: NUMBER(16,2)
+      - name: EU_ANTICIPO
+        data_type: NUMBER(16,2)
+      - name: EU_MONTANTE
+        data_type: NUMBER(16,2)
+      - name: DS_MARCA_AUTO
+        data_type: VARCHAR
+      - name: NM_CILINDRATA
+        data_type: NUMBER(16)
+      - name: DT_IMMATRICOLAZIONE
+        data_type: DATE
+      - name: CD_CATEGORIA_DATORE_LAVORO_CLI
+        data_type: VARCHAR
+      - name: PC_TASSO_TAN
+        data_type: NUMBER(16)
+      - name: NM_DURATA_1PERIODO
+        data_type: NUMBER(16)
+      - name: NM_DURATA_2PERIODO
+        data_type: NUMBER(16)
+      - name: EU_IMPORTO_RATA_1PERIODO
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_RATA_2PERIODO
+        data_type: NUMBER(16,2)
+      - name: CD_OPERATION
+        data_type: VARCHAR
+      - name: FL_OV_39_TARGA_TELAI_DOPPI
+        data_type: VARCHAR
+      - name: EU_REDDITO_ANNUO
+        data_type: NUMBER(16,2)
+      - name: FL_CONTO_BANCARIO
+        data_type: VARCHAR
+      - name: NM_MESI_CLIENTE
+        data_type: NUMBER(16)
+      - name: PC_TASSO_TABFIN
+        data_type: NUMBER(16)
+      - name: PC_TASSO_DIFF
+        data_type: NUMBER(16)
+      - name: FL_CONTRIBUTO_CNV
+        data_type: VARCHAR
+      - name: CD_TABFIN_ATTRIBUTO_TT
+        data_type: VARCHAR
+      - name: DT_INIZIO_RESIDENZA
+        data_type: DATE
+      - name: DT_INIZIO_OCCUPAZIONE
+        data_type: DATE
+      - name: NM_DURATA_CONTRATTO_LAVORO
+        data_type: NUMBER(16)
+      - name: FL_GIA_CLIENTE
+        data_type: VARCHAR
+      - name: CD_STATO_CIVILE
+        data_type: VARCHAR
+      - name: CD_OCCUPAZIONE
+        data_type: VARCHAR
+      - name: TP_CONTRATTO_LAVORO
+        data_type: VARCHAR
+      - name: CD_TIPO_ATTIVITA
+        data_type: VARCHAR
+      - name: EU_REDDITO_MENSILE
+        data_type: NUMBER(16,2)
+      - name: EU_REDDITO_FAMILIARE
+        data_type: NUMBER(16,2)
+      - name: NM_NUMERO_FAMILIARI
+        data_type: NUMBER(16)
+      - name: NM_NUMERO_FAMILIARI_OCCUPATI
+        data_type: NUMBER(16)
+      - name: EU_IMPEGNI_MENSILI
+        data_type: NUMBER(16,2)
+      - name: DT_GIA_CORRENTISTA
+        data_type: DATE
+      - name: FL_PROTESTI
+        data_type: VARCHAR
+      - name: CD_INDICATORE_PD
+        data_type: VARCHAR
+      - name: NM_INSOLUTO_MESE_CARICAMENTO
+        data_type: NUMBER(16)
+      - name: CD_ESITO_SIA_BANCOMAT
+        data_type: VARCHAR
+      - name: CD_NEWS_BANCO
+        data_type: VARCHAR
+      - name: FL_NEWDOD_FLAG_DEFAULT_EBA
+        data_type: VARCHAR
+      - name: FL_NEWDOD_FLAG_FORBORNE
+        data_type: VARCHAR
+      - name: CD_TIPO_ABITAZIONE
+        data_type: VARCHAR
+      - name: NM_INSOLV_ATTUALI
+        data_type: NUMBER(16)
+      - name: NM_INSOLV_MAX
+        data_type: NUMBER(16)
+      - name: NM_INSOLV_3M
+        data_type: NUMBER(16)
+      - name: NM_INSOLV_6M
+        data_type: NUMBER(16)
+      - name: NM_INSOLV_12M
+        data_type: NUMBER(16)
+      - name: NM_INSOLV_24M
+        data_type: NUMBER(16)
+      - name: NM_MENSILITA
+        data_type: NUMBER(16)
+      - name: NM_NEWDOD_GIORNI_SUPERAMENTO_SOGLIA_MATERIALITA
+        data_type: NUMBER(16)
+      - name: FL_OV_DOC_IDENTITA_DOPPIO
+        data_type: VARCHAR
+      - name: FL_CHECK_SCIPAFI_OBBLIGATORIO
+        data_type: VARCHAR
+      - name: FL_CAI
+        data_type: VARCHAR
+      - name: FL_BANCO_ATTIVO_CONOSCIUTO
+        data_type: VARCHAR
+      - name: FL_TASSO_ZERO
+        data_type: VARCHAR
+      - name: FL_ACCRED_STIPENDIO_CLI
+        data_type: VARCHAR
+      - name: FL_ACCRED_STIPENDIO_COO
+        data_type: VARCHAR
+      - name: EU_RATA_PROMZ
+        data_type: NUMBER(16,2)
+      - name: NM_MESI_DILAZIONE
+        data_type: NUMBER(16)
+      - name: FL_FIRMA_DOPPIA
+        data_type: VARCHAR
+      - name: DS_BENE
+        data_type: VARCHAR
+      - name: CD_FORMA_GIURIDICA_DATORE_DI_LAVORO
+        data_type: VARCHAR
+      - name: FL_PRESENZA_CQ
+        data_type: VARCHAR
+      - name: FL_PRESENZA_DELEGA
+        data_type: VARCHAR
+      - name: CD_TIPO_CLIENTE
+        data_type: VARCHAR
+      - name: FL_OV_17_COESISTENZA_CARTE
+        data_type: VARCHAR
+      - name: FL_OV_59_RBPSCORE
+        data_type: VARCHAR
+      - name: FL_OV_13_LIVELLO_AUTORIZZAZIONE_INSUFF
+        data_type: VARCHAR
+      - name: FL_OV_53_INTERROGAZIONE_POLICY_NON_EFFETTUATA
+        data_type: VARCHAR
+      - name: EU_NETTO_DA_EROGARE
+        data_type: NUMBER(16,2)
+      - name: CD_SEGMENTO_PERSONAL
+        data_type: VARCHAR
+      - name: CD_INDICATORE_PREQUALIFICA
+        data_type: VARCHAR
+      - name: DT_MORATORIA_ULTIMO_MOTIVO
+        data_type: DATE
+      - name: DT_MORATORIA_ULTIMA_DATA_INIZIO
+        data_type: DATE
+      - name: DT_MORATORIA_ULTIMA_DATA_FINE
+        data_type: DATE
+      - name: FL_MORATORIA_ATTIVA
+        data_type: VARCHAR
+      - name: CD_ORIGINE_MORATORIA_ATTIVA
+        data_type: VARCHAR
+      - name: EU_FIDO
+        data_type: NUMBER(16,2)
+      - name: FL_OV_24_RENDIMENTO_EFFETTIVO_SCARSO
+        data_type: VARCHAR
+      - name: FL_VARIAZIONE_DOCUMENTO
+        data_type: VARCHAR
+      - name: FL_VARIAZIONE_CONTO_CORRENTE
+        data_type: VARCHAR
+      - name: FL_VARIAZIONE_CELLULARE
+        data_type: VARCHAR
+      - name: FL_DOPPIO_DOCUMENTO
+        data_type: VARCHAR
+      - name: FL_DOPPIO_CELLULARE
+        data_type: VARCHAR
+      - name: FL_CHECKVARCELLULARE
+        data_type: VARCHAR
+      - name: FL_CHECKVARCONTOCORR
+        data_type: VARCHAR
+      - name: FL_CHECKVARDOCUM
+        data_type: VARCHAR
+      - name: FL_CHECKDOPPIOCELL
+        data_type: VARCHAR
+      - name: FL_CHECKDOPPIODOCUM
+        data_type: VARCHAR
+      - name: CD_CAUSALE_INSOLUTO_RI10
+        data_type: VARCHAR
+      - name: CD_TIPO_CLIENTE_MKTG
+        data_type: VARCHAR
+      - name: CD_APPLICAZIONE
+        data_type: VARCHAR
+      - name: CD_CATEGORIA_DATORE_LAVORO_COO
+        data_type: VARCHAR
+      - name: CD_CAMPAGNA_INDIVIDUALE
+        data_type: VARCHAR
+      - name: DS_MODELLO_AUTO
+        data_type: VARCHAR
+      - name: CD_PRODOTTO
+        data_type: VARCHAR
+      - name: TP_PRODOTTO
+        data_type: VARCHAR
+      - name: CD_CANALE
+        data_type: VARCHAR
+      - name: FL_CANALE_WEB
+        data_type: VARCHAR
+      - name: CD_EMETTITORE
+        data_type: VARCHAR
+      - name: FL_TIPO_VENDITA_CONGIUNTA
+        data_type: VARCHAR
+      - name: CD_DESTINAZIONE_FINANZIAMENTO
+        data_type: VARCHAR
+      - name: TP_PROCEDURA
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR
+      - name: CD_ANAGRAFICA
+        data_type: NUMBER(16)
+      - name: DT_NASCITA
+        data_type: DATE
+      - name: CD_NAZIONE_RESIDENZA
+        data_type: VARCHAR
+      - name: DS_CITTADINANZA
+        data_type: VARCHAR
+      - name: DT_SCADENZA_PERMSOGG
+        data_type: DATE
+      - name: TP_PERMSOGG
+        data_type: VARCHAR
+      - name: CD_FORMA_GIURIDICA
+        data_type: VARCHAR
+      - name: CD_FISCALE
+        data_type: VARCHAR
+      - name: CD_PARTITA_IVA
+        data_type: VARCHAR
+      - name: FL_TEL_ABIT
+        data_type: VARCHAR
+      - name: FL_TEL_MOBILE
+        data_type: VARCHAR
+      - name: FL_TEL_LAVORO
+        data_type: VARCHAR
+      - name: FL_CTC
+        data_type: VARCHAR
+      - name: FL_TERRORISTI
+        data_type: VARCHAR
+      - name: FL_BUON_CLIENTE
+        data_type: VARCHAR
+      - name: CD_SEGNALAZIONE_ANAGRAFICA
+        data_type: VARCHAR
+      - name: TP_CLASSE_SEGNALAZIONE_ANAGRAFICA
+        data_type: VARCHAR
+      - name: FL_TRUFFATORE
+        data_type: VARCHAR
+      - name: DS_LUOGO_RESIDENZA
+        data_type: VARCHAR
+      - name: CD_LUOGO_RESIDENZA
+        data_type: VARCHAR
+      - name: CD_PROVINCIA_RESIDENZA
+        data_type: VARCHAR
+      - name: DS_RAGIONE_SOCIALE_DATORE_DI_LAVORO
+        data_type: VARCHAR
+      - name: DS_LOCALITA_DATORE_DI_LAVORO
+        data_type: VARCHAR
+      - name: CD_PARTITA_IVA_DATORE_DI_LAVORO
+        data_type: VARCHAR
+      - name: CD_REGIONE_RESIDENZA
+        data_type: VARCHAR
+      - name: FL_COMPORTAMENTO_ANOMALO
+        data_type: VARCHAR
+      - name: DT_INIZIO_PERMSOGG
+        data_type: DATE
+      - name: FL_DIPENDENTE
+        data_type: VARCHAR
+      - name: FL_TRUFFATO
+        data_type: VARCHAR
+      - name: CD_AREA
+        data_type: VARCHAR
+      - name: CD_DISTRETTO
+        data_type: VARCHAR
+      - name: CD_FILIALE
+        data_type: VARCHAR
+      - name: DT_CONVENZIONE
+        data_type: DATE
+      - name: FL_BANCO_SOTTO_OSSERVAZIONE
+        data_type: VARCHAR
+      - name: CD_RETE_VENDITA
+        data_type: VARCHAR
+      - name: DS_MACROAREA_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_STATO_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_RETE_VENDITA
+        data_type: VARCHAR
+      - name: TP_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_AGENTE
+        data_type: VARCHAR
+      - name: DS_MACROAREA_AGENTE
+        data_type: VARCHAR
+      - name: CD_STATO_AGENTE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_AGENTE
+        data_type: VARCHAR
+      - name: TP_AGENTE
+        data_type: VARCHAR
+      - name: CD_SUBAGENTE
+        data_type: VARCHAR
+      - name: DS_MACROAREA_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_STATO_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_SUBAGENTE
+        data_type: VARCHAR
+      - name: TP_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_CONVENZIONATO
+        data_type: VARCHAR
+      - name: DS_MACROAREA_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_STATO_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_CONVENZIONATO
+        data_type: VARCHAR
+      - name: TP_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: DS_MACROAREA_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_STATO_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: TP_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_VENDITORE
+        data_type: VARCHAR
+      - name: DS_MACROAREA_VENDITORE
+        data_type: VARCHAR
+      - name: CD_STATO_VENDITORE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_VENDITORE
+        data_type: VARCHAR
+      - name: TP_VENDITORE
+        data_type: VARCHAR
+      - name: CD_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: TP_NTERMEDIARIO
+        data_type: VARCHAR
+      - name: CD_STATO_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: CD_MACROAREA_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: EU_RATA_AGOS_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_RATA_CRIF_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_CRIF_OVR_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_CRIF_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_AGOS_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_AGOS_OVR_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_GRUPPO_BANCARIO
+        data_type: NUMBER(16,2)
+      - name: PC_INDEBITAMENTO_PRATICA
+        data_type: NUMBER(16)
+      - name: PC_INDEBITAMENTO_APPLICANT
+        data_type: NUMBER(16)
+      - name: EU_TOT_ENTRATE_MENSILI
+        data_type: NUMBER(16,2)
+      - name: EU_TOT_ENTRATE_MENSILI_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_TOT_USCITE_MENSILI
+        data_type: NUMBER(16,2)
+      - name: EU_TOT_USCITE_MENSILI_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+        data_type: NUMBER(16)
+      - name: EU_DBR_ALTRI_IMPEGNI_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_IMPEGNI_CRIF_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: PC_DBR_PERC_INDEBITAMENTO_APPLICANT
+        data_type: NUMBER(16)
+      - name: EU_DBR_REDDITO_ANNUO_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_ENTRATE_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_USCITE_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_ENTRATE_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_USCITE_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_RATA_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_IMPEGNI_AGOS_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_PRATICA
+        data_type: NUMBER(16,2)
+      - name: CD_PRATICA_PREV_APP
+        data_type: NUMBER(16)
+      - name: TP_PREVAPP_TIPO_CONTRATTO_LAVORO
+        data_type: VARCHAR
+      - name: EU_PREVAPP_REDDITO_ANNUO
+        data_type: NUMBER(16,2)
+      - name: DT_PREVAPP_DT_INIZIO_OCCUPAZIONE
+        data_type: DATE
+      - name: CD_PREVAPP_OCCUPAZIONE
+        data_type: VARCHAR
+      - name: EU_PREVAPP_IMPEGNI_CRIF
+        data_type: NUMBER(16,2)
+      - name: EU_PREVAPP_IMPEGNI_AGOS
+        data_type: NUMBER(16,2)
+      - name: TP_PREVAPP_FASCIA_SCORE_CRIF
+        data_type: VARCHAR
+      - name: NM_PREVAPP_CBSCORE_CRIF
+        data_type: NUMBER(16)
+      - name: TP_PREVAPP_TIPO_ATTIVITA
+        data_type: VARCHAR
+      - name: CD_PREVAPP_CROSS_SELLING_DECISIONE
+        data_type: VARCHAR
+      - name: EU_PREVAPP_FIDO_CROSS_SELLING
+        data_type: NUMBER(16,2)
+      - name: CD_PREVAPP_FINAL_DECISION
+        data_type: VARCHAR
+      - name: CD_PREVAPP_CD_ABI
+        data_type: VARCHAR
+      - name: CD_PREVAPP_CD_CAB
+        data_type: VARCHAR
+      - name: CD_PREVAPP_SCIPAFI_ESITO
+        data_type: VARCHAR
+      - name: DS_AIDRIAN_TRIGGEREDRULES
+        data_type: VARCHAR
+      - name: CD_AIDRIAN_RULESET
+        data_type: VARCHAR
+      - name: CD_AIDRIAN_STATUS
+        data_type: VARCHAR
+      - name: NM_AIDRIAN_FRAUDPROBABILITY
+        data_type: NUMBER(16)
+      - name: NM_AIDRIAN_RULESCORE
+        data_type: NUMBER(16)
+      - name: NM_AIDRIAN_OVERALLSCORE
+        data_type: NUMBER(16)
+      - name: NM_EURISC_TOT_CONTRATTI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_ENTI_SEGNALANTI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_ENTI_SOFFERENZA
+        data_type: NUMBER(16)
+      - name: CD_EURISC_ENTI_PERDITE
+        data_type: VARCHAR
+      - name: NM_EURISC_RICH_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RICH_NRATEALI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RICH_CARTE
+        data_type: NUMBER(16)
+      - name: NM_EURISC_ACCORD_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_ACCORD_NRATEALI
+        data_type: NUMBER(16)
+      - name: EU_EURISC_ACCORDATI_CARTE
+        data_type: NUMBER(16,2)
+      - name: NM_EURISC_RIFIUTATI_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RIFIUTATI_NRATEALI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RIFIUTATI_CARTE
+        data_type: NUMBER(16)
+      - name: NM_EURISC_ESTINTI_CARTE
+        data_type: NUMBER(16)
+      - name: NM_EURISC_ESTINTI_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_ESTINTI_NRATEALI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_OPERAZ_RATEALI
+        data_type: NUMBER(16)
+      - name: EU_EURISC_RATERC_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RESIDUERC_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_SCADUTERC_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RATEG_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RESIDUEG_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_SCADUTEG_RAT
+        data_type: NUMBER(16,2)
+      - name: NM_EURISC_OPERAZIONI_CARTE
+        data_type: NUMBER(16)
+      - name: EU_EURISC_MAXFIDORC_CARTE
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RESIDUORC_CARTE
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_SCADUTORC_CARTE
+        data_type: NUMBER(16,2)
+      - name: NM_EURISC_OPERAZ_NRATEALI
+        data_type: NUMBER(16)
+      - name: EU_EURISC_ACCORDATIRC_NRAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_UTILIZZATIRC_NRAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_ACCORDATIG_NRAT
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_UTILIZZATIG_NRAT
+        data_type: NUMBER(16,2)
+      - name: DS_EURISC_NOTE_CRIF
+        data_type: VARCHAR
+      - name: CD_EURISC_PEGG_STATO_CRIF
+        data_type: VARCHAR
+      - name: DT_EURISC_OLDEST_DT_CTR
+        data_type: DATE
+      - name: CD_EURISC_ITF
+        data_type: VARCHAR
+      - name: EU_EURISC_IMPEGNI_MENSILI
+        data_type: NUMBER(16,2)
+      - name: NM_EURISC_CBSCORE
+        data_type: NUMBER(16)
+      - name: TP_EURISC_FASCIA_SCORE
+        data_type: VARCHAR
+      - name: NM_EURISC_MAX_INSOLUTI_R
+        data_type: NUMBER(16)
+      - name: NM_EURISC_MAX_INSOLUTI_C
+        data_type: NUMBER(16)
+      - name: NM_EURISC_MAX_INSOLUTI_G
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CORR_INSOLUTI_R
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CORR_INSOLUTI_C
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CORR_INSOLUTI_G
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CTR_EST_R
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CTR_EST_C
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CTR_EST_G
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CTR_RICHIESTI_U2M
+        data_type: NUMBER(16)
+      - name: FL_EURISC_OPERAZIONI_NON_PERFEZIONATE
+        data_type: NUMBER(16)
+      - name: FL_EURISC_INSOLVENZE_PRECEDENTI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_TOTALE_NUMERO_CONTRATTI
+        data_type: NUMBER(16)
+      - name: NM_EURISC_A_NUMERO_RESIDENZE_STORICHE
+        data_type: NUMBER(16)
+      - name: CD_EURISC_I_ITF
+        data_type: VARCHAR
+      - name: FL_EURISC_I_NOHIT_FIN
+        data_type: VARCHAR
+      - name: CD_EURISC_I_ZONE
+        data_type: VARCHAR
+      - name: CD_EURISC_ZONE_ADRESS_TYPE
+        data_type: VARCHAR
+      - name: NM_EURISC_ZONE_PUNTEGGIO
+        data_type: NUMBER(16)
+      - name: NM_EURISC_NOHIT_PUNTEGGIO
+        data_type: NUMBER(16)
+      - name: EU_EURISC_O_ONERI12MESI_S
+        data_type: NUMBER(16,2)
+      - name: NM_EURISC_O_ONERIATTUALI_A
+        data_type: NUMBER(16)
+      - name: NM_EURISC_O_ONERIATTUALI_S
+        data_type: NUMBER(16)
+      - name: NM_EURISC_O_ONERITO_12MESI_A
+        data_type: NUMBER(16)
+      - name: NM_EURISC_O_ONERITO_12MESI_S
+        data_type: NUMBER(16)
+      - name: NM_EURISC_O_ONERITO_6MESI_A
+        data_type: NUMBER(16)
+      - name: NM_EURISC_O_ONERITO_6MESI_S
+        data_type: NUMBER(16)
+      - name: NM_EURISC_CARTE_LIM_UTLZ_RC
+        data_type: NUMBER(16)
+      - name: EU_EURISC_CARTE_RESIDUO_RC
+        data_type: NUMBER(16,2)
+      - name: NM_EURISC_CARTE_SCAD_NOPAG_RC
+        data_type: NUMBER(16)
+      - name: EU_EURISC_NORA_ACCORDATO_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_NORA_SCONFINATO_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_NORA_UTILIZ_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_CQS_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_CQS_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_CQS_RATE_SCAD_NOPAG_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_LEAS_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_LEAS_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_LEAS_RATE_SCAD_NOPAG_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_MUT_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_MUT_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_MUT_RATE_SCAD_NOPAG_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_PP_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_PP_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_EURISC_RAT_IMP_PP_RATE_SCAD_NOPAG_RC
+        data_type: NUMBER(16,2)
+      - name: NM_EURISC_RAT_NUM_CQS_ACC
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RAT_NUM_CQS_RIC
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RAT_NUM_LEA_ACC
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RAT_NUM_LEA_RIC
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RAT_NUM_MUT_ACC
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RAT_NUM_MUT_RIC
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RAT_NUM_PP_ACC
+        data_type: NUMBER(16)
+      - name: NM_EURISC_RAT_NUM_PP_RIC
+        data_type: NUMBER(16)
+      - name: FL_CTCPOS_HIT_NOHIT
+        data_type: VARCHAR
+      - name: FL_CTCPOS_OPERAZIONI_NON_PERFEZIONATE
+        data_type: NUMBER(16)
+      - name: FL_CTCPOS_INSOLVENZE_PRECEDENTI
+        data_type: NUMBER(16)
+      - name: CD_CTCPOS_CODICE_ERRORE
+        data_type: VARCHAR
+      - name: NM_CTCPOS_RAT_NUM_PP_RIC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RAT_NUM_PP_ACC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RAT_NUM_MUT_RIC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RAT_NUM_MUT_ACC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RAT_NUM_LEA_RIC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RAT_NUM_LEA_ACC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RAT_NUM_CQS_RIC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RAT_NUM_CQS_ACC
+        data_type: NUMBER(16)
+      - name: EU_CTCPOS_RAT_IMP_PP_RATE_SCAD_NOPAG_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_PP_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_PP_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_MUT_RATE_SCAD_NOPAG_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_MUT_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_MUT_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_LEAS_RATE_SCAD_NOPAG_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_LEAS_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_LEAS_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_CQS_RATE_RESIDUE_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RAT_IMP_CQS_RATA_MENS_RC
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_TOT_CONTRATTI
+        data_type: NUMBER(16)
+      - name: EU_CTCPOS_NORA_UTILIZ_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_NORA_SCONFINATO_RC
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_NORA_ACCORDATO_RC
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_CARTE_SCAD_NOPAG_RC
+        data_type: NUMBER(16)
+      - name: EU_CTCPOS_CARTE_RESIDUO_RC
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_CARTE_LIM_UTLZ_RC
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_ENTI_SEGNALANTI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_TOTALE_NUMERO_CONTRATTI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_NUMERO_RESIDENZE_STORICHE
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RICH_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RICH_NRATEALI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RICH_CARTE
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_ACCORD_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_ACCORD_NRATEALI
+        data_type: NUMBER(16)
+      - name: EU_CTCPOS_ACCORDATI_CARTE
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_RIFIUTATI_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RIFIUTATI_NRATEALI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_RIFIUTATI_CARTE
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_ESTINTI_CARTE
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_ESTINTI_RATEALI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_ESTINTI_NRATEALI
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_OPERAZ_RATEALI
+        data_type: NUMBER(16)
+      - name: EU_CTCPOS_RATERC_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RESIDUEG_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_SCADUTERC_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RATEG_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RESIDUERC_RAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_SCADUTEG_RAT
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_OPERAZIONI_CARTE
+        data_type: NUMBER(16)
+      - name: EU_CTCPOS_MAXFIDORC_CARTE
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_RESIDUORC_CARTE
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_SCADUTORC_CARTE
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_OPERAZ_NRATEALI
+        data_type: NUMBER(16)
+      - name: EU_CTCPOS_ACCORDATIRC_NRAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_UTILIZZATIRC_NRAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_ACCORDATIG_NRAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_UTILIZZATIG_NRAT
+        data_type: NUMBER(16,2)
+      - name: EU_CTCPOS_IMPEGNI_MENSILI
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_MAX_INSOLUTI_R
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_MAX_INSOLUTI_C
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_MAX_INSOLUTI_G
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_CORR_INSOLUTI_R
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_CORR_INSOLUTI_C
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_CORR_INSOLUTI_G
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_CTR_EST_R
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_CTR_EST_C
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_CTR_EST_G
+        data_type: NUMBER(16)
+      - name: NM_CTCPOS_CTR_RICHIESTI_U2M
+        data_type: NUMBER(16)
+      - name: CD_CTCPOS_SCORE_STATO_ANAGRAFICA
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_SEGMENTO
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_SOCIODEMO
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_SOCIODEMO_FASCIA
+        data_type: VARCHAR
+      - name: DT_CTCPOS_SCORE_SOCIODEMO
+        data_type: DATE
+      - name: CD_CTCPOS_SCORE_COMPORTAMENTALE
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_COMPORTAMENTALE_FASCIA
+        data_type: VARCHAR
+      - name: DT_CTCPOS_SCORE_COMPORTAMENTALE
+        data_type: DATE
+      - name: CD_CTCPOS_SCORE_COMPLETO
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_COMPLETO_FASCIA
+        data_type: VARCHAR
+      - name: DT_CTCPOS_SCORE_COMPLETO
+        data_type: DATE
+      - name: EU_CTCPOS_PLAFOND
+        data_type: NUMBER(16,2)
+      - name: NM_CTCPOS_INSOLUTI
+        data_type: NUMBER(16)
+      - name: CD_CTCPOS_EX_CTC_GLOBAL
+        data_type: VARCHAR
+      - name: FL_CTCPOS_SUPERO_FIDO
+        data_type: VARCHAR
+      - name: NM_CTCPOS_RICHIESTE_LAST
+        data_type: NUMBER(16)
+      - name: NM_OB_SCORE
+        data_type: NUMBER(16)
+      - name: CD_OB_ESITO
+        data_type: VARCHAR
+      - name: CD_OB_STATO
+        data_type: VARCHAR
+      - name: EU_OB_REDDITO_OPEN_BANKING
+        data_type: NUMBER(16,2)
+      - name: FL_OB_ESENZIONE_REDDITO
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORECARD_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORECARD_CLASSVALUE
+        data_type: VARCHAR
+      - name: DS_CERVED_SCORECARD_CLASSDESCRIPTION
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORECARD_MODELID
+        data_type: VARCHAR
+      - name: FL_CERVED_EXPERIAN_AVAILABLE
+        data_type: VARCHAR
+      - name: FL_CERVED_EXPERIAN_HITFLAG
+        data_type: VARCHAR
+      - name: CD_CERVED_EXPERIAN_INDEX
+        data_type: VARCHAR
+      - name: CD_CERVED_EXPERIAN_SCORE
+        data_type: VARCHAR
+      - name: CD_CERVED_COMPANYID
+        data_type: VARCHAR
+      - name: DS_CERVED_COMPANYNAME
+        data_type: VARCHAR
+      - name: TP_CERVED_COMPANYTYPE
+        data_type: VARCHAR
+      - name: CD_CERVED_COMPANYAGE
+        data_type: VARCHAR
+      - name: CD_CERVED_ATECO
+        data_type: VARCHAR
+      - name: CD_CERVED_NACE_CODICE
+        data_type: VARCHAR
+      - name: DS_CERVED_NACE_DES
+        data_type: VARCHAR
+      - name: CD_CERVED_RAE_CODICE
+        data_type: VARCHAR
+      - name: DS_CERVED_RAE_DES
+        data_type: VARCHAR
+      - name: CD_CERVED_SAE_CODICE
+        data_type: VARCHAR
+      - name: DS_CERVED_SAE_DES
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORE_CGS_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_CGS_GRADING
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_CGS_AREA
+        data_type: VARCHAR
+      - name: DS_CERVED_SCORE_CGS_AREA_DESC
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORE_PAYLINE_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_PAYLINE_AREA
+        data_type: VARCHAR
+      - name: DS_CERVED_SCORE_PAYLINE_AREA_DESC
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORE_EVENTI_NEG_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_EVENTI_NEG_AREA
+        data_type: VARCHAR
+      - name: DS_CERVED_SCORE_EVENTI_NEG_AREA_DESC
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORE_ECOFIN_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_ECOFIN_AREA
+        data_type: VARCHAR
+      - name: DS_CERVED_SCORE_ECOFIN_AREA_DESC
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORE_CONSULTAZIONI_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_CONSULTAZIONI_AREA
+        data_type: VARCHAR
+      - name: DS_CERVED_SCORE_CONSULTAZIONI_AREA_DESC
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORE_IMMOB_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_IMMOB_CLASS_VALUE
+        data_type: VARCHAR
+      - name: FL_CERVED_SCORE_GOVERNANCE_AVAILABLE
+        data_type: VARCHAR
+      - name: CD_CERVED_SCORE_GOVERNANCE_AREA
+        data_type: VARCHAR
+      - name: DS_CERVED_SCORE_GOVERNANCE_AREA_DESC
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_CLOSINGDATE
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_DURATION
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_SALES
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_TOTALASSETS
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_SHAREHOLDERFUNDS
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_SHORTTERMLIQUIDITY
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_CASHFLOW
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_GROSSPROFIT
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_PROFITANDLOSS
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_SHORTTERMASSETS
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_TOTALEREVENUES
+        data_type: VARCHAR
+      - name: CD_CERVED_LAST_BALANCE_SHORTTERMLIABILITIES
+        data_type: VARCHAR
+      - name: CD_ESITO_SCORE
+        data_type: VARCHAR
+      - name: CD_ESITO_SCORE_DECISIONE
+        data_type: VARCHAR
+      - name: CD_ESITO_SCORE_FASCIA
+        data_type: VARCHAR
+      - name: DS_ESITO_SCORE_MESSAGGIO
+        data_type: VARCHAR
+      - name: CD_SCORE_MODULO_01_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_01_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_02_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_02_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_03_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_03_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_04_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_04_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_05_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_05_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_06_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_06_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_07_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_07_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_08_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_08_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_09_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_09_ALIGNED
+        data_type: NUMBER(16)
+      - name: CD_SCORE_MODULO_10_OBJCODE
+        data_type: VARCHAR
+      - name: FL_SCORE_MODULO_10_ALIGNED
+        data_type: NUMBER(16)
+      - name: DS_AAT_I_S_SCORING_TEXT_01
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_02
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_03
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_04
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_05
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_06
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_07
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_08
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_09
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_SCORING_TEXT_10
+        data_type: VARCHAR
+      - name: NM_AAT_I_S_SCORING_NUM_01
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_02
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_03
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_04
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_05
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_06
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_07
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_08
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_09
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_SCORING_NUM_10
+        data_type: NUMBER(16)
+      - name: TP_TIPOLOGIA_MODELLO_01
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_02
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_03
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_04
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_05
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_06
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_07
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_08
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_09
+        data_type: VARCHAR
+      - name: TP_TIPOLOGIA_MODELLO_10
+        data_type: VARCHAR
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_01
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_02
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_03
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_04
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_05
+        data_type: NUMBER(16)
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_01
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_02
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_03
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_04
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_05
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_06
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_07
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_08
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_09
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_10
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_ESITO
+        data_type: VARCHAR
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_01
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_02
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_03
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_04
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_05
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_06
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_07
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_08
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_09
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_10
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_11
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_12
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_13
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_14
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_15
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_16
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_17
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_18
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_19
+        data_type: NUMBER(16)
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_20
+        data_type: NUMBER(16)
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_01
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_02
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_03
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_04
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_05
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_06
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_07
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_08
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_09
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_10
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_11
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_12
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_13
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_14
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_15
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_16
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_17
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_18
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_19
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_RULE_20
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_01
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_02
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_03
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_04
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_05
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_06
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_07
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_08
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_09
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_10
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_11
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_12
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_13
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_14
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_15
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_16
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_17
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_18
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_19
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_20
+        data_type: VARCHAR

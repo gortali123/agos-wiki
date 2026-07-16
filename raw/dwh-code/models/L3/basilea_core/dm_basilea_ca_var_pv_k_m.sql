@@ -1,6 +1,6 @@
 {% set nm_manual_adj_query %} 
     SELECT NM_MANUAL_ADJ
-    FROM AGOS_DEV_16000.TECH.MANUAL_ADJUSTMENT_O  
+    FROM {{ env_var('DBT_DATABASE') }}.TECH.MANUAL_ADJUSTMENT_O  
     WHERE CD_MANUAL_ADJ = 'ADN'
       AND TS_FINE_VALIDITA = {{ custom_to_date("'99991231'") }}
     LIMIT 1
@@ -93,7 +93,7 @@ WITH BASE AS (
     CAST( {{ custom_to_decimal('CC.PVKCA_PERDITA_ATTESA_FLOOR',  precision=13, decimal=2) }} AS NUMBER(13,2))    AS EU_EL_FLOOR,      
     CAST( {{ custom_to_decimal('CC.PVKCA_EAD_STIMATA',     precision=13,      decimal=2)  }} AS NUMBER(13,2))   AS EU_EAD_STIMATA,
     CAST( {{ custom_to_decimal('CC.PVKCA_EAD_STIMATA_FLOOR',  precision=13,   decimal=2)  }} AS NUMBER(13,2))   AS EU_EAD_STIMATA_FLOOR 
-   FROM AGOS_DEV_16000.L1_O_BAS.IFBLFPVKCA_TEST AS CC    -- Da sostituire con la ref del modello dbt associato quando verrrano inviati i tracciati mensili da ocs. 
+   FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFPVKCA_TEST AS CC    -- Da sostituire con la ref del modello dbt associato quando verrrano inviati i tracciati mensili da ocs. 
     where cc.PVKCA_DATA_ESTRAZIONE = LAST_DAY(DATEADD(MONTH, -4, CURRENT_DATE()))
 ),
  CTE_CORR AS (
@@ -112,7 +112,7 @@ CASE
         END  AS CORR_CALC, 
         DATEDIFF('MONTH', CM.DT_SCADENZA, CC.DATA_ESTRAZIONE) AS NM_ANZIANITA_CARTA 
     FROM  BASE AS cc 
-    LEFT JOIN  AGOS_DEV_16000.L1_O_BAS.IFBLFSCRCA_TEST AS CA      -- Da sostituire con la ref del modello dbt associato quando verrrano inviati i tracciati mensili da ocs. 
+    LEFT JOIN  {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFSCRCA_TEST AS CA      -- Da sostituire con la ref del modello dbt associato quando verrrano inviati i tracciati mensili da ocs. 
         ON CC.CD_PRATICA = CA.SCRCA_PRATICA
         AND CC.CD_PROVENIENZA = CA.SCRCA_PROVENIENZA
         AND CC.DATA_ESTRAZIONE  =  CA.SCRCA_DATA_ESTRAZIONE
@@ -128,9 +128,9 @@ CTE_CAP AS (
         CR.CORR_CALC AS CORRELATION,
 CASE 
  WHEN CR.NM_PD_FLOOR <> 1 THEN
-         CR.NM_LGD_FLOOR  * AGOS_DEV_16000.TECH.PROBNORM(
-            POWER(1 - CR.CORR_CALC, -0.5) * AGOS_DEV_16000.TECH.PROBIT( CR.NM_PD_FLOOR )
-            + POWER(CR.CORR_CALC / (1 - CR.CORR_CALC), 0.5) * AGOS_DEV_16000.TECH.PROBIT(0.999)
+         CR.NM_LGD_FLOOR  * {{ env_var('DBT_DATABASE') }}.TECH.PROBNORM(
+            POWER(1 - CR.CORR_CALC, -0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT( CR.NM_PD_FLOOR )
+            + POWER(CR.CORR_CALC / (1 - CR.CORR_CALC), 0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT(0.999)
         ) - CR.NM_PD_FLOOR  *  CR.NM_LGD_FLOOR 
         Else null
 END AS CAPITAL_REQUIREMENT,

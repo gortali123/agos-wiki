@@ -1,7 +1,7 @@
 {% macro add_datamask() %}
   {% if execute %}
 
-    {% set tag_name = 'AGOS_DEV_16000.TAGS.sensitivity' %}
+    {% set tag_name = "env_var('DBT_DATABASE').TAGS.sensitivity" %}
     {% set model_name = this.name %}
     {% set model_schema = this.schema %}
     {% set model_database = this.database %}

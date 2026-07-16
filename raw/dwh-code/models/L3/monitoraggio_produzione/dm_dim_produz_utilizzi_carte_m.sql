@@ -63,7 +63,7 @@
         CU.NM_RATE,
         CU.PC_TASSO_RATA,
         CU.TS_INIZIO_VALIDITA
-    --FROM AGOS_DEV_16000.L2_PRODOTTO.CARTE_UTILIZZI_TEST AS CU
+    --FROM {{ env_var('DBT_DATABASE') }}.L2_PRODOTTO.CARTE_UTILIZZI_TEST AS CU
     FROM {{ ref('carte_utilizzi')}} AS CU
     -- TODO LEFT JOIN {{ '{{' }} ref('ana_gerarchia_territoriale_m') {{ '}}' }} AS AGT
     --   ON AGT.CD_NODO_FOGLIA = CU.CD_NODO_FOGLIA

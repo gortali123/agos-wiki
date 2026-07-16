@@ -1,0 +1,78 @@
+version: 2
+models:
+  - name: accettazione_input_ob
+    description: >
+      Entita' L2 ACCETTAZIONE_INPUT_OB (SA SCORING), grana per Applicant.
+      ASSUNZIONI: landing=ref('cde'); ProcessCode 'TARGATO'; tipi inferiti dai prefissi (TIPO vuoto nel foglio);
+      TS_INSERIMENTO=TS_RIFERIMENTO L1, incrementale su TS_RIFERIMENTO.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "ACCETTAZIONE_INPUT_OB"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_RUOLO, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: NM_OB_SCORE
+        data_type: NUMBER(16,0)
+      - name: EU_OB_REDDITO_DA_LAVORO
+        data_type: NUMBER(16,2)
+      - name: EU_OB_ALTRE_ENTRATE_1_30
+        data_type: NUMBER(16,2)
+      - name: EU_OB_ALTRE_ENTRATE_31_60
+        data_type: NUMBER(16,2)
+      - name: EU_OB_ALTRE_ENTRATE_61_90
+        data_type: NUMBER(16,2)
+      - name: EU_OB_SALDO_INIZIALE
+        data_type: NUMBER(16,2)
+      - name: EU_OB_SALDO_FINALE
+        data_type: NUMBER(16,2)
+      - name: EU_OB_SALDI_INTERMEDI
+        data_type: NUMBER(16,2)
+      - name: EU_OB_FINANZIAMENTI
+        data_type: NUMBER(16,2)
+      - name: EU_OB_INVESTIMENTI_FINANZIARI_ENTRATE
+        data_type: NUMBER(16,2)
+      - name: EU_OB_INVESTIMENTI_FINANZIARI_USCITE
+        data_type: NUMBER(16,2)
+      - name: FL_OB_ALERT_SPESE_MORE_RITARDI
+        data_type: VARCHAR(1)
+      - name: EU_OB_REDDITO_OPEN_BANKING
+        data_type: NUMBER(16,2)
+      - name: FL_OB_ESENZIONE_REDDITO
+        data_type: VARCHAR(1)
+      - name: FL_OB_DUMMY_SIGNIFICATIVO
+        data_type: VARCHAR(1)
+      - name: FL_OB_IBAN_SIGNIFICATIVO
+        data_type: VARCHAR(1)
+      - name: CD_OB_IBAN_1
+        data_type: VARCHAR
+      - name: CD_OB_IBAN_2
+        data_type: VARCHAR
+      - name: CD_OB_IBAN_3
+        data_type: VARCHAR
+      - name: DS_OB_IBAN_1_NOMI
+        data_type: VARCHAR
+      - name: DS_OB_IBAN_2_NOMI
+        data_type: VARCHAR
+      - name: DS_OB_IBAN_3_NOMI
+        data_type: VARCHAR
+      - name: CD_OB_ESITO
+        data_type: VARCHAR
+      - name: CD_OB_STATO
+        data_type: VARCHAR
+      - name: CD_OB_ERRORE
+        data_type: VARCHAR
+      - name: TP_OB_ERRORE_AMBITO
+        data_type: VARCHAR
+      - name: NM_OB_ERRORE_LIVELLO
+        data_type: NUMBER(16,0)

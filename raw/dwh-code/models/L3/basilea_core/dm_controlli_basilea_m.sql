@@ -25,7 +25,7 @@
 
 {% set data_esecuzione %}
     SELECT MAX(SCRCO_DATA_ESTRAZIONE)
-        FROM AGOS_DEV_16000.L1_O_BAS.IFBLFSCRCO_TEST
+        FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFSCRCO_TEST
     LIMIT 1
 {% endset %}
 
@@ -44,20 +44,20 @@
 -- ============================================================
 with last_scrco AS (
     SELECT *
-    FROM AGOS_DEV_16000.L1_O_BAS.IFBLFSCRCO_TEST
+    FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFSCRCO_TEST
     WHERE SCRCO_DATA_ESTRAZIONE = (
         SELECT MAX(SCRCO_DATA_ESTRAZIONE)
-        FROM AGOS_DEV_16000.L1_O_BAS.IFBLFSCRCO_TEST
+        FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFSCRCO_TEST
     )
   --      WHERE SCRCO_DATA_ESTRAZIONE = LAST_DAY(DATEADD(MONTH, -3, CURRENT_DATE()))
 )
 
 , last_scrca AS (
     SELECT *
-    FROM AGOS_DEV_16000.L1_O_BAS.IFBLFSCRCA_TEST
+    FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFSCRCA_TEST
     WHERE SCRCA_DATA_ESTRAZIONE = (
         SELECT MAX(SCRCA_DATA_ESTRAZIONE)
-        FROM AGOS_DEV_16000.L1_O_BAS.IFBLFSCRCA_TEST
+        FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFSCRCA_TEST
     )
 )
 
@@ -1222,7 +1222,7 @@ pd_score_min AS (
            ),
            'CO;CA' AS TP_PROC_ESECUZIONE_CONTROLLO
     FROM base b
-	LEFT JOIN AGOS_DEV_16000.L1_O_BAS.IFBLFFPD v -- Tabella dei parametri
+	LEFT JOIN {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFFPD v -- Tabella dei parametri
         ON b.CLASSE_RISCHIO = v.PD_CLASSE_RISCHIO
 )
 -- ── SEZIONE CCF / K ──────────────────────────────────────────

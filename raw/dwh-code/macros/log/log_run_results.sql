@@ -9,13 +9,11 @@
       {% if res.node.resource_type in ('model', 'snapshot')
             and res.node.config.materialized not in ('ephemeral', 'view') %}
 
-        {% set started = res.timing | selectattr("name","equalto","compile") | map(attribute="started_at") | first | default("") %}
-
         {% set row %}
 {
   "execution_type": "MODEL",
-  "ts_started_at": "{{ started }}",
-  "nm_execution_time": {{ res.execution_time }},
+  "ts_started_at": "{{ ts_started_at }}",
+  "nm_execution_time": {{ res.execution_time | default(0) }},
   "ds_schema": "{{ res.node.schema }}",
   "ds_tabella": "{{ (res.node.alias or res.node.name) | upper }}",
   "ds_status": "{{ res.status | upper }}",
@@ -44,8 +42,8 @@
         {% set row %}
 {
   "execution_type": "TEST",
-  "ts_started_at": "{{ started }}",
-  "nm_execution_time": {{ res.execution_time }},
+  "ts_started_at": "{{ ts_started_at }}",
+  "nm_execution_time": {{ res.execution_time | default(0) }},
   "ds_schema": "{{ table_schema }}",
   "ds_tabella": "{{ table_name | upper }}",
   "ds_status": "{{ res.status | upper }}",
@@ -63,13 +61,8 @@
     {% endfor %}
 
     {% if ns.rows | length > 0 %}
-      {# Dollar-quoting ($$...$$): stringa letterale, Snowflake NON interpreta gli
-         escape con backslash. I messaggi d'errore dei modelli contengono apici (')
-         e sequenze che tojson rende come \n, \\, ecc.: dentro un literal tra apici
-         singoli Snowflake le ri-convertirebbe rompendo il JSON ("unterminated
-         string" / "error parsing json"). Con $$ il payload arriva intatto. #}
       {% set payload = ('[' ~ (ns.rows | join(", ")) ~ ']') | replace('$$', '') %}
-      CALL AGOS_DEV_16000.TECH.LOG_DBT(
+      CALL {{ env_var('DBT_DATABASE') }}.TECH.LOG_DBT(
         PARSE_JSON($${{ payload }}$$)
       );
     {% endif %}

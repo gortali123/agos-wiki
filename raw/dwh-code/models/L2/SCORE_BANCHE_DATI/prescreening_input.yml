@@ -1,0 +1,221 @@
+version: 2
+models:
+  - name: prescreening_input
+    description: >
+      Entita' L2 PRESCREENING_INPUT (SA SCORING), grana per Applicant.
+      Sorgente: landing XML CDE, payload StrategyOneRequest, ProcessCode = 'PRESCREENING'.
+      Estrazione via macro get_xml_path / flatten_xml.
+      ASSUNZIONI da validare: (1) nome reale della landing CDE = ref('cde');
+      (2) filtro riga su ProcessCode letto dal PERIMETRO = 'PRESCREENING' (lo xsd dichiara
+      fixed="PRESCREENINGX" nell'Header: verificare quale valore compare davvero nel payload
+      in produzione, altrimenti il modello resta a zero righe);
+      (3) storicizzazione S2 con TS_INSERIMENTO valorizzato dal campo TS_RIFERIMENTO della L1
+      (non da LASTMODIFIEDDATA ne' CURRENT_TIMESTAMP), incrementale append filtrato su TS_RIFERIMENTO;
+      (4) TP_INTERMEDIARIO_TIPOLOGIA: nel data model figura una seconda colonna omonima TP_INTERMEDIARIO
+      (RF = TIPOLOGIA_INTERMEDIARIO), rinominata per evitare collisione;
+      (5) EU_ANTICIPO ha tipo VARCHAR(13,2) nel data model (anomalo per un EU_): mantenuto stringa.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "PRESCREENING_INPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_RUOLO, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: CD_INTERROGAZIONE
+        data_type: NUMBER(16,0)
+      - name: CD_USER_CODE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: TP_PROCEDURA
+        data_type: VARCHAR
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: CD_DESTINAZIONE_FINANZIAMENTO
+        data_type: VARCHAR
+      - name: CD_AREA
+        data_type: VARCHAR
+      - name: CD_DISTRETTO
+        data_type: VARCHAR
+      - name: CD_FILIALE
+        data_type: VARCHAR
+      - name: CD_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_MACROAREA_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_STATO_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_RETE_VENDITA
+        data_type: VARCHAR
+      - name: TP_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_AGENTE
+        data_type: VARCHAR
+      - name: CD_MACROAREA_AGENTE
+        data_type: VARCHAR
+      - name: CD_STATO_AGENTE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_AGENTE
+        data_type: VARCHAR
+      - name: TP_AGENTE
+        data_type: VARCHAR
+      - name: CD_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_MACROAREA_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_STATO_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_SUBAGENTE
+        data_type: VARCHAR
+      - name: TP_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_MACROAREA_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_STATO_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_CONVENZIONATO
+        data_type: VARCHAR
+      - name: TP_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_MACROAREA_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_STATO_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: TP_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_VENDITORE
+        data_type: VARCHAR
+      - name: CD_MACROAREA_VENDITORE
+        data_type: VARCHAR
+      - name: CD_STATO_VENDITORE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_VENDITORE
+        data_type: VARCHAR
+      - name: TP_VENDITORE
+        data_type: VARCHAR
+      - name: CD_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: CD_STATO_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: TP_INTERMEDIARIO_TIPOLOGIA
+        data_type: VARCHAR
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(13,2)
+      - name: EU_IMPORTO_FINANZIATO
+        data_type: NUMBER(13,2)
+      - name: EU_ANTICIPO
+        data_type: VARCHAR
+      - name: TP_PRODOTTO
+        data_type: VARCHAR
+      - name: CD_PRODOTTO
+        data_type: VARCHAR
+      - name: DT_GIA_CORRENTISTA
+        data_type: DATE
+      - name: CD_CANALE
+        data_type: VARCHAR
+      - name: FL_CANALE_WEB
+        data_type: VARCHAR(1)
+      - name: CD_EMETTITORE
+        data_type: VARCHAR
+      - name: FL_TIPO_VENDITA_CONGIUNTA
+        data_type: VARCHAR(1)
+      - name: FL_MORATORIA_ATTIVA
+        data_type: VARCHAR(1)
+      - name: CD_ORIGINE_MORATORIA_ATTIVA
+        data_type: VARCHAR
+      - name: NM_INSLV_CO_CA_120M
+        data_type: NUMBER(16,0)
+      - name: NM_INSLV_TOT_120M
+        data_type: NUMBER(16,0)
+      - name: FL_RIVALUTAZIONE_PRESCREENING_KO
+        data_type: VARCHAR(1)
+      - name: CD_ESITO_SIA_BANCOMAT
+        data_type: VARCHAR
+      - name: FL_RIVALUTAZIONE_FLG_CTC
+        data_type: VARCHAR(1)
+      - name: FL_RIVALUTAZIONE_FLG_PROTESTI
+        data_type: VARCHAR(1)
+      - name: FL_RIVALUTAZIONE_FLG_CAI
+        data_type: VARCHAR(1)
+      - name: CD_ANAGRAFICA
+        data_type: VARCHAR
+      - name: FL_DIPENDENTE
+        data_type: VARCHAR(1)
+      - name: CD_CITTADINANZA
+        data_type: VARCHAR
+      - name: CD_FISCALE
+        data_type: VARCHAR
+      - name: DT_NASCITA
+        data_type: DATE
+      - name: CD_NAZIONE_NASCITA
+        data_type: VARCHAR
+      - name: CD_PROVINCIA_NASCITA
+        data_type: VARCHAR
+      - name: DS_LUOGO_NASCITA
+        data_type: VARCHAR
+      - name: CD_LUOGO_NASCITA
+        data_type: VARCHAR
+      - name: CD_NAZIONE_RESIDENZA
+        data_type: VARCHAR
+      - name: CD_PROVINCIA_RESIDENZA
+        data_type: VARCHAR
+      - name: CD_CAP_RESIDENZA
+        data_type: VARCHAR
+      - name: DS_LUOGO_RESIDENZA
+        data_type: VARCHAR
+      - name: CD_LUOGO_RESIDENZA
+        data_type: VARCHAR
+      - name: TP_CLIENTE
+        data_type: VARCHAR
+      - name: FL_NEWDOD_DEFAULT_EBA
+        data_type: VARCHAR(1)
+      - name: FL_NEWDOD_FORBORNE
+        data_type: VARCHAR(1)
+      - name: NM_NEWDOD_GIORNI_SUPERAMENTO_SOGLIA_MATERIALITA
+        data_type: VARCHAR
+      - name: EU_CUMULO_AGOS_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_AGOS_OVR_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: DT_INIZIO_RESIDENZA
+        data_type: DATE
+      - name: FL_TRUFFATORE
+        data_type: VARCHAR(1)
+      - name: FL_TRUFFATO
+        data_type: VARCHAR(1)
+      - name: FL_BUON_CLIENTE
+        data_type: VARCHAR(1)
+      - name: FL_CTC
+        data_type: VARCHAR(1)
+      - name: FL_PROTESTI
+        data_type: VARCHAR(1)
+      - name: FL_TERRORISTI
+        data_type: VARCHAR(1)
+      - name: FL_CAI
+        data_type: VARCHAR(1)
+      - name: CD_FORMA_GIURIDICA
+        data_type: VARCHAR
+      - name: CD_PARTITA_IVA
+        data_type: VARCHAR
+      - name: NM_MENSILITA
+        data_type: VARCHAR
