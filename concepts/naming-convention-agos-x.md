@@ -2,7 +2,7 @@
 title: "Naming convention Agos X (schemi, tabelle, campi)"
 type: concept
 tags: [naming-convention, layer/L2, glossario]
-updated: 2026-07-14
+updated: 2026-07-20
 ---
 
 Convenzioni di naming per il DWH Agos X, raccolte da tre fonti che si sovrappongono solo parzialmente: [[caricamento-layer-l2]], [[guida-sviluppo]], e la xlsx [[layer-l2-xlsx-reference]] (foglio "Nomenclatura Campi"). Le divergenze tra fonti sono segnalate esplicitamente qui e riportate in [[inconsistenze]].
@@ -23,7 +23,7 @@ Convenzioni di naming per il DWH Agos X, raccolte da tre fonti che si sovrappong
 
 Differenze:
 - **`ID_`** (Identificativo) e **`SK_`** (Smart key) compaiono solo nei docx, non nella xlsx.
-- **`PR_`** (Progressivo) compare solo nella xlsx, non nei docx — nonostante il concetto di "progressivo" sia usato concretamente nel codice (`PROGRESSIVO_PK`, `PROGRESSIVO_CONTROPARTE` — che però non usano il prefisso `PR_`, sono scritti per esteso, vedi [[progressivo-pk-e-progressivo-controparte]]).
+- **`PR_`** (Progressivo): dopo il resync del 2026-07-20, il codice usa ora `PR_PK` (rinominato da `PROGRESSIVO_PK`) in `variazioni_anagrafiche` — allineato sia alla xlsx sia alla guida sviluppo aggiornata (sezione 5.1, variante S1 senza PK propria). `PROGRESSIVO_CONTROPARTE` resta invece per esteso, senza prefisso `PR_`. Vedi [[progressivo-pk-e-progressivo-controparte]].
 
 Non è chiaro se le due liste siano state scritte in momenti diversi (una supersede l'altra) o se semplicemente nessuno le ha mai riconciliate. Da chiedere al team.
 
@@ -36,7 +36,7 @@ La xlsx è esplicita: "Rigorosamente a 2 valori. **'S' o 'N'**". Nel codice real
 Osservate nel codice reale, sistematicamente senza prefisso standard:
 - `LASTMODIFIEDDATA` — timestamp CDC, usato ovunque senza prefisso `TS_`.
 - `ROWID` — chiave tecnica L1.
-- `PROGRESSIVO_PK`, `PROGRESSIVO_CONTROPARTE` — campi tecnici di disambiguazione, senza prefisso.
+- `PROGRESSIVO_CONTROPARTE` — campo tecnico di disambiguazione, senza prefisso (`PR_PK`, l'altro campo dello stesso gruppo, ha invece il prefisso dal 2026-07-20 — vedi sopra).
 - `NM_ORA_INSERIMENTO_RECORD` (in `SEGNALAZIONI_ANAGRAFICHE`) — usa `NM_` (quantità numerica) per un valore orario, che semanticamente sarebbe più vicino a `TS_`.
 
 Questi sono probabilmente accettati come "colonne tecniche di framework" più che violazioni vere e proprie, ma vale la pena tenerne traccia.

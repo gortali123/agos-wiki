@@ -2,23 +2,24 @@
 title: "PROGRESSIVO_PK e PROGRESSIVO_CONTROPARTE"
 type: concept
 tags: [layer/L2, storicizzazione, entita/VARIAZIONI_ANAGRAFICHE]
-updated: 2026-07-14
+updated: 2026-07-20
 ---
 
 Pattern documentato in [[caricamento-layer-l2]] e [[guida-sviluppo]] per gestire archivi L1 con chiave primaria non univoca (l'unica PK certa è il campo tecnico `ROWID`).
 
-- **`PROGRESSIVO_PK`**: disambigua record fisici distinti che condividono la stessa chiave funzionale e lo stesso timestamp di modifica. Calcolato come `ROW_NUMBER() OVER (PARTITION BY <chiave_funzionale>, <data_modifica>, <ora_modifica> ORDER BY <ROWID>)`. Si estende a `unique_key`/`primary_key` del modello.
-- **`PROGRESSIVO_CONTROPARTE`**: campo aggiuntivo, **specifico solo di `VARIAZIONI_ANAGRAFICHE`**, che numera le versioni di una controparte partizionando su `AL_CODICE` (codice controparte) e ordinando su `ROWID`.
+- **`PR_PK`** (rinominato da `PROGRESSIVO_PK` nel resync `raw/dwh-code/` del 2026-07-20): disambigua record fisici distinti che condividono la stessa chiave funzionale e lo stesso timestamp di modifica. Calcolato come `ROW_NUMBER() OVER (PARTITION BY <chiave_funzionale>, <data_modifica>, <ora_modifica> ORDER BY <ROWID>)`. Si estende a `unique_key`/`primary_key` del modello.
+- **`PROGRESSIVO_CONTROPARTE`**: campo aggiuntivo, **specifico solo di `VARIAZIONI_ANAGRAFICHE`**, che numera le versioni di una controparte partizionando su `AL_CODICE` (codice controparte) e ordinando su `ROWID`. Nome invariato dal resync.
 
-## Verifica nel codice (2026-07-14)
+## Verifica nel codice (aggiornata 2026-07-20)
 
-Confermato: **`VARIAZIONI_ANAGRAFICHE` è l'unico modello in tutta `raw/dwh-code/models/L2/` che usa questo pattern.** Nel modello reale:
+Confermato: **`VARIAZIONI_ANAGRAFICHE` è l'unico modello in tutta `raw/dwh-code/models/L2/` che usa questo pattern.** Nel modello reale (`variazioni_anagrafiche.sql`/`.yml`):
 
-- `PROGRESSIVO_PK` = `ROW_NUMBER() OVER (PARTITION BY CC.AL_CODICE, CC.AL_DATA_MODIFICA, CC.AL_ORA_MODIFICA ORDER BY CC.ROWID)`, incluso in `unique_key: [CD_CONTROPARTE, TS_INIZIO_VALIDITA, PROGRESSIVO_PK]`.
-- `PROGRESSIVO_CONTROPARTE` = `COALESCE(OLD_PROGRESSIVO, COALESCE(MAX(OLD_PROGRESSIVO) OVER (PARTITION BY CD_CONTROPARTE),0) + ROW_NUMBER() OVER (PARTITION BY CD_CONTROPARTE, IS_EXISTING ORDER BY TS_INIZIO_VALIDITA, PROGRESSIVO_PK))` — un contatore di generazione per controparte, portato avanti tra run incrementali via `OLD_PROGRESSIVO`.
-- Modelli affini (`variazioni_anagrafiche_day`, `indirizzi_postalizzazione`, `legame_pratica_controparte`) **non** usano né `PROGRESSIVO_PK` né `PROGRESSIVO_CONTROPARTE`: hanno una chiave naturale/composita sufficiente. Conferma quanto dichiarato nei docx.
+- `PR_PK` = `ROW_NUMBER() OVER (PARTITION BY CC.AL_CODICE, CC.AL_DATA_MODIFICA, CC.AL_ORA_MODIFICA ORDER BY CC.ROWID)`, incluso in `unique_key: [CD_CONTROPARTE, TS_INIZIO_VALIDITA, PR_PK]` e nei `constraints.primary_key`. **Rinominato dal precedente `PROGRESSIVO_PK`** — verificato in tutti i punti d'uso (`unique_key`, `constraints`, colonna yml, `is_incremental_S1(..., order_extra='PR_PK')`, `ts_fine_validita(..., order_extra='PR_PK')`).
+- `PROGRESSIVO_CONTROPARTE` = `COALESCE(OLD_PROGRESSIVO, COALESCE(MAX(OLD_PROGRESSIVO) OVER (PARTITION BY CD_CONTROPARTE),0) + ROW_NUMBER() OVER (PARTITION BY CD_CONTROPARTE, IS_EXISTING ORDER BY TS_INIZIO_VALIDITA, PR_PK))` — un contatore di generazione per controparte, portato avanti tra run incrementali via `OLD_PROGRESSIVO`. Nome invariato.
+- Modelli affini (`variazioni_anagrafiche_day`, `indirizzi_postalizzazione`, `legame_pratica_controparte`) **non** usano né `PR_PK` né `PROGRESSIVO_CONTROPARTE`: hanno una chiave naturale/composita sufficiente. Conferma quanto dichiarato nei docx.
+- La guida sviluppo aggiornata (sezione 5.1, "S1 — Variante: tabella main L1 senza PK propria") ora nomina esplicitamente il campo generico `PR_PK` nell'esempio — coerente con il codice rinominato. In precedenza (fino al 2026-07-16) sia doc sia codice usavano `PROGRESSIVO_PK`.
 
-Nota su naming: né `PROGRESSIVO_PK` né `PROGRESSIVO_CONTROPARTE` usano il prefisso `PR_` (Progressivo) della xlsx — vedi [[naming-convention-agos-x]].
+Nota su naming: dal 2026-07-20 `PR_PK` usa il prefisso `PR_` (Progressivo) della xlsx, risolvendo parzialmente la divergenza descritta in [[naming-convention-agos-x]]; `PROGRESSIVO_CONTROPARTE` resta invece scritto per esteso, senza prefisso.
 
 ## Fix proposto: TS_INIZIO_VALIDITA del primo record storico (2026-07-14)
 
