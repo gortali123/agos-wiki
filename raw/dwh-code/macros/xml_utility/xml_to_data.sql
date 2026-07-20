@@ -1,6 +1,7 @@
 -- Macro per gestione tag root - tag child
 {%- macro flatten_xml(root_xml_col, child_tag_name, alias, dt_type='VARCHAR', outer=false) -%}
-    LATERAL FLATTEN(input => {{ root_xml_col }}:"$", OUTER => {{ outer | upper }}) {{ alias }}
+    -- versione deprecata -- LATERAL FLATTEN(input => { root_xml_col }:"$", OUTER => {{ outer | upper }}) {{ alias }}
+    LATERAL FLATTEN(input => TO_ARRAY({{ root_xml_col }}:"$"), OUTER => {{ outer | upper }}) {{ alias }}
     WHERE {{ alias }}.value:"@"::{{ dt_type }} = '{{ child_tag_name }}'
 {%- endmacro -%}
 

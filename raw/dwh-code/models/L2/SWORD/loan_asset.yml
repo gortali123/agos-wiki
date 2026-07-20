@@ -39,7 +39,7 @@ models:
       - name: DS_NUMERO_FATTURA_NM
         data_type: VARCHAR(17)
       - name: DS_MARCA_VEIC
-        data_type: VARCHAR(17)
+        data_type: VARCHAR(35)
       - name: CD_MAKE
         data_type: VARCHAR(1)
       - name: DS_MODELLO_VEIC
@@ -49,7 +49,7 @@ models:
       - name: CD_DOCUMENT_NUMBER
         data_type: VARCHAR(1)
       - name: DS_TARGA
-        data_type: VARCHAR(10)
+        data_type: VARCHAR(20)
       - name: CD_BAUMUSTER
         data_type: VARCHAR(1)
       - name: CD_CHASSIS_NUMBER
@@ -63,7 +63,7 @@ models:
       - name: DS_UNITA_MSRA
         data_type: VARCHAR(10)
       - name: DS_LOCATION
-        data_type: VARCHAR(21)
+        data_type: VARCHAR(40)
       - name: CD_SUPPLIER
         data_type: VARCHAR(1)
       - name: CD_THIRD_PARTY

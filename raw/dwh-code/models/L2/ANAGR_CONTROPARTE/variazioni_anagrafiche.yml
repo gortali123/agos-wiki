@@ -5,7 +5,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: merge
-      unique_key: [CD_CONTROPARTE, TS_INIZIO_VALIDITA, PROGRESSIVO_PK]
+      unique_key: [CD_CONTROPARTE, TS_INIZIO_VALIDITA, PR_PK]
       pre_hook: >
         {{ delete_l2(
             'ccanalog',
@@ -15,7 +15,7 @@ models:
     constraints:
       - type: primary_key
         warn_unenforced: false
-        columns: [CD_CONTROPARTE, TS_INIZIO_VALIDITA, PROGRESSIVO_PK]
+        columns: [CD_CONTROPARTE, TS_INIZIO_VALIDITA, PR_PK]
     columns:
       - name: CD_CONTROPARTE
         data_type: NUMBER(9,0)
@@ -23,7 +23,7 @@ models:
         data_type: TIMESTAMP_NTZ
       - name: TS_FINE_VALIDITA
         data_type: TIMESTAMP_NTZ
-      - name: PROGRESSIVO_PK
+      - name: PR_PK
         data_type: NUMBER(38,0)
       - name: PROGRESSIVO_CONTROPARTE
         data_type: NUMBER(38,0)

@@ -1,0 +1,55 @@
+version: 2
+models:
+  - name: dm_saldo_pratica_cliente_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: "{{ delete_month() }}"
+      query_tag: '{"app": "DBT", "schema": "L3_SALDI", "entita": "DM_SALDO_PRATICA_CLIENTE_M"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_SALDO, CD_PRATICA_CLIENTE, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: TP_SALDO
+        data_type: VARCHAR(10)
+      - name: CD_PRATICA_CLIENTE
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: EU_ON_BALANCE
+        data_type: NUMBER(13,2)
+      - name: EU_IMPIEGO_GESTIONALE
+        data_type: NUMBER(13,2)
+      - name: EU_CAPITALE_SCADERE
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_SCADERE
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE_SCADERE
+        data_type: NUMBER(13,2)
+      - name: EU_CAPITALE_SCADUTO
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_SCADUTO
+        data_type: NUMBER(13,2)
+      - name: EU_SPESE
+        data_type: NUMBER(13,2)
+      - name: EU_MORA
+        data_type: NUMBER(13,2)
+      - name: EU_SALDO_AVERE
+        data_type: NUMBER(13,2)
+      - name: EU_ANTICIPI_EROGATI
+        data_type: NUMBER(13,2)
+      - name: EU_PAG_ESUB_NON_ALLOCATI
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_MATURATI_SCADERE
+        data_type: NUMBER(13,2)
+      - name: EU_RATEO
+        data_type: NUMBER(13,2)
+      - name: EU_RISCONTI
+        data_type: NUMBER(13,2)
+      - name: EU_RISCONTI_ALTRI
+        data_type: NUMBER(13,2)
+      - name: EU_RISCONTI_INTERESSI
+        data_type: NUMBER(13,2)

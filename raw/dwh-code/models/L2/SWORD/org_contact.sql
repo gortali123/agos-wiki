@@ -56,7 +56,7 @@ SELECT
     ELSE {{ get_xml_path('contact_xml', 'Address/PostCode', 'NUMBER(5,0)') }}  
     END AS CD_POSTCODE,
     {{ get_xml_path('contact_xml', 'Address/PostTown', 'VARCHAR') }} AS DS_POST_TOWN,
-    {{ get_xml_path('contact_xml', 'Address/PropertyNumber', 'VARCHAR(7)') }} AS CD_PROPERTY_NUMBER,
+    {{ get_xml_path('contact_xml', 'Address/PropertyNumber', 'VARCHAR(20)') }} AS CD_PROPERTY_NUMBER,
     {{ get_xml_path('contact_xml', 'Address/Street', 'VARCHAR') }} AS DS_STREET
 
 FROM contacts

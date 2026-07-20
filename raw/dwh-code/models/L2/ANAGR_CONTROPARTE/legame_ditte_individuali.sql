@@ -21,9 +21,8 @@ WITH LEGAME_RAW AS (
             AND F.TP_CONTROPARTE = 'F'
     WHERE
         P.TP_CONTROPARTE = 'P'
-        AND (P.CD_PARTITA_IVA IS NULL OR P.CD_PARTITA_IVA = '')
-        AND F.CD_PARTITA_IVA IS NOT NULL
-        AND F.CD_PARTITA_IVA != ''
+        AND {{ custom_is_null('P.CD_PARTITA_IVA') }}
+        AND {{ custom_is_not_null('F.CD_PARTITA_IVA') }}
 ),
 
 LEGAME_DISTINCT AS (

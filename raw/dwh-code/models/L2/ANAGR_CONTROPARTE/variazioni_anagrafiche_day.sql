@@ -253,7 +253,7 @@ WITH COMBINED AS (
     -- una sola variazione per (controparte, giorno): la piu' tarda del giorno
     QUALIFY ROW_NUMBER() OVER (
         PARTITION BY V.CD_CONTROPARTE, CAST(V.TS_INIZIO_VALIDITA AS DATE)
-        ORDER BY V.TS_INIZIO_VALIDITA DESC, V.PROGRESSIVO_PK DESC
+        ORDER BY V.TS_INIZIO_VALIDITA DESC, V.PR_PK DESC
     ) = 1
 
     {% if is_incremental() %}

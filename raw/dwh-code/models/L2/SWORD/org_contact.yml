@@ -45,6 +45,6 @@ models:
       - name: DS_POST_TOWN
         data_type: VARCHAR
       - name: CD_PROPERTY_NUMBER
-        data_type: VARCHAR(7)
+        data_type: VARCHAR(20)
       - name: DS_STREET
         data_type: VARCHAR

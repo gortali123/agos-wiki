@@ -62,27 +62,51 @@ nodes AS (
 ),
 
 -- ========================= RAMO PR (policy rules) =========================
--- I 300 gruppi REGOLA<nnn>_* sono tag piatti in n_req_var; li estraiamo in VARCHAR e
--- li impiliamo con un UNION ALL generato via loop Jinja.
+-- I gruppi REGOLA<n>_<attributo> sono tag PIATTI in n_req_var. ATTENZIONE: nel payload il
+-- progressivo NON e' zero-padded (es. REGOLA6_TIPO, non REGOLA006_TIPO). Approccio:
+--   1) si appiattiscono TUTTI i figli di Variables con LATERAL FLATTEN (una sola lettura);
+--   2) si tengono solo i tag REGOLA<n>_<attributo> con attributo atteso;
+--   3) dal nome tag si estraggono progressivo (REG_NUM, numerico) e attributo (REG_ATTR);
+--   4) si filtra il dominio sul VALORE numerico del progressivo (1..300, tetto fisso as-is),
+--      cosi' e' indipendente dallo zero-padding;
+--   5) si ri-pivota per progressivo con MAX(CASE ...) GROUP BY per ricomporre la riga.
+-- (UNPIVOT non e' adatto: richiederebbe di nominare a priori le colonne REGOLAn_*.)
+regole_flat AS (
+
+    SELECT
+        n.TS_RIFERIMENTO,
+        n.CD_INQUIRYCODE,
+        rf.value:"@"::VARCHAR                                                     AS TAG_NAME,
+        rf.value:"$"::VARCHAR                                                     AS TAG_VALUE,
+        -- progressivo come intero (gestisce sia REGOLA6_ sia REGOLA06_/REGOLA006_)
+        TRY_TO_NUMBER(REGEXP_SUBSTR(rf.value:"@"::VARCHAR, 'REGOLA([0-9]+)_', 1, 1, 'e', 1)) AS REG_NUM,
+        -- attributo (tutto cio' che segue il primo underscore dopo le cifre)
+        REGEXP_SUBSTR(rf.value:"@"::VARCHAR, 'REGOLA[0-9]+_(.+)$', 1, 1, 'e', 1)  AS REG_ATTR
+    FROM nodes n,
+    LATERAL FLATTEN(input => n.n_req_var:"$", OUTER => TRUE) rf
+    -- match tag REGOLA<n>_<attributo> senza assumere lo zero-padding delle cifre
+    WHERE rf.value:"@"::VARCHAR REGEXP 'REGOLA[0-9]+_(TIPO|CODICE|DESCRIZIONE_RULES|ESITO|FIRMA|MESSAGGIO)'
+
+),
+
+-- Re-pivot: una riga per (InquiryCode, progressivo regola)
 pr_raw AS (
 
-    {%- for i in range(1, 301) %}
-    {%- set n = '%03d' % i %}
     SELECT
         TS_RIFERIMENTO,
         CD_INQUIRYCODE,
-        '{{ n }}'                                                              AS PR_REGOLA,
-        {{ get_xml_path('n_req_var', 'REGOLA' ~ n ~ '_TIPO', 'VARCHAR') }}        AS REGOLA_TIPO,
-        {{ get_xml_path('n_req_var', 'REGOLA' ~ n ~ '_CODICE', 'VARCHAR') }}      AS CD_REGOLA,
-        {{ get_xml_path('n_req_var', 'REGOLA' ~ n ~ '_DESCRIZIONE_RULES', 'VARCHAR') }} AS DS_REGOLA,
-        {{ get_xml_path('n_req_var', 'REGOLA' ~ n ~ '_ESITO', 'VARCHAR') }}       AS DS_ESITO_REGOLA,
-        {{ get_xml_path('n_req_var', 'REGOLA' ~ n ~ '_FIRMA', 'VARCHAR') }}       AS CD_FIRMA_REGOLA,
-        {{ get_xml_path('n_req_var', 'REGOLA' ~ n ~ '_MESSAGGIO', 'VARCHAR') }}   AS DS_MESSAGGIO_REGOLA
-    FROM nodes
-    {%- if not loop.last %}
-    UNION ALL
-    {%- endif %}
-    {%- endfor %}
+        -- progressivo normalizzato a 3 cifre (coerente con PR_REGOLA VARCHAR(3))
+        LPAD(TO_VARCHAR(REG_NUM), 3, '0')                               AS PR_REGOLA,
+        MAX(CASE WHEN REG_ATTR = 'TIPO'              THEN TAG_VALUE END) AS REGOLA_TIPO,
+        MAX(CASE WHEN REG_ATTR = 'CODICE'            THEN TAG_VALUE END) AS CD_REGOLA,
+        MAX(CASE WHEN REG_ATTR = 'DESCRIZIONE_RULES' THEN TAG_VALUE END) AS DS_REGOLA,
+        MAX(CASE WHEN REG_ATTR = 'ESITO'             THEN TAG_VALUE END) AS DS_ESITO_REGOLA,
+        MAX(CASE WHEN REG_ATTR = 'FIRMA'             THEN TAG_VALUE END) AS CD_FIRMA_REGOLA,
+        MAX(CASE WHEN REG_ATTR = 'MESSAGGIO'         THEN TAG_VALUE END) AS DS_MESSAGGIO_REGOLA
+    FROM regole_flat
+    -- dominio dei progressivi ancorato al valore numerico 1..300 (tetto fisso noto as-is)
+    GROUP BY TS_RIFERIMENTO, CD_INQUIRYCODE, REG_NUM
+
 ),
 
 pr_branch AS (
@@ -98,7 +122,7 @@ pr_branch AS (
         CD_FIRMA_REGOLA,
         DS_MESSAGGIO_REGOLA
     FROM pr_raw
-    -- scarta i gruppi non valorizzati (nessun codice ne' tipo)
+    -- scarta i gruppi non valorizzati (nessun attributo valorizzato)
     WHERE COALESCE(CD_REGOLA, REGOLA_TIPO, DS_REGOLA, DS_ESITO_REGOLA, CD_FIRMA_REGOLA, DS_MESSAGGIO_REGOLA) IS NOT NULL
 
 ),
@@ -124,9 +148,9 @@ ov_branch AS (
         'OV'                 AS TP_REGOLA,
         LPAD(CAST(ROW_NUMBER() OVER (PARTITION BY CD_INQUIRYCODE ORDER BY OV_INDEX) AS VARCHAR), 3, '0') AS PR_REGOLA,
         {{ get_xml_path('n_ov_var', 'CODICE_OVR', 'VARCHAR') }}       AS CD_REGOLA,
-        CAST(NULL AS VARCHAR)                 AS DS_REGOLA,
-        CAST(NULL AS VARCHAR)                 AS DS_ESITO_REGOLA,
-        CAST(NULL AS VARCHAR)                 AS CD_FIRMA_REGOLA,
+        NULL                 AS DS_REGOLA,
+        NULL                 AS DS_ESITO_REGOLA,
+        NULL                 AS CD_FIRMA_REGOLA,
         {{ get_xml_path('n_ov_var', 'DESCRIZIONE_OVR', 'VARCHAR') }}  AS DS_MESSAGGIO_REGOLA
     FROM ov_flat
 
@@ -144,7 +168,7 @@ SELECT
     -- PK
     CD_INQUIRYCODE,
     TP_REGOLA,
-    PR_REGOLA,
+    TRY_TO_NUMBER(PR_REGOLA) AS PR_REGOLA,
     -- campo tecnico di storicizzazione (S2)
     TS_RIFERIMENTO AS TS_INSERIMENTO,
     -- business

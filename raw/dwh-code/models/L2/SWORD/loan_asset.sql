@@ -97,7 +97,7 @@ SELECT
     {{ get_xml_path('loan_xml', 'Asset/Identification', 'VARCHAR(17)') }} AS DS_TELAIO,
     {{ get_xml_path('loan_xml', 'Asset/StockNumber', 'VARCHAR(1)') }} AS CD_STOCK_NUMBER,
     {{ get_xml_path('loan_xml', 'Asset/InvoiceNumber', 'VARCHAR(17)') }} AS DS_NUMERO_FATTURA_NM,
-    {{ get_xml_path('loan_xml', 'Asset/Make', 'VARCHAR(17)') }} AS DS_MARCA_VEIC,
+    {{ get_xml_path('loan_xml', 'Asset/Make', 'VARCHAR(35)') }} AS DS_MARCA_VEIC,
     {{ get_xml_path('loan_xml', 'Asset/MakeCode', 'VARCHAR(1)') }} AS CD_MAKE,
     {{ get_xml_path('loan_xml', 'Asset/Model', 'VARCHAR(54)') }} AS DS_MODELLO_VEIC,
     CASE 
@@ -108,7 +108,7 @@ SELECT
     END AS DS_ANNO_COSTRZ, -- FIX aggiunto CASE WHEN per gestione spazi vuoti come NULL altrimenti non possibile cast a number
     -- Documenti e Targa
     {{ get_xml_path('loan_xml', 'Asset/Title/DocumentNumber', 'VARCHAR(1)') }} AS CD_DOCUMENT_NUMBER,
-    {{ get_xml_path('loan_xml', 'Asset/Plate', 'VARCHAR(10)') }} AS DS_TARGA,
+    {{ get_xml_path('loan_xml', 'Asset/Plate', 'VARCHAR(20)') }} AS DS_TARGA,
     {{ get_xml_path('loan_xml', 'Asset/Baumuster', 'VARCHAR(1)') }} AS CD_BAUMUSTER,
     {{ get_xml_path('loan_xml', 'Asset/ChassisNumber', 'VARCHAR(17)') }} AS CD_CHASSIS_NUMBER,
     {{ get_xml_path('loan_xml', 'Asset/CommissionNumber', 'VARCHAR(1)') }} AS CD_COMMISSION_NUMBER,
@@ -117,7 +117,7 @@ SELECT
     {{ get_xml_path('loan_xml', 'Asset/VehicleInStockDays', 'NUMBER') }} AS NM_GIORNI_DEP, -- WARN in table solo NUMBER
     {{ get_xml_path('loan_xml', 'Asset/DistanceTravelled/Distance', 'NUMBER') }} AS NM_DISTANZA_PERCRS, -- WARN in table solo NUMBER
     {{ get_xml_path('loan_xml', 'Asset/DistanceTravelled/DistanceUnitType', 'VARCHAR(10)') }} AS DS_UNITA_MSRA,
-    {{ get_xml_path('loan_xml', 'Asset/Location', 'VARCHAR(21)') }} AS DS_LOCATION,
+    {{ get_xml_path('loan_xml', 'Asset/Location', 'VARCHAR(40)') }} AS DS_LOCATION,
     {{ get_xml_path('loan_xml', 'Asset/Supplier', 'VARCHAR(1)') }} AS CD_SUPPLIER,
     {{ get_xml_path('loan_xml', 'Asset/ThirdParty', 'VARCHAR(1)') }} AS CD_THIRD_PARTY,
     {{ get_xml_path('loan_xml', 'Asset/RegistrationDate', 'DATE') }} AS DT_REGISTRAZIONE_VEIC

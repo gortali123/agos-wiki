@@ -1,0 +1,221 @@
+version: 2
+
+models:
+  - name: dbrscipa_output
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "DBRSCIPA_OUTPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_RUOLO, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR(9)
+      - name: CD_PROCESSVERSION
+        data_type: VARCHAR
+      - name: CD_LAYOUTVERSION
+        data_type: NUMBER
+      - name: CD_INTERROGAZIONE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_CONTESTO
+        data_type: VARCHAR
+      - name: TP_SCIPAFI_ESITO
+        data_type: VARCHAR
+      - name: FL_SCIPAFI_FLAG
+        data_type: VARCHAR
+      - name: DS_SCIPAFI_OUTPUT
+        data_type: VARCHAR
+      - name: TP_DECISIONE_FINALE
+        data_type: VARCHAR
+      - name: EU_RATA_MAX_SOSTENIBILE
+        data_type: NUMBER(16,2)
+      - name: CD_OPERATION
+        data_type: VARCHAR
+      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_ENTRATE_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_USCITE_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_RATA_PRATICA
+        data_type: NUMBER(16,2)
+      - name: TP_AAT_I_S_DBRSCIPA_ESITO
+        data_type: VARCHAR
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_01
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_02
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_03
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_04
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_05
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_06
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_07
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_08
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_09
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_10
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_11
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_12
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_13
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_14
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_15
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_16
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_17
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_18
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_19
+        data_type: NUMBER
+      - name: NM_AAT_I_S_DBRSCIPA_NUM_20
+        data_type: NUMBER
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_01
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_02
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_03
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_04
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_05
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_06
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_07
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_08
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_09
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_10
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_11
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_12
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_13
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_14
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_15
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_16
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_17
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_18
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_19
+        data_type: VARCHAR
+      - name: CD_AAT_I_S_DBRSCIPA_RULE_20
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_01
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_02
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_03
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_04
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_05
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_06
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_07
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_08
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_09
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_10
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_11
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_12
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_13
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_14
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_15
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_16
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_17
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_18
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_19
+        data_type: VARCHAR
+      - name: DS_AAT_I_S_DBRSCIPA_TEXT_20
+        data_type: VARCHAR
+      - name: CD_ANAGRAFICA
+        data_type: NUMBER(16,0)
+      - name: EU_DBR_ALTRI_IMPEGNI_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_IMPEGNI_CRIF_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: PC_DBR_PERC_INDEBITAMENTO_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_REDDITO_ANNUO_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_ENTRATE_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_USCITE_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_IMPEGNI_AGOS_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_01
+        data_type: NUMBER
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_02
+        data_type: NUMBER
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_03
+        data_type: NUMBER
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_04
+        data_type: NUMBER
+      - name: NM_AAT_I_M_DBRSCIPA_NUM_05
+        data_type: NUMBER
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_01
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_02
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_03
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_04
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_05
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_06
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_07
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_08
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_09
+        data_type: VARCHAR
+      - name: DS_AAT_I_M_DBRSCIPA_TEXT_10
+        data_type: VARCHAR
