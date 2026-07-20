@@ -2,7 +2,7 @@
 title: "L2 ANTIFRODE"
 type: entity
 tags: [layer/L2, area/ANTIFRODE]
-updated: 2026-07-14
+updated: 2026-07-16
 ---
 
 Modelli (`raw/dwh-code/models/L2/ANTIFRODE/`): `archivio_tessere`, `gestione_truffe`. Entrambi S2 (append), nessun `query_tag`, nessun `pre_hook delete_l2`.

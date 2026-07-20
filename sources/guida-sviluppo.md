@@ -2,7 +2,7 @@
 title: Guida Sviluppo
 type: source
 tags: [layer/L0, layer/L1, layer/L2, layer/L3, source/docx, operativo]
-updated: 2026-07-14
+updated: 2026-07-20
 ---
 
 Sintesi di `raw/guida_sviluppo.docx` ("AGOS-X DWH — Guida Sviluppo v2.0", documento operativo interno). È la guida pratica/quotidiana per sviluppare sul progetto `dwh-x-dbt`, complementare (più tecnica e concreta) ai due documenti di analisi [[caricamento-layer-l0-l1]] e [[caricamento-layer-l2]].
@@ -32,7 +32,7 @@ Sintesi di `raw/guida_sviluppo.docx` ("AGOS-X DWH — Guida Sviluppo v2.0", docu
 Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio SQL) quanto descritto in [[caricamento-layer-l2]]:
 
 - **S1 (SCD2)**: `unique_key: [PK_funzionale, TS_INIZIO_VALIDITA]`. Struttura SQL a 3 CTE fisse: base (deriva TS_INIZIO/FINE_VALIDITA, ereditati da sorgente se cluster C, calcolati con macro altrimenti) → dedup (hash colonne via `hash_cols([...])`, esclude LASTMODIFIEDDATA e le date di validità, usa `is_incremental_S1('PK')`) → select finale (ricalcola `TS_FINE_VALIDITA` con `ts_fine_validita(...)`, LEFT JOIN ai lookup).
-- **Variante S1 senza PK propria** (main L1 con solo ROWID come chiave tecnica, es. quando ci sono duplicati non discriminabili da chiave+timestamp): si introduce `PROGRESSIVO_PK` = `ROW_NUMBER() OVER (PARTITION BY <chiave>, <data/ora modifica> ORDER BY <ROWID>)`, esteso a `unique_key`/`primary_key`; `is_incremental_S1(..., order_extra='PROGRESSIVO_PK')`; chiusura finestra con `MAX(...) OVER (PARTITION BY PK, TS_INIZIO_VALIDITA)` per evitare che record duplicati dello stesso istante si chiudano a vicenda. `PROGRESSIVO_CONTROPARTE` (usato solo in `VARIAZIONI_ANAGRAFICHE`) è un pattern separato, entità-specifico.
+- **Variante S1 senza PK propria** (main L1 con solo ROWID come chiave tecnica, es. quando ci sono duplicati non discriminabili da chiave+timestamp): si introduce `PR_PK` = `ROW_NUMBER() OVER (PARTITION BY <chiave>, <data/ora modifica> ORDER BY <ROWID>)`, esteso a `unique_key`/`primary_key`; `is_incremental_S1(..., order_extra='PR_PK')`; chiusura finestra con `MAX(...) OVER (PARTITION BY PK, TS_INIZIO_VALIDITA)` per evitare che record duplicati dello stesso istante si chiudano a vicenda. `PROGRESSIVO_CONTROPARTE` (usato solo in `VARIAZIONI_ANAGRAFICHE`) è un pattern separato, entità-specifico. **Nota (2026-07-20)**: la docx ora chiama esplicitamente questo campo `PR_PK` (in precedenza, fino al 2026-07-16, sia doc sia codice usavano `PROGRESSIVO_PK`); il codice in `raw/dwh-code/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql`/`.yml` è stato rinominato in coerenza — vedi [[progressivo-pk-e-progressivo-controparte]].
 - **S2 (append giornaliero)**: `primary_key: [PK, TS_INSERIMENTO]`, blocco incrementale su `LASTMODIFIEDDATA > MAX(...)`.
 - **S3 (append mensile)**: `primary_key: [PK, DT_OSSERVAZIONE]`, `pre_hook: delete_month()`, blocco incrementale su `DT_OSSERVAZIONE = get_dt_osservazione()`. Nessuna cancellazione fisica.
 - **S4 (attualizzato)**: `insert_overwrite`, full overwrite ogni run.
@@ -40,6 +40,16 @@ Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio S
 - Cancellazioni: filtro `FL_DELETED = 'N'` in lettura (nota: qui il documento usa `'N'` come valore da mantenere, implicitamente `Y` = cancellato — coerente con gli altri due documenti ma **da verificare contro la convenzione xlsx `S`/`N` per i flag**, vedi [[inconsistenze]]) + `pre_hook: delete_l2('ARCHIVIO', [PK_L2...], [PK_L1...])`.
 - Query tag obbligatorio: `'{"app": "DBT", "schema": "L2_<AREA>", "entita": "<NOME>"}'`.
 - Checklist pre-rilascio: tipi dato per prefisso (TS_/DT_/EU_), tracciato e ordine colonne allineati all'analisi tecnica, cluster/join SCD2 coerenti col `Catalogo Entità` della xlsx, mai `SELECT *`, non duplicare in yml quanto già in `dbt_project.yml`, `dbt.exe compile` pulito prima della MR.
+
+## Layer L2 — gestione campi varchar vuoti OCS (nuova sezione 5.5, 2026-07-20)
+
+Sezione nuova rispetto alla versione precedente della docx (non presente nell'ingest del 2026-07-14): le sorgenti OCS non prevedono NULL sui campi varchar, per cui un valore "bianco" arriva in L1 come stringa a singolo spazio (`' '`). Impatti prescritti per L2/L3:
+
+1. Sostituire `campo IS NULL` con `{{ custom_is_null('campo') }}` (copre `IS NULL OR campo = ' '`), salvo casi con valorizzazione specifica nota (unico caso documentato: `BACCPTES`, dove `' '` = "Poste Italiane").
+2. Nei `COALESCE` con primo input di sorgente OCS, aggiungere `NULLIF(campo, ' ')`.
+3. JOIN/UNION: nessuna modifica richiesta in generale; unico punto critico segnalato è un campo OCS (`' '`) in join con un campo non-OCS (`NULL`) — da trattare caso per caso.
+
+Analisi di dettaglio, inventario dei punti di codice da correggere e verifica puntuale contro `raw/dwh-code/`: vedi [[null-vs-placeholder-ocs]] (pagina dedicata, gestita separatamente).
 
 ## Layer L3 — storicizzazioni
 
@@ -50,7 +60,7 @@ Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio S
 
 - La sezione S1 variante ROWID e la sezione S5 sono le più recenti/dettagliate del documento e non hanno ancora un doppione nei due file di analisi tecnica — probabile che siano state aggiunte dopo.
 - Diversi punti aperti segnalati esplicitamente nel testo: "Se ci sono funzioni più complesse nel passaggio della chiave da L1 a L2 staging?" (5.3 Cancellazioni), "S1 non previsto?" (L3).
-- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 — vedi [[inconsistenze]].
+- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14, e ri-verificato il 2026-07-20 dopo un secondo resync di `raw/dwh-code/` e un aggiornamento della docx (nuova sezione 5.5 "Gestione campi varchar vuoti OCS"; rinomina `PROGRESSIVO_PK`→`PR_PK` nella sezione 5.1) — vedi [[inconsistenze]].
 
 ## Collegamenti
 
@@ -60,4 +70,5 @@ Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio S
 - [[progressivo-pk-e-progressivo-controparte]]
 - [[cancellazioni-fl-deleted]]
 - [[caricamento-layer-l0-l1]], [[caricamento-layer-l2]]
+- [[null-vs-placeholder-ocs]]
 - [[inconsistenze]]

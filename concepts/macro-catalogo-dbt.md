@@ -2,10 +2,10 @@
 title: Catalogo macro DBT (Agos X)
 type: concept
 tags: [dbt, macro, layer/L0, layer/L1, layer/L2, layer/L3]
-updated: 2026-07-14
+updated: 2026-07-16
 ---
 
-Catalogo delle macro DBT presenti in `raw/dwh-code/macros/` (49 file .sql, 62 macro), verificato contro `raw/dwh-code/` in data 2026-07-14. Le macro documentate nei tre file `raw/` sono confermate quasi tutte presenti, con alcune differenze di naming — vedi [[inconsistenze]].
+Catalogo delle macro DBT presenti in `raw/dwh-code/macros/` (49 file .sql, 62 macro), verificato contro `raw/dwh-code/` in data 2026-07-14, riconfermato senza differenze dopo il resync del 2026-07-16 (spot-check: `custom_to_date`, `delete_month`, `is_incremental_S1`, `ts_fine_validita`, `scd2_foto_mensile`, `add_datamask`/`remove_datamask` assente, `log_run_results`, `call_proc_report_fondi_masterscale`). Le macro documentate nei tre file `raw/` sono confermate quasi tutte presenti, con alcune differenze di naming — vedi [[inconsistenze]].
 
 ## Conversioni dtype (`macros/dtype_conversion/`)
 

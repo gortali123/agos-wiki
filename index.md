@@ -12,7 +12,7 @@
 - [L2 ASSICURAZIONI](entities/l2-assicurazioni.md)
 - [L2 CARTE](entities/l2-carte.md) — query_tag schema mismatch sistematico
 - [L2 GESTIONE_CREDITI](entities/l2-gestione-crediti.md)
-- [L2 ONBOARDING](entities/l2-onboarding.md) — wfl_istanza usa is_incremental_S1
+- [L2 ONBOARDING](entities/l2-onboarding.md) — tutti i modelli S1 usano is_incremental_S1
 - [L2 PRODOTTO](entities/l2-prodotto.md)
 - [L2 PRODOTTO_M](entities/l2-prodotto-m.md)
 - [L2 PROVVIGIONI_RAPPEL](entities/l2-provvigioni-rappel.md) — query_tag disattivato/errato
@@ -40,10 +40,12 @@
 - [Caricamento layer L2](sources/caricamento-layer-l2.md)
 - [Guida Sviluppo](sources/guida-sviluppo.md)
 - [Agos X - Layer L2.xlsx (reference)](sources/layer-l2-xlsx-reference.md) — non ingerito foglio per foglio, solo struttura
+- [CFG_L1_SCHEMA e CFG_L1_CLUSTER_STO](sources/cfg-l1-schema-e-cluster-sto.md) — export tabelle tecniche, non ingerito riga per riga, solo struttura/statistiche
 
 ## Queries
 
-- [Inconsistenze: codice vs skill vs documentazione](queries/inconsistenze.md) — tabella riassuntiva + 12 voci di dettaglio
+- [Inconsistenze: codice vs skill vs documentazione](queries/inconsistenze.md) — tabella riassuntiva (solo voci aperte) + 10 voci di dettaglio
+- [NULL vs placeholder OCS (' ') in L2/L3](queries/null-vs-placeholder-ocs.md) — interventi da guida sviluppo: custom_is_null()/NULLIF, inventario completo
 
 ## Develop
 

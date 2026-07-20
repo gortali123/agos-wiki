@@ -2,10 +2,10 @@
 title: "Storicizzazione L2: pattern S1-S4"
 type: concept
 tags: [layer/L2, storicizzazione]
-updated: 2026-07-14
+updated: 2026-07-16
 ---
 
-I quattro pattern di storicizzazione L2 documentati in [[caricamento-layer-l2]] e [[guida-sviluppo]], verificati contro i modelli reali in `raw/dwh-code/models/L2/` (2026-07-14).
+I quattro pattern di storicizzazione L2 documentati in [[caricamento-layer-l2]] e [[guida-sviluppo]], verificati contro i modelli reali in `raw/dwh-code/models/L2/` (risincronizzato 2026-07-16 dalla repo live; ricontrollato in data).
 
 | Pattern | Materializzazione | Chiave tecnica | Uso tipico |
 |---|---|---|---|
@@ -16,14 +16,14 @@ I quattro pattern di storicizzazione L2 documentati in [[caricamento-layer-l2]] 
 
 Regola d'ordine colonne (da [[caricamento-layer-l2]]): campi di storicizzazione subito dopo la PK funzionale, `LASTMODIFIEDDATA` sempre in coda.
 
-## Due implementazioni di S1 coesistenti nel codice
+## Due implementazioni di S1 coesistenti nel codice (corretto 2026-07-16)
 
-Verificato che il pattern S1 è implementato in due modi differenti nella stessa area di codice:
+Ricontrollato dopo il resync di `raw/dwh-code/`: la caratterizzazione precedente ("bespoke con hash_cols" vs "macro `is_incremental_S1` senza CTE di dedup") era imprecisa e comunque superata dall'adozione più ampia della macro. Stato attuale:
 
-1. **Bespoke/hand-rolled** (es. `variazioni_anagrafiche.sql`, `indirizzi_postalizzazione.sql`): CTE esplicite per dedup via hash (`{{ hash_cols([...]) }}` + `QUALIFY ... IS DISTINCT FROM LAG(...)`) e calcolo manuale di `TS_FINE_VALIDITA` via `{{ ts_fine_validita(...) }}`.
-2. **Basata su macro condivisa** (es. `wfl_istanza.sql`, ONBOARDING): usa direttamente `{{ is_incremental_S1('CD_ISTANZA') }}` + `{{ ts_fine_validita(...) }}` senza CTE di dedup-hash esplicite (la macro `is_incremental_S1` fa QUALIFY/collasso duplicati internamente, ma con logica leggermente diversa da quella hand-rolled — non è confermato che producano risultati identici in tutti i casi).
+1. **Completamente bespoke** (nessun uso di `is_incremental_S1`): solo `variazioni_anagrafiche.sql` (`raw/dwh-code/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql`), che usa `is_incremental()` grezzo + `QUALIFY ... IS DISTINCT FROM LAG(...)` manuale e `{{ ts_fine_validita(...) }}` per calcolare `TS_FINE_VALIDITA`.
+2. **`hash_cols()` + macro condivisa `is_incremental_S1(...)`**: tutti gli altri modelli S1 ispezionati costruiscono comunque una CTE con `{{ hash_cols([...]) }}` per calcolare `HASHED_COLS`, poi passano quella colonna alla macro `is_incremental_S1`, che internamente applica sia il filtro incrementale (`WHERE LASTMODIFIEDDATA > ...` o finestra `TS_FINE_VALIDITA` aperta) sia il `QUALIFY HASHED_COLS IS DISTINCT FROM LAG(HASHED_COLS) OVER (...)` di dedup — quindi la macro non salta il dedup-hash, lo assorbe. Verificato in `raw/dwh-code/macros/materialization/is_incremental_S1.sql` e in almeno 8 modelli: `models/L2/ANAGR_CONTROPARTE/indirizzi_postalizzazione.sql`, `models/L2/CARTE/carte_utilizzi.sql`, `models/L2/ONBOARDING/wfl_istanza.sql`, `wfl_attivita.sql`, `wfl_fase.sql`, `wfl_sottofase.sql`, `models/L2/PRODOTTO/tabelle_finanziarie.sql`, `models/L2/PRODOTTO/variazioni_stato_prat.sql`.
 
-Non è chiaro se questa doppia implementazione sia intenzionale (macro introdotta più tardi, modelli vecchi non migrati) o un problema di consistenza — segnalato in [[inconsistenze]].
+Quindi non è più corretto dire che "solo `wfl_istanza` usa la macro condivisa": l'adozione di `is_incremental_S1` è oggi la norma per i nuovi modelli S1, e `variazioni_anagrafiche.sql` è l'eccezione bespoke residua (probabilmente per storia/anzianità del modello). Nessuna evidenza che le due varianti producano risultati diversi nella pratica — la macro condivisa è funzionalmente equivalente al pattern manuale, solo fattorizzata. Voce corrispondente in [[inconsistenze]] aggiornata/risolta.
 
 ## query_tag: copertura incompleta
 
