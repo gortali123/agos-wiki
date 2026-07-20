@@ -86,7 +86,7 @@ Mirror-Folder "templates"
 Mirror-Folder "tests"
 
 # --- File sciolti nella root della repo sorgente ---
-Copy-RootFilesByExtension -Extensions @(".yml", ".py", ".md", ".ps1")
+Copy-RootFilesByExtension -Extensions @(".yml", ".py", ".md", ".ps1", ".csv")
 
 # --- Models: L2 e L3 completi ---
 Mirror-Folder "models\L2"
