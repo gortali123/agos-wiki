@@ -17,33 +17,33 @@ Regole ufficiali (guida sviluppo, sez. 5.5 "Gestione campi varchar vuoti OCS"):
 
 ### IS NULL da sostituire con `custom_is_null()`
 
-| Macro area | Tabella | Righe | Campo |
-|---|---|---|---|
-| RISCHI_ADEMPIMENTI | `svalutazioni_m.sql` | 47 | SVCRSC_COD_TRANSAZIONE |
-| RISCHI_ADEMPIMENTI | `flessibilita_m.sql` | 51 | PSVT_BLOCCO |
-| GESTIONE_CREDITI | `perdite_minime_abb.sql` | 43 | PSVT_BLOCCO |
-| PRODOTTO | `carta.sql` | 73-74 | CEMPR_INVIO_EC_MAIL, CEMPR_INVIO_EC_INTERNET |
-| PRODOTTO_M | `carta_m.sql` | 70-71 | CEMPR_INVIO_EC_MAIL, CEMPR_INVIO_EC_INTERNET |
-| CARTE | `carte_utilizzi.sql` | 143 | CRVOC_CODICE_CAMP |
-| CARTE | `carte_utilizzi.sql` | 191 | CRVOC_CONTR_DEALER |
-| PRODOTTO | `pratica.sql` | 149 | CHC_CES_PERDITA |
-| PRODOTTO_M | `pratica_m.sql` | 154 | CHC_CES_PERDITA |
-| PRODOTTO | `carta.sql` | 86 | CAB_COD_BLOCCO_OCS |
-| PRODOTTO_M | `carta_m.sql` | 83 | CAB_COD_BLOCCO_OCS |
-| CARTE | `carte_limitazioni_operativita.sql` | 12 | CAB_COD_BLOCCO_OCS |
-| ONBOARDING | `wfl_fase.sql` | 12 | WFISFA_STATO |
-| ONBOARDING | `wfl_istanza.sql` | 14 | WFISWFL_STATO |
-| ONBOARDING | `wfl_sottofase.sql` | 13 | WFISSF_STATO |
+| Macro area         | Tabella                             | Righe | Campo                                        |
+| ------------------ | ----------------------------------- | ----- | -------------------------------------------- |
+| RISCHI_ADEMPIMENTI | `svalutazioni_m.sql`                | 47    | SVCRSC_COD_TRANSAZIONE                       |
+| RISCHI_ADEMPIMENTI | `flessibilita_m.sql`                | 51    | PSVT_BLOCCO                                  |
+| GESTIONE_CREDITI   | `perdite_minime_abb.sql`            | 43    | PSVT_BLOCCO                                  |
+| PRODOTTO           | `carta.sql`                         | 73-74 | CEMPR_INVIO_EC_MAIL, CEMPR_INVIO_EC_INTERNET |
+| PRODOTTO_M         | `carta_m.sql`                       | 70-71 | CEMPR_INVIO_EC_MAIL, CEMPR_INVIO_EC_INTERNET |
+| CARTE              | `carte_utilizzi.sql`                | 143   | CRVOC_CODICE_CAMP                            |
+| CARTE              | `carte_utilizzi.sql`                | 191   | CRVOC_CONTR_DEALER                           |
+| PRODOTTO           | `pratica.sql`                       | 149   | CHC_CES_PERDITA                              |
+| PRODOTTO_M         | `pratica_m.sql`                     | 154   | CHC_CES_PERDITA                              |
+| PRODOTTO           | `carta.sql`                         | 86    | CAB_COD_BLOCCO_OCS                           |
+| PRODOTTO_M         | `carta_m.sql`                       | 83    | CAB_COD_BLOCCO_OCS                           |
+| CARTE              | `carte_limitazioni_operativita.sql` | 12    | CAB_COD_BLOCCO_OCS                           |
+| ONBOARDING         | `wfl_fase.sql`                      | 12    | WFISFA_STATO                                 |
+| ONBOARDING         | `wfl_istanza.sql`                   | 14    | WFISWFL_STATO                                |
+| ONBOARDING         | `wfl_sottofase.sql`                 | 13    | WFISSF_STATO                                 |
 
 Nota: le 3 righe `wfl_fase`/`wfl_istanza`/`wfl_sottofase` già replicano manualmente `IS NULL OR campo = ' '` (funzionalmente corrette) ma vanno migrate a `custom_is_null()` per uniformità, come richiesto dalla guida.
 
 ### COALESCE da integrare con `NULLIF(campo, ' ')`
 
-| Macro area | Tabella | Righe | Campo (primo input COALESCE) |
-|---|---|---|---|
-| ONBOARDING | `doc_istruttoria.sql` | 19-26 | SEDO.OXDOTSEDO_OPE_BLOCCATA |
-| GESTIONE_CREDITI | `passaggi_a_perdita.sql` | 8, 32 | B.TABTPP_CONCORDATA |
-| ASSICURAZIONI | `provvigioni_assicurative.sql` | 7-8 | A.BAPV_SERVIZIO (workaround `TRIM(...)=''` ancora in uso, da migrare a `COALESCE(NULLIF(...))`) |
+| Macro area       | Tabella                        | Righe | Campo (primo input COALESCE)                                                                    |
+| ---------------- | ------------------------------ | ----- | ----------------------------------------------------------------------------------------------- |
+| ONBOARDING       | `doc_istruttoria.sql`          | 19-26 | SEDO.OXDOTSEDO_OPE_BLOCCATA                                                                     |
+| GESTIONE_CREDITI | `passaggi_a_perdita.sql`       | 8, 32 | B.TABTPP_CONCORDATA                                                                             |
+| ASSICURAZIONI    | `provvigioni_assicurative.sql` | 7-8   | A.BAPV_SERVIZIO (workaround `TRIM(...)=''` ancora in uso, da migrare a `COALESCE(NULLIF(...))`) |
 
 ## Già corretto
 
@@ -64,4 +64,5 @@ Nota: le 3 righe `wfl_fase`/`wfl_istanza`/`wfl_sottofase` già replicano manualm
 
 - [[l2-anagr-controparte]], [[l2-rischi-adempimenti]], [[l2-gestione-crediti]], [[l2-prodotto]], [[l2-prodotto-m]], [[l2-carte]], [[l2-onboarding]]
 - [[cfg-l1-schema-e-cluster-sto]]
+- [[storicizzazione-l1-cluster-a-b-c]] — sezione "Normalizzazione varchar vuoti OCS in L1": i modelli L1 OCS/AIN normalizzano già (`IFF(RTRIM(campo)='', ' ', RTRIM(campo))`) ogni stringa vuota a placeholder `' '` canonico; è logica L1 reale, ma va in direzione opposta a questa pagina (produce/canonicalizza il placeholder, non lo converte in NULL)
 - [[inconsistenze]]

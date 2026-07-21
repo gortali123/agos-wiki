@@ -165,6 +165,21 @@ Nelle **RT** invece le colonne sorgente si usano come scritte nella regola
 e' usata sia in un mapping diretto (convertito) sia dentro una formula (raw),
 segnala la possibile incoerenza di unita' con `-- WARN`.
 
+### Placeholder OCS (varchar vuoti ' ') su sorgenti L1
+
+Se una colonna sorgente L1 e' un campo OCS varchar (le sorgenti OCS non
+prevedono NULL, il "bianco" arriva da L1 gia' normalizzato al placeholder
+`' '`) e la RT/CHIAVI la testa con `IS NULL`/`IS NOT NULL` o come primo
+input di un `COALESCE`:
+
+- **IS NULL / IS NOT NULL** -> usa `{{ custom_is_null('alias.<col>') }}` /
+  `{{ custom_is_not_null('alias.<col>') }}` invece del confronto nudo.
+- **COALESCE** con la colonna OCS come primo input -> avvolgila in
+  `NULLIF(alias.<col>, ' ')`.
+- Se la sorgente e' L2 (gia' convertita a monte) o la colonna non e'
+  chiaramente OCS, non applicare la macro: mappa/trascrivi as-is, o segnala
+  `-- WARN` in caso di dubbio sulla provenienza.
+
 ### Placeholder temporali nelle RT
 
 Le RT contengono placeholder tipo

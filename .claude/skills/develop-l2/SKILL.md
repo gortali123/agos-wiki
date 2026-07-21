@@ -149,6 +149,15 @@ WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 - **Non usare SELECT \*** - elencare sempre tutte le colonne esplicitamente
 - **Nessun padding prima di `AS`**: `alias.COLONNA AS NOME_CAMPO`
 
+#### Placeholder OCS (varchar vuoti ' ')
+
+Le sorgenti OCS non prevedono NULL sui campi varchar: un valore "bianco" arriva gia' da L1 come placeholder a singolo spazio `' '` (normalizzato canonicamente in L1). Quando la RT o il mapping diretto testano un campo OCS varchar:
+
+- **IS NULL / IS NOT NULL** su campo OCS -> usa `{{ custom_is_null('alias.<col>') }}` / `{{ custom_is_not_null('alias.<col>') }}` (coprono sia NULL vero sia `' '`), non il solo `IS NULL`.
+- **COALESCE** con un campo OCS come primo input -> aggiungi `NULLIF(alias.<col>, ' ')` prima del COALESCE, cosi' il placeholder non "vince" sul fallback.
+- **Eccezione nota**: `BACCPTES` dove `' '` ha significato applicativo proprio ("Poste Italiane") - non applicare la macro li'.
+- In caso di dubbio se un campo e' OCS o la provenienza non e' chiara, segnala `-- WARN` invece di applicare la macro alla cieca.
+
 #### Cluster FL_DELETED (cancellazioni logiche)
 
 Le tabelle L1 dei cluster **A1, A2, C** (solo questi) hanno FL_DELETED; B1 e altri cluster no. Per le tabelle A1/A2/C:

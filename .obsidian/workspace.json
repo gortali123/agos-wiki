@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "queries/null-vs-placeholder-ocs.md",
+                "file": "queries/inconsistenze.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "null-vs-placeholder-ocs"
+              "title": "inconsistenze"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 479.50909423828125
+    "width": 263.50909423828125
   },
   "right": {
     "id": "d10b8989480e73a0",
@@ -185,19 +185,20 @@
   },
   "active": "3b79670d107d39b6",
   "lastOpenFiles": [
+    "queries/inconsistenze.md.tmp.15964.e0959378b53b",
+    "queries/inconsistenze.md.tmp.15964.9d0f164047c9",
+    "log.md.tmp.15964.c8fd309c84df",
+    "queries/inconsistenze.md.tmp.15964.2c3e6d032ce0",
+    "queries/inconsistenze.md.tmp.15964.653368558410",
+    "queries/null-vs-placeholder-ocs.md",
+    "queries/inconsistenze.md",
     "log.md.tmp.1932.dc217071f346",
     "index.md.tmp.1932.bffaabd3e0d9",
     "queries/null-vs-placeholder-ocs.md.tmp.1932.cda64dca5c95",
     "queries/null-vs-placeholder-ocs.md.tmp.1932.290fae83a555",
     "queries/null-vs-placeholder-ocs.md.tmp.1932.7d5c54b36934",
     "queries/null-vs-placeholder-ocs.md.tmp.1932.114e393df0c2",
-    "queries/null-vs-placeholder-ocs.md.tmp.1932.49875ab7db6a",
-    "queries/null-vs-placeholder-ocs.md.tmp.1932.a95c4b8c051f",
-    "queries/null-vs-placeholder-ocs.md.tmp.1932.251d81d1c0ac",
-    "queries/null-vs-placeholder-ocs.md.tmp.1932.66004f65703e",
-    "queries/null-vs-placeholder-ocs.md.tmp.1932.85a3fe604a58",
     "sources/cfg-l1-schema-e-cluster-sto.md",
-    "queries/inconsistenze.md",
     "CLAUDE.md",
     "queries/inconsistenze-doc-vs-codice.md",
     "entities/l2-sword.md",
@@ -220,7 +221,6 @@
     "concepts/cobol-parsing.md",
     "concepts/data-masking-agos-x.md",
     "concepts/progressivo-pk-e-progressivo-controparte.md",
-    "concepts/naming-convention-agos-x.md",
     "Untitled 2.canvas",
     "Untitled 1.canvas",
     "Untitled.canvas"

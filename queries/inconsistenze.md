@@ -9,18 +9,19 @@ Elenco **solo delle incongruenze attualmente aperte** tra le tre fonti di verit�
 
 ## Tabella
 
-| # | Titolo | Codice | Skill | Doc |
-|---|---|---|---|---|
-| 1 | query_tag L2: obbligatorio, assente/errato nel codice | ⚠️ incompleto/errato | — | ✅ prescrive obbligo |
-| 2 | Cancellazioni L2: due meccanismi non equivalenti | ⚠️ incompleto in più aree | — | ✅ prescrive 2 step sempre |
-| 3 | Flag: xlsx dice S/N, codice/docx usano Y/N | ✅ Y/N pervasivo | — | ⚠️ xlsx diverge dal docx |
-| 4 | Prefissi campo: `PROGRESSIVO_CONTROPARTE` senza prefisso `PR_` | ⚠️ parziale | — | ⚠️ xlsx/docx non riconciliate su `ID_`/`SK_` |
-| 5 | Subject area: due tassonomie di sigle | ✅ solo nome esteso osservato | — | ⚠️ xlsx sigle mai viste nel codice |
-| 6 | `dbt_artifacts.upload_results` documentato, non presente | ✅ usa log_run_results/TECH.LOG_DBT | — | ⚠️ descrive dbt_artifacts |
-| 7 | Nomi test generici: doc dice `_table`, codice no | ✅ nomi senza `_table` | — | ⚠️ doc con suffisso `_table` |
-| 8 | Macro documentate ma non trovate/nome diverso | ✅ nomi reali diversi | — | ⚠️ nomi non corrispondenti |
-| 9 | Sentinella finestra aperta: TIMESTAMP (L2/S1) vs DATE (L3/S5) | ⚠️ due tipi diversi | — | ⚠️ non documentato come intenzionale |
-| 10 | Bug applicativi minori (vari) | ⚠️ vedi dettaglio | — | — |
+| #   | Titolo                                                                                | Codice                             | Skill | Doc                                          |
+| --- | ------------------------------------------------------------------------------------- | ---------------------------------- | ----- | -------------------------------------------- |
+| 1   | query_tag L2: obbligatorio, assente/errato nel codice                                 | ⚠️ incompleto/errato               | —     | ✅ prescrive obbligo                          |
+| 2   | Cancellazioni L2: standard è pre_hook `delete_l2`, codice disallineato in più modelli | ⚠️ disallineato in più aree        | —     | ✅ prescrive pre_hook come standard           |
+| 3   | Flag: xlsx riporta S/N, errato — standard reale è Y/N                                 | ✅ Y/N pervasivo                    | —     | ⚠️ xlsx da correggere in Y/N                 |
+| 4   | Prefissi campo: `PROGRESSIVO_CONTROPARTE` senza prefisso `PR_`                        | ⚠️ parziale                        | —     | ⚠️ xlsx/docx non riconciliate su `ID_`/`SK_` |
+| 5   | Subject area: due tassonomie di sigle                                                 | ✅ solo nome esteso osservato       | —     | ⚠️ xlsx sigle mai viste nel codice           |
+| 6   | `dbt_artifacts.upload_results` documentato, non presente                              | ✅ usa log_run_results/TECH.LOG_DBT | —     | ⚠️ descrive dbt_artifacts                    |
+| 7   | Nomi test generici: doc dice `_table`, codice no                                      | ✅ nomi senza `_table`              | —     | ⚠️ doc con suffisso `_table`                 |
+| 8   | Macro documentate ma non trovate/nome diverso                                         | ✅ nomi reali diversi               | —     | ⚠️ nomi non corrispondenti                   |
+| 9   | Sentinella finestra aperta: TIMESTAMP (L2/S1) vs DATE (L3/S5)                         | ⚠️ due tipi diversi                | —     | ⚠️ non documentato come intenzionale         |
+| 10  | Bug applicativi minori (vari)                                                         | ⚠️ vedi dettaglio                  | —     | —                                            |
+| 11  | Normalizzazione OCS in L1 non documentata nel doc framework L1                        | ⚠️ presente ma non documentata     | —     | ⚠️ assente da [[caricamento-layer-l0-l1]]    |
 
 Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; — = fonte non coinvolta in questa voce.
 
@@ -33,19 +34,21 @@ Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; �
 - **Impatto**: il monitoring per-query su Snowflake (query_tag) descritto come pilastro dell'osservabilità DBT è di fatto inaffidabile per gran parte del progetto.
 - **Dettagli**: [[query-tag-monitoring]], [[storicizzazione-l2-s1-s4]], [[l2-carte]], [[l2-provvigioni-rappel]].
 
-### 2. Cancellazioni L2: due meccanismi non equivalenti, non è chiaro quale sia lo standard
+### 2. Cancellazioni L2: standard è il pre_hook `delete_l2`, il codice è disallineato
 
-- **Doc**: [[caricamento-layer-l2]]/[[guida-sviluppo]] (sezione 5.3) descrivono un processo a 2 step sempre presente — filtro `FL_DELETED` + `pre_hook delete_l2(...)` per la DELETE fisica.
-- **Codice**: molti modelli (es. `ANTIFRODE.archivio_tessere`, gran parte di GESTIONE_CREDITI, PRODOTTO) hanno **solo** il filtro `WHERE FL_DELETED = 'N'`, senza `pre_hook delete_l2`. Una riga già caricata e poi cancellata alla fonte **resta stale nel target L2** per questi modelli.
+- **Standard**: il pre_hook `delete_l2(...)` (DELETE fisica) + filtro `FL_DELETED` è il meccanismo di riferimento, descritto in [[caricamento-layer-l2]]/[[guida-sviluppo]] (sezione 5.3) come processo a 2 step sempre presente.
+- **Codice**: **disallineato rispetto allo standard**. Molti modelli (es. `ANTIFRODE.archivio_tessere`, gran parte di GESTIONE_CREDITI, PRODOTTO) hanno **solo** il filtro `WHERE FL_DELETED = 'N'`, senza `pre_hook delete_l2`. Una riga già caricata e poi cancellata alla fonte **resta stale nel target L2** per questi modelli.
 - **Impatto**: query di business su queste entità possono contare/mostrare pratiche/controparti/eventi cancellati alla fonte, se non filtrate esplicitamente anche a valle.
+- **Da fare**: allineare i modelli mancanti al pattern standard aggiungendo il `pre_hook delete_l2(...)` (proposta di fix in [[cancellazioni-fl-deleted]] / eventuale `develop/`).
 - **Dettagli**: [[cancellazioni-fl-deleted]], [[l2-antifrode]].
 
-### 3. Convenzione valori flag: xlsx dice "S"/"N", codice e docx usano "Y"/"N"
+### 3. Convenzione valori flag: `raw/Agos X - Layer L2.xlsx` (foglio Nomenclatura Campi) riporta 'S'/'N', errato
 
-- **Doc (xlsx, foglio Nomenclatura Campi)**: "Indicatore Flag (FL_): Rigorosamente a 2 valori. 'S' o 'N'".
-- **Doc (docx) e codice**: `FL_DELETED` (il flag più usato nel progetto) usa sistematicamente **'Y'/'N'**.
+- **Errore**: `raw/Agos X - Layer L2.xlsx`, foglio Nomenclatura Campi, riporta: "Indicatore Flag (FL_): Rigorosamente a 2 valori. 'S' o 'N'". Questo valore è **errato/disallineato** rispetto al resto del progetto.
+- **Riferimento corretto**: `raw/guida_sviluppo.docx` (pagina [[guida-sviluppo]]) e il codice usano sistematicamente **'Y'/'N'** — `FL_DELETED` (il flag più usato nel progetto) ne è l'esempio principale.
+- **Da correggere**: la cella del foglio Nomenclatura Campi nella xlsx va aggiornata da 'S'/'N' a 'Y'/'N' per allinearsi allo standard reale (correzione lato utente, non modificabile qui).
 - **Impatto**: chi scrive un nuovo modello guardando solo la xlsx potrebbe implementare un flag 'S'/'N' non coerente con `FL_DELETED` esistente.
-- **Dettagli**: [[naming-convention-agos-x]], [[cancellazioni-fl-deleted]].
+- **Dettagli**: [[naming-convention-agos-x]], [[cancellazioni-fl-deleted]], [[layer-l2-xlsx-reference]].
 
 ### 4. Prefissi campo: `PROGRESSIVO_CONTROPARTE` ancora senza prefisso `PR_`; `ID_`/`SK_` non in xlsx
 
@@ -98,6 +101,14 @@ Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; �
 - File orfani: `variazioni_anagrafiche.sql.old`, `variazioni_anagrafiche_day.sql.old`.
 - `variazioni_anagrafiche_day.sql` si autodichiara nell'header come proposta di riscrittura non testata su dati reali — da verificare se è la versione realmente deployata.
 - `models/L0/` copre solo ADOBE, CTC, OCS (manca CRIF, presente invece in L1) — limite di questo wiki, non del progetto reale.
+
+### 11. Normalizzazione varchar vuoti OCS in L1: logica reale nel codice, assente dal doc framework L1
+
+- **Codice**: i 14 modelli `raw/dwh-code/models/L1/OCS/AIN/*.sql` (es. `aiecfpare.sql`, `aictfpt.sql`) applicano sistematicamente `TRY_CAST(IFF(RTRIM(campo) = '', ' ', RTRIM(campo)) AS VARCHAR(n))` — un IF esplicito, scritto a mano modello per modello (non nel template `templates/models/L1/C/stg_table.sql`), che forza ogni stringa vuota `''` al placeholder canonico `' '`. Non è passthrough puro.
+- **Doc**: [[caricamento-layer-l0-l1]] descrive L1 come caricamento meccanico (job Glue, TRANSIENT VARCHAR/VARIANT, cluster storicizzazione) e non menziona questa normalizzazione, pur essendo logica applicativa reale scritta nei modelli L1.
+- **Impatto**: chi legge solo il doc framework L1 non sa che L1 già canonicalizza i placeholder OCS — rischio di reintrodurre logica ridondante o inconsistente a valle, o di non capire perché L2 trova sempre `' '` e mai `''`.
+- **Da fare**: integrare una sezione dedicata in [[caricamento-layer-l0-l1]] (sorgente: `raw/Agos X - Caricamento layer L0-L1.docx`, va aggiornata dall'utente, non modificabile qui).
+- **Dettagli**: [[storicizzazione-l1-cluster-a-b-c]] (sezione "Normalizzazione varchar vuoti OCS in L1"), [[null-vs-placeholder-ocs]].
 
 ## Verifiche eseguite (stato attuale, nessuna incongruenza rilevata)
 
