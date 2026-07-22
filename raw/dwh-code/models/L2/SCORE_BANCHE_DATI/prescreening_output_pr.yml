@@ -20,7 +20,7 @@ models:
     constraints:
       - type: primary_key
         warn_unenforced: false
-        columns: [CD_INQUIRYCODE, CD_RUOLO, CD_POLICY, TS_INSERIMENTO]
+        columns: [CD_INQUIRYCODE, CD_POLICY, TS_INSERIMENTO] # WARN: Da inserire CD_RUOLO come PK al momento risulta NULL
     columns:
       - name: CD_INQUIRYCODE
         data_type: VARCHAR(255)

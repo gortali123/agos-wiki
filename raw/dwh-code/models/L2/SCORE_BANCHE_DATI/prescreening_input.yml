@@ -117,7 +117,7 @@ models:
         data_type: VARCHAR
       - name: CD_ATTRIBUTO_INTERMEDIARIO
         data_type: VARCHAR
-      - name: TP_INTERMEDIARIO_TIPOLOGIA
+      - name: DS_TIPOLOGIA_INTERMEDIARIO
         data_type: VARCHAR
       - name: EU_PREZZO_BENE
         data_type: NUMBER(13,2)

@@ -4,7 +4,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: insert_overwrite
-      #query_tag: '{"app": "DBT", "schema": "L2_MAIN", "entita": "PROVVIGIONI_E_RAPPEL"}'
+      query_tag: '{"app": "DBT", "schema": "L2_PROVVIGIONI_RAPPEL", "entita": "PROVVIGIONI_E_RAPPEL"}'
     constraints:
       - type: primary_key
         warn_unenforced: false
@@ -131,7 +131,7 @@ models:
       - name: TP_INTERM_RIF
         data_type: VARCHAR(2)
       - name: DT_SOPRAVVENIENZA
-        data_type: NUMBER(8)
+        data_type: DATE
       - name: NM_PERIODO_MATURAZ
         data_type: NUMBER(3)
       - name: TP_PERIODO_MATURAZ
@@ -146,3 +146,5 @@ models:
         data_type: NUMBER(12)
       - name: NM_ORDIN_LEASING
         data_type: NUMBER(2)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

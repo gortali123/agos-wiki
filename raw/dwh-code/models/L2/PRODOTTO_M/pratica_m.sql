@@ -334,7 +334,7 @@ TAB_FIN_CONSUMO AS (
         CAST(NULL AS NUMBER(3))                         AS NM_GIORNI,
         NULL                                            AS FL_RIELAB_24,
         NULL                                            AS FL_ESITO_DEF,
-        P.PLC_CONIUGE_GARANT                            AS FL_FIRMA_DOPPIA,
+        CASE WHEN P.PLC_CONIUGE_GARANT = 'C' THEN 'S' ELSE 'N' END AS FL_FIRMA_DOPPIA,
         NULL                                            AS FL_IN_NOSTART,
         CASE WHEN P.PLC_DAT_STATO_10 IS NOT NULL THEN 'S' ELSE 'N'
         END                                             AS FL_DBT,

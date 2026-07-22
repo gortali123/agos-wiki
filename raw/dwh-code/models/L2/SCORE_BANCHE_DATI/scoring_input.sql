@@ -11,10 +11,10 @@ WITH src AS (
         TS_RIFERIMENTO
     FROM {{ ref('cde') }}          -- ASSUNZIONE: modello landing = ref('cde'); TS_RIFERIMENTO esposta dalla landing
     WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneRequest'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'SCORING'
+    
     {% if is_incremental() %}
-      AND TS_RIFERIMENTO > (SELECT COALESCE(MAX(TS_RIFERIMENTO), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
+        AND TS_RIFERIMENTO > (SELECT COALESCE(MAX(TS_INSERIMENTO), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
     {% endif %}
-
 ),
 nodes AS (
 

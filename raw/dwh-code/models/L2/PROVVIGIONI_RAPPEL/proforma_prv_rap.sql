@@ -1,24 +1,16 @@
 SELECT
     T.FTPRV_CODICE AS CD_DESTINATARIO,
     T.FTPRV_PROGRESSIVO AS PR_DESTINATARIO,
-    -- WARN: TS_INSERIMENTO - campo tecnico S2 non presente nel data model; valorizzato con CURRENT_TIMESTAMP()
-    CURRENT_TIMESTAMP()::TIMESTAMP_NTZ  AS TS_INSERIMENTO,
     T.FTPRV_TIPO_FATTURA AS TP_FATTURA,
     T.FTPRV_PROGR_PROV AS CD_DOC_LIQUIDAZIONE,
     T.FTPRV_BOLLI AS CD_GESTIONE_BOLLO,
     T.FTPRV_SOSPESO_PAGAM AS FL_PAGAMENTO_SOSPESO,
-    -- WARN: DT_INIZIO_COMPETENZA - prefisso DT_ ma tipo NUMBER(5) nel data model (data numerica); mappata diretta senza custom_to_date, coerente col FORMATO dichiarato
-    T.FTPRV_PERIODO_DAL AS DT_INIZIO_COMPETENZA,
-    -- WARN: DT_FINE_COMPETENZA - prefisso DT_ ma tipo NUMBER(5) nel data model; mappata diretta senza custom_to_date
-    T.FTPRV_PERIODO_AL AS DT_FINE_COMPETENZA,
-    -- WARN: DT_FATTURA - prefisso DT_ ma tipo NUMBER(5) nel data model; mappata diretta senza custom_to_date
-    T.FTPRV_DATA_FATT AS DT_FATTURA,
-    -- WARN: DT_REGISTRAZIONE - prefisso DT_ ma tipo NUMBER(5) nel data model; mappata diretta senza custom_to_date
-    T.FTPRV_DATA_REG AS DT_REGISTRAZIONE,
-    -- WARN: DT_SOPRAVVENIENZA - prefisso DT_ ma tipo NUMBER(8) nel data model (probabile YYYYMMDD); mappata diretta senza custom_to_date
-    T.FTPRV_DATA_SOPRAVV AS DT_SOPRAVVENIENZA,
-    -- WARN: DT_PAGAMENTO - prefisso DT_ ma tipo NUMBER(5) nel data model; mappata diretta senza custom_to_date
-    T.FTPRV_DATA_PAGAMENTO AS DT_PAGAMENTO,
+    {{ ole_to_date ('T.FTPRV_PERIODO_DAL') }} AS DT_INIZIO_COMPETENZA,
+    {{ ole_to_date ('T.FTPRV_PERIODO_AL') }} AS DT_FINE_COMPETENZA,
+    {{ ole_to_date ('T.FTPRV_DATA_FATT') }} AS DT_FATTURA,
+    {{ ole_to_date ('T.FTPRV_DATA_REG') }} AS DT_REGISTRAZIONE,
+    {{ custom_to_date('T.FTPRV_DATA_SOPRAVV') }} AS DT_SOPRAVVENIENZA,
+    {{ ole_to_date(' T.FTPRV_DATA_PAGAMENTO') }} AS DT_PAGAMENTO,
     T.FTPRV_PROVENIENZA AS TP_PROCEDURA,
     T.FTPRV_TIPO_PRODOTTO AS TP_PRODOTTO_PRV,
     T.FTPRV_TIPO_CODICE AS TP_DESTINATARIO,
@@ -43,13 +35,9 @@ SELECT
     T.FTPRV_TIPO_CATENA AS TP_CATENA,
     T.FTPRV_TIPO_MATURAZ AS TP_MATURAZIONE,
     T.FTPRV_DESTINAT_PAG AS CD_DESTINATARIO_PAG,
-    -- WARN: TP_DESTINARATIO_PAG - nome campo con refuso ("DESTINARATIO") nel data model; mantenuto come da contratto, verificare
-    T.FTPRV_TIPO_DESTINAT_PAG AS TP_DESTINARATIO_PAG,
+    T.FTPRV_TIPO_DESTINAT_PAG AS TP_DESTINATARIO_PAG,
     T.FTPRV_EER AS CD_EER,
     T.FTPRV_ATTIVITA_EER AS CD_EER_ATTIVITA,
     T.LASTMODIFIEDDATA AS LASTMODIFIEDDATA
 FROM {{ ref('ccfatprv') }} T
 WHERE T.FL_DELETED = 'N'
-{% if is_incremental() %}
-AND LASTMODIFIEDDATA > (SELECT COALESCE(MAX(LASTMODIFIEDDATA),'1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
-{% endif %}

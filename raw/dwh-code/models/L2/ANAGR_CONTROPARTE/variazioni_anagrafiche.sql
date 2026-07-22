@@ -1,16 +1,28 @@
 
-WITH COMBINED AS (
+WITH
+{% if is_incremental() %}
+EXISTING_CODES AS (
+    SELECT DISTINCT CD_CONTROPARTE
+    FROM {{ this }}
+),
+{% endif %}
+COMBINED AS (
     -- ramo 1: righe nuove/modificate dal source (solo il delta)
     SELECT
         CC.AL_CODICE AS CD_CONTROPARTE,
         -- Il primo record storico di ogni controparte (il piu' vecchio) usa
         -- AL_DATA_INSERIMENTO a mezzanotte come TS_INIZIO_VALIDITA invece di
-        -- AL_DATA_MODIFICA/AL_ORA_MODIFICA.
+        -- AL_DATA_MODIFICA/AL_ORA_MODIFICA. Non si applica se la controparte
+        -- e' gia' presente in target: in quel caso e' solo la riga piu'
+        -- vecchia del delta corrente, non il vero primo record storico.
         CASE
             WHEN ROW_NUMBER() OVER (
                      PARTITION BY CC.AL_CODICE
                      ORDER BY CC.AL_DATA_MODIFICA, CC.AL_ORA_MODIFICA, CC.ROWID
                  ) = 1
+                {% if is_incremental() %}
+                AND EX.CD_CONTROPARTE IS NULL
+                {% endif %}
                 THEN COALESCE({{ custom_to_timestamp_ntz('CC.AL_DATA_INSERIMENTO') }}, {{ custom_to_timestamp_ntz('CC.AL_DATA_MODIFICA', 'CC.AL_ORA_MODIFICA') }})
             ELSE {{ custom_to_timestamp_ntz('CC.AL_DATA_MODIFICA', 'CC.AL_ORA_MODIFICA') }}
         END AS TS_INIZIO_VALIDITA,
@@ -235,6 +247,9 @@ WITH COMBINED AS (
         CAST(NULL AS TIMESTAMP_NTZ) AS OLD_TS_FINE_VALIDITA,
         FALSE AS IS_EXISTING
     FROM {{ ref('ccanalog') }} AS CC
+    {% if is_incremental() %}
+    LEFT JOIN EXISTING_CODES AS EX ON EX.CD_CONTROPARTE = CC.AL_CODICE
+    {% endif %}
     WHERE CC.FL_DELETED = 'N'
     {% if is_incremental() %}
     AND CC.LASTMODIFIEDDATA > (

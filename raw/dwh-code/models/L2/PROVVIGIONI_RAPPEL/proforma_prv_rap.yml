@@ -4,20 +4,16 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
-      #query_tag: '{"app": "DBT", "schema": "L2_MAIN", "entita": "PROFORMA_PRV_RAP"}'
-      pre_hook:
-        - "{{ delete_l2('ccfatprv', ['CD_DESTINATARIO', 'PR_DESTINATARIO'], ['FTPRV_CODICE', 'FTPRV_PROGRESSIVO']) }}"
+      query_tag: '{"app": "DBT", "schema": "L2_PROVVIGIONI_RAPPEL", "entita": "PROFORMA_PRV_RAP"}'
     constraints:
       - type: primary_key
         warn_unenforced: false
-        columns: [CD_DESTINATARIO, PR_DESTINATARIO, TS_INSERIMENTO]
+        columns: [CD_DESTINATARIO, PR_DESTINATARIO]
     columns:
       - name: CD_DESTINATARIO
         data_type: NUMBER(9)
       - name: PR_DESTINATARIO
         data_type: NUMBER(4)
-      - name: TS_INSERIMENTO
-        data_type: TIMESTAMP_NTZ
       - name: TP_FATTURA
         data_type: CHAR(2)
       - name: CD_DOC_LIQUIDAZIONE
@@ -27,17 +23,17 @@ models:
       - name: FL_PAGAMENTO_SOSPESO
         data_type: CHAR(1)
       - name: DT_INIZIO_COMPETENZA
-        data_type: NUMBER(5)
+        data_type: DATE
       - name: DT_FINE_COMPETENZA
-        data_type: NUMBER(5)
+        data_type: DATE
       - name: DT_FATTURA
-        data_type: NUMBER(5)
+        data_type: DATE
       - name: DT_REGISTRAZIONE
-        data_type: NUMBER(5)
+        data_type: DATE
       - name: DT_SOPRAVVENIENZA
-        data_type: NUMBER(8)
+        data_type: DATE
       - name: DT_PAGAMENTO
-        data_type: NUMBER(5)
+        data_type: DATE
       - name: TP_PROCEDURA
         data_type: CHAR(2)
       - name: TP_PRODOTTO_PRV
@@ -86,7 +82,7 @@ models:
         data_type: CHAR(1)
       - name: CD_DESTINATARIO_PAG
         data_type: NUMBER(9)
-      - name: TP_DESTINARATIO_PAG
+      - name: TP_DESTINATARIO_PAG
         data_type: CHAR(2)
       - name: CD_EER
         data_type: CHAR(5)

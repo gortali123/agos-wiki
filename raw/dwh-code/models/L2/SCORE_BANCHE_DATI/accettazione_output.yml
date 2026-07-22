@@ -53,7 +53,7 @@ models:
         data_type: NUMBER(16,2)
       - name: CD_POTERE_FIRMA
         data_type: VARCHAR
-      - name: TP_SCIPAFI_TIPO
+      - name: TP_SCIPAFI
         data_type: VARCHAR
       - name: FL_IN_ORARIO_SERVIZIO
         data_type: VARCHAR(1)

@@ -48,10 +48,10 @@ WITH perimetro AS (
         ON P.PLPSDAIF_EV_PSV_RIF = T.PSVT_PROGRESSIVO
         AND T.FL_DELETED = 'N'
     WHERE T.PSVT_STATO = '30'
-        AND T.PSVT_BLOCCO IS NOT NULL
+        AND  {{ custom_is_not_null('T.PSVT_BLOCCO') }}
         AND T.PSVT_AZIONE IN ('RID', 'RIF')
         AND T.PSVT_ORIGINE_RICHIESTA = 'FLE'
-        AND P.PLPSDAIF_DATA_REG IS NULL
+        AND {{ custom_is_null('P.PLPSDAIF_DATA_REG') }}
 )
 
 SELECT

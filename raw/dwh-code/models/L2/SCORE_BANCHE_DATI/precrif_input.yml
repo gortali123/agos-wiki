@@ -1,0 +1,221 @@
+version: 2
+models:
+  - name: precrif_input
+    description: >
+      L2 SCORING PRECRIF_INPUT - input della strategia PRECRIF estratto dal payload XML
+      della landing CDE (StrategyOneRequest, ProcessCode = 'PRECRIF'). Grana per soggetto
+      (PK CD_INQUIRYCODE + CD_RUOLO): campi a livello pratica dalla Richiesta/Variables e
+      Header, campi soggetto dal FLATTEN degli Applicant.
+      ASSUNZIONI da validare: (1) landing = ref('cde') con VALUE variant; (2) filtro
+      ProcessCode 'PRECRIF' (lo xsd dichiara fixed 'PRECRIFX'); (3) TS_INSERIMENTO valorizzato
+      con CURRENT_TIMESTAMP() perche' assente dal data model; (4) blocco incrementale S2 non
+      applicabile (nessun LASTMODIFIEDDATA nella landing) - da riconciliare prima della prod;
+      (5) 5 campi PUNTO_VENDITA senza tag corrispondente nello xsd -> NULL;
+      (6) TP_INTERMEDIARIO duplicato nel data model, secondo campo esposto come TP_INTERMEDIARIO_2.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "PRECRIF_INPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, TS_INSERIMENTO] # WARN: Da inserire CD_RUOLO come PK al momento risulta NULL
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR(8)
+      - name: CD_INTERROGAZIONE
+        data_type: NUMBER(16,0)
+      - name: CD_USER_CODE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_PROCEDURA
+        data_type: VARCHAR
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: CD_PRESCREENING_ESITO
+        data_type: VARCHAR
+      - name: CD_PRATICHE_IN_VOLO
+        data_type: VARCHAR
+      - name: NM_RATE_1PERIODO
+        data_type: NUMBER(16,0)
+      - name: NM_RATE_2PERIODO
+        data_type: NUMBER(16,0)
+      - name: EU_IMPORTO_RATA_1PERIODO
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_RATA_2PERIODO
+        data_type: NUMBER(16,2)
+      - name: CD_MODALITA_PAGAMENTO
+        data_type: VARCHAR
+      - name: CD_TABELLA_FINANZIARIA
+        data_type: VARCHAR
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_FINANZIATO
+        data_type: NUMBER(16,2)
+      - name: EU_ANTICIPO
+        data_type: NUMBER(16,2)
+      - name: DT_DECORRENZA_1ACQUISTO
+        data_type: DATE
+      - name: CD_EMETTITORE
+        data_type: VARCHAR
+      - name: FL_TIPO_VENDITA_CONGIUNTA
+        data_type: VARCHAR
+      - name: CD_PRODOTTO
+        data_type: VARCHAR
+      - name: TP_PRODOTTO
+        data_type: VARCHAR
+      - name: TP_DESTINAZIONE_FINANZIAMENTO
+        data_type: VARCHAR
+      - name: DT_GIA_CORRENTISTA
+        data_type: DATE
+      - name: CD_CANALE
+        data_type: VARCHAR
+      - name: FL_CANALE_WEB
+        data_type: VARCHAR
+      - name: DT_CARICAMENTO
+        data_type: DATE
+      - name: CD_AREA
+        data_type: VARCHAR
+      - name: CD_DISTRETTO
+        data_type: VARCHAR
+      - name: CD_FILIALE
+        data_type: VARCHAR
+      - name: DS_RETE_VENDITA
+        data_type: VARCHAR
+      - name: DS_MACROAREA_RETE_VENDITA
+        data_type: VARCHAR
+      - name: TP_STATO_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_RETE_VENDITA
+        data_type: VARCHAR
+      - name: TP_RETE_VENDITA
+        data_type: VARCHAR
+      - name: CD_AGENTE
+        data_type: VARCHAR
+      - name: DS_MACROAREA_AGENTE
+        data_type: VARCHAR
+      - name: TP_STATO_AGENTE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_AGENTE
+        data_type: VARCHAR
+      - name: TP_AGENTE
+        data_type: VARCHAR
+      - name: CD_SUBAGENTE
+        data_type: VARCHAR
+      - name: DS_MACROAREA_SUBAGENTE
+        data_type: VARCHAR
+      - name: TP_STATO_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_SUBAGENTE
+        data_type: VARCHAR
+      - name: TP_SUBAGENTE
+        data_type: VARCHAR
+      - name: CD_CONVENZIONATO
+        data_type: VARCHAR
+      - name: DS_MACROAREA_CONVENZIONATO
+        data_type: VARCHAR
+      - name: TP_STATO_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_CONVENZIONATO
+        data_type: VARCHAR
+      - name: TP_CONVENZIONATO
+        data_type: VARCHAR
+      - name: CD_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: DS_MACROAREA_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: TP_STATO_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: TP_PUNTO_VENDITA
+        data_type: VARCHAR
+      - name: CD_VENDITORE
+        data_type: VARCHAR
+      - name: DS_MACROAREA_VENDITORE
+        data_type: VARCHAR
+      - name: CD_STATO_VENDITORE
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_VENDITORE
+        data_type: VARCHAR
+      - name: TP_VENDITORE
+        data_type: VARCHAR
+      - name: CD_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: CD_STATO_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: DS_TIPOLOGIA_INTERMEDIARIO
+        data_type: VARCHAR
+      - name: NM_LAST_EURISC_INC_CLI_CBSCORE
+        data_type: VARCHAR
+      - name: FL_LAST_EURISC_INC_CLI_NOHIT
+        data_type: VARCHAR
+      - name: DT_LAST_EURISC_INC_CLI_DATA_CARICAMENTO
+        data_type: DATE
+      - name: DT_LAST_EURISC_INC_CLI_DATA_ELABORAZIONE
+        data_type: DATE
+      - name: CD_LAST_EURISC_INC_CLI_CODICE_PRATICA
+        data_type: VARCHAR
+      - name: CD_LAST_EURISC_INC_CLI_PROCEDURA
+        data_type: VARCHAR
+      - name: CD_ANAGRAFICA
+        data_type: NUMBER(16,0)
+      - name: FL_DIPENDENTE
+        data_type: VARCHAR
+      - name: CD_FORMA_GIURIDICA
+        data_type: VARCHAR
+      - name: DT_NASCITA
+        data_type: DATE
+      - name: DT_INIZIO_OCCUPAZIONE
+        data_type: VARCHAR
+      - name: NM_DURATA_CONTRATTO_LAVORO
+        data_type: VARCHAR
+      - name: CD_PARTITA_IVA
+        data_type: NUMBER(16,0)
+      - name: TP_CLIENTE
+        data_type: VARCHAR
+      - name: CD_STATO_CIVILE
+        data_type: VARCHAR
+      - name: CD_OCCUPAZIONE
+        data_type: VARCHAR
+      - name: CD_TIPO_CONTRATTO_LAVORO
+        data_type: VARCHAR
+      - name: CD_TIPO_ATTIVITA
+        data_type: VARCHAR
+      - name: CD_TIPO_ABITAZIONE
+        data_type: VARCHAR
+      - name: CD_CTCPOS_STATO
+        data_type: VARCHAR
+      - name: FL_CTCPOS_HIT_NOHIT
+        data_type: VARCHAR
+      - name: DT_CTCPOS_SCORE_COMPLETO_DT
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_COMPLETO_FASCIA
+        data_type: VARCHAR
+      - name: NM_CTCPOS_SCORE_COMPLETO
+        data_type: VARCHAR
+      - name: DT_CTCPOS_SCORE_COMPORTAMENTALE_DT
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_COMPORTAMENTALE_FASCIA
+        data_type: VARCHAR
+      - name: NM_CTCPOS_SCORE_COMPORTAMENTALE
+        data_type: VARCHAR
+      - name: DT_CTCPOS_SCORE_SOCIODEMO_DT
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_SOCIODEMO_FASCIA
+        data_type: VARCHAR
+      - name: NM_CTCPOS_SCORE_SOCIODEMO
+        data_type: VARCHAR
+      - name: CD_CTCPOS_SCORE_SEGMENTO
+        data_type: VARCHAR

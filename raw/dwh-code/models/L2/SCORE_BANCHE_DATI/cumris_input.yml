@@ -1,0 +1,104 @@
+version: 2
+models:
+  - name: cumris_input
+    description: >
+      L2 SCORING - CUMRIS_INPUT. Estratta dal payload XML della landing CDE
+      (StrategyOneRequest, ProcessCode = 'CUMRIS'), grana per Rapporto
+      (Header/InquiryCode + Applicant/CD_CONTROPARTE + Rapporto/CD_RAPPORTO).
+      Storicizzazione S2 (append). ASSUNZIONI da validare: (1) landing = ref('cde');
+      (2) filtro ProcessCode = 'CUMRIS' mentre lo xsd dichiara fixed="CUMRISX";
+      (3) importi EU_ castati a NUMBER(16,2) senza /100 (xsd xs:decimal totalDigits=16);
+      usato anche come colonna di change-tracking del blocco incrementale.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "CUMRIS_INPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_CONTROPARTE, CD_RAPPORTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_CONTROPARTE
+        data_type: VARCHAR
+      - name: CD_RAPPORTO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_USER_CODE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_PRATICA
+        data_type: VARCHAR
+      - name: CD_PRATICA_MATCH
+        data_type: VARCHAR
+      - name: CD_PROCEDURA
+        data_type: VARCHAR
+      - name: TP_PARTECIPAZIONE
+        data_type: VARCHAR
+      - name: CD_BAN_DATI
+        data_type: VARCHAR
+      - name: NM_PROGRES
+        data_type: NUMBER(16,0)
+      - name: CD_PRATICA_DET
+        data_type: VARCHAR
+      - name: CD_ENTE_FINANZIATORE
+        data_type: VARCHAR
+      - name: TP_PARTECIPAZIONE_DET
+        data_type: VARCHAR
+      - name: TP_OPERAZIONE
+        data_type: VARCHAR
+      - name: CD_SOTTOTIPO_OPERAZIONE
+        data_type: VARCHAR
+      - name: CD_RICHIESTA_EXPE
+        data_type: VARCHAR
+      - name: FL_CRIF_ALTRO_AGOS
+        data_type: VARCHAR
+      - name: FL_EXPE_ALTRO_AGOS
+        data_type: VARCHAR
+      - name: CD_FASE_OPERAZIONE
+        data_type: VARCHAR
+      - name: DT_INIZIO_OPERAZ
+        data_type: DATE
+      - name: DT_RICHIESTA_FINANZIAMENTO
+        data_type: DATE
+      - name: DT_FINE_OPERAZ
+        data_type: DATE
+      - name: DT_ULT_AGGIOR
+        data_type: DATE
+      - name: EU_IMPORTO_RATA_MENSILE
+        data_type: NUMBER(16,2)
+      - name: NM_NUMERO_RATE
+        data_type: NUMBER(16,0)
+      - name: EU_IMPORTO_RATE_RESIDUE
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_CAPITALE_RICHIESTO
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_RATE_SCADUTE
+        data_type: NUMBER(16,2)
+      - name: NM_NUMERO_RATE_SCADUTE
+        data_type: NUMBER(16,0)
+      - name: NM_NUMERO_RATE_RESIDUE
+        data_type: NUMBER(16,0)
+      - name: CD_PERIODICITA_RATE
+        data_type: VARCHAR
+      - name: EU_IMPORTO_FIDO
+        data_type: NUMBER(16,2)
+      - name: EU_AEU_RATA
+        data_type: NUMBER(16,2)
+      - name: EU_RISC_RIL
+        data_type: NUMBER(16,2)
+      - name: EU_RISC_ATT
+        data_type: NUMBER(16,2)
+      - name: FL_ELIMINA_X_RSD
+        data_type: VARCHAR
+      - name: FL_ELIMINA_ALTRO2
+        data_type: VARCHAR
+      - name: TP_TRAT_RATA_ATRIB
+        data_type: VARCHAR
+      - name: CD_BAN_DATI_ORIGINALE
+        data_type: VARCHAR
+      - name: CD_TX_IDENTIF_DET
+        data_type: VARCHAR

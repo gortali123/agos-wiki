@@ -1,62 +1,12 @@
 {#
 In attesa --> da sistemare i seguenti campi da aggiungere 'NM_TAEG', 'NM_IRR'
 #}
-WITH base_comm_atm AS (
-    SELECT
-        f.CRVOC_EMETTITORE,
-        f.CRVOC_PROTOCOLLO,
-        f.CRVOC_RIGA,
-        f.CRVOC_ESTERA,
-        -- ── Commissione ATM in EURO ───────────────────────────────────────────────
-        r_euro.ROTBCAU_IMPORTO AS IMP_COMM_ATM_EURO,
-        r_euro.ROTBCAU_PERCENTUALE AS PERC_COMM_ATM_EURO,
-        -- ── Commissione ATM in VALUTA ─────────────────────────────────────────────
-        -- Se causale 42 non valorizzata → fallback su causale euro (COALESCE)
-        COALESCE(r_val.ROTBCAU_IMPORTO, r_euro.ROTBCAU_IMPORTO) AS EU_MIN_COMM_ATM,
-        COALESCE(r_val.ROTBCAU_PERCENTUALE, r_euro.ROTBCAU_PERCENTUALE) AS PC_COMM_ATM,
-        -- ── Importo commissione ATM applicabile al movimento ─────────────────────
-        -- Se acquisto estero (CRVOC_ESTERA = 'S') usa causale valuta,
-        -- altrimenti usa causale euro
-        CASE
-            WHEN f.CRVOC_ESTERA = 'S'
-            THEN COALESCE(r_val.ROTBCAU_IMPORTO, r_euro.ROTBCAU_IMPORTO)
-            ELSE r_euro.ROTBCAU_IMPORTO
-        END AS IMP_COMM_ATM_APPLICABILE,
-        CASE
-            WHEN f.CRVOC_ESTERA = 'S'
-            THEN COALESCE(r_val.ROTBCAU_PERCENTUALE, r_euro.ROTBCAU_PERCENTUALE)
-            ELSE r_euro.ROTBCAU_PERCENTUALE
-        END AS PERC_COMM_ATM_APPLICABILE
-    FROM {{ ref('crvouf') }} f
-    -- ── JOIN con CREMEE per recuperare le causali ATM dell'emettitore ─────────────
-    -- Chiave: CRCAR_EME = CEMEM_EMETTITORE
-    -- Filtro tipo record fisso 'E' come da tracciato CREMEE
-    JOIN {{ ref('cremee') }} e
-        ON  e.CEMEM_EMETTITORE = f.CRVOC_EMETTITORE
-        AND e.CEMEM_TIPO_RECORD = 'E'
-        AND e.FL_DELETED = 'N'
-    -- ── JOIN con ROTBFCAU per commissione ATM in EURO (causale pos.05) ────────────
-    -- Procedura fissa 'CA', causale = CEMEM_CAU_COMMISSIO05
-    JOIN {{ ref('rotbfcau') }} r_euro
-        ON  r_euro.ROTBCAU_PROCEDURA = 'CA'
-        AND r_euro.ROTBCAU_CAUSALE = e.CEMEM_CAU_COMMISSIO05
-        AND r_euro.FL_DELETED = 'N'
-    -- ── LEFT JOIN con ROTBFCAU per commissione ATM in VALUTA (causale pos.42) ─────
-    -- LEFT perché CEMEM_CAU_COMMISSIO42 è facoltativa:
-    -- se non valorizzata il COALESCE usa il fallback sulla causale euro
-    LEFT JOIN {{ ref('rotbfcau') }} r_val
-        ON  r_val.ROTBCAU_PROCEDURA = 'CA'
-        AND r_val.ROTBCAU_CAUSALE = e.CEMEM_CAU_COMMISSIO42
-        AND e.CEMEM_CAU_COMMISSIO42 IS NOT NULL
-        AND r_val.FL_DELETED = 'N'
-        --AND e.CEMEM_CAU_COMMISSIO42 <> ' '     -- causale 42 blank = non valorizzata -- ERRORE perché campo number
-    WHERE f.CRVOC_CONTABILIZZATO = 'C'       -- solo acquisti contabilizzati
-      AND f.CRVOC_TIPO_RECORD = 'F'           -- valore fisso tracciato CRVOUF
-      AND f.FL_DELETED = 'N' 
-),
 
--- ── Macro Prodotto + tipizzazione intermediario ──────────────────────────────
-macroprodotto_ca AS (
+-- ── Macro Prodotto + tipizzazione intermediario + Mercato ─────────────────────
+-- CTE unica: legge crvouf/crvoua una sola volta, calcola intermediario,
+-- macro prodotto (aggancio per emettitore) e mercato (B2B via settore
+-- merceologico, B2C via macro prodotto 1) in un solo passaggio.
+WITH base_macro_mercato AS (
     SELECT
         f.CRVOC_EMETTITORE,
         f.CRVOC_PROTOCOLLO,
@@ -75,7 +25,11 @@ macroprodotto_ca AS (
         mp.CD_MACRO_PRODOTTO_1,
         mp.CD_MACRO_PRODOTTO_2,
         mp.CD_MACRO_PRODOTTO_3,
-        mp.CD_MACRO_PRODOTTO_4
+        mp.CD_MACRO_PRODOTTO_4,
+        COALESCE(b2b.CD_MERCATO_1, b2c.CD_MERCATO_1) AS CD_MERCATO_1,
+        COALESCE(b2b.CD_MERCATO_2, b2c.CD_MERCATO_2) AS CD_MERCATO_2,
+        COALESCE(b2b.CD_MERCATO_3, b2c.CD_MERCATO_3) AS CD_MERCATO_3,
+        COALESCE(b2b.CD_MERCATO_4, b2c.CD_MERCATO_4) AS CD_MERCATO_4
     FROM {{ ref('crvouf') }} f
     LEFT JOIN {{ ref('crvoua') }} a
         ON  a.CRVOA_EMETTITORE = f.CRVOC_EMETTITORE
@@ -84,42 +38,39 @@ macroprodotto_ca AS (
     -- Macro prodotto agganciato per emettitore
     LEFT JOIN {{ source('l1_e_bsn', 'lkp_ger_macro_prodotto_ca') }} mp
         ON  mp.CD_EMETTITORE = f.CRVOC_EMETTITORE
-    WHERE f.FL_DELETED = 'N'
-),
-
--- ── Mercato: B2B via settore merceologico, B2C via macro prodotto 1 ───────────
-base_macro_mercato AS (
-    SELECT
-        m.CRVOC_EMETTITORE,
-        m.CRVOC_PROTOCOLLO,
-        m.CRVOC_RIGA,
-        m.CD_INTERMEDIARIO,
-        m.TP_INTERMEDIARIO,
-        m.CD_MACRO_PRODOTTO_1,
-        m.CD_MACRO_PRODOTTO_2,
-        m.CD_MACRO_PRODOTTO_3,
-        m.CD_MACRO_PRODOTTO_4,
-        COALESCE(b2b.CD_MERCATO_1, b2c.CD_MERCATO_1) AS CD_MERCATO_1,
-        COALESCE(b2b.CD_MERCATO_2, b2c.CD_MERCATO_2) AS CD_MERCATO_2,
-        COALESCE(b2b.CD_MERCATO_3, b2c.CD_MERCATO_3) AS CD_MERCATO_3,
-        COALESCE(b2b.CD_MERCATO_4, b2c.CD_MERCATO_4) AS CD_MERCATO_4
-    FROM macroprodotto_ca m
     -- Anagrafica intermediario: PV su CCANAIPV, CV su CCANAICV
     LEFT JOIN {{ ref('ccanaipv') }} ipv
-        ON  ipv.IPV_CODICE = m.CD_INTERMEDIARIO
+        ON  ipv.IPV_CODICE = COALESCE(
+                NULLIF(a.CRVOA_CONVENZIONATO, 0),
+                NULLIF(a.CRVOA_SUB_AGENTE,    0),
+                NULLIF(a.CRVOA_AGENTE,        0)
+            )
     LEFT JOIN {{ ref('ccanaicv') }} icv
-        ON  icv.ICV_CODICE = m.CD_INTERMEDIARIO
+        ON  icv.ICV_CODICE = COALESCE(
+                NULLIF(a.CRVOA_CONVENZIONATO, 0),
+                NULLIF(a.CRVOA_SUB_AGENTE,    0),
+                NULLIF(a.CRVOA_AGENTE,        0)
+            )
     -- Mercato B2B: aggancio per settore merceologico dell'intermediario
     LEFT JOIN {{ source('l1_e_bsn', 'lkp_mercato_ca_b2b') }} b2b
-        ON  m.CD_MACRO_PRODOTTO_4 = 'REV_B2B'
+        ON  mp.CD_MACRO_PRODOTTO_4 = 'REV_B2B'
         AND b2b.CD_SETTORE_MERCEOLOGICO = CASE
-                WHEN m.TP_INTERMEDIARIO = 'PV' THEN ipv.IPV_SETTORE_MERC
-                WHEN m.TP_INTERMEDIARIO = 'CV' THEN icv.ICV_SETTORE_MERC
+                WHEN CASE
+                        WHEN NULLIF(a.CRVOA_CONVENZIONATO, 0) IS NOT NULL THEN 'CV'
+                        WHEN NULLIF(a.CRVOA_SUB_AGENTE,    0) IS NOT NULL THEN 'SA'
+                        WHEN NULLIF(a.CRVOA_AGENTE,        0) IS NOT NULL THEN 'AG'
+                    END = 'PV' THEN ipv.IPV_SETTORE_MERC
+                WHEN CASE
+                        WHEN NULLIF(a.CRVOA_CONVENZIONATO, 0) IS NOT NULL THEN 'CV'
+                        WHEN NULLIF(a.CRVOA_SUB_AGENTE,    0) IS NOT NULL THEN 'SA'
+                        WHEN NULLIF(a.CRVOA_AGENTE,        0) IS NOT NULL THEN 'AG'
+                    END = 'CV' THEN icv.ICV_SETTORE_MERC
             END
     -- Mercato B2C: aggancio per macro prodotto 1
     LEFT JOIN {{ source('l1_e_bsn', 'lkp_mercato_ca_b2c') }} b2c
-        ON  m.CD_MACRO_PRODOTTO_4 = 'REV_B2C'
-        AND b2c.CD_MACRO_PRODOTTO_1 = m.CD_MACRO_PRODOTTO_1
+        ON  mp.CD_MACRO_PRODOTTO_4 = 'REV_B2C'
+        AND b2c.CD_MACRO_PRODOTTO_1 = mp.CD_MACRO_PRODOTTO_1
+    WHERE f.FL_DELETED = 'N'
 ),
 
 base AS (
@@ -140,7 +91,7 @@ base AS (
         f.CRVOC_CONTABILIZZATO AS TP_CONTABILIZZAZIONE, 
         f.CRVOC_DARE_AVERE AS CD_DARE_AVERE,
         au.CRAUT_PSV_AUT_POS AS FL_WEB,
-        CASE WHEN f.CRVOC_CODICE_CAMP IS NOT NULL THEN 'Y' ELSE 'N' END AS FL_PROMO,
+        CASE WHEN {{ custom_is_not_null('f.CRVOC_CODICE_CAMP') }} THEN 'Y' ELSE 'N' END AS FL_PROMO,
         CASE 
             WHEN f.CRVOC_CONTABILIZZATO IN ('S', 'H') THEN 'S'
             ELSE 'N'
@@ -162,7 +113,7 @@ base AS (
         {{ ole_to_date('f.CRVOC_DATA_ACQUISTO') }} AS DT_UTILIZZO,
         {{ ole_to_date('f.CRVOC_DATA_VALUTA') }} AS DT_VALUTA,
         CASE
-            WHEN f.CRVOC_CONTABILIZZATO = 'S' AND sv.CROSV_EMETTITORE_A IS NULL THEN {{ ole_to_date('f.CRVOC_DATA_ACQUISTO') }}
+            WHEN f.CRVOC_CONTABILIZZATO = 'S' AND  sv.CROSV_EMETTITORE_A IS NULL THEN {{ ole_to_date('f.CRVOC_DATA_ACQUISTO') }}
             WHEN f.CRVOC_DARE_AVERE = 'A' AND sv.CROSV_EMETTITORE_A IS NOT NULL THEN {{ ole_to_date('a.CRVOA_DATA_REGISTRAZIONE') }}
             ELSE NULL
         END AS DT_STORNATA,
@@ -174,9 +125,15 @@ base AS (
         {{ custom_to_decimal('f.CRVOC_IMPORTO', precision=11) }} AS EU_EROGATO,
         {{ custom_to_decimal('f.CRVOC_TOTALE', precision=11) }} AS EU_FINANZIATO,
         {{ custom_to_decimal('f.CRVOC_COMM_ATM', precision=13) }} AS EU_COMMISSIONE_ATM,
-        -- Logica commissioni ATM completa dalla CTE base_comm_atm
-        comm.PC_COMM_ATM,
-        {{ custom_to_decimal('comm.EU_MIN_COMM_ATM', precision=6, decimal=3) }} AS EU_MIN_COMM_ATM,
+        -- ── Logica commissioni ATM (ex CTE base_comm_atm, ora inline via LEFT JOIN) ──
+        -- Se acquisto estero (CRVOC_ESTERA = 'S') usa causale valuta, altrimenti euro.
+        -- Se causale 42 non valorizzata → fallback su causale euro (COALESCE).
+        CASE
+            WHEN f.CRVOC_ESTERA = 'S'
+            THEN COALESCE(r_val.ROTBCAU_PERCENTUALE, r_euro.ROTBCAU_PERCENTUALE)
+            ELSE r_euro.ROTBCAU_PERCENTUALE
+        END AS PC_COMM_ATM,
+        {{ custom_to_decimal('COALESCE(r_val.ROTBCAU_IMPORTO, r_euro.ROTBCAU_IMPORTO)', precision=6, decimal=3) }} AS EU_MIN_COMM_ATM,
         {{ custom_to_decimal('f.CRVOC_IMPORTO_ASSIC', precision=13) }} AS EU_ASSICURAZIONE_PROMO,
         {{ custom_to_decimal('f.CRVOC_SPESE_ISTRUT', precision=13) }} AS EU_SPESE_TOT_IST,
         ci.CRINS_PERC_SPESE_ISTRUT AS PC_SPESE_IST,
@@ -253,11 +210,6 @@ base AS (
         a.CRVOA_VENDITORE AS CD_VENDITORE_ESERCENTE,
         f.LASTMODIFIEDDATA AS LASTMODIFIEDDATA
     FROM {{ ref('crvouf') }} f
-    -- JOIN con CTE per logica commissioni ATM completa
-    LEFT JOIN base_comm_atm comm
-        ON  comm.CRVOC_EMETTITORE = f.CRVOC_EMETTITORE
-        AND comm.CRVOC_PROTOCOLLO = f.CRVOC_PROTOCOLLO
-        AND comm.CRVOC_RIGA = f.CRVOC_RIGA
     LEFT JOIN base_macro_mercato mm
         ON  mm.CRVOC_EMETTITORE = f.CRVOC_EMETTITORE
         AND mm.CRVOC_PROTOCOLLO = f.CRVOC_PROTOCOLLO
@@ -303,9 +255,23 @@ base AS (
     LEFT JOIN {{ ref('pssiccod') }} mc
         ON  mc.SICCOD_MCC_CODE = ps.INTACQ_CAT_ESERC -- CORRETTA QUESTA JOIN??? ps. --> VARCHAR(5) <> mc. --> NUMBER(4)
         AND mc.FL_DELETED = 'N'
-    LEFT JOIN {{ ref('cremee') }} e 
+    INNER JOIN {{ ref('cremee') }} e 
         ON  e.CEMEM_EMETTITORE = f.CRVOC_EMETTITORE
         AND e.CEMEM_TIPO_RECORD = 'E'
+    -- ── Commissioni ATM in EURO (causale pos.05) - ex CTE base_comm_atm, ora LEFT ──
+    -- Procedura fissa 'CA', causale = CEMEM_CAU_COMMISSIO05.
+    -- FIX: era INNER JOIN in base_comm_atm; convertito a LEFT su richiesta utente
+    -- per non perdere righe di crvouf prive della causale/emettitore.
+    LEFT JOIN {{ ref('rotbfcau') }} r_euro
+        ON  r_euro.ROTBCAU_PROCEDURA = 'CA'
+        AND r_euro.ROTBCAU_CAUSALE = e.CEMEM_CAU_COMMISSIO05
+        AND r_euro.FL_DELETED = 'N'
+    -- ── Commissione ATM in VALUTA (causale pos.42) - facoltativa ──────────────────
+    LEFT JOIN {{ ref('rotbfcau') }} r_val
+        ON  r_val.ROTBCAU_PROCEDURA = 'CA'
+        AND r_val.ROTBCAU_CAUSALE = e.CEMEM_CAU_COMMISSIO42
+        AND e.CEMEM_CAU_COMMISSIO42 IS NOT NULL
+        AND r_val.FL_DELETED = 'N'
     LEFT JOIN {{ ref('ccanatfi') }} F_CO
         ON  F_CO.ANATFI_FILIALE = a.CRVOA_FILIALE
     LEFT JOIN {{ ref('ccanainin') }} N_CO

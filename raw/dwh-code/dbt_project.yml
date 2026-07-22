@@ -190,7 +190,7 @@ models:
           +tags: ["int"]
         ITF:
           +schema: L1_O_ITF
-          +meta: {modulo: "iTF"}
+          +meta: {modulo: "itf"}
           +tags: ["itf"]
         MIG:
           +schema: L1_O_MIG
@@ -424,6 +424,10 @@ snapshots:
           +schema: L1_O_INT
           +meta: {modulo: "int"}
           +tags: ["int"]
+        ITF:
+          +schema: L1_O_ITF
+          +meta: {modulo: "itf"}
+          +tags: ["itf"]
         MSF:
           +schema: L1_O_MSF
           +meta: {modulo: "msf"}

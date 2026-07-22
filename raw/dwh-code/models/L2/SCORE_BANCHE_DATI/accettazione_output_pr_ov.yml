@@ -22,7 +22,7 @@ models:
       - name: TP_REGOLA
         data_type: VARCHAR(2)
       - name: PR_REGOLA
-        data_type: VARCHAR(3)
+        data_type: NUMBER(3)
       - name: TS_INSERIMENTO
         data_type: TIMESTAMP_NTZ
       - name: CD_REGOLA

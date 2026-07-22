@@ -17,432 +17,6 @@
     cron: "0 * * * *"
 
 jobs:
-  AGOS_L2_ANAGR_CONTROPARTE_ANAGRAFICA_CONTROPARTE:
-    <<: *job_defaults
-    name: "AGOS_L2_ANAGR_CONTROPARTE_ANAGRAFICA_CONTROPARTE"
-    description: '{"layer":"L2","model":"ANAGRAFICA_CONTROPARTE","subject_area":"ANAGR_CONTROPARTE"}'
-    execute_steps:
-      - "dbt build --select anagrafica_controparte"
-  AGOS_L2_ANAGR_CONTROPARTE_INDIRIZZI_POSTALIZZAZIONE:
-    <<: *job_defaults
-    name: "AGOS_L2_ANAGR_CONTROPARTE_INDIRIZZI_POSTALIZZAZIONE"
-    description: '{"layer":"L2","model":"INDIRIZZI_POSTALIZZAZIONE","subject_area":"ANAGR_CONTROPARTE"}'
-    execute_steps:
-      - "dbt build --select indirizzi_postalizzazione"
-  AGOS_L2_ANAGR_CONTROPARTE_LEGAME_DITTE_INDIVIDUALI:
-    <<: *job_defaults
-    name: "AGOS_L2_ANAGR_CONTROPARTE_LEGAME_DITTE_INDIVIDUALI"
-    description: '{"layer":"L2","model":"LEGAME_DITTE_INDIVIDUALI","subject_area":"ANAGR_CONTROPARTE"}'
-    execute_steps:
-      - "dbt build --select legame_ditte_individuali"
-  AGOS_L2_ANAGR_CONTROPARTE_LEGAME_PRATICA_CONTROPARTE:
-    <<: *job_defaults
-    name: "AGOS_L2_ANAGR_CONTROPARTE_LEGAME_PRATICA_CONTROPARTE"
-    description: '{"layer":"L2","model":"LEGAME_PRATICA_CONTROPARTE","subject_area":"ANAGR_CONTROPARTE"}'
-    execute_steps:
-      - "dbt build --select legame_pratica_controparte"
-  AGOS_L2_ANAGR_CONTROPARTE_SEGNALAZIONI_ANAGRAFICHE:
-    <<: *job_defaults
-    name: "AGOS_L2_ANAGR_CONTROPARTE_SEGNALAZIONI_ANAGRAFICHE"
-    description: '{"layer":"L2","model":"SEGNALAZIONI_ANAGRAFICHE","subject_area":"ANAGR_CONTROPARTE"}'
-    execute_steps:
-      - "dbt build --select segnalazioni_anagrafiche"
-  AGOS_L2_ANAGR_CONTROPARTE_VARIAZIONI_ANAGRAFICHE:
-    <<: *job_defaults
-    name: "AGOS_L2_ANAGR_CONTROPARTE_VARIAZIONI_ANAGRAFICHE"
-    description: '{"layer":"L2","model":"VARIAZIONI_ANAGRAFICHE","subject_area":"ANAGR_CONTROPARTE"}'
-    execute_steps:
-      - "dbt build --select variazioni_anagrafiche"
-  AGOS_L2_ANTIFRODE_ARCHIVIO_TESSERE:
-    <<: *job_defaults
-    name: "AGOS_L2_ANTIFRODE_ARCHIVIO_TESSERE"
-    description: '{"layer":"L2","model":"ARCHIVIO_TESSERE","subject_area":"ANTIFRODE"}'
-    execute_steps:
-      - "dbt build --select archivio_tessere"
-  AGOS_L2_ANTIFRODE_GESTIONE_TRUFFE:
-    <<: *job_defaults
-    name: "AGOS_L2_ANTIFRODE_GESTIONE_TRUFFE"
-    description: '{"layer":"L2","model":"GESTIONE_TRUFFE","subject_area":"ANTIFRODE"}'
-    execute_steps:
-      - "dbt build --select gestione_truffe"
-  AGOS_L2_ASSICURAZIONI_ANAGRAFICA_PRODOTTO_ASSIC:
-    <<: *job_defaults
-    name: "AGOS_L2_ASSICURAZIONI_ANAGRAFICA_PRODOTTO_ASSIC"
-    description: '{"layer":"L2","model":"ANAGRAFICA_PRODOTTO_ASSIC","subject_area":"ASSICURAZIONI"}'
-    execute_steps:
-      - "dbt build --select anagrafica_prodotto_assic"
-  AGOS_L2_ASSICURAZIONI_POLIZZE_STANDALONE:
-    <<: *job_defaults
-    name: "AGOS_L2_ASSICURAZIONI_POLIZZE_STANDALONE"
-    description: '{"layer":"L2","model":"POLIZZE_STANDALONE","subject_area":"ASSICURAZIONI"}'
-    execute_steps:
-      - "dbt build --select polizze_standalone"
-  AGOS_L2_ASSICURAZIONI_PREMI_ASSICURATIVI:
-    <<: *job_defaults
-    name: "AGOS_L2_ASSICURAZIONI_PREMI_ASSICURATIVI"
-    description: '{"layer":"L2","model":"PREMI_ASSICURATIVI","subject_area":"ASSICURAZIONI"}'
-    execute_steps:
-      - "dbt build --select premi_assicurativi"
-  AGOS_L2_ASSICURAZIONI_PROVVIGIONI_ASSICURATIVE:
-    <<: *job_defaults
-    name: "AGOS_L2_ASSICURAZIONI_PROVVIGIONI_ASSICURATIVE"
-    description: '{"layer":"L2","model":"PROVVIGIONI_ASSICURATIVE","subject_area":"ASSICURAZIONI"}'
-    execute_steps:
-      - "dbt build --select provvigioni_assicurative"
-  AGOS_L2_ASSICURAZIONI_QUESTIONARI_ASSICURATIVI:
-    <<: *job_defaults
-    name: "AGOS_L2_ASSICURAZIONI_QUESTIONARI_ASSICURATIVI"
-    description: '{"layer":"L2","model":"QUESTIONARI_ASSICURATIVI","subject_area":"ASSICURAZIONI"}'
-    execute_steps:
-      - "dbt build --select questionari_assicurativi"
-  AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI:
-    <<: *job_defaults
-    name: "AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI"
-    description: '{"layer":"L2","model":"SERVIZI_ASSICURATIVI","subject_area":"ASSICURAZIONI"}'
-    execute_steps:
-      - "dbt build --select servizi_assicurativi"
-  AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI_M:
-    <<: *job_defaults
-    name: "AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI_M"
-    description: '{"layer":"L2","model":"SERVIZI_ASSICURATIVI_M","subject_area":"ASSICURAZIONI"}'
-    execute_steps:
-      - "dbt build --select servizi_assicurativi_m"
-  AGOS_L2_CARTE_CARTE_AUTORIZZATIVO:
-    <<: *job_defaults
-    name: "AGOS_L2_CARTE_CARTE_AUTORIZZATIVO"
-    description: '{"layer":"L2","model":"CARTE_AUTORIZZATIVO","subject_area":"CARTE"}'
-    execute_steps:
-      - "dbt build --select carte_autorizzativo"
-  AGOS_L2_CARTE_CARTE_BLOCCHI:
-    <<: *job_defaults
-    name: "AGOS_L2_CARTE_CARTE_BLOCCHI"
-    description: '{"layer":"L2","model":"CARTE_BLOCCHI","subject_area":"CARTE"}'
-    execute_steps:
-      - "dbt build --select carte_blocchi"
-  AGOS_L2_CARTE_CARTE_ESTRATTO_CONTO_M:
-    <<: *job_defaults
-    name: "AGOS_L2_CARTE_CARTE_ESTRATTO_CONTO_M"
-    description: '{"layer":"L2","model":"CARTE_ESTRATTO_CONTO_M","subject_area":"CARTE"}'
-    execute_steps:
-      - "dbt build --select carte_estratto_conto_m"
-  AGOS_L2_CARTE_CARTE_LIMITAZIONI_OPERATIVITA:
-    <<: *job_defaults
-    name: "AGOS_L2_CARTE_CARTE_LIMITAZIONI_OPERATIVITA"
-    description: '{"layer":"L2","model":"CARTE_LIMITAZIONI_OPERATIVITA","subject_area":"CARTE"}'
-    execute_steps:
-      - "dbt build --select carte_limitazioni_operativita"
-  AGOS_L2_CARTE_CARTE_MOV_ESTRATTO_CONTO_M:
-    <<: *job_defaults
-    name: "AGOS_L2_CARTE_CARTE_MOV_ESTRATTO_CONTO_M"
-    description: '{"layer":"L2","model":"CARTE_MOV_ESTRATTO_CONTO_M","subject_area":"CARTE"}'
-    execute_steps:
-      - "dbt build --select carte_mov_estratto_conto_m"
-  AGOS_L2_CARTE_CARTE_UTILIZZI:
-    <<: *job_defaults
-    name: "AGOS_L2_CARTE_CARTE_UTILIZZI"
-    description: '{"layer":"L2","model":"CARTE_UTILIZZI","subject_area":"CARTE"}'
-    execute_steps:
-      - "dbt build --select carte_utilizzi"
-  AGOS_L2_GESTIONE_CREDITI_AZIONI_RECUPERO:
-    <<: *job_defaults
-    name: "AGOS_L2_GESTIONE_CREDITI_AZIONI_RECUPERO"
-    description: '{"layer":"L2","model":"AZIONI_RECUPERO","subject_area":"GESTIONE_CREDITI"}'
-    execute_steps:
-      - "dbt build --select azioni_recupero"
-  AGOS_L2_GESTIONE_CREDITI_CESSIONI:
-    <<: *job_defaults
-    name: "AGOS_L2_GESTIONE_CREDITI_CESSIONI"
-    description: '{"layer":"L2","model":"CESSIONI","subject_area":"GESTIONE_CREDITI"}'
-    execute_steps:
-      - "dbt build --select cessioni"
-  AGOS_L2_GESTIONE_CREDITI_CONTEGGI_ESTINTIVI:
-    <<: *job_defaults
-    name: "AGOS_L2_GESTIONE_CREDITI_CONTEGGI_ESTINTIVI"
-    description: '{"layer":"L2","model":"CONTEGGI_ESTINTIVI","subject_area":"GESTIONE_CREDITI"}'
-    execute_steps:
-      - "dbt build --select conteggi_estintivi"
-  AGOS_L2_GESTIONE_CREDITI_ESTINZIONI_ANTICIPATE_TOT:
-    <<: *job_defaults
-    name: "AGOS_L2_GESTIONE_CREDITI_ESTINZIONI_ANTICIPATE_TOT"
-    description: '{"layer":"L2","model":"ESTINZIONI_ANTICIPATE_TOT","subject_area":"GESTIONE_CREDITI"}'
-    execute_steps:
-      - "dbt build --select estinzioni_anticipate_tot"
-  AGOS_L2_GESTIONE_CREDITI_PASSAGGI_A_PERDITA:
-    <<: *job_defaults
-    name: "AGOS_L2_GESTIONE_CREDITI_PASSAGGI_A_PERDITA"
-    description: '{"layer":"L2","model":"PASSAGGI_A_PERDITA","subject_area":"GESTIONE_CREDITI"}'
-    execute_steps:
-      - "dbt build --select passaggi_a_perdita"
-  AGOS_L2_GESTIONE_CREDITI_PERDITE_MINIME_ABB:
-    <<: *job_defaults
-    name: "AGOS_L2_GESTIONE_CREDITI_PERDITE_MINIME_ABB"
-    description: '{"layer":"L2","model":"PERDITE_MINIME_ABB","subject_area":"GESTIONE_CREDITI"}'
-    execute_steps:
-      - "dbt build --select perdite_minime_abb"
-  AGOS_L2_GESTIONE_CREDITI_PRATICA_A_RECUPERO:
-    <<: *job_defaults
-    name: "AGOS_L2_GESTIONE_CREDITI_PRATICA_A_RECUPERO"
-    description: '{"layer":"L2","model":"PRATICA_A_RECUPERO","subject_area":"GESTIONE_CREDITI"}'
-    execute_steps:
-      - "dbt build --select pratica_a_recupero"
-  AGOS_L2_ONBOARDING_DOC_ISTRUTTORIA:
-    <<: *job_defaults
-    name: "AGOS_L2_ONBOARDING_DOC_ISTRUTTORIA"
-    description: '{"layer":"L2","model":"DOC_ISTRUTTORIA","subject_area":"ONBOARDING"}'
-    execute_steps:
-      - "dbt build --select doc_istruttoria"
-  AGOS_L2_ONBOARDING_WFL_ATTIVITA:
-    <<: *job_defaults
-    name: "AGOS_L2_ONBOARDING_WFL_ATTIVITA"
-    description: '{"layer":"L2","model":"WFL_ATTIVITA","subject_area":"ONBOARDING"}'
-    execute_steps:
-      - "dbt build --select wfl_attivita"
-  AGOS_L2_ONBOARDING_WFL_FASE:
-    <<: *job_defaults
-    name: "AGOS_L2_ONBOARDING_WFL_FASE"
-    description: '{"layer":"L2","model":"WFL_FASE","subject_area":"ONBOARDING"}'
-    execute_steps:
-      - "dbt build --select wfl_fase"
-  AGOS_L2_ONBOARDING_WFL_ISTANZA:
-    <<: *job_defaults
-    name: "AGOS_L2_ONBOARDING_WFL_ISTANZA"
-    description: '{"layer":"L2","model":"WFL_ISTANZA","subject_area":"ONBOARDING"}'
-    execute_steps:
-      - "dbt build --select wfl_istanza"
-  AGOS_L2_ONBOARDING_WFL_SOTTOFASE:
-    <<: *job_defaults
-    name: "AGOS_L2_ONBOARDING_WFL_SOTTOFASE"
-    description: '{"layer":"L2","model":"WFL_SOTTOFASE","subject_area":"ONBOARDING"}'
-    execute_steps:
-      - "dbt build --select wfl_sottofase"
-  AGOS_L2_PRODOTTO_AZIONI_POSTVENDITA:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_AZIONI_POSTVENDITA"
-    description: '{"layer":"L2","model":"AZIONI_POSTVENDITA","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select azioni_postvendita"
-  AGOS_L2_PRODOTTO_CARTA:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_CARTA"
-    description: '{"layer":"L2","model":"CARTA","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select carta"
-  AGOS_L2_PRODOTTO_CATENE_INTERMEDIAZIONE_AGG:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_CATENE_INTERMEDIAZIONE_AGG"
-    description: '{"layer":"L2","model":"CATENE_INTERMEDIAZIONE_AGG","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select catene_intermediazione_agg"
-  AGOS_L2_PRODOTTO_CONSUMO:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_CONSUMO"
-    description: '{"layer":"L2","model":"CONSUMO","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select consumo"
-  AGOS_L2_PRODOTTO_CQS:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_CQS"
-    description: '{"layer":"L2","model":"CQS","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select cqs"
-  AGOS_L2_PRODOTTO_M_CARTA_M:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_M_CARTA_M"
-    description: '{"layer":"L2","model":"CARTA_M","subject_area":"PRODOTTO_M"}'
-    execute_steps:
-      - "dbt build --select carta_m"
-  AGOS_L2_PRODOTTO_M_CONSUMO_M:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_M_CONSUMO_M"
-    description: '{"layer":"L2","model":"CONSUMO_M","subject_area":"PRODOTTO_M"}'
-    execute_steps:
-      - "dbt build --select consumo_m"
-  AGOS_L2_PRODOTTO_M_CQS_M:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_M_CQS_M"
-    description: '{"layer":"L2","model":"CQS_M","subject_area":"PRODOTTO_M"}'
-    execute_steps:
-      - "dbt build --select cqs_m"
-  AGOS_L2_PRODOTTO_M_PRATICA_M:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_M_PRATICA_M"
-    description: '{"layer":"L2","model":"PRATICA_M","subject_area":"PRODOTTO_M"}'
-    execute_steps:
-      - "dbt build --select pratica_m"
-  AGOS_L2_PRODOTTO_PRATICA:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_PRATICA"
-    description: '{"layer":"L2","model":"PRATICA","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select pratica"
-  AGOS_L2_PRODOTTO_TABELLE_FINANZIARIE:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_TABELLE_FINANZIARIE"
-    description: '{"layer":"L2","model":"TABELLE_FINANZIARIE","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select tabelle_finanziarie"
-  AGOS_L2_PRODOTTO_VARIAZIONI_STATO_PRAT:
-    <<: *job_defaults
-    name: "AGOS_L2_PRODOTTO_VARIAZIONI_STATO_PRAT"
-    description: '{"layer":"L2","model":"VARIAZIONI_STATO_PRAT","subject_area":"PRODOTTO"}'
-    execute_steps:
-      - "dbt build --select variazioni_stato_prat"
-  AGOS_L2_RISCHI_ADEMPIMENTI_CARTOLARIZZAZIONI_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_CARTOLARIZZAZIONI_M"
-    description: '{"layer":"L2","model":"CARTOLARIZZAZIONI_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select cartolarizzazioni_m"
-  AGOS_L2_RISCHI_ADEMPIMENTI_CONSOLIDAMENTI:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_CONSOLIDAMENTI"
-    description: '{"layer":"L2","model":"CONSOLIDAMENTI","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select consolidamenti"
-  AGOS_L2_RISCHI_ADEMPIMENTI_ELENCO_CONTI_SVAL_O:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_ELENCO_CONTI_SVAL_O"
-    description: '{"layer":"L2","model":"ELENCO_CONTI_SVAL_O","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select elenco_conti_sval_o"
-  AGOS_L2_RISCHI_ADEMPIMENTI_FLESSIBILITA_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_FLESSIBILITA_M"
-    description: '{"layer":"L2","model":"FLESSIBILITA_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select flessibilita_m"
-  AGOS_L2_RISCHI_ADEMPIMENTI_FORBEARANCE_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_FORBEARANCE_M"
-    description: '{"layer":"L2","model":"FORBEARANCE_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select forbearance_m"
-  AGOS_L2_RISCHI_ADEMPIMENTI_GIORNI_SCADUTO:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_GIORNI_SCADUTO"
-    description: '{"layer":"L2","model":"GIORNI_SCADUTO","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select giorni_scaduto"
-  AGOS_L2_RISCHI_ADEMPIMENTI_INDICE_RISCHIO_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_INDICE_RISCHIO_M"
-    description: '{"layer":"L2","model":"INDICE_RISCHIO_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select indice_rischio_m"
-  AGOS_L2_RISCHI_ADEMPIMENTI_LEGAME_CARTOLARIZZAZIONI:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_LEGAME_CARTOLARIZZAZIONI"
-    description: '{"layer":"L2","model":"LEGAME_CARTOLARIZZAZIONI","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select legame_cartolarizzazioni"
-  AGOS_L2_RISCHI_ADEMPIMENTI_MORATORIE_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_MORATORIE_M"
-    description: '{"layer":"L2","model":"MORATORIE_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select moratorie_m"
-  AGOS_L2_RISCHI_ADEMPIMENTI_PERFORMING_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_PERFORMING_M"
-    description: '{"layer":"L2","model":"PERFORMING_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select performing_m"
-  AGOS_L2_RISCHI_ADEMPIMENTI_STATO_CREDITIZIO_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_STATO_CREDITIZIO_M"
-    description: '{"layer":"L2","model":"STATO_CREDITIZIO_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select stato_creditizio_m"
-  AGOS_L2_RISCHI_ADEMPIMENTI_SVALUTAZIONI_M:
-    <<: *job_defaults
-    name: "AGOS_L2_RISCHI_ADEMPIMENTI_SVALUTAZIONI_M"
-    description: '{"layer":"L2","model":"SVALUTAZIONI_M","subject_area":"RISCHI_ADEMPIMENTI"}'
-    execute_steps:
-      - "dbt build --select svalutazioni_m"
-  AGOS_L2_SWORD_CREDITLINE:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_CREDITLINE"
-    description: '{"layer":"L2","model":"CREDITLINE","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select creditline"
-  AGOS_L2_SWORD_CREDLINASSET:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_CREDLINASSET"
-    description: '{"layer":"L2","model":"CREDLINASSET","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select credlinasset"
-  AGOS_L2_SWORD_CREDLINFACIL:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_CREDLINFACIL"
-    description: '{"layer":"L2","model":"CREDLINFACIL","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select credlinfacil"
-  AGOS_L2_SWORD_LOAN:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_LOAN"
-    description: '{"layer":"L2","model":"LOAN","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select loan"
-  AGOS_L2_SWORD_LOAN_ARREARS:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_LOAN_ARREARS"
-    description: '{"layer":"L2","model":"LOAN_ARREARS","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select loan_arrears"
-  AGOS_L2_SWORD_LOAN_ASSET:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_LOAN_ASSET"
-    description: '{"layer":"L2","model":"LOAN_ASSET","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select loan_asset"
-  AGOS_L2_SWORD_LOAN_CHARGEPROF:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_LOAN_CHARGEPROF"
-    description: '{"layer":"L2","model":"LOAN_CHARGEPROF","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select loan_chargeprof"
-  AGOS_L2_SWORD_LOAN_TRANSAC:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_LOAN_TRANSAC"
-    description: '{"layer":"L2","model":"LOAN_TRANSAC","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select loan_transac"
-  AGOS_L2_SWORD_ORG_CONTACT:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_ORG_CONTACT"
-    description: '{"layer":"L2","model":"ORG_CONTACT","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select org_contact"
-  AGOS_L2_SWORD_ORG_TRANSACT:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_ORG_TRANSACT"
-    description: '{"layer":"L2","model":"ORG_TRANSACT","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select org_transact"
-  AGOS_L2_SWORD_ORGANISATION:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_ORGANISATION"
-    description: '{"layer":"L2","model":"ORGANISATION","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select organisation"
-  AGOS_L2_SWORD_PLAN:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_PLAN"
-    description: '{"layer":"L2","model":"PLAN","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select plan"
-  AGOS_L2_SWORD_PLAN_CHARGEPROF:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_PLAN_CHARGEPROF"
-    description: '{"layer":"L2","model":"PLAN_CHARGEPROF","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select plan_chargeprof"
-  AGOS_L2_SWORD_PLAN_PAYSCH:
-    <<: *job_defaults
-    name: "AGOS_L2_SWORD_PLAN_PAYSCH"
-    description: '{"layer":"L2","model":"PLAN_PAYSCH","subject_area":"SWORD"}'
-    execute_steps:
-      - "dbt build --select plan_paysch" 
   AGOS_L1_E_ADOBE_ADB_ARC:
     <<: *job_defaults
     name: "AGOS_L1_E_ADOBE_ADB_ARC"
@@ -665,6 +239,24 @@ jobs:
     description: '{"modulo":"","layer":"L1","model":"CDE","source":"CDE"}'
     execute_steps:
       - "dbt build --select +cde"
+  AGOS_L1_E_CRIF_CRIFRA_NP041RT:
+    <<: *job_defaults
+    name: "AGOS_L1_E_CRIF_CRIFRA_NP041RT"
+    description: '{"modulo":"","layer":"L1","model":"CRIFRA_NP041RT","source":"CRIF"}'
+    execute_steps:
+      - "dbt build --select +crifra_np041rt"
+  AGOS_L1_E_CRIF_CRIFRC_NP042RT:
+    <<: *job_defaults
+    name: "AGOS_L1_E_CRIF_CRIFRC_NP042RT"
+    description: '{"modulo":"","layer":"L1","model":"CRIFRC_NP042RT","source":"CRIF"}'
+    execute_steps:
+      - "dbt build --select +crifrc_np042rt"
+  AGOS_L1_E_CTC_LOGERCTC_PR339M:
+    <<: *job_defaults
+    name: "AGOS_L1_E_CTC_LOGERCTC_PR339M"
+    description: '{"modulo":"","layer":"L1","model":"LOGERCTC_PR339M","source":"CTC"}'
+    execute_steps:
+      - "dbt build --select +logerctc_pr339m"
   AGOS_L1_E_DIL_BLOCCO_BD:
     <<: *job_defaults
     name: "AGOS_L1_E_DIL_BLOCCO_BD"
@@ -737,6 +329,18 @@ jobs:
     description: '{"modulo":"","layer":"L1","model":"NCP_TBLTRACKINGLEAD","source":"FEA"}'
     execute_steps:
       - "dbt build --select +ncp_tbltrackinglead"
+  AGOS_L1_E_FEA_STANDALONE_TBLPOLSTATO:
+    <<: *job_defaults
+    name: "AGOS_L1_E_FEA_STANDALONE_TBLPOLSTATO"
+    description: '{"modulo":"","layer":"L1","model":"STANDALONE_TBLPOLSTATO","source":"FEA"}'
+    execute_steps:
+      - "dbt build --select +standalone_tblpolstato"
+  AGOS_L1_E_FEA_STANDALONE_TBLPREVSTATO:
+    <<: *job_defaults
+    name: "AGOS_L1_E_FEA_STANDALONE_TBLPREVSTATO"
+    description: '{"modulo":"","layer":"L1","model":"STANDALONE_TBLPREVSTATO","source":"FEA"}'
+    execute_steps:
+      - "dbt build --select +standalone_tblprevstato"
   AGOS_L1_E_FEA_STANDALONE_TBLSTATOPOST:
     <<: *job_defaults
     name: "AGOS_L1_E_FEA_STANDALONE_TBLSTATOPOST"
@@ -767,6 +371,12 @@ jobs:
     description: '{"modulo":"","layer":"L1","model":"TBLDISTINTETRANSAZIONI","source":"FEA"}'
     execute_steps:
       - "dbt build --select +tbldistintetransazioni"
+  AGOS_L1_E_FEA_TBLESITI7DAYSCALLCENTER:
+    <<: *job_defaults
+    name: "AGOS_L1_E_FEA_TBLESITI7DAYSCALLCENTER"
+    description: '{"modulo":"","layer":"L1","model":"TBLESITI7DAYSCALLCENTER","source":"FEA"}'
+    execute_steps:
+      - "dbt build --select +tblesiti7dayscallcenter"
   AGOS_L1_E_FEA_TBLESTRATTICONTOATTIVI:
     <<: *job_defaults
     name: "AGOS_L1_E_FEA_TBLESTRATTICONTOATTIVI"
@@ -7943,6 +7553,18 @@ jobs:
     description: '{"modulo":"ITF","layer":"L1","model":"IFKCFRSI","source":"OCS"}'
     execute_steps:
       - "dbt build --select +ifkcfrsi"
+  AGOS_L1_O_MIG_MGDRFCRANA:
+    <<: *job_defaults
+    name: "AGOS_L1_O_MIG_MGDRFCRANA"
+    description: '{"modulo":"MIG","layer":"L1","model":"MGDRFCRANA","source":"OCS"}'
+    execute_steps:
+      - "dbt build --select +mgdrfcrana"
+  AGOS_L1_O_MIG_MGDRFCRPRA:
+    <<: *job_defaults
+    name: "AGOS_L1_O_MIG_MGDRFCRPRA"
+    description: '{"modulo":"MIG","layer":"L1","model":"MGDRFCRPRA","source":"OCS"}'
+    execute_steps:
+      - "dbt build --select +mgdrfcrpra"
   AGOS_L1_O_MSF_MFFTBTCA:
     <<: *job_defaults
     name: "AGOS_L1_O_MSF_MFFTBTCA"
@@ -10823,3 +10445,654 @@ jobs:
     description: '{"modulo":"WFL","layer":"L1","model":"WFTBFSOW","source":"OCS"}'
     execute_steps:
       - "dbt build --select +wftbfsow"
+
+  AGOS_L2_ANAGR_CONTROPARTE_ANAGRAFICA_CONTROPARTE:
+    <<: *job_defaults
+    name: "AGOS_L2_ANAGR_CONTROPARTE_ANAGRAFICA_CONTROPARTE"
+    description: '{"layer":"L2","model":"ANAGRAFICA_CONTROPARTE","subject_area":"ANAGR_CONTROPARTE"}'
+    execute_steps:
+      - "dbt build --select anagrafica_controparte"
+  AGOS_L2_ANAGR_CONTROPARTE_INDIRIZZI_POSTALIZZAZIONE:
+    <<: *job_defaults
+    name: "AGOS_L2_ANAGR_CONTROPARTE_INDIRIZZI_POSTALIZZAZIONE"
+    description: '{"layer":"L2","model":"INDIRIZZI_POSTALIZZAZIONE","subject_area":"ANAGR_CONTROPARTE"}'
+    execute_steps:
+      - "dbt build --select indirizzi_postalizzazione"
+  AGOS_L2_ANAGR_CONTROPARTE_LEGAME_DITTE_INDIVIDUALI:
+    <<: *job_defaults
+    name: "AGOS_L2_ANAGR_CONTROPARTE_LEGAME_DITTE_INDIVIDUALI"
+    description: '{"layer":"L2","model":"LEGAME_DITTE_INDIVIDUALI","subject_area":"ANAGR_CONTROPARTE"}'
+    execute_steps:
+      - "dbt build --select legame_ditte_individuali"
+  AGOS_L2_ANAGR_CONTROPARTE_LEGAME_PRATICA_CONTROPARTE:
+    <<: *job_defaults
+    name: "AGOS_L2_ANAGR_CONTROPARTE_LEGAME_PRATICA_CONTROPARTE"
+    description: '{"layer":"L2","model":"LEGAME_PRATICA_CONTROPARTE","subject_area":"ANAGR_CONTROPARTE"}'
+    execute_steps:
+      - "dbt build --select legame_pratica_controparte"
+  AGOS_L2_ANAGR_CONTROPARTE_SEGNALAZIONI_ANAGRAFICHE:
+    <<: *job_defaults
+    name: "AGOS_L2_ANAGR_CONTROPARTE_SEGNALAZIONI_ANAGRAFICHE"
+    description: '{"layer":"L2","model":"SEGNALAZIONI_ANAGRAFICHE","subject_area":"ANAGR_CONTROPARTE"}'
+    execute_steps:
+      - "dbt build --select segnalazioni_anagrafiche"
+  AGOS_L2_ANAGR_CONTROPARTE_VARIAZIONI_ANAGRAFICHE:
+    <<: *job_defaults
+    name: "AGOS_L2_ANAGR_CONTROPARTE_VARIAZIONI_ANAGRAFICHE"
+    description: '{"layer":"L2","model":"VARIAZIONI_ANAGRAFICHE","subject_area":"ANAGR_CONTROPARTE"}'
+    execute_steps:
+      - "dbt build --select variazioni_anagrafiche"
+  AGOS_L2_ANAGR_CONTROPARTE_VARIAZIONI_ANAGRAFICHE_DAY:
+    <<: *job_defaults
+    name: "AGOS_L2_ANAGR_CONTROPARTE_VARIAZIONI_ANAGRAFICHE_DAY"
+    description: '{"layer":"L2","model":"VARIAZIONI_ANAGRAFICHE_DAY","subject_area":"ANAGR_CONTROPARTE"}'
+    execute_steps:
+      - "dbt build --select variazioni_anagrafiche_day"
+  AGOS_L2_ANTIFRODE_ARCHIVIO_TESSERE:
+    <<: *job_defaults
+    name: "AGOS_L2_ANTIFRODE_ARCHIVIO_TESSERE"
+    description: '{"layer":"L2","model":"ARCHIVIO_TESSERE","subject_area":"ANTIFRODE"}'
+    execute_steps:
+      - "dbt build --select archivio_tessere"
+  AGOS_L2_ANTIFRODE_GESTIONE_TRUFFE:
+    <<: *job_defaults
+    name: "AGOS_L2_ANTIFRODE_GESTIONE_TRUFFE"
+    description: '{"layer":"L2","model":"GESTIONE_TRUFFE","subject_area":"ANTIFRODE"}'
+    execute_steps:
+      - "dbt build --select gestione_truffe"
+  AGOS_L2_ASSICURAZIONI_ANAGRAFICA_PRODOTTO_ASSIC:
+    <<: *job_defaults
+    name: "AGOS_L2_ASSICURAZIONI_ANAGRAFICA_PRODOTTO_ASSIC"
+    description: '{"layer":"L2","model":"ANAGRAFICA_PRODOTTO_ASSIC","subject_area":"ASSICURAZIONI"}'
+    execute_steps:
+      - "dbt build --select anagrafica_prodotto_assic"
+  AGOS_L2_ASSICURAZIONI_POLIZZE_STANDALONE:
+    <<: *job_defaults
+    name: "AGOS_L2_ASSICURAZIONI_POLIZZE_STANDALONE"
+    description: '{"layer":"L2","model":"POLIZZE_STANDALONE","subject_area":"ASSICURAZIONI"}'
+    execute_steps:
+      - "dbt build --select polizze_standalone"
+  AGOS_L2_ASSICURAZIONI_PREMI_ASSICURATIVI:
+    <<: *job_defaults
+    name: "AGOS_L2_ASSICURAZIONI_PREMI_ASSICURATIVI"
+    description: '{"layer":"L2","model":"PREMI_ASSICURATIVI","subject_area":"ASSICURAZIONI"}'
+    execute_steps:
+      - "dbt build --select premi_assicurativi"
+  AGOS_L2_ASSICURAZIONI_PROVVIGIONI_ASSICURATIVE:
+    <<: *job_defaults
+    name: "AGOS_L2_ASSICURAZIONI_PROVVIGIONI_ASSICURATIVE"
+    description: '{"layer":"L2","model":"PROVVIGIONI_ASSICURATIVE","subject_area":"ASSICURAZIONI"}'
+    execute_steps:
+      - "dbt build --select provvigioni_assicurative"
+  AGOS_L2_ASSICURAZIONI_QUESTIONARI_ASSICURATIVI:
+    <<: *job_defaults
+    name: "AGOS_L2_ASSICURAZIONI_QUESTIONARI_ASSICURATIVI"
+    description: '{"layer":"L2","model":"QUESTIONARI_ASSICURATIVI","subject_area":"ASSICURAZIONI"}'
+    execute_steps:
+      - "dbt build --select questionari_assicurativi"
+  AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI:
+    <<: *job_defaults
+    name: "AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI"
+    description: '{"layer":"L2","model":"SERVIZI_ASSICURATIVI","subject_area":"ASSICURAZIONI"}'
+    execute_steps:
+      - "dbt build --select servizi_assicurativi"
+  AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI_M:
+    <<: *job_defaults
+    name: "AGOS_L2_ASSICURAZIONI_SERVIZI_ASSICURATIVI_M"
+    description: '{"layer":"L2","model":"SERVIZI_ASSICURATIVI_M","subject_area":"ASSICURAZIONI"}'
+    execute_steps:
+      - "dbt build --select servizi_assicurativi_m"
+  AGOS_L2_CARTE_CARTE_AUTORIZZATIVO:
+    <<: *job_defaults
+    name: "AGOS_L2_CARTE_CARTE_AUTORIZZATIVO"
+    description: '{"layer":"L2","model":"CARTE_AUTORIZZATIVO","subject_area":"CARTE"}'
+    execute_steps:
+      - "dbt build --select carte_autorizzativo"
+  AGOS_L2_CARTE_CARTE_BLOCCHI:
+    <<: *job_defaults
+    name: "AGOS_L2_CARTE_CARTE_BLOCCHI"
+    description: '{"layer":"L2","model":"CARTE_BLOCCHI","subject_area":"CARTE"}'
+    execute_steps:
+      - "dbt build --select carte_blocchi"
+  AGOS_L2_CARTE_CARTE_ESTRATTO_CONTO_M:
+    <<: *job_defaults
+    name: "AGOS_L2_CARTE_CARTE_ESTRATTO_CONTO_M"
+    description: '{"layer":"L2","model":"CARTE_ESTRATTO_CONTO_M","subject_area":"CARTE"}'
+    execute_steps:
+      - "dbt build --select carte_estratto_conto_m"
+  AGOS_L2_CARTE_CARTE_LIMITAZIONI_OPERATIVITA:
+    <<: *job_defaults
+    name: "AGOS_L2_CARTE_CARTE_LIMITAZIONI_OPERATIVITA"
+    description: '{"layer":"L2","model":"CARTE_LIMITAZIONI_OPERATIVITA","subject_area":"CARTE"}'
+    execute_steps:
+      - "dbt build --select carte_limitazioni_operativita"
+  AGOS_L2_CARTE_CARTE_MOV_ESTRATTO_CONTO_M:
+    <<: *job_defaults
+    name: "AGOS_L2_CARTE_CARTE_MOV_ESTRATTO_CONTO_M"
+    description: '{"layer":"L2","model":"CARTE_MOV_ESTRATTO_CONTO_M","subject_area":"CARTE"}'
+    execute_steps:
+      - "dbt build --select carte_mov_estratto_conto_m"
+  AGOS_L2_CARTE_CARTE_UTILIZZI:
+    <<: *job_defaults
+    name: "AGOS_L2_CARTE_CARTE_UTILIZZI"
+    description: '{"layer":"L2","model":"CARTE_UTILIZZI","subject_area":"CARTE"}'
+    execute_steps:
+      - "dbt build --select carte_utilizzi"
+  AGOS_L2_GESTIONE_CREDITI_AZIONI_RECUPERO:
+    <<: *job_defaults
+    name: "AGOS_L2_GESTIONE_CREDITI_AZIONI_RECUPERO"
+    description: '{"layer":"L2","model":"AZIONI_RECUPERO","subject_area":"GESTIONE_CREDITI"}'
+    execute_steps:
+      - "dbt build --select azioni_recupero"
+  AGOS_L2_GESTIONE_CREDITI_CESSIONI:
+    <<: *job_defaults
+    name: "AGOS_L2_GESTIONE_CREDITI_CESSIONI"
+    description: '{"layer":"L2","model":"CESSIONI","subject_area":"GESTIONE_CREDITI"}'
+    execute_steps:
+      - "dbt build --select cessioni"
+  AGOS_L2_GESTIONE_CREDITI_CONTEGGI_ESTINTIVI:
+    <<: *job_defaults
+    name: "AGOS_L2_GESTIONE_CREDITI_CONTEGGI_ESTINTIVI"
+    description: '{"layer":"L2","model":"CONTEGGI_ESTINTIVI","subject_area":"GESTIONE_CREDITI"}'
+    execute_steps:
+      - "dbt build --select conteggi_estintivi"
+  AGOS_L2_GESTIONE_CREDITI_ESTINZIONI_ANTICIPATE_TOT:
+    <<: *job_defaults
+    name: "AGOS_L2_GESTIONE_CREDITI_ESTINZIONI_ANTICIPATE_TOT"
+    description: '{"layer":"L2","model":"ESTINZIONI_ANTICIPATE_TOT","subject_area":"GESTIONE_CREDITI"}'
+    execute_steps:
+      - "dbt build --select estinzioni_anticipate_tot"
+  AGOS_L2_GESTIONE_CREDITI_PASSAGGI_A_PERDITA:
+    <<: *job_defaults
+    name: "AGOS_L2_GESTIONE_CREDITI_PASSAGGI_A_PERDITA"
+    description: '{"layer":"L2","model":"PASSAGGI_A_PERDITA","subject_area":"GESTIONE_CREDITI"}'
+    execute_steps:
+      - "dbt build --select passaggi_a_perdita"
+  AGOS_L2_GESTIONE_CREDITI_PERDITE_MINIME_ABB:
+    <<: *job_defaults
+    name: "AGOS_L2_GESTIONE_CREDITI_PERDITE_MINIME_ABB"
+    description: '{"layer":"L2","model":"PERDITE_MINIME_ABB","subject_area":"GESTIONE_CREDITI"}'
+    execute_steps:
+      - "dbt build --select perdite_minime_abb"
+  AGOS_L2_GESTIONE_CREDITI_PRATICA_A_RECUPERO:
+    <<: *job_defaults
+    name: "AGOS_L2_GESTIONE_CREDITI_PRATICA_A_RECUPERO"
+    description: '{"layer":"L2","model":"PRATICA_A_RECUPERO","subject_area":"GESTIONE_CREDITI"}'
+    execute_steps:
+      - "dbt build --select pratica_a_recupero"
+  AGOS_L2_ONBOARDING_DOC_ISTRUTTORIA:
+    <<: *job_defaults
+    name: "AGOS_L2_ONBOARDING_DOC_ISTRUTTORIA"
+    description: '{"layer":"L2","model":"DOC_ISTRUTTORIA","subject_area":"ONBOARDING"}'
+    execute_steps:
+      - "dbt build --select doc_istruttoria"
+  AGOS_L2_ONBOARDING_WFL_ATTIVITA:
+    <<: *job_defaults
+    name: "AGOS_L2_ONBOARDING_WFL_ATTIVITA"
+    description: '{"layer":"L2","model":"WFL_ATTIVITA","subject_area":"ONBOARDING"}'
+    execute_steps:
+      - "dbt build --select wfl_attivita"
+  AGOS_L2_ONBOARDING_WFL_FASE:
+    <<: *job_defaults
+    name: "AGOS_L2_ONBOARDING_WFL_FASE"
+    description: '{"layer":"L2","model":"WFL_FASE","subject_area":"ONBOARDING"}'
+    execute_steps:
+      - "dbt build --select wfl_fase"
+  AGOS_L2_ONBOARDING_WFL_ISTANZA:
+    <<: *job_defaults
+    name: "AGOS_L2_ONBOARDING_WFL_ISTANZA"
+    description: '{"layer":"L2","model":"WFL_ISTANZA","subject_area":"ONBOARDING"}'
+    execute_steps:
+      - "dbt build --select wfl_istanza"
+  AGOS_L2_ONBOARDING_WFL_SOTTOFASE:
+    <<: *job_defaults
+    name: "AGOS_L2_ONBOARDING_WFL_SOTTOFASE"
+    description: '{"layer":"L2","model":"WFL_SOTTOFASE","subject_area":"ONBOARDING"}'
+    execute_steps:
+      - "dbt build --select wfl_sottofase"
+  AGOS_L2_PRODOTTO_AZIONI_POSTVENDITA:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_AZIONI_POSTVENDITA"
+    description: '{"layer":"L2","model":"AZIONI_POSTVENDITA","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select azioni_postvendita"
+  AGOS_L2_PRODOTTO_CARTA:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_CARTA"
+    description: '{"layer":"L2","model":"CARTA","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select carta"
+  AGOS_L2_PRODOTTO_CATENE_INTERMEDIAZIONE_AGG:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_CATENE_INTERMEDIAZIONE_AGG"
+    description: '{"layer":"L2","model":"CATENE_INTERMEDIAZIONE_AGG","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select catene_intermediazione_agg"
+  AGOS_L2_PRODOTTO_CONSUMO:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_CONSUMO"
+    description: '{"layer":"L2","model":"CONSUMO","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select consumo"
+  AGOS_L2_PRODOTTO_CQS:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_CQS"
+    description: '{"layer":"L2","model":"CQS","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select cqs"
+  AGOS_L2_PRODOTTO_M_CARTA_M:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_M_CARTA_M"
+    description: '{"layer":"L2","model":"CARTA_M","subject_area":"PRODOTTO_M"}'
+    execute_steps:
+      - "dbt build --select carta_m"
+  AGOS_L2_PRODOTTO_M_CONSUMO_M:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_M_CONSUMO_M"
+    description: '{"layer":"L2","model":"CONSUMO_M","subject_area":"PRODOTTO_M"}'
+    execute_steps:
+      - "dbt build --select consumo_m"
+  AGOS_L2_PRODOTTO_M_CQS_M:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_M_CQS_M"
+    description: '{"layer":"L2","model":"CQS_M","subject_area":"PRODOTTO_M"}'
+    execute_steps:
+      - "dbt build --select cqs_m"
+  AGOS_L2_PRODOTTO_M_PRATICA_M:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_M_PRATICA_M"
+    description: '{"layer":"L2","model":"PRATICA_M","subject_area":"PRODOTTO_M"}'
+    execute_steps:
+      - "dbt build --select pratica_m"
+  AGOS_L2_PRODOTTO_PRATICA:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_PRATICA"
+    description: '{"layer":"L2","model":"PRATICA","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select pratica"
+  AGOS_L2_PRODOTTO_TABELLE_FINANZIARIE:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_TABELLE_FINANZIARIE"
+    description: '{"layer":"L2","model":"TABELLE_FINANZIARIE","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select tabelle_finanziarie"
+  AGOS_L2_PRODOTTO_VARIAZIONI_STATO_PRAT:
+    <<: *job_defaults
+    name: "AGOS_L2_PRODOTTO_VARIAZIONI_STATO_PRAT"
+    description: '{"layer":"L2","model":"VARIAZIONI_STATO_PRAT","subject_area":"PRODOTTO"}'
+    execute_steps:
+      - "dbt build --select variazioni_stato_prat"
+  AGOS_L2_PROVVIGIONI_RAPPEL_PROFORMA_PRV_RAP:
+    <<: *job_defaults
+    name: "AGOS_L2_PROVVIGIONI_RAPPEL_PROFORMA_PRV_RAP"
+    description: '{"layer":"L2","model":"PROFORMA_PRV_RAP","subject_area":"PROVVIGIONI_RAPPEL"}'
+    execute_steps:
+      - "dbt build --select proforma_prv_rap"
+  AGOS_L2_PROVVIGIONI_RAPPEL_PROVVIGIONI_E_RAPPEL:
+    <<: *job_defaults
+    name: "AGOS_L2_PROVVIGIONI_RAPPEL_PROVVIGIONI_E_RAPPEL"
+    description: '{"layer":"L2","model":"PROVVIGIONI_E_RAPPEL","subject_area":"PROVVIGIONI_RAPPEL"}'
+    execute_steps:
+      - "dbt build --select provvigioni_e_rappel"
+  AGOS_L2_RISCHI_ADEMPIMENTI_CARTOLARIZZAZIONI_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_CARTOLARIZZAZIONI_M"
+    description: '{"layer":"L2","model":"CARTOLARIZZAZIONI_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select cartolarizzazioni_m"
+  AGOS_L2_RISCHI_ADEMPIMENTI_CONSOLIDAMENTI:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_CONSOLIDAMENTI"
+    description: '{"layer":"L2","model":"CONSOLIDAMENTI","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select consolidamenti"
+  AGOS_L2_RISCHI_ADEMPIMENTI_ELENCO_CONTI_SVAL_O:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_ELENCO_CONTI_SVAL_O"
+    description: '{"layer":"L2","model":"ELENCO_CONTI_SVAL_O","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select elenco_conti_sval_o"
+  AGOS_L2_RISCHI_ADEMPIMENTI_FLESSIBILITA_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_FLESSIBILITA_M"
+    description: '{"layer":"L2","model":"FLESSIBILITA_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select flessibilita_m"
+  AGOS_L2_RISCHI_ADEMPIMENTI_FORBEARANCE_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_FORBEARANCE_M"
+    description: '{"layer":"L2","model":"FORBEARANCE_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select forbearance_m"
+  AGOS_L2_RISCHI_ADEMPIMENTI_GIORNI_SCADUTO:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_GIORNI_SCADUTO"
+    description: '{"layer":"L2","model":"GIORNI_SCADUTO","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select giorni_scaduto"
+  AGOS_L2_RISCHI_ADEMPIMENTI_INDICE_RISCHIO_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_INDICE_RISCHIO_M"
+    description: '{"layer":"L2","model":"INDICE_RISCHIO_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select indice_rischio_m"
+  AGOS_L2_RISCHI_ADEMPIMENTI_LEGAME_CARTOLARIZZAZIONI:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_LEGAME_CARTOLARIZZAZIONI"
+    description: '{"layer":"L2","model":"LEGAME_CARTOLARIZZAZIONI","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select legame_cartolarizzazioni"
+  AGOS_L2_RISCHI_ADEMPIMENTI_MORATORIE_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_MORATORIE_M"
+    description: '{"layer":"L2","model":"MORATORIE_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select moratorie_m"
+  AGOS_L2_RISCHI_ADEMPIMENTI_PERFORMING_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_PERFORMING_M"
+    description: '{"layer":"L2","model":"PERFORMING_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select performing_m"
+  AGOS_L2_RISCHI_ADEMPIMENTI_STATO_CREDITIZIO_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_STATO_CREDITIZIO_M"
+    description: '{"layer":"L2","model":"STATO_CREDITIZIO_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select stato_creditizio_m"
+  AGOS_L2_RISCHI_ADEMPIMENTI_SVALUTAZIONI_M:
+    <<: *job_defaults
+    name: "AGOS_L2_RISCHI_ADEMPIMENTI_SVALUTAZIONI_M"
+    description: '{"layer":"L2","model":"SVALUTAZIONI_M","subject_area":"RISCHI_ADEMPIMENTI"}'
+    execute_steps:
+      - "dbt build --select svalutazioni_m"
+  AGOS_L2_SALDI_SALDO_CONTABILE_M:
+    <<: *job_defaults
+    name: "AGOS_L2_SALDI_SALDO_CONTABILE_M"
+    description: '{"layer":"L2","model":"SALDO_CONTABILE_M","subject_area":"SALDI"}'
+    execute_steps:
+      - "dbt build --select saldo_contabile_m"
+  AGOS_L2_SALDI_SALDO_GESTIONALE_M:
+    <<: *job_defaults
+    name: "AGOS_L2_SALDI_SALDO_GESTIONALE_M"
+    description: '{"layer":"L2","model":"SALDO_GESTIONALE_M","subject_area":"SALDI"}'
+    execute_steps:
+      - "dbt build --select saldo_gestionale_m"
+  AGOS_L2_SALDI_SALDO_OFF_M:
+    <<: *job_defaults
+    name: "AGOS_L2_SALDI_SALDO_OFF_M"
+    description: '{"layer":"L2","model":"SALDO_OFF_M","subject_area":"SALDI"}'
+    execute_steps:
+      - "dbt build --select saldo_off_m"
+  AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT"
+    description: '{"layer":"L2","model":"ACCETTAZIONE_INPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select accettazione_input"
+  AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT_CAT_AGG:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT_CAT_AGG"
+    description: '{"layer":"L2","model":"ACCETTAZIONE_INPUT_CAT_AGG","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select accettazione_input_cat_agg"
+  AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT_OB:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT_OB"
+    description: '{"layer":"L2","model":"ACCETTAZIONE_INPUT_OB","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select accettazione_input_ob"
+  AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT_PRAT_PREC:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_INPUT_PRAT_PREC"
+    description: '{"layer":"L2","model":"ACCETTAZIONE_INPUT_PRAT_PREC","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select accettazione_input_prat_prec"
+  AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_OUTPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_OUTPUT"
+    description: '{"layer":"L2","model":"ACCETTAZIONE_OUTPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select accettazione_output"
+  AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_OUTPUT_PR_OV:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_ACCETTAZIONE_OUTPUT_PR_OV"
+    description: '{"layer":"L2","model":"ACCETTAZIONE_OUTPUT_PR_OV","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select accettazione_output_pr_ov"
+  AGOS_L2_SCORE_BANCHE_DATI_CUMRIS_INPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_CUMRIS_INPUT"
+    description: '{"layer":"L2","model":"CUMRIS_INPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select cumris_input"
+  AGOS_L2_SCORE_BANCHE_DATI_DBRSCIPA_INPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_DBRSCIPA_INPUT"
+    description: '{"layer":"L2","model":"DBRSCIPA_INPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select dbrscipa_input"
+  AGOS_L2_SCORE_BANCHE_DATI_DBRSCIPA_OUTPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_DBRSCIPA_OUTPUT"
+    description: '{"layer":"L2","model":"DBRSCIPA_OUTPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select dbrscipa_output"
+  AGOS_L2_SCORE_BANCHE_DATI_PRECRIF_INPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_PRECRIF_INPUT"
+    description: '{"layer":"L2","model":"PRECRIF_INPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select precrif_input"
+  AGOS_L2_SCORE_BANCHE_DATI_PRECRIF_OUTPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_PRECRIF_OUTPUT"
+    description: '{"layer":"L2","model":"PRECRIF_OUTPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select precrif_output"
+  AGOS_L2_SCORE_BANCHE_DATI_PRESCREENING_INPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_PRESCREENING_INPUT"
+    description: '{"layer":"L2","model":"PRESCREENING_INPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select prescreening_input"
+  AGOS_L2_SCORE_BANCHE_DATI_PRESCREENING_OUTPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_PRESCREENING_OUTPUT"
+    description: '{"layer":"L2","model":"PRESCREENING_OUTPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select prescreening_output"
+  AGOS_L2_SCORE_BANCHE_DATI_PRESCREENING_OUTPUT_PR:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_PRESCREENING_OUTPUT_PR"
+    description: '{"layer":"L2","model":"PRESCREENING_OUTPUT_PR","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select prescreening_output_pr"
+  AGOS_L2_SCORE_BANCHE_DATI_RBPCORTO_INPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_RBPCORTO_INPUT"
+    description: '{"layer":"L2","model":"RBPCORTO_INPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select rbpcorto_input"
+  AGOS_L2_SCORE_BANCHE_DATI_RBPCORTO_OUTPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_RBPCORTO_OUTPUT"
+    description: '{"layer":"L2","model":"RBPCORTO_OUTPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select rbpcorto_output"
+  AGOS_L2_SCORE_BANCHE_DATI_SCORING_DETTAGLIO_OUTPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_SCORING_DETTAGLIO_OUTPUT"
+    description: '{"layer":"L2","model":"SCORING_DETTAGLIO_OUTPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select scoring_dettaglio_output"
+  AGOS_L2_SCORE_BANCHE_DATI_SCORING_INPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_SCORING_INPUT"
+    description: '{"layer":"L2","model":"SCORING_INPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select scoring_input"
+  AGOS_L2_SCORE_BANCHE_DATI_SCORING_TESTATA_OUTPUT:
+    <<: *job_defaults
+    name: "AGOS_L2_SCORE_BANCHE_DATI_SCORING_TESTATA_OUTPUT"
+    description: '{"layer":"L2","model":"SCORING_TESTATA_OUTPUT","subject_area":"SCORE_BANCHE_DATI"}'
+    execute_steps:
+      - "dbt build --select scoring_testata_output"
+  AGOS_L2_SWORD_CREDITLINE:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_CREDITLINE"
+    description: '{"layer":"L2","model":"CREDITLINE","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select creditline"
+  AGOS_L2_SWORD_CREDLINASSET:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_CREDLINASSET"
+    description: '{"layer":"L2","model":"CREDLINASSET","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select credlinasset"
+  AGOS_L2_SWORD_CREDLINFACIL:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_CREDLINFACIL"
+    description: '{"layer":"L2","model":"CREDLINFACIL","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select credlinfacil"
+  AGOS_L2_SWORD_LOAN:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_LOAN"
+    description: '{"layer":"L2","model":"LOAN","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select loan"
+  AGOS_L2_SWORD_LOAN_ARREARS:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_LOAN_ARREARS"
+    description: '{"layer":"L2","model":"LOAN_ARREARS","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select loan_arrears"
+  AGOS_L2_SWORD_LOAN_ASSET:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_LOAN_ASSET"
+    description: '{"layer":"L2","model":"LOAN_ASSET","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select loan_asset"
+  AGOS_L2_SWORD_LOAN_CHARGEPROF:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_LOAN_CHARGEPROF"
+    description: '{"layer":"L2","model":"LOAN_CHARGEPROF","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select loan_chargeprof"
+  AGOS_L2_SWORD_LOAN_TRANSAC:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_LOAN_TRANSAC"
+    description: '{"layer":"L2","model":"LOAN_TRANSAC","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select loan_transac"
+  AGOS_L2_SWORD_ORG_CONTACT:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_ORG_CONTACT"
+    description: '{"layer":"L2","model":"ORG_CONTACT","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select org_contact"
+  AGOS_L2_SWORD_ORG_TRANSACT:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_ORG_TRANSACT"
+    description: '{"layer":"L2","model":"ORG_TRANSACT","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select org_transact"
+  AGOS_L2_SWORD_ORGANISATION:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_ORGANISATION"
+    description: '{"layer":"L2","model":"ORGANISATION","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select organisation"
+  AGOS_L2_SWORD_PLAN:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_PLAN"
+    description: '{"layer":"L2","model":"PLAN","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select plan"
+  AGOS_L2_SWORD_PLAN_CHARGEPROF:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_PLAN_CHARGEPROF"
+    description: '{"layer":"L2","model":"PLAN_CHARGEPROF","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select plan_chargeprof"
+  AGOS_L2_SWORD_PLAN_PAYSCH:
+    <<: *job_defaults
+    name: "AGOS_L2_SWORD_PLAN_PAYSCH"
+    description: '{"layer":"L2","model":"PLAN_PAYSCH","subject_area":"SWORD"}'
+    execute_steps:
+      - "dbt build --select plan_paysch"
+
+  AGOS_L3_BASILEA_CORE_DM_BASILEA_CA_VAR_PV_K_M:
+    <<: *job_defaults
+    name: "AGOS_L3_BASILEA_CORE_DM_BASILEA_CA_VAR_PV_K_M"
+    description: '{"layer":"L3","model":"DM_BASILEA_CA_VAR_PV_K_M","subject_area":"BASILEA_CORE"}'
+    execute_steps:
+      - "dbt build --select dm_basilea_ca_var_pv_k_m"
+  AGOS_L3_BASILEA_CORE_DM_BASILEA_CO_VAR_PV_K_M:
+    <<: *job_defaults
+    name: "AGOS_L3_BASILEA_CORE_DM_BASILEA_CO_VAR_PV_K_M"
+    description: '{"layer":"L3","model":"DM_BASILEA_CO_VAR_PV_K_M","subject_area":"BASILEA_CORE"}'
+    execute_steps:
+      - "dbt build --select dm_basilea_co_var_pv_k_m"
+  AGOS_L3_BASILEA_CORE_DM_CONTROLLI_BASILEA_M:
+    <<: *job_defaults
+    name: "AGOS_L3_BASILEA_CORE_DM_CONTROLLI_BASILEA_M"
+    description: '{"layer":"L3","model":"DM_CONTROLLI_BASILEA_M","subject_area":"BASILEA_CORE"}'
+    execute_steps:
+      - "dbt build --select dm_controlli_basilea_m"
+  AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_PRATICHE:
+    <<: *job_defaults
+    name: "AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_PRATICHE"
+    description: '{"layer":"L3","model":"DM_DIM_PRODUZ_PRATICHE","subject_area":"MONITORAGGIO_PRODUZIONE"}'
+    execute_steps:
+      - "dbt build --select dm_dim_produz_pratiche"
+  AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_PRATICHE_M:
+    <<: *job_defaults
+    name: "AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_PRATICHE_M"
+    description: '{"layer":"L3","model":"DM_DIM_PRODUZ_PRATICHE_M","subject_area":"MONITORAGGIO_PRODUZIONE"}'
+    execute_steps:
+      - "dbt build --select dm_dim_produz_pratiche_m"
+  AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_UTILIZZI_CARTE:
+    <<: *job_defaults
+    name: "AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_UTILIZZI_CARTE"
+    description: '{"layer":"L3","model":"DM_DIM_PRODUZ_UTILIZZI_CARTE","subject_area":"MONITORAGGIO_PRODUZIONE"}'
+    execute_steps:
+      - "dbt build --select dm_dim_produz_utilizzi_carte"
+  AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_UTILIZZI_CARTE_M:
+    <<: *job_defaults
+    name: "AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_DIM_PRODUZ_UTILIZZI_CARTE_M"
+    description: '{"layer":"L3","model":"DM_DIM_PRODUZ_UTILIZZI_CARTE_M","subject_area":"MONITORAGGIO_PRODUZIONE"}'
+    execute_steps:
+      - "dbt build --select dm_dim_produz_utilizzi_carte_m"
+  AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_MOV_PRODUZIONE:
+    <<: *job_defaults
+    name: "AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_MOV_PRODUZIONE"
+    description: '{"layer":"L3","model":"DM_MOV_PRODUZIONE","subject_area":"MONITORAGGIO_PRODUZIONE"}'
+    execute_steps:
+      - "dbt build --select dm_mov_produzione"
+  AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_MOV_PRODUZIONE_M:
+    <<: *job_defaults
+    name: "AGOS_L3_MONITORAGGIO_PRODUZIONE_DM_MOV_PRODUZIONE_M"
+    description: '{"layer":"L3","model":"DM_MOV_PRODUZIONE_M","subject_area":"MONITORAGGIO_PRODUZIONE"}'
+    execute_steps:
+      - "dbt build --select dm_mov_produzione_m"
+  AGOS_L3_SALDI_DM_SALDO_CLIENTE_M:
+    <<: *job_defaults
+    name: "AGOS_L3_SALDI_DM_SALDO_CLIENTE_M"
+    description: '{"layer":"L3","model":"DM_SALDO_CLIENTE_M","subject_area":"SALDI"}'
+    execute_steps:
+      - "dbt build --select dm_saldo_cliente_m"
+  AGOS_L3_SALDI_DM_SALDO_PRATICA_CLIENTE_M:
+    <<: *job_defaults
+    name: "AGOS_L3_SALDI_DM_SALDO_PRATICA_CLIENTE_M"
+    description: '{"layer":"L3","model":"DM_SALDO_PRATICA_CLIENTE_M","subject_area":"SALDI"}'
+    execute_steps:
+      - "dbt build --select dm_saldo_pratica_cliente_m"
+  AGOS_L3_SALDI_DM_SALDO_PRATICA_M:
+    <<: *job_defaults
+    name: "AGOS_L3_SALDI_DM_SALDO_PRATICA_M"
+    description: '{"layer":"L3","model":"DM_SALDO_PRATICA_M","subject_area":"SALDI"}'
+    execute_steps:
+      - "dbt build --select dm_saldo_pratica_m"
+
