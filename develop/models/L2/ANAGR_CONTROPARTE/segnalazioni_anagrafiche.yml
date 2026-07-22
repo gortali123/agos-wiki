@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: segnalazioni_anagrafiche
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_CONTROPARTE", "entita": "SEGNALAZIONI_ANAGRAFICHE"}'
+      pre_hook: >
+        {{ delete_l2(
+            'yqngrant',
+            ['CD_CONTROPARTE', 'TP_SEGNALAZIONE', 'PR_SEGNALAZIONE', 'DT_INIZIO'],
+            ['NGRANT_CODICE', 'NGRANT_TIPO_SEGNALAZIONE', 'NGRANT_TES_PROGR', 'NGRANT_DATA_INIZIO']
+        ) }}
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_CONTROPARTE, TP_SEGNALAZIONE, PR_SEGNALAZIONE, DT_INIZIO, TS_INSERIMENTO]
+    columns:
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: TP_SEGNALAZIONE
+        data_type: VARCHAR(3)
+      - name: PR_SEGNALAZIONE
+        data_type: NUMBER(9,0)
+      - name: DT_INIZIO
+        data_type: DATE
+      - name: DT_FINE
+        data_type: DATE
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: DS_SEGNALAZIONE
+        data_type: VARCHAR(30)
+      - name: CD_RISCHIO
+        data_type: NUMBER(3,0)
+      - name: CD_CLASSE
+        data_type: VARCHAR(2)
+      - name: CD_GRUPPO
+        data_type: VARCHAR(2)
+      - name: DT_INSERIMENTO_RECORD
+        data_type: DATE
+      - name: NM_ORA_INSERIMENTO_RECORD
+        data_type: TIME
+      - name: CD_UTENTE_INSERIMENTO_RECORD
+        data_type: VARCHAR(10)
+      - name: DT_CHIUSURA_RECORD
+        data_type: DATE
+      - name: NM_ORA_CHIUSURA_RECORD
+        data_type: TIME
+      - name: CD_UTENTE_CHIUSURA_RECORD
+        data_type: VARCHAR(10)
+      - name: TP_NOMINATIVO
+        data_type: VARCHAR(3)
+      - name: TP_NOMINATIVO_FAS
+        data_type: VARCHAR(3)
+      - name: DS_RAGIONE_SOCIALE
+        data_type: VARCHAR(30)
+      - name: CD_ORIGINE_CONTATTO
+        data_type: VARCHAR(3)
+      - name: CD_MOTIVO_CONTATTO
+        data_type: VARCHAR(3)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

@@ -1,0 +1,53 @@
+version: 2
+models:
+- name: provvigioni_assicurative
+  config:
+    materialized: incremental
+    incremental_strategy: insert_overwrite
+    unique_key: [TP_SORGENTE, CD_PROVVIGIONE, TP_PROCEDURA, CD_PRATICA]
+    query_tag: '{"app": "DBT", "schema": "L2_ASSICURAZIONI", "entita": "PROVVIGIONI_ASSICURATIVE"}'
+  constraints:
+    - type: primary_key
+      warn_unenforced: false
+      columns: [TP_SORGENTE, CD_PROVVIGIONE, TP_PROCEDURA, CD_PRATICA, CD_SERVIZIO, NM_ANNOMESE_MATURAZIONE]
+  columns:
+  - name: TP_SORGENTE
+    data_type: VARCHAR(3)
+  - name: CD_PROVVIGIONE
+    data_type: NUMBER(11,0)
+  - name: TP_PROCEDURA
+    data_type: CHAR(2)
+  - name: CD_PRATICA
+    data_type: VARCHAR(250)
+  - name: CD_SERVIZIO
+    data_type: CHAR(5)
+  - name: NM_ANNOMESE_MATURAZIONE
+    data_type: NUMBER(6,0)
+  - name: TP_PROVVIGIONE
+    data_type: VARCHAR(3)
+  - name: CD_TRANSAZIONE
+    data_type: NUMBER(11,0)
+  - name: FL_STORNO
+    data_type: CHAR(1)
+  - name: DT_LIQUIDAZIONE
+    data_type: DATE
+  - name: DT_VALUTA
+    data_type: DATE
+  - name: EU_IMPORTO_1
+    data_type: NUMBER(13,2)
+  - name: EU_IMPORTO_2
+    data_type: NUMBER(13,2)
+  - name: EU_IMPORTO_FISSO
+    data_type: NUMBER(13,2)
+  - name: EU_TOTALE
+    data_type: NUMBER(38,2)
+  - name: CD_INTERMEDIARIO
+    data_type: NUMBER(9,0)
+  - name: TP_INTERMEDIARIO
+    data_type: CHAR(2)
+  - name: CD_DESTINATARIO
+    data_type: NUMBER(9,0)
+  - name: TP_DESTINATARIO
+    data_type: CHAR(2)
+  - name: LASTMODIFIEDDATA
+    data_type: TIMESTAMP_NTZ

@@ -1,0 +1,20 @@
+version: 2
+models:
+  - name: estinzioni_anticipate_tot
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_GESTIONE_CREDITI", "entita": "ESTINZIONI_ANTICIPATE_TOT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: DT_ESTINZIONE
+        data_type: DATE
+      - name: EU_ESTINTO
+        data_type: NUMBER(13,2)

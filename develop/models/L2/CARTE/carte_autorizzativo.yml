@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: carte_autorizzativo
+    description: "Entità contente TUTTE le richieste autorizzative provenienti dai tentati pagamenti carta"
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key:
+        - CD_AUTORIZZAZIONE
+        - CD_EMETTITORE
+        - TS_INIZIO_VALIDITA
+      pre_hook: "{{ delete_l2('craut', ['CD_AUTORIZZAZIONE', 'CD_EMETTITORE'], ['CRAUT_AUTORIZZAZIONE', 'CRAUT_EMETTITORE']) }}"
+      query_tag: '{"app": "DBT", "schema": "L2_CARTE", "entita": "CARTE_AUTORIZZATIVO"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_AUTORIZZAZIONE, CD_EMETTITORE, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_AUTORIZZAZIONE
+        data_type: NUMBER(8,0)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3,0)
+      - name: CD_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_TERMINALE
+        data_type: VARCHAR(8)
+      - name: TP_TERMINALE
+        data_type: VARCHAR(1)
+      - name: CD_STATO
+        data_type: VARCHAR(1)
+      - name: CD_ESITO
+        data_type: VARCHAR(1)
+      - name: CD_MOTIVO
+        data_type: VARCHAR(2)
+      - name: CD_CONVENZIONATO
+        data_type: NUMBER(9,0)
+      - name: TP_AUTORIZZAZIONE
+        data_type: VARCHAR(1)
+      - name: TP_CANALE_TRANSAZIONE
+        data_type: VARCHAR(1)
+      - name: TS_AUTORIZZAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: DT_ACQUISTO
+        data_type: DATE
+      - name: EU_IMPORTO
+        data_type: NUMBER(11,2)
+      - name: EU_COMM_ATM
+        data_type: NUMBER(13,2)
+      - name: TP_COMM_ATM
+        data_type: VARCHAR(1)
+      - name: CD_CAMPAGNA_FL_CAMPAGNA
+        data_type: VARCHAR(3)
+      - name: CD_ESERCENTE
+        data_type: VARCHAR(15)
+      - name: CD_MERC
+        data_type: NUMBER(4,0)
+      - name: DS_MERC
+        data_type: VARCHAR(28)
+      - name: DS_ESERC
+        data_type: VARCHAR(30)
+      - name: CD_ACQUIRER
+        data_type: VARCHAR(11)
+      - name: CD_CAP_ESERC
+        data_type: VARCHAR(10)
+      - name: DS_NOME_ESERC
+        data_type: VARCHAR(25)
+      - name: DS_CITTA_ESERC
+        data_type: VARCHAR(13)
+      - name: CD_NAZIONE_ESERC
+        data_type: VARCHAR(3)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

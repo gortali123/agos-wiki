@@ -1,0 +1,72 @@
+version: 2
+models:
+  - name: doc_istruttoria
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_ONBOARDING", "entita": "DOC_ISTRUTTORIA"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_CARTELLA, CD_ELEMENTO, CD_VERSIONE_DOC, CD_SET_DOC]
+    columns:
+      - name: CD_CARTELLA
+        data_type: NUMBER(12,0)
+      - name: CD_ELEMENTO
+        data_type: NUMBER(5,0)
+      - name: CD_VERSIONE_DOC
+        data_type: NUMBER(4,0)
+      - name: CD_SET_DOC
+        data_type: VARCHAR(3)
+      - name: CD_GRUPPO
+        data_type: VARCHAR(2)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: CD_PRATICA_CONV
+        data_type: NUMBER(12,0)
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: CD_TIPO_DOC
+        data_type: VARCHAR(3)
+      - name: DS_TIPO_DOC
+        data_type: VARCHAR(30)
+      - name: CD_SOTTOTIPO_DOC
+        data_type: VARCHAR(3)
+      - name: DS_SOTTOTIPO_DOC
+        data_type: VARCHAR(30)
+      - name: CD_FASE_OBBLIGATORIETA
+        data_type: VARCHAR(2)
+      - name: CD_SITUAZIONE
+        data_type: VARCHAR(1)
+      - name: DS_SITUAZIONE
+        data_type: VARCHAR(30)
+      - name: NM_GG_RIENTRO_CONCESSI
+        data_type: NUMBER(3,0)
+      - name: FL_ANNULLO_DOC
+        data_type: VARCHAR(1)
+      - name: CD_ANNULLO_DOC
+        data_type: VARCHAR(3)
+      - name: TS_ANNULLO_DOC
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_ANNULLO_DOC
+        data_type: VARCHAR(10)
+      - name: TS_INSERIMENTO_DOC
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_INSERIMENTO_DOC
+        data_type: VARCHAR(10)
+      - name: FL_ANNULLO_CARTELLA
+        data_type: VARCHAR(1)
+      - name: TS_ANNULLO_CARTELLA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_ANNULLO_CARTELLA
+        data_type: VARCHAR(10)
+      - name: TS_INSERIMENTO_CARTELLA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_INSERIMENTO_CARTELLA
+        data_type: VARCHAR(10)
+      - name: CD_MOTIVO_INS
+        data_type: VARCHAR(3)
+      - name: CD_RAPPORTO_INS
+        data_type: VARCHAR(2)

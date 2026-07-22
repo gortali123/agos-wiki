@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: carte_blocchi
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [CD_PRATICA, TP_PROCEDURA, CD_PROGRESSIVO, CD_BLOCCO_OCS]
+      pre_hook: "{{ delete_l2('crcarblo', ['CD_PRATICA', 'TP_PROCEDURA', 'CD_PROGRESSIVO'], ['cab_pratica', 'cab_provenienza', 'cab_progressivo']) }}"
+      query_tag: '{"app": "DBT", "schema": "L2_CARTE", "entita": "CARTE_BLOCCHI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, CD_PROGRESSIVO, CD_BLOCCO_OCS, TS_INSERIMENTO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PROGRESSIVO
+        data_type: NUMBER(8,0)
+      - name: CD_BLOCCO_OCS
+        data_type: VARCHAR(2)
+      - name: FL_BLOCCO_AUTOMATICO
+        data_type: VARCHAR(1)
+      - name: TP_BLOCCO
+        data_type: VARCHAR(1)
+      - name: DT_APERTURA_BLOCCO
+        data_type: DATE
+      - name: DT_CHIUSURA_BLOCCO
+        data_type: DATE
+      - name: FL_ATTIVO
+        data_type: VARCHAR(1)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: DT_INSERIMENTO
+        data_type: DATE
+      - name: ORA_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_IMMISSIONE
+        data_type: VARCHAR(10)
+      - name: CD_PROGRAMMA_IMMISSIONE
+        data_type: VARCHAR(10)
+      - name: DS_EC_BLOCCANTE
+        data_type: NUMBER(6,0)
+      - name: TS_ANNULLO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_ANNULLO
+        data_type: VARCHAR(10)
+      - name: CD_PROGRAMMA_ANNULLO
+        data_type: VARCHAR(10)
+      - name: TP_ANNULLO
+        data_type: VARCHAR(1)
+      - name: DS_EC_SBLOCCANTE
+        data_type: NUMBER(6,0)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

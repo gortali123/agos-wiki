@@ -1,0 +1,41 @@
+version: 2
+
+
+models:
+  - name: questionari_assicurativi
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_ASSICURAZIONI", "entita": "QUESTIONARI_ASSICURATIVI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_SORGENTE, TP_CONTROPARTE, CD_CONTROPARTE, CD_QUESTIONARIO, NM_LIVELLO]
+    columns:
+      - name: TP_SORGENTE
+        data_type: VARCHAR(3)
+      - name: TP_CONTROPARTE
+        data_type: VARCHAR(2)
+      - name: CD_CONTROPARTE
+        data_type: VARCHAR(45)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: VARCHAR(45)
+      - name: CD_QUESTIONARIO
+        data_type: VARCHAR(11)
+      - name: NM_LIVELLO
+        data_type: NUMBER(11)
+      - name: DS_LIVELLO
+        data_type: VARCHAR(20)
+      - name: CD_ADEGUATO
+        data_type: VARCHAR(2)
+      - name: FL_ABBINATO
+        data_type: VARCHAR(1)
+      - name: DT_SOMMINISTRAZIONE
+        data_type: DATE
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ
+

@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: legame_pratica_controparte
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_CONTROPARTE", "entita": "LEGAME_PRATICA_CONTROPARTE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, TS_INSERIMENTO, CD_CONTROPARTE, TP_RAPPORTO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: TP_RAPPORTO
+        data_type: VARCHAR(2)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

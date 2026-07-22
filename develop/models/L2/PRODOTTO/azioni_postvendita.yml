@@ -1,0 +1,40 @@
+version: 2
+models:
+- name: azioni_postvendita
+  config:
+    materialized: incremental
+    incremental_strategy: insert_overwrite
+    query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "AZIONI_POSTVENDITA"}'
+  constraints:
+  - type: primary_key
+    warn_unenforced: false
+    columns: [CD_PRATICA, PR_POSTVENDITA, TP_PROCEDURA]
+  columns:
+  - name: PR_POSTVENDITA
+    data_type: NUMBER(11,0)
+  - name: TP_PROCEDURA
+    data_type: VARCHAR(2)
+  - name: CD_PRATICA
+    data_type: NUMBER(16,0)
+  - name: CD_AZIONE
+    data_type: VARCHAR(3)
+  - name: DS_AZIONE
+    data_type: VARCHAR(30)
+  - name: CD_STATO_RICHIESTA
+    data_type: VARCHAR(2)
+  - name: DT_STATO_RICHIESTA
+    data_type: DATE
+  - name: CD_ATTRIBUTO_RICHIESTA
+    data_type: VARCHAR(2)
+  - name: TP_CARICAMENTO_RICHIESTA
+    data_type: VARCHAR(2)
+  - name: CD_CANALE_ACQ_RICHIESTA
+    data_type: VARCHAR(3)
+  - name: TP_CONTATTO_RICHIESTA
+    data_type: VARCHAR(3)
+  - name: CD_ORIGINE_RICHIESTA
+    data_type: VARCHAR(3)
+  - name: CD_FILIALE_RICHIESTA
+    data_type: VARCHAR(3)
+  - name: LASTMODIFIEDDATA
+    data_type: TIMESTAMP_NTZ

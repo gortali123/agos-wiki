@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: cessioni
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_GESTIONE_CREDITI", "entita": "CESSIONI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, PR_CESSIONE]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: PR_CESSIONE
+        data_type: NUMBER(9)
+      - name: DT_CESSIONE
+        data_type: DATE
+      - name: EU_CESSIONE
+        data_type: NUMBER(13,2)
+      - name: EU_PERDITA_CESSIONE
+        data_type: NUMBER(13,2)
+      - name: EU_INCASSO_CESSIONE
+        data_type: NUMBER(13,2)
+      - name: CD_CESSIONARIO
+        data_type: NUMBER(9)

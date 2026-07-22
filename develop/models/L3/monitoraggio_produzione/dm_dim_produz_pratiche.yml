@@ -1,0 +1,210 @@
+version: 2
+models:
+  - name: dm_dim_produz_pratiche
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L3_MONITORAGGIO_PRODUZIONE", "entita": "DM_DIM_PRODUZ_PRATICHE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: CD_TIPO_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: DS_PRODOTTO_POG
+        data_type: VARCHAR(20)
+      - name: TP_CONTRATTO_CQ
+        data_type: VARCHAR(1)
+      - name: CD_TABELLA_FINANZIARIA
+        data_type: VARCHAR(3)
+      - name: DS_TABELLA_FINANZIARIA
+        data_type: VARCHAR(30)
+      - name: CD_ATTRIBUTO_TT
+        data_type: VARCHAR(4)
+      - name: CD_DESTINAZIONE_BENE
+        data_type: VARCHAR(3)
+      - name: DS_DESTINAZIONE_BENE
+        data_type: VARCHAR(30)
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(13,2)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(30)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: CD_FILIALE_PRAT
+        data_type: VARCHAR(3)
+      - name: CD_FILIALE_INT
+        data_type: VARCHAR(3)
+      - name: CD_RESPONSABILE
+        data_type: VARCHAR(3)
+      - name: CD_CANALE_ACQUISIZIONE
+        data_type: VARCHAR(3)
+      - name: DS_CANALE_ACQUISIZIONE
+        data_type: VARCHAR(40)
+      - name: CD_TIPO_PROCESSO
+        data_type: VARCHAR(3)
+      - name: DS_TIPO_PROCESSO
+        data_type: VARCHAR(30)
+      - name: FL_WEB_CANALE_ACQ
+        data_type: VARCHAR(1)
+      - name: CD_INTERMEDIARIO
+        data_type: NUMBER(9)
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR(2)
+      - name: CD_RETE_VENDITA
+        data_type: NUMBER(9)
+      - name: CD_AGENTE
+        data_type: NUMBER(9)
+      - name: CD_SUB_AGENTE
+        data_type: NUMBER(9)
+      - name: CD_CONVENZIONATO
+        data_type: NUMBER(9)
+      - name: CD_PUNTO_VENDITA
+        data_type: NUMBER(9)
+      - name: CD_VENDITORE
+        data_type: NUMBER(9)
+      - name: CD_GER_TERRITORIALE_1
+        data_type: VARCHAR(10)
+      - name: CD_GER_TERRITORIALE_2
+        data_type: VARCHAR(3)
+      - name: CD_GER_TERRITORIALE_3
+        data_type: VARCHAR(3)
+      - name: CD_GER_TERRITORIALE_4
+        data_type: VARCHAR(3)
+      - name: CD_NODO_FOGLIA
+        data_type: VARCHAR(10)
+      - name: CD_GER_TIPO_CLIENTE_1
+        data_type: VARCHAR(20)
+      - name: CD_GER_TIPO_CLIENTE_2
+        data_type: VARCHAR(20)
+      - name: CD_GER_TIPO_CLIENTE_3
+        data_type: VARCHAR(20)
+      - name: CD_GER_TIPO_CLIENTE_4
+        data_type: VARCHAR(20)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_COOBLIGATO
+        data_type: VARCHAR(9)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR(2)
+      - name: CD_BLOCCO
+        data_type: VARCHAR(2)
+      - name: DT_CARICAMENTO
+        data_type: DATE
+      - name: DT_ESAMINATA
+        data_type: DATE
+      - name: DT_ESITO
+        data_type: DATE
+      - name: DT_APPROVAZIONE
+        data_type: DATE
+      - name: DT_RESPINTA
+        data_type: DATE
+      - name: DT_RITIRATA
+        data_type: DATE
+      - name: DT_LIQUIDAZIONE
+        data_type: DATE
+      - name: DT_DECORRENZA
+        data_type: DATE
+      - name: DT_STORNATA
+        data_type: DATE
+      - name: DT_CHIUSURA_REGOLARE
+        data_type: DATE
+      - name: DT_CH_ESTINZIONE_ANTICIPATA
+        data_type: DATE
+      - name: DT_CH_PASSAGGIO_PERDITA
+        data_type: DATE
+      - name: DT_CH_CESSIONE
+        data_type: DATE
+      - name: DT_CHIUSURA_EFFETTIVA
+        data_type: DATE
+      - name: DT_MESSA_IN_MORA
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: EU_FINANZIAMENTO
+        data_type: NUMBER(13,2)
+      - name: EU_FIDO
+        data_type: NUMBER(13,2)
+      - name: EU_RATA
+        data_type: NUMBER(13,2)
+      - name: EU_ANTICIPO
+        data_type: NUMBER(13,2)
+      - name: NM_DURATA_FINANZ
+        data_type: NUMBER(6)
+      - name: DT_PRIMA_SCADENZA_IST
+        data_type: DATE
+      - name: DT_ULTIMA_SCADENZA_IST
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA
+        data_type: DATE
+      - name: DT_ULTIMA_SCADENZA
+        data_type: DATE
+      - name: CD_FREQ_RATA
+        data_type: NUMBER(2)
+      - name: FL_MAXI_RATA_OPZIONATA
+        data_type: VARCHAR(1)
+      - name: DT_MAXI_RATA
+        data_type: DATE
+      - name: EU_MAXI_RATA
+        data_type: NUMBER(13,2)
+      - name: NM_TASSO_COSTRUZIONE
+        data_type: NUMBER(5,3)
+      - name: NM_TAEG1
+        data_type: NUMBER(5,2)
+      - name: NM_TAEG2
+        data_type: NUMBER(6,3)
+      - name: NM_TAN1
+        data_type: NUMBER(6,3)
+      - name: NM_TAN2
+        data_type: NUMBER(6,3)
+      - name: NM_TEG1
+        data_type: NUMBER(5,2)
+      - name: NM_TEG2
+        data_type: NUMBER(6,2)
+      - name: NM_TASSO_MORA
+        data_type: NUMBER(7,5)
+      - name: NM_TASSO_CLIENTE
+        data_type: NUMBER(5,3)
+      - name: NM_IRR_NOMINALE
+        data_type: NUMBER(6,3)
+      - name: NM_IRR_EFFETTIVO
+        data_type: NUMBER(6,3)
+      - name: FL_GIA_CLIENTE_MARKETING
+        data_type: VARCHAR(1)
+      - name: CD_GIA_CLIENTE_MARKETING
+        data_type: VARCHAR(1)
+      - name: FL_GIA_CLIENTE_CREDITI
+        data_type: VARCHAR(1)
+      - name: CD_GIA_CLIENTE_CREDITI
+        data_type: VARCHAR(1)
+      - name: FL_FIRMA_DOPPIA
+        data_type: VARCHAR(1)
+      - name: FL_CARTOLARIZZATA
+        data_type: VARCHAR(1)
+      - name: FL_BENE_DETRAZ_FISCALE
+        data_type: VARCHAR(1)
+      - name: FL_PRODOTTO_ASSICURATIVO
+        data_type: VARCHAR(1)

@@ -2,7 +2,7 @@
 title: "Inconsistenze: codice vs skill vs documentazione (dwh-x-dbt)"
 type: query
 tags: [inconsistenze, layer/L0, layer/L1, layer/L2, layer/L3, naming-convention]
-updated: 2026-07-20
+updated: 2026-07-22
 ---
 
 Elenco **solo delle incongruenze attualmente aperte** tra le tre fonti di verità del progetto: **codice** (`raw/dwh-code/`), **skill** (`.claude/skills/develop-l2`, `develop-l3`, `dm-reader`) e **documentazione** (docx/xlsx ingeriti in [[caricamento-layer-l0-l1]], [[caricamento-layer-l2]], [[guida-sviluppo]], [[layer-l2-xlsx-reference]]). Le voci risolte vengono rimosse, non archiviate qui — vedi la sezione "Verifiche eseguite" per lo stato attuale confermato.
@@ -11,7 +11,7 @@ Elenco **solo delle incongruenze attualmente aperte** tra le tre fonti di verit�
 
 | #   | Titolo                                                                                | Codice                             | Skill | Doc                                          |
 | --- | ------------------------------------------------------------------------------------- | ---------------------------------- | ----- | -------------------------------------------- |
-| 1   | query_tag L2: obbligatorio, assente/errato nel codice                                 | ⚠️ incompleto/errato               | —     | ✅ prescrive obbligo                          |
+| 1   | query_tag L2/L3: obbligatorio, assente/errato nel codice                              | ✅ risolto in `develop/` (2026-07-22, non ancora in raw/dwh-code/) | —     | ✅ prescrive obbligo                          |
 | 2   | Cancellazioni L2: standard è pre_hook `delete_l2`, codice disallineato in più modelli | ⚠️ disallineato in più aree        | —     | ✅ prescrive pre_hook come standard           |
 | 3   | Flag: xlsx riporta S/N, errato — standard reale è Y/N                                 | ✅ Y/N pervasivo                    | —     | ⚠️ xlsx da correggere in Y/N                 |
 | 4   | Prefissi campo: `PROGRESSIVO_CONTROPARTE` senza prefisso `PR_`                        | ⚠️ parziale                        | —     | ⚠️ xlsx/docx non riconciliate su `ID_`/`SK_` |
@@ -27,11 +27,12 @@ Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; �
 
 ## Dettaglio
 
-### 1. `query_tag` L2: obbligatorio secondo la doc, assente in metà del codice, sbagliato in un'altra parte
+### 1. `query_tag` L2/L3: obbligatorio secondo la doc, assente in metà del codice, sbagliato in un'altra parte — RISOLTO IN `develop/` (2026-07-22)
 
 - **Doc**: [[guida-sviluppo]] lo rende **obbligatorio** in checklist pre-rilascio (sezione 5.2/5.4); [[caricamento-layer-l2]] lo richiede per il monitoring dettagliato delle query.
-- **Codice**: assente del tutto in ANAGR_CONTROPARTE, ANTIFRODE, ASSICURAZIONI, GESTIONE_CREDITI, ONBOARDING, PRODOTTO, PRODOTTO_M, SWORD. Dove presente: **CARTE** ha tutti e 6 i modelli con `schema: "L2_PRODOTTO"` invece di `L2_CARTE`; **PROVVIGIONI_RAPPEL** ha `schema: "L2_MAIN"` (sigla non riconosciuta) e il `query_tag` è **commentato con `#`** in entrambi i modelli (quindi disattivo); `indice_rischio_m` ha `entita: "INDICE_RISCHIO"` invece di `"INDICE_RISCHIO_M"`. Solo RISCHI_ADEMPIMENTI e SALDI sono coerenti.
-- **Impatto**: il monitoring per-query su Snowflake (query_tag) descritto come pilastro dell'osservabilità DBT è di fatto inaffidabile per gran parte del progetto.
+- **Stato nel codice vendorizzato (`raw/dwh-code/`, non ancora corretto)**: su 107 file yml L2/L3 scansionati, 85 avevano il problema — assente del tutto in ANAGR_CONTROPARTE, ANTIFRODE, ASSICURAZIONI, GESTIONE_CREDITI, ONBOARDING, PRODOTTO, PRODOTTO_M, SWORD, e in `basilea_core`/`monitoraggio_produzione` (L3) (63 file, mai dichiarato); schema errato in **CARTE** (tutti e 6 i modelli con `schema: "L2_PRODOTTO"` invece di `L2_CARTE`) e in 15/19 modelli di **SCORE_BANCHE_DATI** (`schema: "L2_SCORING"` invece di `L2_SCORE_BANCHE_DATI`) — 21 file in totale; `entita` errata in `indice_rischio_m.yml` (`"INDICE_RISCHIO"` invece di `"INDICE_RISCHIO_M"`) — 1 file. Solo 22 file erano già coerenti: RISCHI_ADEMPIMENTI (tranne `indice_rischio_m`), SALDI (L2+L3), PROVVIGIONI_RAPPEL, e 4 modelli di SCORE_BANCHE_DATI (`accettazione_input`, `prescreening_input`, `prescreening_output`, `prescreening_output_pr`).
+- **Correzione proposta**: workflow `develop` eseguito il 2026-07-22 — 85 file corretti scritti sotto `develop/models/L2/` e `develop/models/L3/`, mirror esatto della struttura di `raw/dwh-code/models/`, con solo la chiave `query_tag` aggiunta/corretta in ciascun `config:`. **Non ancora applicato**: `raw/dwh-code/` resta invariato (read-only per questo wiki) e la repo live `dwh-x-dbt` non è stata toccata — l'utente deve portare manualmente questi file a monte.
+- **Impatto residuo finché non portato upstream**: il monitoring per-query su Snowflake (query_tag) resta di fatto inaffidabile per gran parte del progetto nel codice realmente deployato.
 - **Dettagli**: [[query-tag-monitoring]], [[storicizzazione-l2-s1-s4]], [[l2-carte]], [[l2-provvigioni-rappel]].
 
 ### 2. Cancellazioni L2: standard è il pre_hook `delete_l2`, il codice è disallineato

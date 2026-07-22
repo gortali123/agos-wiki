@@ -1,0 +1,33 @@
+version: 2
+models:
+  - name: tabelle_finanziarie
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [TP_PROCEDURA, CD_TABELLA_FINANZIARIA, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "TABELLE_FINANZIARIE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_TABELLA_FINANZIARIA, TS_INIZIO_VALIDITA]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_TABELLA_FINANZIARIA
+        data_type: VARCHAR(10)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: DS_TABELLA_FINANZIARIA
+        data_type: VARCHAR(30)
+      - name: TP_TABELLA_FINANZIARIA
+        data_type: VARCHAR(2)
+      - name: FL_ANNULLO
+        data_type: VARCHAR(1)
+      - name: FL_CAMPAGNA
+        data_type: VARCHAR(1)
+      - name: CD_ATTRIBUTO_TT
+        data_type: VARCHAR(4)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

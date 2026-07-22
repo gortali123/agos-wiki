@@ -1,0 +1,115 @@
+version: 2
+models:
+  - name: wfl_attivita
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_ISTANZA, CD_FASE, CD_SOTTOFASE, CD_ATTIVITA, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_ONBOARDING", "entita": "WFL_ATTIVITA"}'
+      pre_hook:
+        - "{{ delete_l2('wfisfat', ['CD_ISTANZA', 'CD_FASE', 'CD_SOTTOFASE', 'CD_ATTIVITA'], ['WFISAT_ISTANZA', 'WFISAT_FASE', 'WFISAT_SOTTOFASE', 'WFISAT_ATTIVITA']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_ISTANZA, CD_FASE, CD_SOTTOFASE, CD_ATTIVITA, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_ISTANZA
+        data_type: NUMBER(12,0)
+      - name: CD_FASE
+        data_type: VARCHAR(10)
+      - name: CD_SOTTOFASE
+        data_type: VARCHAR(10)
+      - name: CD_ATTIVITA
+        data_type: VARCHAR(10)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: CD_WORKFLOW
+        data_type: VARCHAR(10)
+      - name: CD_AREA_WORKFLOW
+        data_type: VARCHAR(2)
+      - name: CD_STATO_ATTIVITA
+        data_type: VARCHAR(1)
+      - name: DS_STATO_ATTIVITA
+        data_type: VARCHAR(30)
+      - name: CD_UFFICIO
+        data_type: VARCHAR(3)
+      - name: CD_ZONA
+        data_type: VARCHAR(3)
+      - name: CD_FASE_DESTINAZIONE
+        data_type: VARCHAR(10)
+      - name: CD_SOSPENSIONE
+        data_type: VARCHAR(3)
+      - name: CD_PRIORITA
+        data_type: NUMBER(2,0)
+      - name: CD_AGENDA
+        data_type: VARCHAR(10)
+      - name: TS_APERTURA_ATTIVITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_APERTURA_ATTIVITA
+        data_type: VARCHAR(10)
+      - name: TS_SOSPENSIONE_ATTIVITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_SOSPENSIONE_ATTIVITA
+        data_type: VARCHAR(10)
+      - name: TS_ULT_MODIFICA_ATTIVITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_ULT_MODIFICA_ATTIVITA
+        data_type: VARCHAR(10)
+      - name: DT_SCADENZA_ATTIVITA
+        data_type: DATE
+      - name: TS_CHIUSURA_ATTIVITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_CHIUSURA_ATTIVITA
+        data_type: VARCHAR(10)
+      - name: CD_PRG_SIN
+        data_type: NUMBER(3,0)
+      - name: CD_PRG_PSV
+        data_type: NUMBER(11,0)
+      - name: CD_AZIONE_PSV
+        data_type: VARCHAR(3)
+      - name: CD_ATTIVITA_PREC
+        data_type: VARCHAR(10)
+      - name: CD_ATTIVITA_PREC_2
+        data_type: VARCHAR(10)
+      - name: CD_ATTIVITA_PREC_3
+        data_type: VARCHAR(10)
+      - name: CD_ATTIVITA_PREC_4
+        data_type: VARCHAR(10)
+      - name: CD_ATTIVITA_PREC_5
+        data_type: VARCHAR(10)
+      - name: TP_CHIUSURA
+        data_type: VARCHAR(1)
+      - name: CD_DATA_BO
+        data_type: NUMBER(8,0)
+      - name: CD_PROG_RICICLO
+        data_type: NUMBER(3,0)
+      - name: CD_PRG_RET
+        data_type: NUMBER(3,0)
+      - name: CD_LIQ_SC
+        data_type: VARCHAR(1)
+      - name: DT_COM_SIN
+        data_type: DATE
+      - name: CD_CODICE_SIN
+        data_type: VARCHAR(2)
+      - name: CD_CLASS_SIN
+        data_type: VARCHAR(3)
+      - name: TP_SIN
+        data_type: VARCHAR(1)
+      - name: CD_STATO_SIN
+        data_type: VARCHAR(2)
+      - name: CD_ASS_SIN
+        data_type: NUMBER(9,0)
+      - name: CD_STATO_PSV
+        data_type: VARCHAR(2)
+      - name: CD_BLOCCO_PSV
+        data_type: VARCHAR(2)
+      - name: PR_PSV_EXT
+        data_type: NUMBER(11,0)
+      - name: DS_NOTE
+        data_type: VARCHAR(30)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

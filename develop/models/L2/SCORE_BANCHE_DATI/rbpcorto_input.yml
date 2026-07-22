@@ -1,0 +1,73 @@
+version: 2
+models:
+  - name: rbpcorto_input
+    description: >
+      Entita' L2 RBPCORTO_INPUT (subject area SCORING), storicizzazione S2.
+      Sorgente: landing XML CDE (L1_E_CDE.CDE), payload StrategyOneRequest,
+      filtro ProcessCode = 'RBPCORTO'. Campi estratti dai nodi XML via get_xml_path.
+      ASSUNZIONI da validare prima della produzione:
+      (1) nel payload il ProcessCode e' 'RBPCORTO' (lo xsd dichiara fixed="RBPCORTOX");
+      (2) EU_IMPORTO in centesimi -> /100;
+      (3) TS_INSERIMENTO non valorizzato nel data model -> CURRENT_TIMESTAMP();
+      (4) la landing CDE espone LASTMODIFIEDDATA;
+      (5) TP_CANALE mappato sul tag 'Type_CANALE' (RF = 'TIPO_CANALE');
+      (6) FASCIA_RBP non presente nella Request (solo Response) -> NM_FASCIA_RBP sara' NULL.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "RBPCORTO_INPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: CD_PROCESSVERSION
+        data_type: VARCHAR
+      - name: CD_LAYOUTVERSION
+        data_type: NUMBER
+      - name: CD_TAB_FINAZIARIA
+        data_type: VARCHAR
+      - name: CD_CAMPAGNA_INDIVIDUALE
+        data_type: VARCHAR
+      - name: NM_MESE_OFFERTA
+        data_type: NUMBER(16)
+      - name: NM_ANNO_OFFERTA
+        data_type: NUMBER(16)
+      - name: CD_INIZIATIVA_COMMERCIALE
+        data_type: VARCHAR
+      - name: DT_CARICAMENTO
+        data_type: DATE
+      - name: EU_IMPORTO
+        data_type: NUMBER(16,2)
+      - name: NM_DURATA
+        data_type: NUMBER(16)
+      - name: NM_IRR
+        data_type: NUMBER(16)
+      - name: CD_CANALE
+        data_type: VARCHAR
+      - name: TP_CANALE
+        data_type: VARCHAR
+      - name: CD_TIPO_CLIENTE
+        data_type: VARCHAR
+      - name: DS_NOTE1
+        data_type: VARCHAR
+      - name: DS_NOTE2
+        data_type: VARCHAR
+      - name: CD_MACROAREA
+        data_type: VARCHAR
+      - name: CD_PRODOTTO
+        data_type: VARCHAR
+      - name: TP_DESTINAZIONE_FINANZIAMENTO
+        data_type: VARCHAR
+      - name: CD_ASSICURAZIONE
+        data_type: VARCHAR
+      - name: TP_PROCESSO
+        data_type: VARCHAR
+      - name: NM_FASCIA_RBP
+        data_type: NUMBER(16)

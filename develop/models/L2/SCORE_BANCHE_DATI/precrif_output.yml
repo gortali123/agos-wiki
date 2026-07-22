@@ -1,0 +1,97 @@
+version: 2
+models:
+  - name: precrif_output
+    description: >
+      L2 SCORING PRECRIF_OUTPUT - output della strategia PRECRIF estratto dal payload XML
+      della landing CDE (StrategyOneResponse, ProcessCode = 'PRECRIF'). Grana per soggetto
+      (PK CD_INQUIRYCODE + CD_RUOLO): Header + Richiesta/Variables (ESITO_*, PRECRIF_S_*)
+      comuni al documento, campi soggetto (PRECRIF_M_*, CALL_*) dal FLATTEN degli Applicant.
+      ASSUNZIONI da validare: (1) landing = ref('cde') con VALUE variant; (2) filtro
+      ProcessCode 'PRECRIF' (lo xsd dichiara fixed 'PRECRIFX'); (3) TS_INSERIMENTO =
+      CURRENT_TIMESTAMP() perche' assente dal data model; (4) blocco incrementale S2 non
+      applicabile (nessun LASTMODIFIEDDATA nella landing) - da riconciliare prima della prod;
+      (5) CD_RUOLO (RF=RUOLO) NON presente in ResponseApplicant/Variables dello xsd -> attualmente
+      NULL: la PK va rivista o RUOLO va recuperato correlando gli Applicant con PRECRIF_INPUT.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "PRECRIF_OUTPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, TS_INSERIMENTO] # WARN: Da inserire CD_RUOLO come PK al momento risulta NULL
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR(8)
+      - name: CD_PROCESSVERSION
+        data_type: NUMBER(38,0)
+      - name: CD_LAYOUTVERSION
+        data_type: NUMBER(38,0)
+      - name: CD_INTERROGAZIONE
+        data_type: NUMBER(16,0)
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: TP_PROCEDURA
+        data_type: VARCHAR
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_ESITO_CHIAMATA
+        data_type: VARCHAR
+      - name: CD_ESITO
+        data_type: VARCHAR
+      - name: DS_ESITO
+        data_type: VARCHAR
+      - name: DS_ESITO_MESSAGGIO
+        data_type: VARCHAR
+      - name: NM_PRECRIF_S_NUM_01
+        data_type: VARCHAR
+      - name: NM_PRECRIF_S_NUM_02
+        data_type: VARCHAR
+      - name: NM_PRECRIF_S_NUM_03
+        data_type: VARCHAR
+      - name: NM_PRECRIF_S_NUM_04
+        data_type: VARCHAR
+      - name: NM_PRECRIF_S_NUM_05
+        data_type: VARCHAR
+      - name: DS_PRECRIF_S_TEXT_01
+        data_type: VARCHAR
+      - name: DS_PRECRIF_S_TEXT_02
+        data_type: VARCHAR
+      - name: DS_PRECRIF_S_TEXT_03
+        data_type: VARCHAR
+      - name: DS_PRECRIF_S_TEXT_04
+        data_type: VARCHAR
+      - name: DS_PRECRIF_S_TEXT_05
+        data_type: VARCHAR
+      - name: NM_PRECRIF_M_NUM_01
+        data_type: VARCHAR
+      - name: NM_PRECRIF_M_NUM_02
+        data_type: VARCHAR
+      - name: NM_PRECRIF_M_NUM_03
+        data_type: VARCHAR
+      - name: NM_PRECRIF_M_NUM_04
+        data_type: VARCHAR
+      - name: NM_PRECRIF_M_NUM_05
+        data_type: VARCHAR
+      - name: DS_PRECRIF_M_TEXT_01
+        data_type: VARCHAR
+      - name: DS_PRECRIF_M_TEXT_02
+        data_type: VARCHAR
+      - name: DS_PRECRIF_M_TEXT_03
+        data_type: VARCHAR
+      - name: DS_PRECRIF_M_TEXT_04
+        data_type: VARCHAR
+      - name: DS_PRECRIF_M_TEXT_05
+        data_type: VARCHAR
+      - name: TP_CALL_EURISC_TIPO
+        data_type: VARCHAR
+      - name: FL_CALL_EURISC_SI_NO_DB
+        data_type: VARCHAR
+      - name: FL_CALL_CERVED_SI_NO_DB
+        data_type: VARCHAR

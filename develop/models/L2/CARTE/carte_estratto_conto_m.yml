@@ -1,0 +1,86 @@
+version: 2
+models:
+  - name: carte_estratto_conto_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook: "{{ delete_month() }}"
+      query_tag: '{"app": "DBT", "schema": "L2_CARTE", "entita": "CARTE_ESTRATTO_CONTO_M"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, CD_EMETTITORE, TP_PROCEDURA, DT_OSSERVAZIONE, NM_ANNO, NM_MESE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE 
+      - name: NM_ANNO
+        data_type: NUMBER(4)
+      - name: NM_MESE
+        data_type: NUMBER(2)
+      - name: TP_RATA
+        data_type: VARCHAR(1)
+      - name: EU_CREDIT_LIMIT
+        data_type: NUMBER(13,2)
+      - name: TP_PAGAMENTO
+        data_type: CHAR(2)
+      - name: TP_MODALITA_INVIO
+        data_type: CHAR(1)
+      - name: NM_PAGAMENTI
+        data_type: NUMBER(3)
+      - name: NM_INSOLUTI
+        data_type: NUMBER(3)
+      - name: NM_ACQUISTI
+        data_type: NUMBER(3)
+      - name: NM_ACQUISTI_CAMPAGNA
+        data_type: NUMBER(3)
+      - name: NM_INSOLUTI_M
+        data_type: NUMBER(3)
+      - name: NM_RATE_NON_PERVENUTE
+        data_type: NUMBER(3)
+      - name: EU_SALDO_INZIALE
+        data_type: NUMBER(13,2)
+      - name: EU_PAGAMENTI_TOT
+        data_type: NUMBER(13,2)
+      - name: EU_INSOLUTI_TOT
+        data_type: NUMBER(13,2)
+      - name: EU_ACQUISTI_TOT
+        data_type: NUMBER(13,2)
+      - name: EU_ACQUISTI_TOT_CAMPAGNA
+        data_type: NUMBER(13,2)
+      - name: EU_SALDO_TOT
+        data_type: NUMBER(13,2)
+      - name: EU_SALDO_TOT_CAMPAGNA
+        data_type: NUMBER(13,2)
+      - name: EU_DISPONIBILITA_M
+        data_type: NUMBER(13,2)
+      - name: EU_CAPITALE_INIZIALE
+        data_type: NUMBER(13,2)
+      - name: EU_CAPITALE_FINALE
+        data_type: NUMBER(13,2)
+      - name: EU_CAPITALE_FINALE_TOT
+        data_type: NUMBER(13,2)
+      - name: PC_TASSO
+        data_type: NUMBER(7)
+      - name: EU_INTERESSI_INIZIO
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_MORA_INIZIO
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_FINE
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_MORA_FINE
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_CAMPAGNA
+        data_type: NUMBER(13,2)
+      - name: EU_RATE_ACQ_CAMPAGNA
+        data_type: NUMBER(13,2)
+      - name: EU_RATA_MINIMA
+        data_type: NUMBER(13,2)
+      - name: EU_RATA_EXTENDED
+        data_type: NUMBER(13,2)
+      

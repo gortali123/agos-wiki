@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: catene_intermediazione_agg
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "CATENE_INTERMEDIAZIONE_AGG"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, CD_PROGRESSIVO]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: CD_PROGRESSIVO
+        data_type: NUMBER(3,0)
+      - name: CD_RETE_VENDITA
+        data_type: NUMBER(9,0)
+      - name: CD_AGENTE
+        data_type: NUMBER(9,0)
+      - name: CD_SUB_AGENTE
+        data_type: NUMBER(9,0)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

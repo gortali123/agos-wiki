@@ -1,0 +1,598 @@
+version: 2
+models:
+- name: cqs_m
+  config:
+    materialized: incremental
+    incremental_strategy: append
+    unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    pre_hook: "{{ delete_month() }}"
+    query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO_M", "entita": "CQS_M"}'
+  constraints:
+  - type: primary_key
+    warn_unenforced: false
+    columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+  columns:
+  - name: CD_PRATICA
+    data_type: NUMBER(12,0)
+  - name: TP_PROCEDURA
+    data_type: VARCHAR(2)
+  - name: DT_OSSERVAZIONE
+    data_type: DATE
+  - name: CD_STATO
+    data_type: VARCHAR(2)
+  - name: DS_STATO
+    data_type: VARCHAR(30)
+  - name: CD_ATTRIBUTO
+    data_type: VARCHAR(2)
+  - name: CD_CLIENTE
+    data_type: NUMBER(9,0)
+  - name: CD_DATORE_LAVORO
+    data_type: NUMBER(9,0)
+  - name: CD_CATEGORIA_AMMINISTRAZIONE
+    data_type: VARCHAR(2)
+  - name: CD_PRODOTTO
+    data_type: VARCHAR(2)
+  - name: CD_CLASSIFIC_PRODOTTO
+    data_type: VARCHAR(3)
+  - name: CD_GER_TIPO_CLIENTE_1
+    data_type: VARCHAR(20)
+  - name: CD_GER_TIPO_CLIENTE_2
+    data_type: VARCHAR(20)
+  - name: CD_GER_TIPO_CLIENTE_3
+    data_type: VARCHAR(20)
+  - name: CD_GER_TIPO_CLIENTE_4
+    data_type: VARCHAR(20)
+  - name: EU_MONTANTE
+    data_type: NUMBER(13,2)
+  - name: EU_BANCA_INTERESSI
+    data_type: NUMBER(13,2)
+  - name: EU_BANCA_COMMISSIONI
+    data_type: NUMBER(13,2)
+  - name: EU_FINANZIATO
+    data_type: NUMBER(13,2)
+  - name: EU_FRESH_CASH
+    data_type: NUMBER(13,2)
+  - name: EU_RATA
+    data_type: NUMBER(13,2)
+  - name: EU_COSTO_BANCA
+    data_type: NUMBER(13,2)
+  - name: EU_COSTO_FINANZIARIA
+    data_type: NUMBER(13,2)
+  - name: EU_COSTO_ASSICURAZIONI
+    data_type: NUMBER(13,2)
+  - name: EU_TOTALE_FONDI
+    data_type: NUMBER(13,2)
+  - name: EU_EROGATO
+    data_type: NUMBER(13,2)
+  - name: EU_SALDO_OPERAZIONE
+    data_type: NUMBER(13,2)
+  - name: EU_PROVVIGIONI_PASSIVE
+    data_type: NUMBER(13,2)
+  - name: EU_TOT_ANTICIPI
+    data_type: NUMBER(13,2)
+  - name: NM_TAEG
+    data_type: NUMBER(5,4)
+  - name: NM_TAN
+    data_type: NUMBER(6,5)
+  - name: NM_TEG
+    data_type: NUMBER(5,4)
+  - name: NM_TAN_OBIETTIVO
+    data_type: NUMBER(6,5)
+  - name: NM_TEG_OBIETTIVO
+    data_type: NUMBER(5,4)
+  - name: NM_TASSO_MORA
+    data_type: NUMBER(8,7)
+  - name: NM_TASSO_PERM_INTERESSI
+    data_type: NUMBER(6,5)
+  - name: NM_IRR_NOMINALE
+    data_type: NUMBER(6,5)
+  - name: NM_IRR_EFFETTIVO
+    data_type: NUMBER(6,5)
+  - name: NM_IRR_LORDO
+    data_type: NUMBER(6,5)
+  - name: NM_IRR_MEDIO_NOMINALE
+    data_type: NUMBER(6,5)
+  - name: NM_SPREAD_TASSO
+    data_type: NUMBER(5,4)
+  - name: DT_PERFEZIONAMENTO
+    data_type: DATE
+  - name: DT_DECORRENZA
+    data_type: DATE
+  - name: DT_SOSPESA
+    data_type: DATE
+  - name: DT_ATTESA_ESTINZIONE_ANTICIPATA
+    data_type: DATE
+  - name: DT_ESTINZIONE_ANTICIPATA_SINISTRO
+    data_type: DATE
+  - name: DT_SINISTRO
+    data_type: DATE
+  - name: DT_FINE_SOSPENZIONE
+    data_type: DATE
+  - name: DT_RINNOVABILITA
+    data_type: DATE
+  - name: NM_RATE
+    data_type: NUMBER(3,0)
+  - name: NM_DURATA_FINANZ
+    data_type: NUMBER(3,0)
+  - name: TP_CONTRATTO
+    data_type: VARCHAR(1)
+  - name: DS_CONTRATTO
+    data_type: VARCHAR(30)
+  - name: CD_BANCA
+    data_type: NUMBER(5,0)
+  - name: CD_CAMPAGNA
+    data_type: VARCHAR(3)
+  - name: TP_CESSIONE
+    data_type: VARCHAR(1)
+  - name: CD_MOTIVO_ESITO
+    data_type: VARCHAR(3)
+  - name: CD_MOTIVO_OVERR
+    data_type: VARCHAR(2)
+  - name: FL_RINOTIFICA
+    data_type: VARCHAR(1)
+  - name: CD_AZIENDA_SEDE
+    data_type: NUMBER(3,0)
+  - name: CD_ASSICURAZIONE
+    data_type: NUMBER(9,0)
+  - name: CD_AGENZIA_ASSICURATIVA
+    data_type: NUMBER(9,0)
+  - name: CD_GARANTE
+    data_type: NUMBER(9,0)
+  - name: CD_GARANTE_2
+    data_type: NUMBER(9,0)
+  - name: CD_GARANTE_3
+    data_type: NUMBER(9,0)
+  - name: DT_DATA_INSERIMENTO
+    data_type: NUMBER(8,0)
+  - name: CD_LIV_DELIBERA
+    data_type: NUMBER(2,0)
+  - name: TP_ESITO_SCOR
+    data_type: VARCHAR(1)
+  - name: TP_ESITO_APPROVAZIONE
+    data_type: VARCHAR(1)
+  - name: CD_AUTORE_OVERR
+    data_type: VARCHAR(10)
+  - name: PR_PROG_RICICLO
+    data_type: NUMBER(3,0)
+  - name: DT_BAN_DATA_DECORRENZA
+    data_type: NUMBER(8,0)
+  - name: DT_BAN_PRIMA_SCADENZA
+    data_type: NUMBER(8,0)
+  - name: DT_BAN_ULTIMA_SCADENZA
+    data_type: NUMBER(8,0)
+  - name: DT_BAN_DATA_ESTINZIONE
+    data_type: NUMBER(8,0)
+  - name: DT_DATA_CONTRATTO
+    data_type: NUMBER(8,0)
+  - name: EU_SPESE
+    data_type: NUMBER(13,2)
+  - name: EU_ONERI_CONV_AZ
+    data_type: NUMBER(13,2)
+  - name: DT_POL_DATA_LIQUIDATA
+    data_type: NUMBER(8,0)
+  - name: PC_PI_PERC_SCONTI
+    data_type: NUMBER(5,3)
+  - name: FILL300
+    data_type: VARCHAR(66)
+  - name: EU_BANCA_IMPOSTE
+    data_type: NUMBER(13,2)
+  - name: FL_BANCA_IMP_NO_ADD
+    data_type: NUMBER(13,0)
+  - name: FL_IMPOSTE_NON_ADD
+    data_type: VARCHAR(1)
+  - name: EU_BANCA_DELTA_INT
+    data_type: NUMBER(13,2)
+  - name: NM_TASSO_CONTRATTO
+    data_type: NUMBER(5,3)
+  - name: NM_TASSO_COMMISSIONI
+    data_type: NUMBER(5,3)
+  - name: NM_TASSO_ESTINZIONE
+    data_type: NUMBER(5,3)
+  - name: NM_TASSO_OPERAZIONE
+    data_type: NUMBER(5,3)
+  - name: NM_DELTA_TASSO_INT
+    data_type: NUMBER(5,3)
+  - name: PR_PERM_FINANZIAMENTO
+    data_type: NUMBER(6,3)
+  - name: PC_PERM_COMMISSIONI
+    data_type: NUMBER(6,3)
+  - name: PC_PERM_IMPOSTE
+    data_type: NUMBER(6,3)
+  - name: NM_DELTA_PERM_INT
+    data_type: NUMBER(6,3)
+  - name: NM_TAN_ORIGINE
+    data_type: NUMBER(6,3)
+  - name: NM_TAN_CALCOLATO
+    data_type: NUMBER(6,3)
+  - name: NM_TEG_CALCOLATO
+    data_type: NUMBER(5,2)
+  - name: EU_COS_FIN_FISSO
+    data_type: NUMBER(13,2)
+  - name: EU_COS_FIN_XRATA
+    data_type: NUMBER(13,2)
+  - name: EU_COS_FIN_ALIQ1
+    data_type: NUMBER(13,2)
+  - name: EU_COS_FIN_ALIQ2
+    data_type: NUMBER(13,2)
+  - name: TP_TIPO_CO1
+    data_type: VARCHAR(1)
+  - name: EU_EST_IMPORTO
+    data_type: NUMBER(13,2)
+  - name: EU_CES_IMPORTO
+    data_type: NUMBER(13,2)
+  - name: CD_DOC_CODICE_01
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_01
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_01
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_01
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_02
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_02
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_02
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_02
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_03
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_03
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_03
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_03
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_04
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_04
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_04
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_04
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_05
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_05
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_05
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_05
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_06
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_06
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_06
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_06
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_07
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_07
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_07
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_07
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_08
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_08
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_08
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_08
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_09
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_09
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_09
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_09
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_10
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_10
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_10
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_10
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_11
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_11
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_11
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_11
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_12
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_12
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_12
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_12
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_13
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_13
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_13
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_13
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_14
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_14
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_14
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_14
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_15
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_15
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_15
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_15
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_16
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_16
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_16
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_16
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_17
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_17
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_17
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_17
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_18
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_18
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_18
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_18
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_19
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_19
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_19
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_19
+    data_type: NUMBER(3,0)
+  - name: CD_DOC_CODICE_20
+    data_type: VARCHAR(3)
+  - name: TP_DOC_STATO_20
+    data_type: VARCHAR(2)
+  - name: TP_DOC_SITUAZIONE_20
+    data_type: VARCHAR(1)
+  - name: NM_DOC_GIORNI_20
+    data_type: NUMBER(3,0)
+  - name: TP_STATO_CIVILE
+    data_type: VARCHAR(1)
+  - name: TP_QUALIFICA
+    data_type: VARCHAR(20)
+  - name: DT_DATA_ASSUNZIONE
+    data_type: NUMBER(8,0)
+  - name: TP_TIPO_ASSUNZIONE
+    data_type: VARCHAR(1)
+  - name: EU_NETTO_MENSILE
+    data_type: NUMBER(13,2)
+  - name: EU_TFR_LORDO
+    data_type: NUMBER(13,2)
+  - name: EU_TFR_ANTICIPI
+    data_type: NUMBER(13,2)
+  - name: TP_LETT_TIPO_01
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_01
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_01
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_01
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_02
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_02
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_02
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_02
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_03
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_03
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_03
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_03
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_04
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_04
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_04
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_04
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_05
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_05
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_05
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_05
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_06
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_06
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_06
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_06
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_07
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_07
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_07
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_07
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_08
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_08
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_08
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_08
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_09
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_09
+    data_type: NUMBER(8,0)
+  - name: PR_LETT_PROG_STA_09
+    data_type: NUMBER(3,0)
+  - name: DT_LETT_DATA_RIEN_09
+    data_type: NUMBER(8,0)
+  - name: PR_LETT_PROG_RIE_09
+    data_type: NUMBER(3,0)
+  - name: FL_LETT_DA_STAMPA_09
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_10
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_10
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_10
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_10
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_11
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_11
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_11
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_11
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_12
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_12
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_12
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_12
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_13
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_13
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_13
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_13
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_14
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_14
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_14
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_14
+    data_type: VARCHAR(1)
+  - name: TP_LETT_TIPO_15
+    data_type: VARCHAR(3)
+  - name: DT_LETT_DATA_STAM_15
+    data_type: NUMBER(8,0)
+  - name: DT_LETT_DATA_RIEN_15
+    data_type: NUMBER(8,0)
+  - name: FL_LETT_DA_STAMPA_15
+    data_type: VARCHAR(1)
+  - name: FL_CONT_CONTRATTO
+    data_type: VARCHAR(1)
+  - name: CD_OLD_CODICE
+    data_type: VARCHAR(12)
+  - name: TP_TIPO_ISTRUTTORIA
+    data_type: VARCHAR(1)
+  - name: DT_SUB_DATA_COPERTURA
+    data_type: NUMBER(8,0)
+  - name: CD_SIN_SINISTRO
+    data_type: VARCHAR(2)
+  - name: CD_SIN_CLASSIFICAZIONE
+    data_type: VARCHAR(3)
+  - name: DT_SIN_DATA
+    data_type: NUMBER(8,0)
+  - name: FL_CESSIONE_DIR
+    data_type: VARCHAR(1)
+  - name: EU_IMP_UFF_REG
+    data_type: NUMBER(13,2)
+  - name: PC_PERC_DIMIN_AG
+    data_type: NUMBER(4,2)
+  - name: EU_IMP_DIMIN_AG
+    data_type: NUMBER(13,2)
+  - name: EU_PROMOZIONE_TOT
+    data_type: NUMBER(13,2)
+  - name: EU_PROMOZIONE_AGE
+    data_type: NUMBER(13,2)
+  - name: TP_TRATT_DIMIN_AG
+    data_type: VARCHAR(1)
+  - name: DT_SIN_DATA_APERTURA
+    data_type: NUMBER(8,0)
+  - name: DT_SIN_DATA_SCADENZA
+    data_type: NUMBER(8,0)
+  - name: FL_VALUTA_I_E
+    data_type: VARCHAR(1)
+  - name: EU_COMMISS_INTERM
+    data_type: NUMBER(13,2)
+  - name: TP_CEDUTA
+    data_type: VARCHAR(1)
+  - name: DT_DATA_RIACQUISTO
+    data_type: NUMBER(8,0)
+  - name: DT_DATA_SUL_CONTRATTO
+    data_type: NUMBER(8,0)
+  - name: CD_AZIENDA_PAG
+    data_type: NUMBER(9,0)
+  - name: CD_AZIENDA_PAG_SEDE
+    data_type: NUMBER(3,0)
+  - name: TP_PROVEN_PRATICA
+    data_type: VARCHAR(2)
+  - name: DT_DATA_CONTABILIZ
+    data_type: NUMBER(8,0)
+  - name: DT_DATA_INVIO_BANCA
+    data_type: NUMBER(8,0)
+  - name: CD_FINANZIARIA_GEST
+    data_type: NUMBER(9,0)
+  - name: PR_PROGR_PAM
+    data_type: NUMBER(3,0)
+  - name: DT_DATA_BLOCCO
+    data_type: NUMBER(8,0)
+  - name: CD_COD_CONVENZIONE
+    data_type: VARCHAR(2)
+  - name: CD_RIF_MATRICOLA
+    data_type: VARCHAR(12)
+  - name: CD_CEDENTE_CIN
+    data_type: VARCHAR(1)
+  - name: EU_FONDO_PENSIONE
+    data_type: NUMBER(13,2)
+  - name: TP_ADD_BOLLO_RIVALSA
+    data_type: VARCHAR(1)
+  - name: TP_NATURA
+    data_type: VARCHAR(3)
+  - name: EU_SPESE_FISSE
+    data_type: NUMBER(13,2)
+  - name: EU_SPESE_PER_RATA
+    data_type: NUMBER(13,2)
+  - name: EU_ANTICIPO
+    data_type: NUMBER(13,2)
+  - name: LASTMODIFIEDDATA
+    data_type: TIMESTAMP_NTZ

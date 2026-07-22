@@ -1,0 +1,19 @@
+version: 2
+models:
+  - name: credlinfacil
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "CREDLINFACIL"}'
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, TP_FACILITY]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(25)
+      - name: TP_FACILITY
+        data_type: VARCHAR(25)

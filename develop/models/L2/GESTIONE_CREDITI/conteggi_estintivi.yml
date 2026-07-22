@@ -1,0 +1,22 @@
+version: 2
+models:
+  - name: conteggi_estintivi
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_GESTIONE_CREDITI", "entita": "CONTEGGI_ESTINTIVI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, PR_POSTVENDITA]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: PR_POSTVENDITA
+        data_type: NUMBER(11)
+      - name: DT_CONTEGGIO
+        data_type: DATE
+      - name: EU_ESTINTO
+        data_type: NUMBER(13,2)

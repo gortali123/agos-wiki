@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: anagrafica_prodotto_assic
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_ASSICURAZIONI", "entita": "ANAGRAFICA_PRODOTTO_ASSIC"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_SORGENTE, CD_SERVIZIO]
+    columns:
+      - name: CD_SORGENTE
+        data_type: VARCHAR(3)
+      - name: CD_SERVIZIO
+        data_type: VARCHAR(11)
+      - name: DS_SERVIZIO
+        data_type: VARCHAR(100)
+      - name: CD_PACCHETTO
+        data_type: NUMBER(11, 0)
+      - name: DS_PACCHETTO
+        data_type: VARCHAR(45)
+      - name: TP_PACCHETTO
+        data_type: VARCHAR(20)
+      - name: TP_CLASSE
+        data_type: NUMBER(11, 0)
+      - name: TP_FAMIGLIA
+        data_type: VARCHAR(5)
+      - name: CD_COMPAGNIA_CONTRIBUZIONE
+        data_type: NUMBER(11, 0)
+      - name: CD_COMPAGNIA
+        data_type: NUMBER(11, 0)
+      - name: DS_NODO
+        data_type: VARCHAR(250)
+      - name: DS_COMPAGNIA
+        data_type: VARCHAR(250)
+      - name: DT_INIZIO_VALIDITA
+        data_type: DATE
+      - name: DT_FINE_VALIDITA
+        data_type: DATE
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

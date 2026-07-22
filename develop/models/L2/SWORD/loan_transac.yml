@@ -1,0 +1,59 @@
+version: 2
+models:
+  - name: loan_transac
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "LOAN_TRANSAC"}'
+    constraints:
+      - type: primary_key
+        columns: [DT_RIFERIMENTO, CD_PRATICA, CD_PIANO, CD_CERTIFICATO, PR_TRANSAZIONE]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(17)
+      - name: CD_PIANO
+        data_type: VARCHAR(30)
+      - name: CD_CERTIFICATO
+        data_type: NUMBER(8,0)
+      - name: PR_TRANSAZIONE
+        data_type: NUMBER(10,0)
+      - name: CD_ACCOUNT
+        data_type: VARCHAR(70)
+      - name: TP_PAYMENT_METHOD_DEBIT_CREDIT
+        data_type: VARCHAR(6)
+      - name: CD_PAYMENT_TIMING
+        data_type: VARCHAR(4)
+      - name: TP_PAYMENT
+        data_type: VARCHAR(13)
+      - name: TP_VALUE
+        data_type: VARCHAR(3)
+      - name: TP_PROCESSO
+        data_type: VARCHAR(7)
+      - name: TP_OGGETTO_TRANSZ
+        data_type: VARCHAR(16)
+      - name: TP_CATEGORIA_FIN
+        data_type: VARCHAR(18)
+      - name: TP_TRANSACTION_DEBIT_CREDIT
+        data_type: VARCHAR(6)
+      - name: CD_STATO
+        data_type: VARCHAR(14)
+      - name: TP_TRANSAZIONE
+        data_type: VARCHAR(10)
+      - name: TP_NET_TAX
+        data_type: VARCHAR(4)
+      - name: DT_CREAZIONE_RECD
+        data_type: DATE
+      - name: DT_REGISTRAZIONE
+        data_type: DATE
+      - name: DT_FATTURAZIONE
+        data_type: DATE
+      - name: DT_PAGAMENTO
+        data_type: DATE
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: EU_MOVIMENTO
+        data_type: NUMBER(13,2)
