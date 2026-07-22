@@ -1,0 +1,13 @@
+.\load-env.ps1
+ 
+./generate_jobs.ps1 --input-dir .models\L1\ --ouput-file jobs_L1.yml --with-plus
+./generate_jobs.ps1 --input-dir .models\L2\ --ouput-file jobs_L2.yml
+./generate_jobs.ps1 --input-dir .models\L3\ --ouput-file jobs_L3.yml
+ 
+Copy-Item jobs_L1.yml jobs.yml
+Get-Content jobs_L2.yml | Select-Object -Skip 19 | Add-Content jobs.yml
+Get-Content jobs_L3.yml | Select-Object -Skip 19 | Add-Content jobs.yml
+ 
+Remove-Item jobs_L1.yml, jobs_L2.yml, jobs_L3.yml
+ 
+.\dbt-jobs-as-code.exe plan --disable-ssl-verification jobs.yml
