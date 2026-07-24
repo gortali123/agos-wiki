@@ -1,12 +1,6 @@
 WITH BASE_RAW AS (
     SELECT
         CC.AL_CODICE AS CD_CONTROPARTE,
-        -- Il primo record storico di ogni controparte (il piu' vecchio, dato che BASE_RAW
-        -- rilegge sempre l'intero storico ad ogni run) usa AL_DATA_INSERIMENTO a
-        -- mezzanotte come TS_INIZIO_VALIDITA invece di AL_DATA_MODIFICA/AL_ORA_MODIFICA.
-        -- Calcolato qui (non dentro ts_fine_validita) perche' Snowflake non ammette
-        -- window function annidate: ROW_NUMBER() non puo' comparire dentro l'argomento/
-        -- ORDER BY del LEAD() di ts_fine_validita.
         CASE
             WHEN ROW_NUMBER() OVER (
                      PARTITION BY CC.AL_CODICE
