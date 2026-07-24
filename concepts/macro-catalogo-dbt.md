@@ -49,6 +49,8 @@ Suite di codegen che legge le tabelle di configurazione `TECH.CFG_L1_SCHEMA`, `T
 
 Questi script sono la controparte DBT-macro degli script PowerShell `generate_models.ps1` descritti in [[guida-sviluppo]] (lo script PowerShell chiama queste macro).
 
+**Proposta in develop (2026-07-24, non ancora portata upstream)**: per le sole tabelle OCS, `generate_source`/`generate_yaml`/`generate_model`/`generate_snapshots` joinano anche `TECH.CFG_L0_L1_MODULO_LOOKUP` (su `cd_modulo_l1 = s.cd_modulo`) per recuperare `cd_modulo` e generare i file in una sottocartella a due livelli `OCS/<cd_modulo_l1>/<cd_modulo>` invece del solo `OCS/<cd_modulo_l1>` attuale — vedi `develop/macros/generate_models/`.
+
 ## Data masking (`macros/`)
 
 - `add_datamask()` — post-hook, legge `model.columns[*].meta.masking` e applica `ALTER TABLE ... SET TAG AGOS_DEV_16000.TAGS.sensitivity = '<valore>'`.
