@@ -11,4 +11,5 @@ Get-Content jobs_L3.yml | Select-Object -Skip 19 | Add-Content jobs.yml
 Remove-Item jobs_L1.yml, jobs_L2.yml, jobs_L3.yml
 
 $env:PYTHONIOENCODING = 'utf-8'
-dbt-jobs-as-code.exe plan --disable-ssl-verification jobs.yml | Tee-Object -FilePath plan_output.txt
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+dbt-jobs-as-code.exe plan --disable-ssl-verification jobs.yml | Tee-Object -FilePath plan_output.txt -Encoding utf8
