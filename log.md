@@ -1,5 +1,8 @@
 # Log
 
+## [2026-07-24] develop | plan-jobs.ps1: output di dbt-jobs-as-code plan su file di default
+Utente ha chiesto che `plan-jobs.ps1` scriva l'output di `dbt-jobs-as-code.exe plan` su un file di default, non solo a schermo. Aggiunta pipe a `Tee-Object -FilePath plan_output.txt` (stampa comunque a console e in più salva su file). Scritto in `develop/plan-jobs.ps1`, riallineato anche ai path corretti di `raw/dwh-code/plan-jobs.ps1` (il file develop preesistente aveva refusi non correlati: `.models\` invece di `.\models\`, `--ouput-file` invece di `--output-file`). Non ancora portato upstream in `raw/dwh-code/` né nella repo live `dwh-x-dbt`.
+
 ## [2026-07-24] develop | generate_source: primary_key anche per OCS, non più unique_key
 `generate_source.sql` distingueva il test data quality sulla PK in base a `is_ocs`: `unique_key` per OCS, `primary_key` per le altre sorgenti. Utente ha chiesto di usare `primary_key` anche per OCS. Rimosso il branch `if/else` su `is_ocs`, ora il macro emette sempre `primary_key` quando `pk_cols` non è vuoto, indipendentemente dalla sorgente. Aggiornato `develop/macros/generate_models/generate_source.sql` (già in develop per la modifica precedente sul join `CFG_L0_L1_MODULO_LOOKUP`). Non ancora portato upstream in `raw/dwh-code/` né nella repo live `dwh-x-dbt`.
 
