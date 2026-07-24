@@ -165,7 +165,7 @@
 - [dm_dim_produz_utilizzi_carte_m (query_tag)](develop/models/L3/monitoraggio_produzione/dm_dim_produz_utilizzi_carte_m.yml) — fix query_tag, proposto, non ancora portato upstream
 - [dm_mov_produzione (query_tag)](develop/models/L3/monitoraggio_produzione/dm_mov_produzione.yml) — fix query_tag, proposto, non ancora portato upstream
 - [dm_mov_produzione_m (query_tag)](develop/models/L3/monitoraggio_produzione/dm_mov_produzione_m.yml) — fix query_tag, proposto, non ancora portato upstream
-- [generate_source](develop/macros/generate_models/generate_source.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS), proposto
+- [generate_source](develop/macros/generate_models/generate_source.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS); test PK sempre `primary_key`, anche per OCS (era `unique_key`), proposto
 - [generate_yaml](develop/macros/generate_models/generate_yaml.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS), proposto
 - [generate_model](develop/macros/generate_models/generate_model.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS), proposto
 - [generate_snapshots](develop/macros/generate_models/generate_snapshots.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS), proposto

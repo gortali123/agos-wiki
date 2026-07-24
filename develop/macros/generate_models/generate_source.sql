@@ -86,11 +86,7 @@
     {% do out.append('        data_tests:') %}
     {% do out.append('          - try_cast') %}
     {% if pk_cols %}
-      {% if is_ocs %}
-    {% do out.append('          - unique_key:') %}
-      {% else %}
     {% do out.append('          - primary_key:') %}
-      {% endif %}
     {% do out.append('              arguments:') %}
     {% do out.append('                pk_columns: [' ~ (pk_cols | join(', ')) ~ ']') %}
     {% endif %}
