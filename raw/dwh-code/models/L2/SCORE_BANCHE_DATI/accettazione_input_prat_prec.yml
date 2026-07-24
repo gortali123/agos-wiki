@@ -9,7 +9,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
-      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "ACCETTAZIONE_INPUT_PRAT_PREC"}'
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "ACCETTAZIONE_INPUT_PRAT_PREC"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

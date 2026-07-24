@@ -1,0 +1,132 @@
+version: 2
+
+models:
+  - name: dm_campioni_base_lgd_t
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      contract:
+        enforced: false
+      pre_hook:
+        -  "{{ delete_month(column='DT_OSSERVAZIONE', date_expr=last_day_past_month()) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_STATO_PRATICA
+        data_type: VARCHAR(2)
+      - name: TP_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_TRIMESTRE_RIFERIMENTO
+        data_type: VARCHAR(2)
+      - name: NM_DEF
+        data_type: NUMBER(4,0)
+      - name: DT_ATTIVAZIONE_CARTA
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: DT_DEFAULT
+        data_type: DATE
+      - name: DT_USCITA_DEFAULT
+        data_type: DATE
+      - name: DT_DECORRENZA
+        data_type: DATE
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_PERDITA
+        data_type: DATE
+      - name: DT_ACCODAMENTO
+        data_type: DATE
+      - name: DT_CESSIONE
+        data_type: DATE
+      - name: FL_ABBUONO
+        data_type: VARCHAR(1)
+      - name: FL_DECEDUTO
+        data_type: VARCHAR(1)
+      - name: FL_USCITA_DEFAULT_ACCODAMENTO
+        data_type: VARCHAR(1)
+      - name: TP_PERIMETRO
+        data_type: VARCHAR(4)
+      - name: FL_DBT
+        data_type: VARCHAR(1)
+      - name: EU_FIDO_DEFAULT
+        data_type: NUMBER(13,2)
+      - name: EU_FIDO_PRECEDENTE_DEFAULT
+        data_type: NUMBER(13,2)
+      - name: EU_FINANZIATO
+        data_type: NUMBER(13,2)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9,0)
+      - name: CD_FISCALE
+        data_type: VARCHAR(16)
+      - name: DS_RAGIONE_SOCIALE
+        data_type: VARCHAR(30)
+      - name: CD_CONVENZIONATO
+        data_type: NUMBER(9,0)
+      - name: CD_COOBLIGATO
+        data_type: VARCHAR(9)
+      - name: CD_BLOCCO
+        data_type: VARCHAR(2)
+      - name: CD_ORGANIZZAZIONE
+        data_type: VARCHAR(4)
+      - name: TP_CARTA
+        data_type: VARCHAR(2)
+      - name: CD_SETTORE
+        data_type: NUMBER(4,0)
+      - name: DS_SETTORE
+        data_type: VARCHAR(2)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(20)
+      - name: FL_DBT_AV
+        data_type: VARCHAR(1)
+      - name: FL_CAMBIALI
+        data_type: VARCHAR(1)
+      - name: FL_OBSERVATION_F
+        data_type: VARCHAR(1)
+      - name: FL_OBSERVATION_NF
+        data_type: VARCHAR(1)
+      - name: FL_PROLUNGATION_F
+        data_type: VARCHAR(1)
+      - name: FL_PROLUNGATION_NF
+        data_type: VARCHAR(1)
+      - name: FL_DEFAULT_AVERE
+        data_type: VARCHAR(1)
+      - name: FL_RIF
+        data_type: VARCHAR(1)
+      - name: FL_EX_FORZ_DT_PERD
+        data_type: VARCHAR(1)
+      - name: FL_ALTRI_ADDEBITI
+        data_type: VARCHAR(1)
+      - name: NM_ACCODAMENTI
+        data_type: NUMBER(6,0)
+      - name: FL_ACCODAMENTO
+        data_type: VARCHAR(1)
+      - name: PC_TASSO
+        data_type: NUMBER(9,4)
+      - name: EU_INCASSI_TOT
+        data_type: NUMBER(13,2)
+      - name: EU_INCASSO_CESSIONE
+        data_type: NUMBER(13,2)
+      - name: NM_EAD_DEF
+        data_type: NUMBER(4,0)

@@ -28,7 +28,8 @@
         s.fl_is_primary_key,
         c.cd_cluster,
         m.ds_masking_rule,
-        m.fl_active
+        m.fl_active,
+        mlk.cd_modulo as cd_modulo_l0
       from {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_SCHEMA s
       inner join max_ts on s.ds_archivio = max_ts.ds_archivio and s.ts_riferimento = max_ts.max_ts
       left join {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_CLUSTER_STO c
@@ -36,6 +37,9 @@
       left join {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_DATAMASK m
         on m.ds_archivio = s.ds_archivio
         and m.ds_column_name = s.ds_column_name
+      left join {{ env_var('DBT_DATABASE') }}.TECH.CFG_L0_L1_MODULO_LOOKUP mlk
+        on mlk.cd_modulo_l1 = s.cd_modulo
+        and upper(s.ds_sorgente) = 'OCS'
       where s.ds_archivio in ({{ in_clause }})
       order by s.ds_archivio, s.nm_campo::NUMERIC
     {% endset %}
@@ -54,15 +58,20 @@
   {% for model in model_names %}
     {% set rows = cfg_by_table.get(model | upper, []) %}
 
-    {# row layout: [0]ds_archivio [1]modulo [2]sorgente [3]column_name [4]data_type [5]length_col [6]is_nullable [7]is_primary_key [8]cluster [9]masking_rule [10]fl_active #}
-    {% set modulo   = none %}
-    {% set sorgente = none %}
-    {% set cluster  = none %}
+    {# row layout: [0]ds_archivio [1]cd_modulo_l1 [2]sorgente [3]column_name [4]data_type [5]length_col [6]is_nullable [7]is_primary_key [8]cluster [9]masking_rule [10]fl_active [11]cd_modulo_l0 #}
+    {% set modulo_l1 = none %}
+    {% set sorgente   = none %}
+    {% set cluster    = none %}
+    {% set modulo_l0  = none %}
     {% if rows | length > 0 %}
-      {% set modulo   = rows[0][1] | string | trim %}
-      {% set sorgente = rows[0][2] | string | trim %}
-      {% set cluster  = rows[0][8] | string | trim %}
+      {% set modulo_l1 = rows[0][1] | string | trim %}
+      {% set sorgente   = rows[0][2] | string | trim %}
+      {% set cluster    = rows[0][8] | string | trim %}
+      {% if rows[0][11] is not none %}
+        {% set modulo_l0 = rows[0][11] | string | trim %}
+      {% endif %}
     {% endif %}
+    {% set is_ocs = (sorgente | upper) == 'OCS' %}
 
     {% set model_name = ('stg_' ~ model) if cluster is not none and (cluster | upper) == 'C' else model %}
 
@@ -73,9 +82,14 @@
       {% endif %}
     {% endfor %}
 
+    {% set modulo_path = modulo_l1 | default('') | lower %}
+    {% if is_ocs and modulo_l0 %}
+      {% set modulo_path = modulo_path ~ '/' ~ (modulo_l0 | lower) %}
+    {% endif %}
+
     {% do model_yaml.append('  - name: ' ~ (model_name | lower)) %}
     {% do model_yaml.append('### sorgente: ' ~ (sorgente | default('unknown') | lower)) %}
-    {% do model_yaml.append('### modulo: ' ~ (modulo | default('') | lower)) %}
+    {% do model_yaml.append('### modulo: ' ~ modulo_path) %}
     {% do model_yaml.append('    config:') %}
 
     {% if cluster is not none %}
@@ -104,7 +118,7 @@
       {% do model_yaml.append('      post_hook: "{{ logic_delete_merge() }}"') %}
     {% endif %}
 
-    {% set schema_tag = 'L1_O_' ~ (modulo | upper) if (sorgente | upper) == 'OCS' else 'L1_E_' ~ (sorgente | upper) %}
+    {% set schema_tag = 'L1_O_' ~ (modulo_l1 | upper) if (sorgente | upper) == 'OCS' else 'L1_E_' ~ (sorgente | upper) %}
 
     {% do model_yaml.append('      meta:') %}
     {% do model_yaml.append('        cluster: ["' ~ (cluster | upper if cluster is not none else '') ~ '"]') %}

@@ -12,7 +12,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
-      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "CUMRIS_INPUT"}'
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "CUMRIS_INPUT"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

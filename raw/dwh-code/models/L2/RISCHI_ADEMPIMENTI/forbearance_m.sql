@@ -10,7 +10,7 @@ SELECT
     END AS FL_FORBEARANCE,
     NULL AS CD_CATEGORIA_FORBEARANCE,
     NULL AS TP_RISTRUTTURAZIONE,
-    NULL AS DT_RISTRUTTURAZIONE, -- FIX: da castare a to_date()
+    TRY_TO_DATE('1900-01-01') AS DT_RISTRUTTURAZIONE, -- FIX: da castare a to_date() e selezionare campo corretto OP aperto
     NULL AS NM_VAN_A,
     NULL AS NM_VAN_B,
     NULL AS PC_DO,

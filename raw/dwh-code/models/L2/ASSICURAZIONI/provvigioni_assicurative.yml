@@ -5,6 +5,7 @@ models:
     materialized: incremental
     incremental_strategy: insert_overwrite
     unique_key: [TP_SORGENTE, CD_PROVVIGIONE, TP_PROCEDURA, CD_PRATICA]
+    query_tag: '{"app": "DBT", "schema": "L2_ASSICURAZIONI", "entita": "PROVVIGIONI_ASSICURATIVE"}'
   constraints:
     - type: primary_key
       warn_unenforced: false

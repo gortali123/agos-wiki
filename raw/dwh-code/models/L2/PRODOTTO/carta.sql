@@ -70,8 +70,8 @@ SELECT
     {{ custom_to_date('A.CRCAR_DATA_VAL_ORIG') }} AS DT_DATA_VAL_ORIG,
     B.CEMPR_CODICE_BIN AS CD_BIN,
     CASE
-        WHEN B.CEMPR_INVIO_EC_MAIL IS NOT NULL
-          OR B.CEMPR_INVIO_EC_INTERNET IS NOT NULL
+        WHEN {{ custom_is_not_null('B.CEMPR_INVIO_EC_MAIL') }}
+          OR {{ custom_is_not_null('B.CEMPR_INVIO_EC_INTERNET') }}
         THEN 'Y'
         ELSE 'N'
     END AS FL_ESTRATTO_CONTO_ONLINE,
@@ -83,7 +83,8 @@ SELECT
             FROM {{ ref('crcarblo') }} CB
             WHERE CB.CAB_PRATICA = A.CRCAR_KEY_N
               AND CB.CAB_PROVENIENZA = 'CA'
-              AND (CB.CAB_COD_BLOCCO_OCS <> 'FF' OR CB.CAB_COD_BLOCCO_OCS IS NULL)
+              AND (CB.CAB_COD_BLOCCO_OCS <> 'FF' OR {{ custom_is_null('CB.CAB_COD_BLOCCO_OCS') }})
+              AND TRIM(CB.CAB_STATO) = ''
               AND CB.FL_DELETED = 'N'
         )
         THEN 'S'

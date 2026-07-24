@@ -1,12 +1,13 @@
 version: 2
 models:
   - name: org_contact
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "ORG_CONTACT"}'
     constraints:
       - type: primary_key
-        columns: [CD_CLIENTE, CD_GARANTE] 
+        columns: [CD_CLIENTE, CD_GARANTE]
     columns:
       - name: DT_RIFERIMENTO
         data_type: DATE

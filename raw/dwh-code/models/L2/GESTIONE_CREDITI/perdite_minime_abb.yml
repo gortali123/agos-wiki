@@ -4,6 +4,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_GESTIONE_CREDITI", "entita": "PERDITE_MINIME_ABB"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

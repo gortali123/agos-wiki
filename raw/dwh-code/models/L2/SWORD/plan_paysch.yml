@@ -1,9 +1,10 @@
 version: 2
 models:
   - name: plan_paysch
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "PLAN_PAYSCH"}'
     constraints:
       - type: primary_key
         columns: [CD_PRATICA, CD_PIANO, NM_GIORNI_SCADZ_RTA]

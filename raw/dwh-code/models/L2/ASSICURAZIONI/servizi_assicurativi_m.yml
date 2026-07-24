@@ -6,6 +6,7 @@ models:
       materialized: incremental
       incremental_strategy: append
       pre_hook: "{{ delete_month() }}"
+      query_tag: '{"app": "DBT", "schema": "L2_ASSICURAZIONI", "entita": "SERVIZI_ASSICURATIVI_M"}'
     constraints:
       - type: primary_key
         warn_unenforced: false
@@ -18,7 +19,7 @@ models:
       - name: CD_SERVIZIO
         data_type: VARCHAR(5)
       - name: DT_OSSERVAZIONE
-        data_type: DATE        
+        data_type: DATE
       - name: TP_SERVIZIO
         data_type: VARCHAR(3)
       - name: DS_SERVIZIO

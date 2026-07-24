@@ -22,11 +22,15 @@
         s.ds_length_col,
         s.fl_is_nullable,
         s.fl_is_primary_key,
-        c.cd_cluster
+        c.cd_cluster,
+        mlk.cd_modulo as cd_modulo_l0
       from {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_SCHEMA s
       inner join max_ts on s.ds_archivio = max_ts.ds_archivio and s.ts_riferimento = max_ts.max_ts
       left join {{ env_var('DBT_DATABASE') }}.TECH.CFG_L1_CLUSTER_STO c
         on c.ds_archivio = s.ds_archivio
+      left join {{ env_var('DBT_DATABASE') }}.TECH.CFG_L0_L1_MODULO_LOOKUP mlk
+        on mlk.cd_modulo_l1 = s.cd_modulo
+        and upper(s.ds_sorgente) = 'OCS'
       where s.ds_archivio in ({{ in_clause }})
       order by s.ds_archivio, s.nm_campo::NUMERIC
     {% endset %}
@@ -46,15 +50,20 @@
     {% set table = model | lower %}
     {% set rows  = cfg_by_table.get(model | upper, []) %}
 
-    {# row layout: [0]ds_archivio [1]cd_modulo [2]ds_sorgente [3]ds_column_name [4]ds_data_type [5]ds_length_col [6]fl_is_nullable [7]fl_is_primary_key [8]cd_cluster #}
-    {% set modulo   = none %}
-    {% set sorgente = none %}
-    {% set cluster  = none %}
+    {# row layout: [0]ds_archivio [1]cd_modulo_l1 [2]ds_sorgente [3]ds_column_name [4]ds_data_type [5]ds_length_col [6]fl_is_nullable [7]fl_is_primary_key [8]cd_cluster [9]cd_modulo_l0 #}
+    {% set modulo_l1 = none %}
+    {% set sorgente   = none %}
+    {% set cluster    = none %}
+    {% set modulo_l0  = none %}
     {% if rows | length > 0 %}
-      {% set modulo   = rows[0][1] | string | trim %}
-      {% set sorgente = rows[0][2] | string | trim %}
-      {% set cluster  = rows[0][8] | string | trim %}
+      {% set modulo_l1 = rows[0][1] | string | trim %}
+      {% set sorgente   = rows[0][2] | string | trim %}
+      {% set cluster    = rows[0][8] | string | trim %}
+      {% if rows[0][9] is not none %}
+        {% set modulo_l0 = rows[0][9] | string | trim %}
+      {% endif %}
     {% endif %}
+    {% set is_ocs = sorgente is not none and (sorgente | upper) == 'OCS' %}
 
     {% set pk_cols = [] %}
     {% for row in rows %}
@@ -63,15 +72,18 @@
       {% endif %}
     {% endfor %}
 
+    {% set modulo_path = modulo_l1 | default('') | lower %}
+    {% if is_ocs and modulo_l0 %}
+      {% set modulo_path = modulo_path ~ '/' ~ (modulo_l0 | lower) %}
+    {% endif %}
+
     {% do out.append('### sorgente: ' ~ (sorgente | default('unknown') | lower)) %}
-    {% do out.append('### modulo: ' ~ (modulo | default('') | lower)) %}
+    {% do out.append('### modulo: ' ~ modulo_path) %}
     {% if cluster is not none and (cluster | upper) == 'C' %}
       {% do out.append('### model: stg_' ~ table) %}
     {% else %}
       {% do out.append('### model: ' ~ table) %}
     {% endif %}
-
-    {% set is_ocs = sorgente is not none and (sorgente | upper) == 'OCS' %}
 
     {% do out.append('select') %}
     {% do out.append("  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,") %}

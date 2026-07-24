@@ -7,7 +7,7 @@ models:
       incremental_strategy: append
       unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
       pre_hook: "{{ delete_month() }}"
-      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "INDICE_RISCHIO"}'
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "INDICE_RISCHIO_M"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

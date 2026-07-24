@@ -4,8 +4,8 @@ with SOURCE_OCS as (
         0                                                       AS CD_PROVVIGIONE,
         A.BAPV_PROCEDURA                                        AS TP_PROCEDURA,
         CAST(A.BAPV_NUM_PRATICA AS VARCHAR(250))                AS CD_PRATICA,
-        CASE  WHEN TRIM(A.BAPV_SERVIZIO) = '' OR A.BAPV_SERVIZIO IS NULL THEN '0'
-        ELSE A.BAPV_SERVIZIO
+        CASE WHEN {{ custom_is_null('A.BAPV_SERVIZIO') }} THEN '0'
+            ELSE A.BAPV_SERVIZIO
         END                                                     AS CD_SERVIZIO,
         A.BAPV_ANNOMESE                                         AS NM_ANNOMESE_MATURAZIONE,
         A.BAPV_TIPO_PROVVIGIONE                                 AS TP_PROVVIGIONE,

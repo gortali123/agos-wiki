@@ -20,17 +20,19 @@ models:
         data_type: VARCHAR(18)
       - name: isdeleted
         data_type: BOOLEAN
-      - name: case_externalkey__c
-        data_type: VARCHAR(255)
-      - name: createdby_federationidentifier
+      - name: case_id
+        data_type: VARCHAR
+      - name: case_casenumber
         data_type: VARCHAR(255)
       - name: createddate
         data_type: TIMESTAMP_NTZ
       - name: field
-        data_type: VARCHAR(255)
+        data_type: VARCHAR
       - name: datatype
-        data_type: VARCHAR(255)
+        data_type: VARCHAR
       - name: oldvalue
         data_type: VARCHAR(255)
       - name: newvalue
         data_type: VARCHAR(255)
+      - name: createdbyid
+        data_type: VARCHAR

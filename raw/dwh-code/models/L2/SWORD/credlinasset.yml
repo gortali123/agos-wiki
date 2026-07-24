@@ -1,12 +1,13 @@
 version: 2
 models:
   - name: credlinasset
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "CREDLINASSET"}'
     constraints:
       - type: primary_key
-        columns: [CD_PRATICA, TP_VEICOLO] 
+        columns: [CD_PRATICA, TP_VEICOLO]
     columns:
       - name: DT_RIFERIMENTO
         data_type: DATE

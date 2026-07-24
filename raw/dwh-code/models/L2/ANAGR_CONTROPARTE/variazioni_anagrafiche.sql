@@ -10,11 +10,6 @@ COMBINED AS (
     -- ramo 1: righe nuove/modificate dal source (solo il delta)
     SELECT
         CC.AL_CODICE AS CD_CONTROPARTE,
-        -- Il primo record storico di ogni controparte (il piu' vecchio) usa
-        -- AL_DATA_INSERIMENTO a mezzanotte come TS_INIZIO_VALIDITA invece di
-        -- AL_DATA_MODIFICA/AL_ORA_MODIFICA. Non si applica se la controparte
-        -- e' gia' presente in target: in quel caso e' solo la riga piu'
-        -- vecchia del delta corrente, non il vero primo record storico.
         CASE
             WHEN ROW_NUMBER() OVER (
                      PARTITION BY CC.AL_CODICE
@@ -466,7 +461,7 @@ COMBINED AS (
         T.NM_CASELLA_POSTALE,
         T.LASTMODIFIEDDATA,
         T.PR_PK,
-        T.PROGRESSIVO_CONTROPARTE AS OLD_PROGRESSIVO,
+        T.PR_CONTROPARTE AS OLD_PROGRESSIVO,
         T.TS_FINE_VALIDITA AS OLD_TS_FINE_VALIDITA,
         TRUE AS IS_EXISTING
     FROM {{ this }} AS T
@@ -723,7 +718,7 @@ SELECT
                 PARTITION BY H.CD_CONTROPARTE, H.IS_EXISTING
                 ORDER BY H.TS_INIZIO_VALIDITA, H.PR_PK
             )
-    )::NUMBER(38, 0) AS PROGRESSIVO_CONTROPARTE,
+    )::NUMBER(38, 0) AS PR_CONTROPARTE,
     H.TP_CONTROPARTE,
     H.CD_FORMA_GIURIDICA,
     H.CD_FISCALE,

@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: mailc_esiti_tgb
+        data_tests:
+          - try_cast_from_sql

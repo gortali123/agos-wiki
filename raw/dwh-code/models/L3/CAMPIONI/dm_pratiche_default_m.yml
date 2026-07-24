@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: dm_pratiche_default_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook:
+        - "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_TIPO_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3,0)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: DS_STATO
+        data_type: VARCHAR(30)
+      - name: DT_INGRS_DFLT_EBA
+        data_type: DATE
+      - name: DT_USCITA_DFLT_EBA
+        data_type: DATE
+      - name: DT_INGRS_PROBATION
+        data_type: DATE
+      - name: DT_USCITA_PROBATION_STIMATA
+        data_type: DATE
+      - name: DT_USCITA_PROBATION
+        data_type: DATE
+      - name: DT_INGRS_OBSERVATION
+        data_type: DATE
+      - name: FL_OBSERVATION_F
+        data_type: VARCHAR(1)
+      - name: FL_OBSERVATION_NF
+        data_type: VARCHAR(1)
+      - name: FL_PROLUNGATION_F
+        data_type: VARCHAR(1)
+      - name: FL_PROLUNGATION_NF
+        data_type: VARCHAR(1)
+      - name: FL_DBT
+        data_type: VARCHAR(1)
+      - name: FL_DBT_CLI
+        data_type: VARCHAR(1)
+      - name: FL_DFLT_EBA
+        data_type: VARCHAR(1)
+      - name: FL_FORBORNE_CLI
+        data_type: VARCHAR(1)
+      - name: FL_TRUFFA
+        data_type: VARCHAR(1)
+      - name: FL_IPE
+        data_type: VARCHAR(1)
+      - name: FL_UTP
+        data_type: VARCHAR(1)
+      - name: FL_SOF
+        data_type: VARCHAR(1)
+      - name: FL_BONIS_FORZATO
+        data_type: VARCHAR(1)
+      - name: FL_SOVRAINDEB
+        data_type: VARCHAR(1)
+      - name: NM_GG_SCADT_CLI_EBA
+        data_type: NUMBER(8,0)
+      - name: DS_MOTIVO_INGRS_DFLT_STO
+        data_type: VARCHAR(3)
+      - name: DS_MOTIVO_EXIT_DFLT_STO
+        data_type: VARCHAR(3)
+      - name: NM_GG_SCADUTO_CLI
+        data_type: NUMBER(5,0)
+      - name: NM_GG_SCADUTO_CONTR
+        data_type: NUMBER(5,0)
+      - name: EU_SCADUTO_IMPAG_EBA
+        data_type: NUMBER(13,0)
+      - name: EU_IMPIEGO_TOT_EBA
+        data_type: NUMBER(13,0)
+      - name: DT_ULTIMA_RISTR
+        data_type: DATE

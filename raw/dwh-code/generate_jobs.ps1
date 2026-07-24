@@ -79,6 +79,7 @@ foreach ($file in $sqlFiles) {
     $levelIndex = -1
     $source = ''
     $category = ''
+    $subCategory = ''
 
     # Trova il livello (L1, L2, etc)
     for ($j = 0; $j -lt $pathParts.Count; $j++) {
@@ -89,11 +90,15 @@ foreach ($file in $sqlFiles) {
         }
     }
 
-    # Estrai source (prima cartella dopo il livello) e category (seconda cartella dopo il livello)
+    # Estrai source (prima cartella dopo il livello), category (seconda, soprafolder modulo)
+    # e subCategory (terza, sottofolder modulo)
     if ($levelIndex -ge 0 -and $levelIndex + 1 -lt $pathParts.Count) {
         $source = $pathParts[$levelIndex + 1]
         if ($levelIndex + 2 -lt $pathParts.Count) {
             $category = $pathParts[$levelIndex + 2]
+        }
+        if ($levelIndex + 3 -lt $pathParts.Count) {
+            $subCategory = $pathParts[$levelIndex + 3]
         }
     }
 
@@ -144,7 +149,8 @@ foreach ($file in $sqlFiles) {
 
     if ($level -eq "L1") {
         $sourceVal = if ($source -eq "OCS") { "OCS" } else { $source.ToUpper() }
-        $moduloVal = if ($source -eq "OCS" -and $category) { ($category -replace '_$', '').ToUpper() } else { "" }
+        # modulo = solo la sottofolder (cd_modulo), non la soprafolder (cd_modulo_l1)
+        $moduloVal = if ($source -eq "OCS" -and $subCategory) { ($subCategory -replace '_$', '').ToUpper() } else { "" }
         $metadata = @{
             'layer'  = $layerVal
             'source' = $sourceVal

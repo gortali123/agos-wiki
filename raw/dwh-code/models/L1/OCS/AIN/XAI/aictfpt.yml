@@ -1,0 +1,101 @@
+version: 2
+
+models:
+  - name: aictfpt
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['aictpt_pratica', 'aictpt_pratica']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_AIN", "archivio":"AICTFPT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [aictpt_pratica, aictpt_pratica]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: aictpt_pratica
+        data_type: NUMBER(12,0)
+      - name: aictpt_pratica
+        data_type: NUMBER(12,0)
+      - name: aictpt_intermediario
+        data_type: NUMBER(9,0)
+      - name: aictpt_intermediario
+        data_type: NUMBER(9,0)
+      - name: aictpt_tipo_ana
+        data_type: VARCHAR(2)
+      - name: aictpt_tipo_ana
+        data_type: VARCHAR(2)
+      - name: aictpt_tipo_caric
+        data_type: VARCHAR(2)
+      - name: aictpt_tipo_caric
+        data_type: VARCHAR(2)
+      - name: aictpt_canale_acq
+        data_type: VARCHAR(3)
+      - name: aictpt_canale_acq
+        data_type: VARCHAR(3)
+      - name: aictpt_origine
+        data_type: VARCHAR(3)
+      - name: aictpt_origine
+        data_type: VARCHAR(3)
+      - name: aictpt_filiale
+        data_type: VARCHAR(3)
+      - name: aictpt_filiale
+        data_type: VARCHAR(3)
+      - name: aictpt_stato
+        data_type: VARCHAR(2)
+      - name: aictpt_stato
+        data_type: VARCHAR(2)
+      - name: aictpt_attributo
+        data_type: VARCHAR(2)
+      - name: aictpt_attributo
+        data_type: VARCHAR(2)
+      - name: aictpt_data_inserimento
+        data_type: NUMBER(8,0)
+      - name: aictpt_data_inserimento
+        data_type: NUMBER(8,0)
+      - name: aictpt_utente_inserimento
+        data_type: VARCHAR(10)
+      - name: aictpt_utente_inserimento
+        data_type: VARCHAR(10)
+      - name: aictpt_ora_inserimento
+        data_type: NUMBER(8,0)
+      - name: aictpt_ora_inserimento
+        data_type: NUMBER(8,0)
+      - name: aictpt_data_attivazione
+        data_type: NUMBER(8,0)
+      - name: aictpt_data_attivazione
+        data_type: NUMBER(8,0)
+      - name: aictpt_data_chiusura
+        data_type: NUMBER(8,0)
+      - name: aictpt_data_chiusura
+        data_type: NUMBER(8,0)
+      - name: aictpt_utente
+        data_type: VARCHAR(10)
+      - name: aictpt_utente
+        data_type: VARCHAR(10)
+      - name: aictpt_data
+        data_type: NUMBER(8,0)
+      - name: aictpt_data
+        data_type: NUMBER(8,0)
+      - name: aictpt_ora
+        data_type: NUMBER(8,0)
+      - name: aictpt_ora
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

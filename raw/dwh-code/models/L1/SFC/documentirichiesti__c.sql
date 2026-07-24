@@ -1,0 +1,16 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  TRY_CAST(Id AS VARCHAR(18)) AS id,
+  TRY_CAST(Case__r_Id AS VARCHAR(18)) AS case__r_id,
+  TRY_CAST(Esito__c AS VARCHAR(255)) AS esito__c,
+  TRY_CAST(Fonte__c AS VARCHAR(255)) AS fonte__c,
+  TRY_CAST(Name AS VARCHAR(80)) AS name,
+  TRY_CAST(Note__c AS VARCHAR(4000)) AS note__c,
+  TRY_CAST(NumeroPratica__r_ExternalKey__c AS VARCHAR(255)) AS numeropratica__r_externalkey__c,
+  TRY_CAST(TipoDocumento__c AS VARCHAR(255)) AS tipodocumento__c,
+  TRY_TO_TIMESTAMP_TZ(LastModifiedDate, 'YYYY-MM-DDTHH24:MI:SS.FF3TZHTZM')::TIMESTAMP_NTZ AS lastmodifieddate,
+  TRY_CAST(CreatedBy_FederationIdentifier AS VARCHAR(255)) AS createdby_federationidentifier,
+  TRY_CAST(LastModifiedBy_FederationIdentifier AS VARCHAR(255)) AS lastmodifiedby_federationidentifier,
+  TRY_TO_TIMESTAMP_TZ(CreatedDate, 'YYYY-MM-DDTHH24:MI:SS.FF3TZHTZM')::TIMESTAMP_NTZ AS CreatedDate,
+from {{ source('source_l0','documentirichiesti__c') }}

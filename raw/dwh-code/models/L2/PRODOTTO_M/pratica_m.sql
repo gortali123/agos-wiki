@@ -151,7 +151,7 @@ cte_ccpsvt_abb_co AS (
 cte_plchices AS (
     SELECT
         CHC_PRATICA,
-        CASE WHEN CHC_CES_PERDITA IS NOT NULL THEN 'S' ELSE 'N'
+        CASE WHEN NOT {{ custom_is_null('CHC_CES_PERDITA') }} THEN 'S' ELSE 'N'
         END AS FL_PERDITA_CESSIONE
     FROM {{ ref('plchices') }}
     WHERE FL_DELETED = 'N'
@@ -478,40 +478,49 @@ cte_bapratint_ca AS (
 
 cte_crcarblo_rt AS (
     SELECT
-        B.CAB_PRATICA,
-        MAX({{ custom_to_date('B.CAB_DATA_IMMISSIONE') }})  AS DT_RITIRATA,
-        B.CAB_OPE_IMMISSIONE        AS CD_USER_RITIRATA
-    FROM {{ ref('crcarblo') }} AS B
-    WHERE B.CAB_COD_BLOCCO_OCS = 'RT'
-    AND B.FL_DELETED = 'N'
-    GROUP BY B.CAB_PRATICA, B.CAB_OPE_IMMISSIONE
+        CAB_PRATICA,
+        {{ custom_to_date('CAB_DATA_IMMISSIONE') }}  AS DT_RITIRATA,
+        CAB_OPE_IMMISSIONE                            AS CD_USER_RITIRATA
+    FROM {{ ref('crcarblo') }}
+    WHERE CAB_COD_BLOCCO_OCS = 'RT'
+      AND TRIM(CAB_STATO) = ''
+      AND FL_DELETED = 'N'
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY CAB_PRATICA
+        ORDER BY CAB_DATA_IMMISSIONE DESC, CAB_ORA_IMMISSIONE DESC
+    ) = 1
 ),
 
 cte_crcarblo_pp_cc AS (
     SELECT
         blo.CAB_PRATICA AS CAB_PRATICA,
         CASE
-            WHEN blo.CAB_PRATICA IS NOT NULL THEN NULL
+            WHEN {{ custom_is_not_null('blo.CAB_PRATICA') }} THEN NULL
             ELSE {{ custom_to_date('car.CRCAR_DATA_CHIUSURA') }}
-        END AS DT_CHIUSURA_REGOLARE,
-        CAR.DT_OSSERVAZIONE
-    FROM {{ ref('crcar_m') }} car
+        END AS DT_CHIUSURA_REGOLARE
+    FROM {{ ref('crcar') }} car
     LEFT JOIN (
         SELECT DISTINCT CAB_PRATICA
         FROM {{ ref('crcarblo') }}
-        WHERE CAB_COD_BLOCCO_OCS IN ('PP', 'CC') AND FL_DELETED = 'N'
+        WHERE CAB_COD_BLOCCO_OCS IN ('PP', 'CC')
+          AND TRIM(CAB_STATO) = ''
+          AND FL_DELETED = 'N'
     ) blo ON car.CRCAR_KEY_N = blo.CAB_PRATICA
 ),
 
 cte_crcarblo_pp AS (
     SELECT
-        B.CAB_PRATICA,
-        MAX({{ custom_to_date('B.CAB_DATA_IMMISSIONE') }}) AS DT_PASSAGGIO_PERDITA,
-        B.CAB_OPE_IMMISSIONE       AS CD_USER_PASSAGGIO_PERDITA
-    FROM {{ ref('crcarblo') }} AS B
-    WHERE B.CAB_COD_BLOCCO_OCS = 'PP'
-    AND B.FL_DELETED = 'N'
-    GROUP BY B.CAB_PRATICA, B.CAB_OPE_IMMISSIONE
+        CAB_PRATICA,
+        {{ custom_to_date('CAB_DATA_IMMISSIONE') }}  AS DT_PASSAGGIO_PERDITA,
+        CAB_OPE_IMMISSIONE                           AS CD_USER_PASSAGGIO_PERDITA
+    FROM {{ ref('crcarblo') }}
+    WHERE CAB_COD_BLOCCO_OCS = 'PP'
+      AND TRIM(CAB_STATO) = ''
+      AND FL_DELETED = 'N'
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY CAB_PRATICA
+        ORDER BY CAB_DATA_IMMISSIONE DESC, CAB_ORA_IMMISSIONE DESC
+    ) = 1
 ),
 
 cte_crcarblo_cc AS (
@@ -520,7 +529,8 @@ cte_crcarblo_cc AS (
         MAX({{ custom_to_date('CAB_DATA_IMMISSIONE') }}) AS DT_CESSIONE
     FROM {{ ref('crcarblo') }}
     WHERE CAB_COD_BLOCCO_OCS = 'CC'
-    AND FL_DELETED = 'N'
+      AND TRIM(CAB_STATO) = ''
+      AND FL_DELETED = 'N'
     GROUP BY CAB_PRATICA
 ),
 
@@ -530,7 +540,8 @@ cte_crcarblo_db AS (
         MAX({{ custom_to_date('CAB_DATA_IMMISSIONE') }}) AS DT_DBT
     FROM {{ ref('crcarblo') }}
     WHERE CAB_COD_BLOCCO_OCS = 'DB'
-    AND FL_DELETED = 'N'
+      AND TRIM(CAB_STATO) = ''
+      AND FL_DELETED = 'N'
     GROUP BY CAB_PRATICA
 ),
 
@@ -540,7 +551,12 @@ cte_crcarblo_dt AS (
         CAB_OPE_IMMISSIONE AS CD_USER_DBT
     FROM {{ ref('crcarblo') }}
     WHERE CAB_COD_BLOCCO_OCS = 'DT'
-    AND FL_DELETED = 'N'
+      AND TRIM(CAB_STATO) = ''
+      AND FL_DELETED = 'N'
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY CAB_PRATICA
+        ORDER BY CAB_DATA_IMMISSIONE DESC, CAB_ORA_IMMISSIONE DESC
+    ) = 1
 ),
 
 cte_cnslflog_ca AS (
@@ -776,7 +792,6 @@ TAB_FIN_CARTA AS (
     AND CRCAR.DT_OSSERVAZIONE = BPI.DT_OSSERVAZIONE
     LEFT JOIN cte_crcarblo_rt   AS RT   ON CRCAR.CRCAR_KEY_N        = RT.CAB_PRATICA
     LEFT JOIN cte_crcarblo_pp_cc AS PPCC ON CRCAR.CRCAR_KEY_N       = PPCC.CAB_PRATICA
-    AND CRCAR.DT_OSSERVAZIONE = PPCC.DT_OSSERVAZIONE
     LEFT JOIN cte_crcarblo_pp   AS PP   ON CRCAR.CRCAR_KEY_N        = PP.CAB_PRATICA
     LEFT JOIN cte_crcarblo_cc   AS CC   ON CRCAR.CRCAR_KEY_N        = CC.CAB_PRATICA
     LEFT JOIN cte_crcarblo_db   AS DB   ON CRCAR.CRCAR_KEY_N        = DB.CAB_PRATICA

@@ -6,6 +6,7 @@ models:
       materialized: incremental
       incremental_strategy: merge
       unique_key: [CD_CONTROPARTE, DT_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_CONTROPARTE", "entita": "VARIAZIONI_ANAGRAFICHE_DAY"}'
       pre_hook: >
         {{ delete_l2(
             'ccanalog',

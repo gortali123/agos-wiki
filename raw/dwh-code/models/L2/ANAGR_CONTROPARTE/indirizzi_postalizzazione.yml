@@ -6,6 +6,7 @@ models:
       materialized: incremental
       incremental_strategy: merge
       unique_key: [CD_PRATICA, TP_PROCEDURA, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_CONTROPARTE", "entita": "INDIRIZZI_POSTALIZZAZIONE"}'
       pre_hook: >
         {{ delete_l2(
             'bapratag',

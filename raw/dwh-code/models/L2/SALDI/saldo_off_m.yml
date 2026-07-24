@@ -18,6 +18,6 @@ models:
       - name: DT_OSSERVAZIONE
         data_type: DATE
       - name: CD_CONTROPARTE
-        data_type: VARCHAR(9)
+        data_type: NUMBER(9,0)
       - name: EU_OFF_BALANCE
         data_type: NUMBER(13,2)

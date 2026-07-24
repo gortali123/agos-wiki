@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aictfpt
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [aictpt_pratica, aictpt_pratica]
+      - name: aictfpt_deleted

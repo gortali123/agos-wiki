@@ -11,7 +11,7 @@ WITH base AS (
         T.WFISWFL_ZONA AS CD_ZONA,
         T.WFISWFL_STATO AS CD_STATO_ISTANZA,
         CASE
-            WHEN T.WFISWFL_STATO IS NULL OR T.WFISWFL_STATO = ' ' THEN 'Attiva'
+            WHEN {{ custom_is_null('T.WFISWFL_STATO') }} THEN 'Attiva'
             WHEN T.WFISWFL_STATO = 'C' THEN 'Chiusa'
             ELSE T.WFISWFL_STATO
         END AS DS_STATO_ISTANZA,

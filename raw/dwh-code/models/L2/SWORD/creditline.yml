@@ -1,9 +1,10 @@
 version: 2
 models:
   - name: creditline
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "CREDITLINE"}'
     constraints:
       - type: primary_key
         columns: [DT_RIFERIMENTO, CD_PRATICA, DS_NOME_LIN_CREDIT]

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: aitbfsta
+    relation: ref('stg_aitbfsta')
+    config:
+      unique_key: [aitbsta_stato, aitbsta_stato]

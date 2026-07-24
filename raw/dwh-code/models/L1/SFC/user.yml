@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: user
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['id']
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"USER"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: federationidentifier
+        data_type: VARCHAR(512)

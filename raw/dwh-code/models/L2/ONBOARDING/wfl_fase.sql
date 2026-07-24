@@ -9,7 +9,7 @@ WITH base AS (
         T.WFISFA_WORKFLOW AS CD_WORKFLOW,
         T.WFISFA_STATO AS CD_STATO_FASE,
         CASE
-            WHEN T.WFISFA_STATO IS NULL OR T.WFISFA_STATO = ' ' THEN 'Attiva'
+            WHEN {{ custom_is_null('T.WFISFA_STATO') }} THEN 'Attiva'
             WHEN T.WFISFA_STATO = 'F' THEN 'Forzabile'
             WHEN T.WFISFA_STATO = 'C' THEN 'Chiusa'
             WHEN T.WFISFA_STATO = 'I' THEN 'Istanza'

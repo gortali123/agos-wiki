@@ -5,6 +5,7 @@ models:
     materialized: incremental
     incremental_strategy: merge
     unique_key: [TP_PROCEDURA, CD_PRATICA, TS_INIZIO_VALIDITA]
+    query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "VARIAZIONI_STATO_PRAT"}'
   constraints:
     - type: primary_key
       warn_unenforced: false

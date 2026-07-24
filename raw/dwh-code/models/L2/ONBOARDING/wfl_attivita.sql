@@ -13,14 +13,13 @@ WITH base AS (
         T.WFISAT_WORKFLOW AS CD_WORKFLOW,
         T.WFISAT_AREA_WF AS CD_AREA_WORKFLOW,
         T.WFISAT_STATO AS CD_STATO_ATTIVITA,
-        CASE T.WFISAT_STATO
-            WHEN 'A' THEN 'Annullata'
-            WHEN 'C' THEN 'Chiusa'
-            WHEN 'I' THEN 'Istanza'
-            WHEN 'R' THEN 'Rilanciabile'
-            WHEN 'S' THEN 'Sospesa'
-            WHEN ' ' THEN 'Attiva'
-            WHEN '' THEN 'Attiva'
+        CASE
+            WHEN {{ custom_is_null('T.WFISAT_STATO') }} THEN 'Attiva'
+            WHEN T.WFISAT_STATO = 'A' THEN 'Annullata'
+            WHEN T.WFISAT_STATO = 'C' THEN 'Chiusa'
+            WHEN T.WFISAT_STATO = 'I' THEN 'Istanza'
+            WHEN T.WFISAT_STATO = 'R' THEN 'Rilanciabile'
+            WHEN T.WFISAT_STATO = 'S' THEN 'Sospesa'
             ELSE 'Stato sconosciuto'
         END AS DS_STATO_ATTIVITA,
         T.WFISAT_UFFICIO AS CD_UFFICIO,

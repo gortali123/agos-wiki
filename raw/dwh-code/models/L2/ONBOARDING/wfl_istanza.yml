@@ -5,6 +5,7 @@ models:
       materialized: incremental
       incremental_strategy: merge
       unique_key: [CD_ISTANZA, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_ONBOARDING", "entita": "WFL_ISTANZA"}'
       pre_hook:
         - "{{ delete_l2('wfisfwfl', ['CD_ISTANZA'], ['WFISWFL_ISTANZA']) }}"
     constraints:

@@ -1,9 +1,10 @@
 version: 2
 models:
   - name: organisation
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "ORGANISATION"}'
     constraints:
       - type: primary_key
         columns: [CD_CLIENTE]

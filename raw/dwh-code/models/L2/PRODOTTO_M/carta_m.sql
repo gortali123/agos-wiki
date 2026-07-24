@@ -67,8 +67,8 @@ SELECT
     {{ ole_to_date('A.CRCAR_DATA_SCADENZA') }} AS DT_SCADENZA,
     B.CEMPR_CODICE_BIN AS CD_BIN,
     CASE
-        WHEN B.CEMPR_INVIO_EC_MAIL IS NOT NULL
-          OR B.CEMPR_INVIO_EC_INTERNET IS NOT NULL
+        WHEN {{ custom_is_not_null('B.CEMPR_INVIO_EC_MAIL') }}
+          OR {{ custom_is_not_null('B.CEMPR_INVIO_EC_INTERNET') }}
         THEN 'Y'
         ELSE 'N'
     END AS FL_ESTRATTO_CONTO_ONLINE,
@@ -80,7 +80,8 @@ SELECT
             FROM {{ ref('crcarblo') }} CB
             WHERE CB.CAB_PRATICA = A.CRCAR_KEY_N
               AND CB.CAB_PROVENIENZA = 'CA'
-              AND (CB.CAB_COD_BLOCCO_OCS <> 'FF' OR CB.CAB_COD_BLOCCO_OCS IS NULL)
+              AND (CB.CAB_COD_BLOCCO_OCS <> 'FF' OR {{ custom_is_null('CB.CAB_COD_BLOCCO_OCS') }})
+              AND TRIM(CB.CAB_STATO) = ''
               AND CB.FL_DELETED = 'N'
         )
         THEN 'S'
@@ -334,21 +335,21 @@ FROM {{ ref('crcar_m') }} A
 LEFT JOIN {{ ref('cremep') }} B
     ON A.CRCAR_EME = B.CEMPR_EMETTITORE
     AND A.CRCAR_PRODOTTO = B.CEMPR_PRODOTTO
-    AND {{ last_day_past_month() }} >= B.TS_INIZIO_VALIDITA AND {{ last_day_past_month() }} < B.TS_FINE_VALIDITA
+    AND A.DT_OSSERVAZIONE >= B.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < B.TS_FINE_VALIDITA
     AND B.FL_DELETED = 'N'
 LEFT JOIN {{ ref('cremee') }} C
     ON A.CRCAR_EME = C.CEMEM_EMETTITORE
-    AND {{ last_day_past_month() }} >= C.TS_INIZIO_VALIDITA AND {{ last_day_past_month() }} < C.TS_FINE_VALIDITA
+    AND A.DT_OSSERVAZIONE >= C.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < C.TS_FINE_VALIDITA
     AND C.FL_DELETED = 'N'
 LEFT JOIN {{ ref('crtabsta') }} D
     ON A.CRCAR_STATO = D.CRTSTA_STATO
     AND 'CA' = D.CRTSTA_PROCEDURA
-    AND {{ last_day_past_month() }} >= D.TS_INIZIO_VALIDITA AND {{ last_day_past_month() }} < D.TS_FINE_VALIDITA
+    AND A.DT_OSSERVAZIONE >= D.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < D.TS_FINE_VALIDITA
     AND D.FL_DELETED = 'N'
 LEFT JOIN {{ ref('crblocchi') }} E
     ON A.CRCAR_BLOCCO = E.CRB_BLOCCO
     AND 'CA' = E.CRB_PROVENIENZA
-    AND {{ last_day_past_month() }} >= E.TS_INIZIO_VALIDITA AND {{ last_day_past_month() }} < E.TS_FINE_VALIDITA
+    AND A.DT_OSSERVAZIONE >= E.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < E.TS_FINE_VALIDITA
     AND E.FL_DELETED = 'N'
 LEFT JOIN {{ ref('crteg') }} F
     ON A.CRCAR_KEY_N = F.CRTEG_CARTA

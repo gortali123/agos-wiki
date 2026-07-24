@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: aictfpdp
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_AIN", "archivio":"AICTFPDP"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [aictpdp_ide, aictpdp_ide]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: aictpdp_ide
+        data_type: NUMBER(13,0)
+      - name: aictpdp_ide
+        data_type: NUMBER(13,0)
+      - name: aictpdp_pratica
+        data_type: NUMBER(12,0)
+      - name: aictpdp_pratica
+        data_type: NUMBER(12,0)
+      - name: aictpdp_procedura_rif
+        data_type: VARCHAR(2)
+      - name: aictpdp_procedura_rif
+        data_type: VARCHAR(2)
+      - name: aictpdp_email
+        data_type: VARCHAR(50)
+      - name: aictpdp_email
+        data_type: VARCHAR(50)
+      - name: aictpdp_iban
+        data_type: VARCHAR(34)
+      - name: aictpdp_iban
+        data_type: VARCHAR(34)
+      - name: aictpdp_tipo_invio
+        data_type: VARCHAR(1)
+      - name: aictpdp_tipo_invio
+        data_type: VARCHAR(1)
+      - name: aictpdp_utente
+        data_type: VARCHAR(10)
+      - name: aictpdp_utente
+        data_type: VARCHAR(10)
+      - name: aictpdp_data
+        data_type: NUMBER(8,0)
+      - name: aictpdp_data
+        data_type: NUMBER(8,0)
+      - name: aictpdp_ora
+        data_type: NUMBER(8,0)
+      - name: aictpdp_ora
+        data_type: NUMBER(8,0)
+      - name: aictpdp_prg_log
+        data_type: NUMBER(10,0)
+      - name: aictpdp_prg_log
+        data_type: NUMBER(10,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

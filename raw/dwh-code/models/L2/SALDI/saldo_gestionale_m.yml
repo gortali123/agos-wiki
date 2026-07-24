@@ -20,7 +20,7 @@ models:
       - name: CD_PRATICA_CLIENTE
         data_type: NUMBER(12,0)
       - name: CD_CONTROPARTE
-        data_type: VARCHAR(9)
+        data_type: NUMBER(9,0)
       - name: EU_IMPIEGO_GESTIONALE
         data_type: NUMBER(13,2)
       - name: EU_CAPITALE_SCADERE

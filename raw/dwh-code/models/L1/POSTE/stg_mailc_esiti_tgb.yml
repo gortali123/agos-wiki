@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_mailc_esiti_tgb
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"POSTE", "schema":"L1_E_POSTE", "archivio":"MAILC_ESITI_TGB"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id_postalizzazione
+        data_type: NUMBER(8,0)
+      - name: id_sap
+        data_type: NUMBER(8,0)
+      - name: dt_accettazione
+        data_type: DATE
+      - name: ds_centro_accettante
+        data_type: VARCHAR(100)
+      - name: dt_prossim_tentativo_consegna
+        data_type: DATE
+      - name: cap
+        data_type: VARCHAR(8)
+      - name: ds_localita
+        data_type: VARCHAR(100)
+      - name: _2dcomm
+        data_type: VARCHAR(100)
+      - name: cd_esito
+        data_type: VARCHAR(10)
+      - name: ds_causale
+        data_type: VARCHAR(50)
+      - name: anomalia
+        data_type: VARCHAR(255)

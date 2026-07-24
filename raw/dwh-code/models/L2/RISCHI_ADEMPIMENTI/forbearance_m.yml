@@ -28,7 +28,7 @@ models:
       - name: TP_RISTRUTTURAZIONE
         data_type: VARCHAR
       - name: DT_RISTRUTTURAZIONE
-        data_type: VARCHAR
+        data_type: DATE
       - name: NM_VAN_A
         data_type: VARCHAR
       - name: NM_VAN_B

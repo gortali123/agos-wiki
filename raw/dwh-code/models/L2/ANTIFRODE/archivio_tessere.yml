@@ -4,6 +4,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_ANTIFRODE", "entita": "ARCHIVIO_TESSERE"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

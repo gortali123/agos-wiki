@@ -5,6 +5,7 @@ models:
       materialized: incremental
       incremental_strategy: merge
       unique_key: [TP_PROCEDURA, CD_TABELLA_FINANZIARIA, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "TABELLE_FINANZIARIE"}'
     constraints:
       - type: primary_key
         warn_unenforced: false
@@ -15,11 +16,11 @@ models:
       - name: CD_TABELLA_FINANZIARIA
         data_type: VARCHAR(10)
       - name: TS_INIZIO_VALIDITA
-        data_type: TIMESTAMP_NTZ 
+        data_type: TIMESTAMP_NTZ
       - name: TS_FINE_VALIDITA
-        data_type: TIMESTAMP_NTZ 
+        data_type: TIMESTAMP_NTZ
       - name: DS_TABELLA_FINANZIARIA
-        data_type: VARCHAR(30)     
+        data_type: VARCHAR(30)
       - name: TP_TABELLA_FINANZIARIA
         data_type: VARCHAR(2)
       - name: FL_ANNULLO

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: aiecfpart
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [aiecpart_sezione, aiecpart_sezione, aiecpart_pratica, aiecpart_pratica, aiecpart_progressivo, aiecpart_progressivo]
+      - name: aiecfpart_deleted

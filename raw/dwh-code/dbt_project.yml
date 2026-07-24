@@ -89,6 +89,10 @@ models:
         +meta: {source: "PRIMEWEB"}
         +schema: L1_E_PWB
         +tags: ["primeweb","noocs"]
+      POSTE:
+        +meta: {source: "POSTE"}
+        +schema: L1_E_BSN
+        +tags: ["poste","noocs"]
       SAP:
         +meta: {source: "SAP"}
         +schema: L1_E_SAP
@@ -341,6 +345,11 @@ snapshots:
     L1:
       +meta: {layer: "L1", cluster: "C"}
       +tags: ["L1"]
+      POSTE:
+        +updated_at: dt_accettazione
+        +meta: {source: "POSTE"}
+        +schema: L1_E_BSN
+        +tags: ["poste","noocs"]
       FEA:
         +updated_at: ts_coalesce_modif_creaz
         +meta: {source: "FEA"}

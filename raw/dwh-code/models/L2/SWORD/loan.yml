@@ -1,12 +1,13 @@
 version: 2
 models:
   - name: loan
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "LOAN"}'
     constraints:
       - type: primary_key
-        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO] 
+        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO]
     columns:
       - name: DT_RIFERIMENTO
         data_type: DATE

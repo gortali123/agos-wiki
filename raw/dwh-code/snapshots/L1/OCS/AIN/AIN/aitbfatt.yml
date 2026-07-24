@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: aitbfatt
+    relation: ref('stg_aitbfatt')
+    config:
+      unique_key: [aitbatt_attributo, aitbatt_attributo]

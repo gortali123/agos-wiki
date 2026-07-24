@@ -1,9 +1,10 @@
 version: 2
 models:
   - name: loan_chargeprof
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "LOAN_CHARGEPROF"}'
     constraints:
       - type: primary_key
         columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO, DT_START]

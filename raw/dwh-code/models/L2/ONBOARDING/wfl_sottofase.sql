@@ -10,7 +10,7 @@ WITH base AS (
         T.TS_FINE_VALIDITA AS TS_FINE_VALIDITA,
         T.WFISSF_STATO AS CD_STATO_SOTTOFASE,
         CASE
-            WHEN T.WFISSF_STATO IS NULL OR T.WFISSF_STATO = ' ' THEN 'Attiva'
+            WHEN {{ custom_is_null('T.WFISSF_STATO') }} THEN 'Attiva'
             WHEN T.WFISSF_STATO = 'A' THEN 'Annullata'
             WHEN T.WFISSF_STATO = 'C' THEN 'Chiusa'
             WHEN T.WFISSF_STATO = 'I' THEN 'Istanza'

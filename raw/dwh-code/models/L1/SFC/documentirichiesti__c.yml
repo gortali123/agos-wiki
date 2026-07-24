@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: documentirichiesti__c
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"DOCUMENTIRICHIESTI__C"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: case__r_id
+        data_type: VARCHAR(18)
+      - name: esito__c
+        data_type: VARCHAR(255)
+      - name: fonte__c
+        data_type: VARCHAR(255)
+      - name: name
+        data_type: VARCHAR(80)
+      - name: note__c
+        data_type: VARCHAR(4000)
+      - name: numeropratica__r_externalkey__c
+        data_type: VARCHAR(255)
+      - name: tipodocumento__c
+        data_type: VARCHAR(255)
+      - name: lastmodifieddate
+        data_type: TIMESTAMP_NTZ
+      - name: createdby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR(255)
+      - name: createddate
+        data_type: TIMESTAMP_NTZ

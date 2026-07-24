@@ -1,0 +1,81 @@
+version: 2
+
+models:
+  - name: aiecfpartl
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['aipartl_sezione', 'aipartl_sezione', 'aipartl_pratica', 'aipartl_pratica', 'aipartl_progressivo', 'aipartl_progressivo', 'aipartl_prog_var', 'aipartl_prog_var']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_AIN", "archivio":"AIECFPARTL"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [aipartl_sezione, aipartl_sezione, aipartl_pratica, aipartl_pratica, aipartl_progressivo, aipartl_progressivo, aipartl_prog_var, aipartl_prog_var]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: aipartl_sezione
+        data_type: VARCHAR(1)
+      - name: aipartl_sezione
+        data_type: VARCHAR(1)
+      - name: aipartl_pratica
+        data_type: NUMBER(12,0)
+      - name: aipartl_pratica
+        data_type: NUMBER(12,0)
+      - name: aipartl_progressivo
+        data_type: NUMBER(9,0)
+      - name: aipartl_progressivo
+        data_type: NUMBER(9,0)
+      - name: aipartl_tipo_partita
+        data_type: VARCHAR(2)
+      - name: aipartl_tipo_partita
+        data_type: VARCHAR(2)
+      - name: aipartl_data_comp
+        data_type: NUMBER(8,0)
+      - name: aipartl_data_comp
+        data_type: NUMBER(8,0)
+      - name: aipartl_data_scadenza
+        data_type: NUMBER(8,0)
+      - name: aipartl_data_scadenza
+        data_type: NUMBER(8,0)
+      - name: aipartl_pratica_ai_dest
+        data_type: NUMBER(12,0)
+      - name: aipartl_pratica_ai_dest
+        data_type: NUMBER(12,0)
+      - name: aipartl_prog_var
+        data_type: NUMBER(9,0)
+      - name: aipartl_prog_var
+        data_type: NUMBER(9,0)
+      - name: aipartl_data_variazione
+        data_type: NUMBER(8,0)
+      - name: aipartl_data_variazione
+        data_type: NUMBER(8,0)
+      - name: aipartl_ora_variazione
+        data_type: NUMBER(8,0)
+      - name: aipartl_ora_variazione
+        data_type: NUMBER(8,0)
+      - name: aipartl_operatore
+        data_type: VARCHAR(10)
+      - name: aipartl_operatore
+        data_type: VARCHAR(10)
+      - name: aipartl_tipo_operazione
+        data_type: VARCHAR(1)
+      - name: aipartl_tipo_operazione
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

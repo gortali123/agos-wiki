@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: mailc_esiti_tgb
+    relation: ref('stg_mailc_esiti_tgb')
+    config:
+      unique_key: [id_postalizzazione]

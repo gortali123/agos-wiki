@@ -366,7 +366,7 @@ LEFT JOIN {{ ref('plpammrv_m') }} D2
     AND a.DT_OSSERVAZIONE = d2.DT_OSSERVAZIONE
 LEFT JOIN {{ ref('plctfpmx') }} E
     ON A.PLC_NUM_PRATICA = E.PLCTPMX_NUM_PRATICA
-    AND {{ last_day_past_month() }} >= e.TS_INIZIO_VALIDITA AND {{ last_day_past_month() }} < e.TS_FINE_VALIDITA
+    AND A.DT_OSSERVAZIONE >= e.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < e.TS_FINE_VALIDITA
     AND C.FL_DELETED = 'N'
 LEFT JOIN {{ ref('oxctftasr_m') }} F
     ON 'CO' = F.OXCTTASR_PROCEDURA

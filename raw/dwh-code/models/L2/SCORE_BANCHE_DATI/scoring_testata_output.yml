@@ -7,7 +7,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
-      query_tag: '{"app": "DBT", "schema": "L2_SCORING", "entita": "SCORING_TESTATA_OUTPUT"}'
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "SCORING_TESTATA_OUTPUT"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

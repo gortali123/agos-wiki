@@ -5,6 +5,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_ASSICURAZIONI", "entita": "ANAGRAFICA_PRODOTTO_ASSIC"}'
     constraints:
       - type: primary_key
         warn_unenforced: false

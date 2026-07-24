@@ -1,0 +1,127 @@
+version: 2
+
+models:
+  - name: aiecfpare
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_AIN", "archivio":"AIECFPARE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [aiecpare_pratica, aiecpare_pratica, aiecpare_progressivo, aiecpare_progressivo]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: aiecpare_pratica
+        data_type: NUMBER(12,0)
+      - name: aiecpare_pratica
+        data_type: NUMBER(12,0)
+      - name: aiecpare_progressivo
+        data_type: NUMBER(9,0)
+      - name: aiecpare_progressivo
+        data_type: NUMBER(9,0)
+      - name: aiecpare_proc_rif
+        data_type: VARCHAR(2)
+      - name: aiecpare_proc_rif
+        data_type: VARCHAR(2)
+      - name: aiecpare_pratica_rif
+        data_type: NUMBER(12,0)
+      - name: aiecpare_pratica_rif
+        data_type: NUMBER(12,0)
+      - name: aiecpare_tipo_partita_rif
+        data_type: VARCHAR(2)
+      - name: aiecpare_tipo_partita_rif
+        data_type: VARCHAR(2)
+      - name: aiecpare_num_rata_rif
+        data_type: NUMBER(3,0)
+      - name: aiecpare_num_rata_rif
+        data_type: NUMBER(3,0)
+      - name: aiecpare_inc_sospeso
+        data_type: VARCHAR(1)
+      - name: aiecpare_inc_sospeso
+        data_type: VARCHAR(1)
+      - name: aiecpare_data_elaborazione
+        data_type: NUMBER(8,0)
+      - name: aiecpare_data_elaborazione
+        data_type: NUMBER(8,0)
+      - name: aiecpare_imp_comm_d
+        data_type: NUMBER(13,0)
+      - name: aiecpare_imp_comm_d
+        data_type: NUMBER(13,0)
+      - name: aiecpare_cod_servizio
+        data_type: VARCHAR(5)
+      - name: aiecpare_cod_servizio
+        data_type: VARCHAR(5)
+      - name: aiecpare_num_polizza
+        data_type: VARCHAR(15)
+      - name: aiecpare_num_polizza
+        data_type: VARCHAR(15)
+      - name: aiecpare_destin_bonifico
+        data_type: NUMBER(9,0)
+      - name: aiecpare_destin_bonifico
+        data_type: NUMBER(9,0)
+      - name: aiecpare_tp_destin_bonifico
+        data_type: VARCHAR(2)
+      - name: aiecpare_tp_destin_bonifico
+        data_type: VARCHAR(2)
+      - name: aiecpare_cod_voucher
+        data_type: VARCHAR(14)
+      - name: aiecpare_cod_voucher
+        data_type: VARCHAR(14)
+      - name: aiecpare_codice_abi
+        data_type: NUMBER(5,0)
+      - name: aiecpare_codice_abi
+        data_type: NUMBER(5,0)
+      - name: aiecpare_codice_cab
+        data_type: NUMBER(5,0)
+      - name: aiecpare_codice_cab
+        data_type: NUMBER(5,0)
+      - name: aiecpare_conto_corrente
+        data_type: VARCHAR(12)
+      - name: aiecpare_conto_corrente
+        data_type: VARCHAR(12)
+      - name: aiecpare_desc_bonifico
+        data_type: VARCHAR(45)
+      - name: aiecpare_desc_bonifico
+        data_type: VARCHAR(45)
+      - name: aiecpare_bonifico_sing
+        data_type: VARCHAR(1)
+      - name: aiecpare_bonifico_sing
+        data_type: VARCHAR(1)
+      - name: aiecpare_utilizzo
+        data_type: NUMBER(16,0)
+      - name: aiecpare_utilizzo
+        data_type: NUMBER(16,0)
+      - name: aiecpare_imp_markup
+        data_type: NUMBER(13,0)
+      - name: aiecpare_imp_markup
+        data_type: NUMBER(13,0)
+      - name: aiecpare_imposta
+        data_type: NUMBER(13,0)
+      - name: aiecpare_imposta
+        data_type: NUMBER(13,0)
+      - name: aiecpare_cod_pacchetto
+        data_type: VARCHAR(5)
+      - name: aiecpare_cod_pacchetto
+        data_type: VARCHAR(5)
+      - name: aiecpare_mod_accollo_max
+        data_type: VARCHAR(2)
+      - name: aiecpare_mod_accollo_max
+        data_type: VARCHAR(2)
+      - name: aiecpare_imposta_ass
+        data_type: NUMBER(13,0)
+      - name: aiecpare_imposta_ass
+        data_type: NUMBER(13,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

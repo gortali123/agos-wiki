@@ -5,6 +5,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_CONTROPARTE", "entita": "SEGNALAZIONI_ANAGRAFICHE"}'
       pre_hook: >
         {{ delete_l2(
             'yqngrant',

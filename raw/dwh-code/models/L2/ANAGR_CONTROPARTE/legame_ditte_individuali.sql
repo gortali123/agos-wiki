@@ -21,6 +21,10 @@ WITH LEGAME_RAW AS (
             AND F.TP_CONTROPARTE = 'F'
     WHERE
         P.TP_CONTROPARTE = 'P'
+        AND {{ custom_is_not_null('P.CD_FISCALE') }}
+        AND {{ custom_is_not_null('F.CD_FISCALE') }}
+        AND P.CD_FISCALE != '$$$$$$$$$$$$$$$$' 
+        AND F.CD_FISCALE != '$$$$$$$$$$$$$$$$' 
         AND {{ custom_is_null('P.CD_PARTITA_IVA') }}
         AND {{ custom_is_not_null('F.CD_PARTITA_IVA') }}
 ),

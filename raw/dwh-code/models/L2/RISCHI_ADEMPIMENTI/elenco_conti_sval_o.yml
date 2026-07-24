@@ -11,7 +11,7 @@ models:
         columns: [CD_CONTO]
     columns:
       - name: CD_CONTO
-        data_type: NUMBER(6)
+        data_type: VARCHAR(10)
       - name: DT_INI_VALI
         data_type: DATE
       - name: DT_FINE_VALI

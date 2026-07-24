@@ -1,9 +1,10 @@
 version: 2
 models:
   - name: org_transact
-    config: 
+    config:
       materialized: incremental
       incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "ORG_TRANSACT"}'
     constraints:
       - type: primary_key
         columns: [CD_CLIENTE, PR_TRANSAZIONE]

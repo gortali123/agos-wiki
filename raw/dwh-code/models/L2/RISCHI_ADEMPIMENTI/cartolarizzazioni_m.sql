@@ -19,55 +19,16 @@ WITH PERIMETRO AS (
         AND o.FL_DELETED = 'N'
 ),
 
-FORB AS (
-    SELECT
-        p.CD_PRATICA,
-        p.DT_OSSERVAZIONE,
-        f.DT_RISTRUTTURAZIONE
-    FROM PERIMETRO p
-    LEFT JOIN {{ ref('forbearance_m') }} f
-        ON f.CD_PRATICA = p.CD_PRATICA
-       AND f.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
-),
-
-CTE_RATE_CAST AS (
+-- oxdrfpra ri-agganciata su CD_PRATICA (chiave diversa da PERIMETRO):
+-- lettura separata necessaria. Il cast della data resta in CTE perche'
+-- la macro custom_to_date non va annidata inline nel JOIN ON.
+RATE_CAST AS (
     SELECT 
         DRPRA_PRATICA,
         {{ custom_to_date('DRPRA_DATA_ESTRAZIONE') }} AS DT_OSSERVAZIONE,
         DRPRA_N_RATE_SCADUTE_IMPAGATE
     FROM {{ ref('oxdrfpra') }}
     WHERE FL_DELETED = 'N'
-),
-
-RATE AS (
-    SELECT
-        p.CD_PRATICA,
-        p.DT_OSSERVAZIONE,
-        r.DRPRA_N_RATE_SCADUTE_IMPAGATE 
-    FROM PERIMETRO p
-    LEFT JOIN CTE_RATE_CAST r
-        ON r.DRPRA_PRATICA = p.CD_PRATICA
-        AND r.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
-),
-
-PRAT AS (
-    SELECT
-        p.CD_PRATICA,
-        p.DT_OSSERVAZIONE,
-        m.DT_PASSAGGIO_PERDITA,
-        m.DT_CESSIONE
-    FROM PERIMETRO p
-    LEFT JOIN {{ ref('pratica_m') }} M
-        ON m.CD_PRATICA = p.CD_PRATICA
-       AND m.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
-),
-
-STATO_CRED AS(
-    SELECT 
-        CD_PRATICA,
-        DT_OSSERVAZIONE,
-        FL_DFLT_EBA
-        FROM {{ ref('stato_creditizio_m') }}
 ),
 
 STATUS_LOAN AS (
@@ -117,18 +78,18 @@ STATUS_LOAN AS (
             ELSE 'RESS'
         END AS COD_STATO
     FROM PERIMETRO p
-    LEFT JOIN RATE rt
-        ON rt.CD_PRATICA = p.CD_PRATICA
+    LEFT JOIN RATE_CAST rt
+        ON rt.DRPRA_PRATICA = p.CD_PRATICA
        AND rt.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
-    LEFT JOIN FORB fb
+    LEFT JOIN {{ ref('forbearance_m') }} fb
         ON fb.CD_PRATICA = p.CD_PRATICA
        AND fb.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
-    LEFT JOIN PRAT pr
+    LEFT JOIN {{ ref('pratica_m') }} pr
         ON pr.CD_PRATICA = p.CD_PRATICA
        AND pr.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
-    LEFT JOIN STATO_CRED st
+    LEFT JOIN {{ ref('stato_creditizio_m') }} st
         ON st.CD_PRATICA = p.CD_PRATICA
-        AND st.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
+       AND st.DT_OSSERVAZIONE = p.DT_OSSERVAZIONE
 )
 
 SELECT
@@ -180,4 +141,4 @@ LEFT JOIN STATUS_LOAN SL
    AND SL.DT_OSSERVAZIONE = LC.DT_OSSERVAZIONE
 {% if is_incremental() %} 
 WHERE LC.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
-{% endif %} 
+{% endif %}
