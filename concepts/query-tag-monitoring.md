@@ -2,22 +2,28 @@
 title: "query_tag per monitoring"
 type: concept
 tags: [monitoring, convention, layer/L2, layer/L3]
-updated: 2026-07-22
+updated: 2026-07-24
 ---
 
 Il `query_tag` è un campo di config dbt (JSON: `'{"app": "DBT", "schema": "L2_<AREA>", "entita": "<NOME>"}'`, o `L3_<AREA>` per i DataMart L3) dichiarato **obbligatorio** in [[guida-sviluppo]] (checklist pre-rilascio) per identificare, lato monitoring Snowflake, quale modello ha eseguito una query.
 
-## Copertura reale nel codice (riverificato 2026-07-22 contro `raw/dwh-code/models/L2/` e `models/L3/`, 107 file yml scansionati)
+## Copertura reale nel codice (riverificato 2026-07-24 dopo il resync `raw/dwh-code/`, commit "new fetch")
 
-- **Assente del tutto** (63 file) in ANAGR_CONTROPARTE, ANTIFRODE, ASSICURAZIONI, GESTIONE_CREDITI, ONBOARDING, PRODOTTO, PRODOTTO_M, SWORD (L2) e in `basilea_core`/`monitoraggio_produzione` (L3) — inclusa l'area più documentata, [[l2-anagr-controparte]].
-- **Presente ma con `schema` errato** (21 file): tutti i 6 modelli di [[l2-carte]] dichiarano `schema: "L2_PRODOTTO"` invece di `L2_CARTE`; 15 dei 19 modelli di SCORE_BANCHE_DATI dichiarano `schema: "L2_SCORING"` invece di `L2_SCORE_BANCHE_DATI` (i 4 corretti: `accettazione_input`, `prescreening_input`, `prescreening_output`, `prescreening_output_pr`).
-- **Presente ma con `entita` errata** (1 file): `indice_rischio_m.yml` ha `entita: "INDICE_RISCHIO"` (manca `_M`).
-- **Presente e coerente** (22 file): tutti i modelli di [[l2-rischi-adempimenti]] (tranne `indice_rischio_m`), [[l2-saldi]] (L2+L3), [[l2-provvigioni-rappel]] (schema `L2_PROVVIGIONI_RAPPEL`, attivo — nessun `#` di commento trovato in questo giro), e i 4 modelli SCORE_BANCHE_DATI citati sopra.
-- Nota: la voce precedente di questa pagina segnalava `l2-provvigioni-rappel` con `schema: "L2_MAIN"` e query_tag commentato con `#` — non confermato nel giro 2026-07-22 (i 2 modelli in `raw/dwh-code/models/L2/PROVVIGIONI_RAPPEL/` risultano attivi e con schema corretto `L2_PROVVIGIONI_RAPPEL`); possibile fix intermedio già applicato upstream, oppure discrepanza da chiarire in un giro successivo.
+Il resync ha portato a monte **73 degli 85 fix** proposti in `develop/` il 2026-07-22 (tutta l'area L2 tranne CARTE). Stato attuale:
 
-## Correzione proposta in `develop/` (2026-07-22, non ancora applicata upstream)
+- **Presente e corretto** (ora la stragrande maggioranza): tutti i modelli L2 di ANAGR_CONTROPARTE, ANTIFRODE, ASSICURAZIONI, GESTIONE_CREDITI, ONBOARDING, PRODOTTO, PRODOTTO_M, SWORD, SCORE_BANCHE_DATI (tutti e 19, schema ora sempre `L2_SCORE_BANCHE_DATI`), RISCHI_ADEMPIMENTI (tutti e 12, incluso `indice_rischio_m` ora con `entita: "INDICE_RISCHIO_M"` corretto), [[l2-saldi]] (L2+L3), [[l2-provvigioni-rappel]].
+- **Ancora con `schema` errato** (6 file, non toccati dal resync): tutti i modelli di [[l2-carte]] dichiarano ancora `schema: "L2_PRODOTTO"` invece di `L2_CARTE`.
+- **Ancora assente del tutto** (12 file, non toccati dal resync): L3 `basilea_core` (3 modelli) e `monitoraggio_produzione` (6 modelli), più la nuova area L3 **CAMPIONI** (3 modelli: `dm_campioni_base_lgd_t`, `dm_cliente_default_m`, `dm_pratiche_default_m` — subject area comparsa per la prima volta in questo resync, mai avuta query_tag).
+- Nota storica: la voce precedente di questa pagina segnalava un possibile `l2-provvigioni-rappel` con schema/query_tag commentato — non confermato nei giri 2026-07-22/2026-07-24, i modelli risultano attivi e coerenti.
 
-Workflow `develop` eseguito su tutti gli 85 file non conformi: file corretti scritti sotto `develop/models/L2/<AREA>/` e `develop/models/L3/<area>/`, mirror esatto della struttura in `raw/dwh-code/models/`, con solo la chiave `query_tag` aggiunta o corretta in ciascun `config:` (nessun'altra riga toccata). Aree toccate: L2 ANAGR_CONTROPARTE, ANTIFRODE, ASSICURAZIONI, CARTE, GESTIONE_CREDITI, ONBOARDING, PRODOTTO, PRODOTTO_M, RISCHI_ADEMPIMENTI (solo `indice_rischio_m`), SCORE_BANCHE_DATI, SWORD; L3 `basilea_core`, `monitoraggio_produzione`. Vedi `index.md` sezione Develop per l'elenco dei file. `raw/dwh-code/` resta invariato (read-only) — l'utente deve portare questi file a monte manualmente nella repo live `dwh-x-dbt`.
+## Correzione proposta in `develop/` — stato dopo il resync (2026-07-24)
+
+Del set di 85 file scritto in `develop/models/L2/` e `develop/models/L3/` il 2026-07-22, **73 sono ora superflui** (applicati upstream dal resync, possono essere rimossi da `develop/`/`index.md`). Restano da portare a monte:
+- **CARTE** (6 file): fix `schema` già pronto in `develop/models/L2/CARTE/*.yml`.
+- **L3 basilea_core + monitoraggio_produzione** (9 file): fix già pronto in `develop/models/L3/{basilea_core,monitoraggio_produzione}/*.yml`.
+- **L3 CAMPIONI** (3 file, nuovi): **non coperti dal fix del 2026-07-22** (l'area non esisteva ancora) — serve un nuovo passaggio `develop` per aggiungere `query_tag` a `dm_campioni_base_lgd_t.yml`, `dm_cliente_default_m.yml`, `dm_pratiche_default_m.yml`.
+
+`raw/dwh-code/` resta il riferimento read-only per questo wiki — l'utente deve portare i file residui a monte manualmente nella repo live `dwh-x-dbt`.
 
 ## Due tassonomie di naming non riconciliate
 

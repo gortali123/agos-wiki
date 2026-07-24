@@ -2,7 +2,7 @@
 title: "Inconsistenze: codice vs skill vs documentazione (dwh-x-dbt)"
 type: query
 tags: [inconsistenze, layer/L0, layer/L1, layer/L2, layer/L3, naming-convention]
-updated: 2026-07-22
+updated: 2026-07-24
 ---
 
 Elenco **solo delle incongruenze attualmente aperte** tra le tre fonti di verità del progetto: **codice** (`raw/dwh-code/`), **skill** (`.claude/skills/develop-l2`, `develop-l3`, `dm-reader`) e **documentazione** (docx/xlsx ingeriti in [[caricamento-layer-l0-l1]], [[caricamento-layer-l2]], [[guida-sviluppo]], [[layer-l2-xlsx-reference]]). Le voci risolte vengono rimosse, non archiviate qui — vedi la sezione "Verifiche eseguite" per lo stato attuale confermato.
@@ -11,10 +11,10 @@ Elenco **solo delle incongruenze attualmente aperte** tra le tre fonti di verit�
 
 | #   | Titolo                                                                                | Codice                             | Skill | Doc                                          |
 | --- | ------------------------------------------------------------------------------------- | ---------------------------------- | ----- | -------------------------------------------- |
-| 1   | query_tag L2/L3: obbligatorio, assente/errato nel codice                              | ✅ risolto in `develop/` (2026-07-22, non ancora in raw/dwh-code/) | —     | ✅ prescrive obbligo                          |
+| 1   | query_tag L2/L3: obbligatorio, ancora assente/errato in 21 file (CARTE + L3)          | ⚠️ CARTE (schema) + basilea_core/monitoraggio_produzione/CAMPIONI (assente) | —     | ✅ prescrive obbligo                          |
 | 2   | Cancellazioni L2: standard è pre_hook `delete_l2`, codice disallineato in più modelli | ⚠️ disallineato in più aree        | —     | ✅ prescrive pre_hook come standard           |
 | 3   | Flag: xlsx riporta S/N, errato — standard reale è Y/N                                 | ✅ Y/N pervasivo                    | —     | ⚠️ xlsx da correggere in Y/N                 |
-| 4   | Prefissi campo: `PROGRESSIVO_CONTROPARTE` senza prefisso `PR_`                        | ⚠️ parziale                        | —     | ⚠️ xlsx/docx non riconciliate su `ID_`/`SK_` |
+| 4   | Prefissi campo: `ID_`/`SK_` (docx) vs `PR_` (xlsx) non riconciliati                    | —                                   | —     | ⚠️ xlsx/docx non riconciliate su `ID_`/`SK_` |
 | 5   | Subject area: due tassonomie di sigle                                                 | ✅ solo nome esteso osservato       | —     | ⚠️ xlsx sigle mai viste nel codice           |
 | 6   | `dbt_artifacts.upload_results` documentato, non presente                              | ✅ usa log_run_results/TECH.LOG_DBT | —     | ⚠️ descrive dbt_artifacts                    |
 | 7   | Nomi test generici: doc dice `_table`, codice no                                      | ✅ nomi senza `_table`              | —     | ⚠️ doc con suffisso `_table`                 |
@@ -22,17 +22,19 @@ Elenco **solo delle incongruenze attualmente aperte** tra le tre fonti di verit�
 | 9   | Sentinella finestra aperta: TIMESTAMP (L2/S1) vs DATE (L3/S5)                         | ⚠️ due tipi diversi                | —     | ⚠️ non documentato come intenzionale         |
 | 10  | Bug applicativi minori (vari)                                                         | ⚠️ vedi dettaglio                  | —     | —                                            |
 | 11  | Normalizzazione OCS in L1 non documentata nel doc framework L1                        | ⚠️ presente ma non documentata     | —     | ⚠️ assente da [[caricamento-layer-l0-l1]]    |
+| 12  | NUMBER OCS: NULL arriva come 0, non documentato in doc (skill corrette il 2026-07-24)  | ⚠️ comportamento reale, non verificabile in codice locale | ✅ corretto 2026-07-24 (`develop-l2`/`develop-l3`) | ⚠️ sez. 5.5 copre solo VARCHAR |
 
 Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; — = fonte non coinvolta in questa voce.
 
 ## Dettaglio
 
-### 1. `query_tag` L2/L3: obbligatorio secondo la doc, assente in metà del codice, sbagliato in un'altra parte — RISOLTO IN `develop/` (2026-07-22)
+### 1. `query_tag` L2/L3: obbligatorio secondo la doc, ancora assente/errato in 21 file dopo il resync 2026-07-24
 
 - **Doc**: [[guida-sviluppo]] lo rende **obbligatorio** in checklist pre-rilascio (sezione 5.2/5.4); [[caricamento-layer-l2]] lo richiede per il monitoring dettagliato delle query.
-- **Stato nel codice vendorizzato (`raw/dwh-code/`, non ancora corretto)**: su 107 file yml L2/L3 scansionati, 85 avevano il problema — assente del tutto in ANAGR_CONTROPARTE, ANTIFRODE, ASSICURAZIONI, GESTIONE_CREDITI, ONBOARDING, PRODOTTO, PRODOTTO_M, SWORD, e in `basilea_core`/`monitoraggio_produzione` (L3) (63 file, mai dichiarato); schema errato in **CARTE** (tutti e 6 i modelli con `schema: "L2_PRODOTTO"` invece di `L2_CARTE`) e in 15/19 modelli di **SCORE_BANCHE_DATI** (`schema: "L2_SCORING"` invece di `L2_SCORE_BANCHE_DATI`) — 21 file in totale; `entita` errata in `indice_rischio_m.yml` (`"INDICE_RISCHIO"` invece di `"INDICE_RISCHIO_M"`) — 1 file. Solo 22 file erano già coerenti: RISCHI_ADEMPIMENTI (tranne `indice_rischio_m`), SALDI (L2+L3), PROVVIGIONI_RAPPEL, e 4 modelli di SCORE_BANCHE_DATI (`accettazione_input`, `prescreening_input`, `prescreening_output`, `prescreening_output_pr`).
-- **Correzione proposta**: workflow `develop` eseguito il 2026-07-22 — 85 file corretti scritti sotto `develop/models/L2/` e `develop/models/L3/`, mirror esatto della struttura di `raw/dwh-code/models/`, con solo la chiave `query_tag` aggiunta/corretta in ciascun `config:`. **Non ancora applicato**: `raw/dwh-code/` resta invariato (read-only per questo wiki) e la repo live `dwh-x-dbt` non è stata toccata — l'utente deve portare manualmente questi file a monte.
-- **Impatto residuo finché non portato upstream**: il monitoring per-query su Snowflake (query_tag) resta di fatto inaffidabile per gran parte del progetto nel codice realmente deployato.
+- **Storico**: fix proposto in `develop/` il 2026-07-22 su 85 file (su 107 scansionati). Il resync `raw/dwh-code/` del 2026-07-24 (commit "new fetch") ha portato **73 di questi fix upstream**: tutta l'area L2 tranne CARTE (ANAGR_CONTROPARTE, ANTIFRODE, ASSICURAZIONI, GESTIONE_CREDITI, ONBOARDING, PRODOTTO, PRODOTTO_M, SWORD, SCORE_BANCHE_DATI tutti e 19, RISCHI_ADEMPIMENTI incluso `indice_rischio_m` ora `INDICE_RISCHIO_M` corretto).
+- **Stato residuo nel codice (`raw/dwh-code/`, 2026-07-24)**: **CARTE** — tutti e 6 i modelli hanno ancora `schema: "L2_PRODOTTO"` invece di `L2_CARTE` (non toccati dal resync). **L3** — `query_tag` ancora assente in `basilea_core` (3 modelli) e `monitoraggio_produzione` (6 modelli), più la nuova area **CAMPIONI** (3 modelli: `dm_campioni_base_lgd_t`, `dm_cliente_default_m`, `dm_pratiche_default_m` — subject area comparsa per la prima volta in questo resync, mai avuta `query_tag`, non coperta dal fix del 2026-07-22 perché non esisteva ancora).
+- **Correzione proposta**: `develop/models/L2/CARTE/*.yml` (6 file, fix già pronto) e `develop/models/L3/{basilea_core,monitoraggio_produzione}/*.yml` (9 file, fix già pronto) restano da portare a monte. I 73 file ormai superflui in `develop/` possono essere rimossi. Serve un nuovo passaggio `develop` per i 3 file CAMPIONI (mai coperti).
+- **Impatto residuo**: monitoring per-query su Snowflake inaffidabile per CARTE, per le tre aree L3, e per CAMPIONI.
 - **Dettagli**: [[query-tag-monitoring]], [[storicizzazione-l2-s1-s4]], [[l2-carte]], [[l2-provvigioni-rappel]].
 
 ### 2. Cancellazioni L2: standard è il pre_hook `delete_l2`, il codice è disallineato
@@ -51,11 +53,12 @@ Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; �
 - **Impatto**: chi scrive un nuovo modello guardando solo la xlsx potrebbe implementare un flag 'S'/'N' non coerente con `FL_DELETED` esistente.
 - **Dettagli**: [[naming-convention-agos-x]], [[cancellazioni-fl-deleted]], [[layer-l2-xlsx-reference]].
 
-### 4. Prefissi campo: `PROGRESSIVO_CONTROPARTE` ancora senza prefisso `PR_`; `ID_`/`SK_` non in xlsx
+### 4. Prefissi campo: `ID_`/`SK_` (docx) vs `PR_` (xlsx) non riconciliati
 
 - **Aggiornamento 2026-07-20**: il campo `PROGRESSIVO_PK` è stato rinominato in `PR_PK` nel codice (`variazioni_anagrafiche.sql`/`.yml`) e la docx aggiornata usa ora lo stesso nome — quella parte della divergenza è **risolta**.
-- **Residuo**: `PROGRESSIVO_CONTROPARTE` (stesso modello) resta scritto per esteso, senza prefisso `PR_`. La docx elenca inoltre `ID_`/`SK_` come prefissi validi, assenti dalla xlsx (foglio Nomenclatura Campi), e la xlsx elenca `PR_` che nel docx non compare come lista generale prefissi.
-- **Impatto**: basso — ambiguità residua solo su `PROGRESSIVO_CONTROPARTE` e su `ID_`/`SK_`.
+- **Aggiornamento 2026-07-24**: il resync `raw/dwh-code/` ha rinominato anche `PROGRESSIVO_CONTROPARTE` → `PR_CONTROPARTE` (stesso modello) — **risolto**, non è più un residuo aperto. Vedi [[l2-anagr-controparte]].
+- **Residuo**: la docx elenca `ID_`/`SK_` come prefissi validi, assenti dalla xlsx (foglio Nomenclatura Campi); la xlsx elenca `PR_` che nel docx non compare come lista generale prefissi. Nessuna verifica di codice reale associata a questo residuo — è solo una divergenza xlsx/docx.
+- **Impatto**: basso — ambiguità solo su `ID_`/`SK_` come categoria di prefisso.
 - **Dettagli**: [[naming-convention-agos-x]], [[progressivo-pk-e-progressivo-controparte]].
 
 ### 5. Subject area: due tassonomie di sigle non riconciliate
@@ -98,10 +101,10 @@ Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; �
 - `custom_to_date`: la guard per input a 5 cifre referenzia una variabile Jinja non definita (`col_str` invece di `column`) — va in errore invece di dare un messaggio pulito.
 - `delete_month(column='DT_OSSERVAZIONE', ...)`: il parametro `column` è accettato ma **ignorato** — la DELETE usa sempre il letterale `DT_OSSERVAZIONE`.
 - `call_proc_report_fondi_masterscale.sql`: workaround hardcoded che forza il mese di calcolo a marzo 2026, commento esplicito "togliere il replace" — hack temporaneo attivo.
-- `RISCHI_ADEMPIMENTI/ristrutturazioni_o_sql` / `ristrutturazioni_o_yml`: nome file senza punto prima dell'estensione — dbt non li riconoscerebbe come file modello.
-- File orfani: `variazioni_anagrafiche.sql.old`, `variazioni_anagrafiche_day.sql.old`.
+- ~~`RISCHI_ADEMPIMENTI/ristrutturazioni_o_sql` / `ristrutturazioni_o_yml`: nome file senza punto prima dell'estensione~~ — **risolto nel resync 2026-07-24**: i file sono ora correttamente `ristrutturazioni_o.sql`/`.yml`.
+- File orfano: `variazioni_anagrafiche_day.sql.old` (`variazioni_anagrafiche.sql.old` rimosso nel resync 2026-07-24).
 - `variazioni_anagrafiche_day.sql` si autodichiara nell'header come proposta di riscrittura non testata su dati reali — da verificare se è la versione realmente deployata.
-- `models/L0/` copre solo ADOBE, CTC, OCS (manca CRIF, presente invece in L1) — limite di questo wiki, non del progetto reale.
+- `models/L0/` copre solo ADOBE, CTC, OCS, e dal 2026-07-24 anche POSTE e SFC (manca CRIF, presente invece in L1) — limite di questo wiki, non del progetto reale.
 
 ### 11. Normalizzazione varchar vuoti OCS in L1: logica reale nel codice, assente dal doc framework L1
 
@@ -111,9 +114,19 @@ Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; �
 - **Da fare**: integrare una sezione dedicata in [[caricamento-layer-l0-l1]] (sorgente: `raw/Agos X - Caricamento layer L0-L1.docx`, va aggiornata dall'utente, non modificabile qui).
 - **Dettagli**: [[storicizzazione-l1-cluster-a-b-c]] (sezione "Normalizzazione varchar vuoti OCS in L1"), [[null-vs-placeholder-ocs]].
 
+## Gap di documentazione, non ancora un'incongruenza (resync 2026-07-24)
+
+Il resync `raw/dwh-code/` del 2026-07-24 ha introdotto tre integrazioni completamente nuove e non ancora documentate in nessuna pagina wiki — non sono incongruenze codice/skill/doc (nessuna delle tre fonti fa ancora claim su di esse), quindi non in tabella, ma vanno segnalate come gap da ingerire:
+
+- **Sorgente POSTE**: nuova `models/L0/POSTE/mailc_esiti_tgb_source.yml` + L1 `models/L1/POSTE/stg_mailc_esiti_tgb.{sql,yml}`.
+- **Sorgente SFC**: nuovi L0/L1 `documentirichiesti__c`, `praticacase__c`, `user`; modifiche a `casehistory`/`iniziativa__c` esistenti.
+- **Area L3 CAMPIONI**: nuova sotto-cartella `models/L3/CAMPIONI/` con 3 modelli (`dm_campioni_base_lgd_t`, `dm_cliente_default_m`, `dm_pratiche_default_m`), nessuno con `query_tag` (vedi voce 1).
+
+Nessuna entity/concept page menziona POSTE, SFC o CAMPIONI. Da ingerire quando l'utente vorrà approfondire quelle aree.
+
 ## Verifiche eseguite (stato attuale, nessuna incongruenza rilevata)
 
-Confermato contro `raw/dwh-code/` risincronizzato e guida sviluppo aggiornata al 2026-07-20:
+Confermato contro `raw/dwh-code/` risincronizzato al 2026-07-24 (macro `generate_models/*.sql`, `generate_jobs.ps1`, struttura OCS AIN/XAI — vedi [[macro-catalogo-dbt]] — tutte allineate alla proposta `develop/` del 2026-07-24) e guida sviluppo aggiornata al 2026-07-20:
 
 - **Pattern S1 (SCD2)**: due implementazioni coesistono ma sono equivalenti funzionalmente — `is_incremental_S1()` (macro condivisa, usata da 8+ modelli: `indirizzi_postalizzazione`, `carte_utilizzi`, tutti i `wfl_*` di ONBOARDING, `tabelle_finanziarie`, `variazioni_stato_prat`) assorbe lo stesso dedup-hash del pattern bespoke residuo (`variazioni_anagrafiche`, unico modello ancora manuale). Nessun rischio di risultati diversi. Solo gap: la doc descrive solo il pattern bespoke, non la macro condivisa (gap di documentazione, non funzionale). Vedi [[storicizzazione-l2-s1-s4]].
 - **`PROGRESSIVO_PK`→`PR_PK`**: rinominato nel codice e nella docx in modo coerente (vedi voce 4 sopra, risolta per questo campo). Vedi [[progressivo-pk-e-progressivo-controparte]].
@@ -127,6 +140,8 @@ Confermato contro `raw/dwh-code/` risincronizzato e guida sviluppo aggiornata al
 - Le aree L1 CRIF/ADOBE/CTC non sono state ispezionate in dettaglio quanto OCS.
 - La sezione L3 dei tre documenti raw è la meno dettagliata; il confronto con `basilea_core`/`monitoraggio_produzione` è solo parziale.
 - La sezione 5.5 OCS (varchar vuoti) non è stata verificata riga per riga in questo giro — delegata a [[null-vs-placeholder-ocs]].
+- Righe 2, 3, 5, 6, 7, 8, 9 e i sotto-punti residui della 10: non ri-verificate nel giro 2026-07-24 (il resync non ha toccato le aree coinvolte — cancellazioni, flag S/N, sigle subject area, dbt_artifacts, naming test, naming macro, sentinelle TIMESTAMP/DATE); ragionevole assumerle invariate ma non ricontrollate esplicitamente.
+- [[storicizzazione-l1-cluster-a-b-c]], [[naming-convention-agos-x]], [[cancellazioni-fl-deleted]]: non riletti riga per riga contro il resync 2026-07-24 in questo giro (il resync non sembra averle toccate direttamente, ma non è stata fatta una verifica puntuale) — da confermare in un giro successivo se serve certezza.
 
 ## Collegamenti
 

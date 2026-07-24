@@ -149,14 +149,14 @@ WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 - **Non usare SELECT \*** - elencare sempre tutte le colonne esplicitamente
 - **Nessun padding prima di `AS`**: `alias.COLONNA AS NOME_CAMPO`
 
-#### Placeholder OCS (varchar vuoti ' ')
+#### Placeholder OCS (niente NULL veri)
 
-Le sorgenti OCS non prevedono NULL sui campi varchar: un valore "bianco" arriva gia' da L1 come placeholder a singolo spazio `' '` (normalizzato canonicamente in L1). Quando la RT o il mapping diretto testano un campo OCS varchar:
+OCS non manda NULL veri: varchar vuoto -> `' '` (gia' normalizzato in L1), NUMBER nullo -> `0`. Su campo OCS:
 
-- **IS NULL / IS NOT NULL** su campo OCS -> usa `{{ custom_is_null('alias.<col>') }}` / `{{ custom_is_not_null('alias.<col>') }}` (coprono sia NULL vero sia `' '`), non il solo `IS NULL`.
-- **COALESCE** con un campo OCS come primo input -> aggiungi `NULLIF(alias.<col>, ' ')` prima del COALESCE, cosi' il placeholder non "vince" sul fallback.
-- **Eccezione nota**: `BACCPTES` dove `' '` ha significato applicativo proprio ("Poste Italiane") - non applicare la macro li'.
-- In caso di dubbio se un campo e' OCS o la provenienza non e' chiara, segnala `-- WARN` invece di applicare la macro alla cieca.
+- **IS NULL/IS NOT NULL** varchar -> `{{ custom_is_null('alias.<col>') }}`/`{{ custom_is_not_null('alias.<col>') }}`; NUMBER -> `NULLIF(alias.<col>, 0) IS NULL`/`IS NOT NULL`.
+- **COALESCE** con campo OCS come primo input -> avvolgilo in `NULLIF(alias.<col>, ' ')` (varchar) o `NULLIF(alias.<col>, 0)` (NUMBER).
+- Eccezione nota: `BACCPTES` varchar, dove `' '` = "Poste Italiane" -> non applicare la macro li'.
+- Se provenienza/tipo non e' chiaro (non assumere NUMBER solo dal nome campo), segnala `-- WARN` invece di applicare alla cieca.
 
 #### Cluster FL_DELETED (cancellazioni logiche)
 

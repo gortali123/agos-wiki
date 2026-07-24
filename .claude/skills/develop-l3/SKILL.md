@@ -165,20 +165,20 @@ Nelle **RT** invece le colonne sorgente si usano come scritte nella regola
 e' usata sia in un mapping diretto (convertito) sia dentro una formula (raw),
 segnala la possibile incoerenza di unita' con `-- WARN`.
 
-### Placeholder OCS (varchar vuoti ' ') su sorgenti L1
+### Placeholder OCS (niente NULL veri) su sorgenti L1
 
-Se una colonna sorgente L1 e' un campo OCS varchar (le sorgenti OCS non
-prevedono NULL, il "bianco" arriva da L1 gia' normalizzato al placeholder
-`' '`) e la RT/CHIAVI la testa con `IS NULL`/`IS NOT NULL` o come primo
-input di un `COALESCE`:
+OCS non manda NULL veri: varchar vuoto -> `' '` (gia' normalizzato in
+L1), NUMBER nullo -> `0`. Se la RT/CHIAVI testa una colonna OCS con
+`IS NULL`/`IS NOT NULL` o come primo input di un `COALESCE`:
 
-- **IS NULL / IS NOT NULL** -> usa `{{ custom_is_null('alias.<col>') }}` /
-  `{{ custom_is_not_null('alias.<col>') }}` invece del confronto nudo.
+- **IS NULL/IS NOT NULL** varchar -> `{{ custom_is_null('alias.<col>') }}`/
+  `{{ custom_is_not_null('alias.<col>') }}`; NUMBER ->
+  `NULLIF(alias.<col>, 0) IS NULL`/`IS NOT NULL`.
 - **COALESCE** con la colonna OCS come primo input -> avvolgila in
-  `NULLIF(alias.<col>, ' ')`.
-- Se la sorgente e' L2 (gia' convertita a monte) o la colonna non e'
-  chiaramente OCS, non applicare la macro: mappa/trascrivi as-is, o segnala
-  `-- WARN` in caso di dubbio sulla provenienza.
+  `NULLIF(alias.<col>, ' ')` (varchar) o `NULLIF(alias.<col>, 0)` (NUMBER).
+- Se la sorgente e' L2 (gia' convertita a monte), il tipo dato non e'
+  chiaro, o la colonna non e' chiaramente OCS, non applicare: mappa/
+  trascrivi as-is, o segnala `-- WARN` in caso di dubbio.
 
 ### Placeholder temporali nelle RT
 
