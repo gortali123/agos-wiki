@@ -74,7 +74,7 @@
 
     {% set modulo_path = modulo_l1 | default('') | lower %}
     {% if is_ocs and modulo_l0 %}
-      {% set modulo_path = modulo_path ~ '/' ~ (modulo_l0 | lower) %}
+      {% set modulo_path = (modulo_l0 | lower) ~ '/' ~ (modulo_l1 | lower) %}
     {% endif %}
 
     {% do out.append('### sorgente: ' ~ (sorgente | default('unknown') | lower)) %}
