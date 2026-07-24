@@ -130,13 +130,6 @@ foreach ($file in $sqlFiles) {
                 # Se non c'è category, ripeti la source
                 $jobKey += "_$($source.ToUpper())"
             }
-
-            # Aggiungi subCategory (sottofolder modulo) se esiste, per non collidere
-            # tra modelli omonimi in sottofolder diverse sotto la stessa category
-            if ($subCategory) {
-                $subCategoryName = $subCategory -replace '_$', ''
-                $jobKey += "_$($subCategoryName.ToUpper())"
-            }
         } else {
             # Non L1: usa source intero
             $jobKey += "$($source.ToUpper())"

@@ -169,4 +169,4 @@
 - [generate_yaml](develop/macros/generate_models/generate_yaml.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS), proposto
 - [generate_model](develop/macros/generate_models/generate_model.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS), proposto
 - [generate_snapshots](develop/macros/generate_models/generate_snapshots.sql) — join con `TECH.CFG_L0_L1_MODULO_LOOKUP` per path `cd_modulo_l1/cd_modulo` (solo OCS), proposto
-- [generate_jobs](develop/generate_jobs.ps1) — `modulo` nella description job ora usa solo la sottofolder (`cd_modulo`), non più la soprafolder; aggiunta anche al jobKey per evitare collisioni tra sottofolder omonime, proposto
+- [generate_jobs](develop/generate_jobs.ps1) — `modulo` nella description job ora usa solo la sottofolder (`cd_modulo`), non più la soprafolder; jobKey resta su `category` (soprafolder), invariato tra sottofolder diverse, proposto
