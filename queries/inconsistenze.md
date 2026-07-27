@@ -9,20 +9,20 @@ Elenco **solo delle incongruenze attualmente aperte** tra le tre fonti di verit�
 
 ## Tabella
 
-| #   | Titolo                                                                                | Codice                             | Skill | Doc                                          |
-| --- | ------------------------------------------------------------------------------------- | ---------------------------------- | ----- | -------------------------------------------- |
-| 1   | query_tag L2/L3: obbligatorio, ancora assente/errato in 21 file (CARTE + L3)          | ⚠️ CARTE (schema) + basilea_core/monitoraggio_produzione/CAMPIONI (assente) | —     | ✅ prescrive obbligo                          |
-| 2   | Cancellazioni L2: standard è pre_hook `delete_l2`, codice disallineato in più modelli | ⚠️ disallineato in più aree        | —     | ✅ prescrive pre_hook come standard           |
-| 3   | Flag: xlsx riporta S/N, errato — standard reale è Y/N                                 | ✅ Y/N pervasivo                    | —     | ⚠️ xlsx da correggere in Y/N                 |
-| 4   | Prefissi campo: `ID_`/`SK_` (docx) vs `PR_` (xlsx) non riconciliati                    | —                                   | —     | ⚠️ xlsx/docx non riconciliate su `ID_`/`SK_` |
-| 5   | Subject area: due tassonomie di sigle                                                 | ✅ solo nome esteso osservato       | —     | ⚠️ xlsx sigle mai viste nel codice           |
-| 6   | `dbt_artifacts.upload_results` documentato, non presente                              | ✅ usa log_run_results/TECH.LOG_DBT | —     | ⚠️ descrive dbt_artifacts                    |
-| 7   | Nomi test generici: doc dice `_table`, codice no                                      | ✅ nomi senza `_table`              | —     | ⚠️ doc con suffisso `_table`                 |
-| 8   | Macro documentate ma non trovate/nome diverso                                         | ✅ nomi reali diversi               | —     | ⚠️ nomi non corrispondenti                   |
-| 9   | Sentinella finestra aperta: TIMESTAMP (L2/S1) vs DATE (L3/S5)                         | ⚠️ due tipi diversi                | —     | ⚠️ non documentato come intenzionale         |
-| 10  | Bug applicativi minori (vari)                                                         | ⚠️ vedi dettaglio                  | —     | —                                            |
-| 11  | Normalizzazione OCS in L1 non documentata nel doc framework L1                        | ⚠️ presente ma non documentata     | —     | ⚠️ assente da [[caricamento-layer-l0-l1]]    |
-| 12  | NUMBER OCS: NULL arriva come 0, non documentato in doc (skill corrette il 2026-07-24)  | ⚠️ comportamento reale, non verificabile in codice locale | ✅ corretto 2026-07-24 (`develop-l2`/`develop-l3`) | ⚠️ sez. 5.5 copre solo VARCHAR |
+| #   | Titolo                                                                                | Codice                                                                      | Skill                                             | Doc                                          |
+| --- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------- | -------------------------------------------- |
+| 1   | query_tag L2/L3: obbligatorio, ancora assente/errato in 21 file (CARTE + L3)          | ⚠️ CARTE (schema) + basilea_core/monitoraggio_produzione/CAMPIONI (assente) | —                                                 | ✅ prescrive obbligo                          |
+| 2   | Cancellazioni L2: standard è pre_hook `delete_l2`, codice disallineato in più modelli | ⚠️ disallineato in più aree                                                 | —                                                 | ✅ prescrive pre_hook come standard           |
+| 3   | Flag: xlsx riporta S/N, errato — standard reale è Y/N                                 | ✅ Y/N pervasivo                                                             | —                                                 | ⚠️ xlsx da correggere in Y/N                 |
+| 4   | Prefissi campo: `ID_`/`SK_` (docx) vs `PR_` (xlsx) non riconciliati                   | —                                                                           | —                                                 | ⚠️ xlsx/docx non riconciliate su `ID_`/`SK_` |
+| 5   | Subject area: due tassonomie di sigle                                                 | ✅ solo nome esteso osservato                                                | —                                                 | ⚠️ xlsx sigle mai viste nel codice           |
+| 6   | `dbt_artifacts.upload_results` documentato, non presente                              | ✅ usa log_run_results/TECH.LOG_DBT                                          | —                                                 | ⚠️ descrive dbt_artifacts                    |
+| 7   | Nomi test generici: doc dice `_table`, codice no                                      | ✅ nomi senza `_table`                                                       | —                                                 | ⚠️ doc con suffisso `_table`                 |
+| 8   | Macro documentate ma non trovate/nome diverso                                         | ✅ nomi reali diversi                                                        | —                                                 | ⚠️ nomi non corrispondenti                   |
+| 9   | Sentinella finestra aperta: TIMESTAMP (L2/S1) vs DATE (L3/S5)                         | ⚠️ due tipi diversi                                                         | —                                                 | ⚠️ non documentato come intenzionale         |
+| 10  | Bug applicativi minori (vari)                                                         | ⚠️ vedi dettaglio                                                           | —                                                 | —                                            |
+| 11  | Normalizzazione OCS in L1 non documentata nel doc framework L1                        | ⚠️ presente ma non documentata                                              | —                                                 | ⚠️ assente da [[caricamento-layer-l0-l1]]    |
+| 12  | NUMBER OCS: NULL arriva come 0, non documentato in doc (skill corrette il 2026-07-24) | ⚠️ comportamento reale, non verificabile in codice locale                   | ✅ corretto 2026-07-24 (`develop-l2`/`develop-l3`) | ⚠️ sez. 5.5 copre solo VARCHAR               |
 
 Legenda: ✅ = coerente/conferma la riga; ⚠️ = incongruenza/gap rilevato; — = fonte non coinvolta in questa voce.
 

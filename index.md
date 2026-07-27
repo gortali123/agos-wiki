@@ -46,6 +46,10 @@
 
 - [Inconsistenze: codice vs skill vs documentazione](queries/inconsistenze.md) — tabella riassuntiva (solo voci aperte) + 10 voci di dettaglio
 - [NULL vs placeholder OCS (' ') in L2/L3](queries/null-vs-placeholder-ocs.md) — interventi da guida sviluppo: custom_is_null()/NULLIF, inventario completo
+- [Proposta testo: L1 - Raccolta dei log](queries/proposta-testo-log-l1.md) — sostituisce il capitolo obsoleto basato su dbt_artifacts con log_run_results/EVENT_LOG/viste
+- [Proposta testo: L1 - Controlli data quality (OCS)](queries/proposta-testo-test-l1-ocs.md) — corregge nomi test primary_key/try_cast (no suffisso _table)
+- [Proposta testo: L1 - Generazione modelli DBT](queries/proposta-testo-generazione-modelli-l1.md) — sezione autoconclusiva, assorbe guida sviluppo 4.1 (non la 4.2 job)
+- [Proposta testo: L1 - capitolo breve sui job dbt Cloud](queries/proposta-testo-job-l1.md) — elenco utility (generate_jobs.ps1/dbt-jobs-as-code/fetch_dbt_*), rimanda a guida sviluppo 4.2 per il dettaglio
 
 ## Develop
 
@@ -101,3 +105,7 @@
 - [generate_source/generate_yaml/generate_model/generate_snapshots (fix join + path)](develop/macros/generate_models/generate_source.sql) — **bug nel join**: la chiave di join era invertita. `CFG_L1_SCHEMA.cd_modulo` vale es. `ANA`/`XAN`; `CFG_L0_L1_MODULO_LOOKUP` ha `cd_modulo`=`ANA`/`XAN` (stessa chiave) e `cd_modulo_l1`=`ANA` per entrambe le righe (valore aggregato). Il join corretto è `mlk.cd_modulo = s.cd_modulo` (non `mlk.cd_modulo_l1 = s.cd_modulo`), soprafolder = `cd_modulo_l1` (dalla lookup, comune), sottofolder = `cd_modulo` grezzo (quello che distingue) → struttura reale `OCS/ANA/{ANA,XAN}`. La versione già applicata upstream nel resync aveva sia il join sia l'ordine del path sbagliati — **già live e da correggere con priorità**. Fix nelle 4 macro in `develop/macros/generate_models/`, proposto
 - [generate_models](develop/generate_models.ps1) — bug introdotto dal path OCS a due livelli: `Resolve-Mod` (escape del nome riservato Windows `CON`) veniva applicato all'intera stringa `modulo`, che ora può essere `"cd_modulo_l1/cd_modulo"` — un singolo segmento `CON` non veniva più intercettato; fix: split su `/` e `Resolve-Mod` applicato per segmento, proposto
 - [plan-jobs](develop/plan-jobs.ps1) — output di `dbt-jobs-as-code.exe plan` ora scritto anche su file di default `plan_output.txt` (oltre a stdout), proposto
+- [custom_to_date](develop/macros/dtype_conversion/custom_to_date.sql) — fix variabile non definita `col_str` nel messaggio d'errore (era `column`), proposto
+- [delete_month](develop/macros/materialization/delete_month.sql) — fix parametro `column` ignorato nella DELETE (hardcoded `DT_OSSERVAZIONE`), proposto
+- [get_dt_settimana](develop/macros/materialization/get_dt_settimana.sql) — nuova macro, analoga a `get_dt_osservazione` ma su base settimanale (venerdì precedente invece di fine mese precedente), proposta
+- [delete_week](develop/macros/materialization/delete_week.sql) — nuova macro, analoga a `delete_month` ma su `DT_ACCETTAZIONE`/`get_dt_settimana()`, proposta

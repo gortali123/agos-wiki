@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "queries/inconsistenze.md",
+                "file": "queries/proposta-testo-test-l1-ocs.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "inconsistenze"
+              "title": "proposta-testo-test-l1-ocs"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 263.50909423828125
+    "width": 334.50909423828125
   },
   "right": {
     "id": "d10b8989480e73a0",
@@ -185,19 +185,23 @@
   },
   "active": "3b79670d107d39b6",
   "lastOpenFiles": [
-    "develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql.tmp.22044.88dbeacb14b0",
-    "log.md.tmp.22044.e088c610ae55",
-    "entities/l2-anagr-controparte.md.tmp.22044.1d5f5177425d",
-    "develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.yml.tmp.22044.5e062ba33485",
-    "develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql.tmp.22044.80e49cedd51b",
-    "develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql.tmp.22044.781aed37bb92",
-    "develop/models/L2/ANAGR_CONTROPARTE/sedsd00oe",
-    "develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql.tmp.22044.2c1d9b9bff9f",
-    "develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql.tmp.22044.7a2a7982c1be",
-    "log.md.tmp.22044.f3a11ae5ebb1",
-    "entities/l2-anagr-controparte.md.tmp.22044.ced5240e97b3",
-    "queries/null-vs-placeholder-ocs.md",
+    "log.md.tmp.3492.c6ec6cf4a1bf",
+    "index.md.tmp.3492.69b7781f9d85",
+    "develop/macros/materialization/delete_week.sql",
+    "develop/macros/materialization/delete_week.sql.tmp.3492.80773439a1fd",
+    "develop/macros/materialization/get_dt_settimana.sql",
+    "develop/macros/materialization/get_dt_settimana.sql.tmp.3492.381ad8a05d3e",
+    "queries/proposta-testo-log-l1.md",
+    "queries/proposta-testo-job-l1.md",
+    "queries/proposta-testo-job-l1.md.tmp.3492.0ac3ac6c6aba",
+    "queries/proposta-testo-job-l1.md.tmp.3492.ef6bd7899296",
+    "queries/proposta-testo-job-l1.md.tmp.3492.41930a238606",
+    "queries/proposta-testo-job-l1.md.tmp.3492.bfb9822da812",
+    "log.md.tmp.3492.b6bac0534e88",
+    "queries/proposta-testo-generazione-modelli-l1.md",
+    "queries/proposta-testo-test-l1-ocs.md",
     "queries/inconsistenze.md",
+    "queries/null-vs-placeholder-ocs.md",
     "sources/cfg-l1-schema-e-cluster-sto.md",
     "CLAUDE.md",
     "queries/inconsistenze-doc-vs-codice.md",
@@ -217,10 +221,6 @@
     "entities/layer-l2.md",
     "entities/layer-l1.md",
     "entities/layer-l0.md",
-    "entities/repo-dwh-x-dbt.md",
-    "concepts/cobol-parsing.md",
-    "concepts/data-masking-agos-x.md",
-    "concepts/progressivo-pk-e-progressivo-controparte.md",
     "Untitled 2.canvas",
     "Untitled 1.canvas",
     "Untitled.canvas"

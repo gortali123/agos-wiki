@@ -49,7 +49,7 @@ Suite di codegen che legge le tabelle di configurazione `TECH.CFG_L1_SCHEMA`, `T
 
 Questi script sono la controparte DBT-macro degli script PowerShell `generate_models.ps1` descritti in [[guida-sviluppo]] (lo script PowerShell chiama queste macro).
 
-**Proposta in develop (2026-07-24, non ancora portata upstream)**: per le sole tabelle OCS, `generate_source`/`generate_yaml`/`generate_model`/`generate_snapshots` joinano anche `TECH.CFG_L0_L1_MODULO_LOOKUP` (su `cd_modulo_l1 = s.cd_modulo`) per recuperare `cd_modulo` e generare i file in una sottocartella a due livelli `OCS/<cd_modulo_l1>/<cd_modulo>` invece del solo `OCS/<cd_modulo_l1>` attuale — vedi `develop/macros/generate_models/`.
+**Applicato upstream (verificato 2026-07-28 dopo resync)**: per le sole tabelle OCS, `generate_source`/`generate_yaml` joinano anche `TECH.CFG_L0_L1_MODULO_LOOKUP` (`mlk.cd_modulo = s.cd_modulo`) per recuperare `cd_modulo_l1` e generare i file in una sottocartella a due livelli `OCS/<cd_modulo_l1>/<cd_modulo>` invece del solo `OCS/<cd_modulo_l1>`. Era la proposta `develop/` del 2026-07-24, ora byte-identica al codice risincronizzato.
 
 ## Data masking (`macros/`)
 
