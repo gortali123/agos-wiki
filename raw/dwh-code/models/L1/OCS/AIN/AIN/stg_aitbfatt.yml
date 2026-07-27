@@ -22,13 +22,7 @@ models:
         data_type: TIMESTAMP_NTZ
       - name: aitbatt_attributo
         data_type: VARCHAR(2)
-      - name: aitbatt_attributo
-        data_type: VARCHAR(2)
       - name: aitbatt_descrizione
         data_type: VARCHAR(30)
-      - name: aitbatt_descrizione
-        data_type: VARCHAR(30)
-      - name: rowid
-        data_type: NUMBER(38, 0)
       - name: rowid
         data_type: NUMBER(38, 0)

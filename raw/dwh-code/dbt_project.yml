@@ -65,6 +65,10 @@ models:
         +meta: {source: "CRIF"}
         +schema: L1_E_CRF
         +tags: ["crif","noocs"]
+      CRUSCOTTI:
+        +meta: {source: "CRUSCOTTI"}
+        +schema: L1_E_CRS
+        +tags: ["crs","noocs"]
       CTC:
         +meta: {source: "CTC"}
         +schema: L1_E_CTC
@@ -311,6 +315,11 @@ models:
         +schema: L2_SWORD
         +meta: {subject_area: "SWORD"}
         +tags: ["SWORD"]
+      PAGAMENTI_CONTABILITA:
+        +schema: L2_PAGAMENTI_CONTABILITA
+        +meta: {subject_area: "PAGAMENTI_CONTABILITA"}
+        +tags: ["PAGAMENTI_CONTABILITA"]
+        
 
     L3:
       +meta: {layer: "L3"}

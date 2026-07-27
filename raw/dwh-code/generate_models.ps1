@@ -58,12 +58,16 @@ function Resolve-Mod([string]$mod) {
 }
 
 # Calcola la directory di output in base a sorgente e modulo.
-# OCS: base/OCS/{modulo}   — struttura per moduli
+# OCS: base/OCS/{cd_modulo_l1}/{cd_modulo}   — struttura a due livelli quando il modulo e' un path (con '/')
 # altri: base/{SORGENTE}   — piatta, senza modulo
 function Get-OutputDir([string]$base, [string]$sorgente, [string]$modulo) {
     $s = if ([string]::IsNullOrEmpty($sorgente)) { 'UNKNOWN' } else { $sorgente.ToUpper() }
     if ($s -eq 'OCS') {
-        return "$base/$s/$(Resolve-Mod $modulo | ForEach-Object { $_.ToUpper() })"
+        # $modulo puo' contenere piu' segmenti separati da '/' (cd_modulo_l1/cd_modulo):
+        # Resolve-Mod va applicato a ciascun segmento singolarmente, non all'intera stringa,
+        # altrimenti l'escape del nome riservato Windows 'CON' non scatta piu' se non e' l'unico segmento.
+        $parts = $modulo -split '/' | ForEach-Object { (Resolve-Mod $_).ToUpper() }
+        return "$base/$s/$($parts -join '/')"
     }
     return "$base/$s"
 }

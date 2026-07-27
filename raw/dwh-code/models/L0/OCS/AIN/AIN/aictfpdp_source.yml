@@ -9,5 +9,5 @@ sources:
           - try_cast
           - primary_key:
               arguments:
-                pk_columns: [aictpdp_ide, aictpdp_ide]
+                pk_columns: [aictpdp_ide]
       - name: aictfpdp_deleted

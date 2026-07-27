@@ -1,0 +1,56 @@
+version: 2
+models:
+  - name: incassi_testata_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_PAGAMENTI_CONTABILITA", "entita": "INCASSI_TESTATA_M"}'
+      pre_hook:
+        - "{{ delete_month() }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_EVENTO_INCASSO, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_EVENTO_INCASSO
+        data_type: NUMBER(11)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: DT_REGISTRAZIONE
+        data_type: DATE
+      - name: DT_VALUTA
+        data_type: DATE
+      - name: NM_MESE_ANNO_RENDICONTAZIONE
+        data_type: NUMBER(6)
+      - name: EU_INCASSO
+        data_type: NUMBER(13,2)
+      - name: FL_STORNO
+        data_type: VARCHAR(1)
+      - name: CD_EVENTO_INCASSO_STORNATO
+        data_type: NUMBER(11)
+      - name: FL_STORNATO
+        data_type: VARCHAR(1)
+      - name: DT_STORNATO
+        data_type: DATE
+      - name: CD_ORIGINE
+        data_type: VARCHAR(3)
+      - name: TP_FORMA_PAGAMENTO
+        data_type: VARCHAR(2)
+      - name: DS_FORMA_PAGAMENTO
+        data_type: VARCHAR(30)
+      - name: TP_MOVIMENTO
+        data_type: VARCHAR(30)
+      - name: CD_CAUSALE
+        data_type: NUMBER(3)
+      - name: CD_FILE_DETTAGLIO
+        data_type: VARCHAR(4)
+      - name: CD_FUNZIONE
+        data_type: VARCHAR(12)
+      - name: CD_OPERAZIONE
+        data_type: VARCHAR(12)
+      - name: FL_SEZIONALE
+        data_type: VARCHAR(1)

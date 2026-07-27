@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: configurazione_banca_dati
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"CRUSCOTTI", "schema":"L1_E_CRUSCOTTI", "archivio":"CONFIGURAZIONE_BANCA_DATI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [codice_banca_dati_pk]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: codice_banca_dati_pk
+        data_type: VARCHAR(2)
+      - name: descrizione_banca_dati
+        data_type: VARCHAR(30)
+      - name: numero_sequenza_visualizzazione
+        data_type: NUMBER(38, 0)
+      - name: indicatore_gestione
+        data_type: VARCHAR(1)
+      - name: indicatore_gestione_blocco
+        data_type: VARCHAR(1)
+      - name: indicatore_gestione_sblocco
+        data_type: VARCHAR(1)
+      - name: id_configurazione_blocco_fk
+        data_type: NUMBER(38, 0)
+      - name: id_configurazione_sblocco_fk
+        data_type: NUMBER(38, 0)
+      - name: codice_utente_creazione
+        data_type: VARCHAR(255)
+      - name: timestamp_creazione
+        data_type: TIMESTAMP_NTZ
+      - name: codice_utente_modifica
+        data_type: VARCHAR(255)
+      - name: timestamp_modifica
+        data_type: TIMESTAMP_NTZ

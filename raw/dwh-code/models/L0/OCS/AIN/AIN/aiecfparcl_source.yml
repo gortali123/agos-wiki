@@ -9,5 +9,5 @@ sources:
           - try_cast
           - primary_key:
               arguments:
-                pk_columns: [aiparcl_pratica, aiparcl_pratica, aiparcl_progressivo, aiparcl_progressivo, aiparcl_prog_var, aiparcl_prog_var]
+                pk_columns: [aiparcl_pratica, aiparcl_progressivo, aiparcl_prog_var]
       - name: aiecfparcl_deleted

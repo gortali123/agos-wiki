@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: configurazione_blocco_banca_dati
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"CRUSCOTTI", "schema":"L1_E_CRUSCOTTI", "archivio":"CONFIGURAZIONE_BLOCCO_BANCA_DATI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id_configurazione_blocco_pk]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id_configurazione_blocco_pk
+        data_type: NUMBER(38, 0)
+      - name: codice_banca_dati
+        data_type: VARCHAR(2)
+      - name: indicatore_blocco_auto
+        data_type: VARCHAR(1)
+      - name: numero_minuti
+        data_type: NUMBER(38, 0)
+      - name: numero_max_richieste_errore
+        data_type: NUMBER(38, 0)
+      - name: numero_max_richieste_attive
+        data_type: NUMBER(38, 0)
+      - name: denominazione_email_alert
+        data_type: VARCHAR(255)
+      - name: codice_utente_creazione
+        data_type: VARCHAR(255)
+      - name: timestamp_creazione
+        data_type: TIMESTAMP_NTZ

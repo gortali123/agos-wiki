@@ -1,0 +1,38 @@
+version: 2
+models:
+  - name: incassi_dettaglio
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_PAGAMENTI_CONTABILITA", "entita": "INCASSI_DETTAGLIO"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_EVENTO_INCASSO, PR_DETT_INCASSO]
+    columns:
+      - name: CD_EVENTO_INCASSO
+        data_type: NUMBER(11)
+      - name: PR_DETT_INCASSO
+        data_type: NUMBER(9)
+      - name: CD_EVENTO_DETT
+        data_type: NUMBER(11)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: NM_PARTITA
+        data_type: NUMBER(5)
+      - name: NM_RIGA
+        data_type: NUMBER(3)
+      - name: TP_PARTITA
+        data_type: VARCHAR(2)
+      - name: DS_PARTITA
+        data_type: VARCHAR(30)
+      - name: EU_INCASSO
+        data_type: NUMBER(13,2)
+      - name: CD_CAUSALE
+        data_type: NUMBER(3)
+      - name: DS_CAUSALE
+        data_type: VARCHAR(30)
+      - name: FL_SEZIONALE
+        data_type: VARCHAR(1)
