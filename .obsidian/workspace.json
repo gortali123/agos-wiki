@@ -185,6 +185,8 @@
   },
   "active": "3b79670d107d39b6",
   "lastOpenFiles": [
+    "log.md.tmp.3492.6babb7de07eb",
+    "develop/macros/generate_schema_name.sql.tmp.3492.77ca8b389045",
     "log.md.tmp.3492.6121ae99737e",
     "index.md.tmp.3492.b9c918ce29d3",
     "index.md.tmp.3492.195af66d0596",
@@ -194,8 +196,6 @@
     "develop/models/L1/POSTE/mailc_esiti_tgb.sql.tmp.3492.f73bfcc09be2",
     "log.md.tmp.3492.59cfbd080140",
     "index.md.tmp.3492.85ebf3c0d2b0",
-    "develop/macros/generate_schema_name.sql",
-    "develop/macros/generate_schema_name.sql.tmp.3492.aa96ceb4f119",
     "queries/proposta-testo-log-l1.md",
     "queries/proposta-testo-job-l1.md",
     "queries/proposta-testo-generazione-modelli-l1.md",
