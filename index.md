@@ -109,3 +109,4 @@
 - [delete_month](develop/macros/materialization/delete_month.sql) — fix parametro `column` ignorato nella DELETE (hardcoded `DT_OSSERVAZIONE`), proposto
 - [get_dt_settimana](develop/macros/materialization/get_dt_settimana.sql) — nuova macro, analoga a `get_dt_osservazione` ma su base settimanale (venerdì precedente invece di fine mese precedente), proposta
 - [delete_week](develop/macros/materialization/delete_week.sql) — nuova macro, analoga a `delete_month` ma su `DT_ACCETTAZIONE`/`get_dt_settimana()`, proposta
+- [mailc_esiti_tgb (POSTE)](develop/models/L1/POSTE/mailc_esiti_tgb.yml) — MAILC_ESITI_TGB riclassificato da cluster C (ephemeral+snapshot) a cluster D (incremental append + `delete_week`), rinominato da `stg_mailc_esiti_tgb`; proposto, snapshot/stg vecchi da rimuovere upstream
