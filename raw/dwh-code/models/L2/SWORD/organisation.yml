@@ -1,0 +1,45 @@
+version: 2
+models:
+  - name: organisation
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "ORGANISATION"}'
+    constraints:
+      - type: primary_key
+        columns: [CD_CLIENTE]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: TP_ORGANISATION
+        data_type: VARCHAR(10)
+      - name: TP_DEALER
+        data_type: VARCHAR(6)
+      - name: DS_CONVENZIONATO
+        data_type: VARCHAR(53)
+      - name: CD_REGIONE
+        data_type: VARCHAR(7)
+      - name: CD_PARTITA_IVA
+        data_type: VARCHAR(12)
+      - name: CD_RISCHIO_GLOBAL
+        data_type: VARCHAR(100)
+      - name: CD_RISCHIO_LOCLE
+        data_type: VARCHAR(3)
+      - name: CD_RISCHIO_VALTZ
+        data_type: VARCHAR(4)
+      - name: IN_STATUS_CONVTO
+        data_type: VARCHAR(2)
+      - name: FL_NON_ACCRUAL
+        data_type: VARCHAR(2)
+      - name: CD_SALES_AREA
+        data_type: NUMBER(3,0)
+      - name: CD_ORGANISATION_STATUS
+        data_type: VARCHAR(6)
+      - name: CD_ORGANISATION_LINKS
+        data_type: VARCHAR(1)
+      - name: DT_ORGANISATION_ACTIVATION
+        data_type: VARCHAR(10)
+      - name: DT_ATTIVAZIONE
+        data_type: DATE

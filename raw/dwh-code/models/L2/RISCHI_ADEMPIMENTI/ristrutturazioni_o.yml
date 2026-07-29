@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: ristrutturazioni_o
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [TP_RISTRUTTURAZIONE]
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "RISTRUTTURAZIONI_O"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_RISTRUTTURAZIONE]
+    columns:
+      - name: TP_RISTRUTTURAZIONE
+        data_type: VARCHAR(1)
+      - name: DS_RISTRUTTURAZIONE
+        data_type: VARCHAR(35)
+      - name: CD_F_TYP
+        data_type: VARCHAR(2)
+

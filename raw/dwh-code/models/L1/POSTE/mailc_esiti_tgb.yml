@@ -1,12 +1,19 @@
 version: 2
 
 models:
-  - name: stg_mailc_esiti_tgb
+  - name: mailc_esiti_tgb
     config:
-      materialized: ephemeral
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook:
+        - "{{ delete_week('DT_ACCETTAZIONE', get_dt_accettazione()) }}"
       meta:
-        cluster: ["C"]
+        cluster: ["D"]
       query_tag: '{"app":"DBT", "sorgente":"POSTE", "schema":"L1_E_POSTE", "archivio":"MAILC_ESITI_TGB"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id_postalizzazione, dt_accettazione]
     columns:
       - name: ts_riferimento
         data_type: TIMESTAMP_NTZ

@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: premi_assicurativi
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      unique_key: ['TP_SORGENTE', 'CD_TRANSAZIONE', 'CD_PREMIO']
+      query_tag: '{"app": "DBT", "schema": "L2_ASSICURAZIONI", "entita": "PREMI_ASSICURATIVI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_SORGENTE, CD_TRANSAZIONE, CD_PREMIO]
+    columns:
+      - name: TP_SORGENTE
+        data_type: VARCHAR(3)
+      - name: CD_TRANSAZIONE
+        data_type: NUMBER(11,0)
+      - name: CD_PREMIO
+        data_type: NUMBER(11,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: VARCHAR(250)
+      - name: CD_SERVIZIO
+        data_type: NUMBER(11,0)
+      - name: TP_OPERAZIONE
+        data_type: VARCHAR(11)
+      - name: TP_PAGAMENTO
+        data_type: VARCHAR(5)
+      - name: DT_PRESENTAZIONE
+        data_type: DATE
+      - name: DT_EFFETTO
+        data_type: DATE
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: DT_VALUTA
+        data_type: DATE
+      - name: DT_OPERAZIONE
+        data_type: DATE
+      - name: CD_STATO_TRANSAZIONE
+        data_type: NUMBER(11,0)
+      - name: DS_STATO_TRANSAZIONE
+        data_type: VARCHAR(15)
+      - name: EU_IMP_OPERAZIONE_PREM_NETTO
+        data_type: NUMBER(38,2)
+      - name: EU_PREMIO_ADDZL
+        data_type: NUMBER(38,2)
+      - name: EU_PREMIO_IMPONIBILE
+        data_type: NUMBER(38,2)
+      - name: EU_PREMIO_TASSE
+        data_type: NUMBER(38,2)
+      - name: EU_IMP_OPERAZIONE_PREM_LORDO
+        data_type: NUMBER(38,2)
+      - name: EU_PREMIO_COMMISSIONI
+        data_type: NUMBER(38,2)
+      - name: FL_PROVVIGIONE_ATTIVA
+        data_type: VARCHAR(1)
+      - name: DT_PROVVIGIONE_ATTIVA
+        data_type: DATE
+      - name: EU_PROVVIGIONE_ATTIVA
+        data_type: NUMBER(38,2)
+      - name: PC_PROVVIGIONE_ATTIVA
+        data_type: NUMBER(38,10)
+      - name: FL_PROVVIGIONE_PASSIVA
+        data_type: VARCHAR(1)
+      - name: DT_PROVVIGIONE_PASSIVA
+        data_type: DATE
+      - name: EU_PROVVIGIONE_PASSIVA
+        data_type: NUMBER(38,2)
+      - name: PC_PROVVIGIONE_PASSIVA
+        data_type: NUMBER(38,10)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

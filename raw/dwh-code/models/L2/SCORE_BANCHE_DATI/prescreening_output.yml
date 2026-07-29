@@ -1,0 +1,49 @@
+version: 2
+models:
+  - name: prescreening_output
+    description: >
+      Entita' L2 PRESCREENING_OUTPUT (SA SCORING), grana per richiesta.
+      Sorgente: landing XML CDE, payload StrategyOneResponse, ProcessCode = 'PRESCREENING'.
+      Estrazione via macro get_xml_path.
+      ASSUNZIONI da validare: (1) nome reale della landing CDE = ref('cde');
+      (2) filtro riga su ProcessCode = 'PRESCREENING' (xsd dichiara fixed="PRESCREENINGX":
+      verificare il valore reale nel payload); (3) storicizzazione S2 con TS_INSERIMENTO
+      valorizzato dal campo TS_RIFERIMENTO della L1 (non LASTMODIFIEDDATA), incrementale
+      append filtrato su TS_RIFERIMENTO.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "PRESCREENING_OUTPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: CD_PROCESSVERSION
+        data_type: NUMBER(38,0)
+      - name: CD_LAYOUTVERSION
+        data_type: NUMBER(38,0)
+      - name: CD_INTERROGAZIONE
+        data_type: NUMBER(16,0)
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_PROCEDURA
+        data_type: VARCHAR
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: CD_ESITO_CHIAMATA
+        data_type: VARCHAR
+      - name: CD_ESITO
+        data_type: VARCHAR
+      - name: DS_ESITO
+        data_type: VARCHAR
+      - name: DS_ESITO_MESSAGGIO
+        data_type: VARCHAR
+      - name: CD_POTERE_FIRMA
+        data_type: VARCHAR

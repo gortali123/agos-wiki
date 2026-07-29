@@ -1,8 +1,8 @@
 {% macro custom_to_date(column, zero='null') %}
 
-{% if (column | string | length) == 5 %}    
-{{ exceptions.raise_compiler_error( "to_date: column value '" ~ col_str ~ "' has length 5, which is not a supported date format (expected YYYYMMDD or YYYYMM)."    ) }}
-{% endif %} 
+{% if (column | string | length) == 5 %}
+{{ exceptions.raise_compiler_error( "to_date: column value '" ~ column ~ "' has length 5, which is not a supported date format (expected YYYYMMDD or YYYYMM)."    ) }}
+{% endif %}
 
 CASE
     WHEN CAST({{ column }} AS VARCHAR) = '99999999'

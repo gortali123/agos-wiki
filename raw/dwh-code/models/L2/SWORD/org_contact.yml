@@ -1,0 +1,51 @@
+version: 2
+models:
+  - name: org_contact
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "ORG_CONTACT"}'
+    constraints:
+      - type: primary_key
+        columns: [CD_CLIENTE, CD_GARANTE]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_GARANTE
+        data_type: VARCHAR
+      - name: CD_CONTACT_TITLE
+        data_type: VARCHAR
+      - name: TP_CONTACT
+        data_type: VARCHAR
+      - name: DS_EMAIL
+        data_type: VARCHAR(50)
+      - name: DS_FAX
+        data_type: VARCHAR(1)
+      - name: DS_FIRST_NAME
+        data_type: VARCHAR
+      - name: DS_LAST_NAME
+        data_type: VARCHAR
+      - name: DS_PHONE
+        data_type: VARCHAR(15)
+      - name: DS_POSITION
+        data_type: VARCHAR
+      - name: DS_ADDRESS_LINE_4
+        data_type: VARCHAR
+      - name: CD_COUNTRY
+        data_type: VARCHAR(30)
+      - name: DS_LOCALITY
+        data_type: VARCHAR(1)
+      - name: CD_LOCATION
+        data_type: VARCHAR(1)
+      - name: CD_LOCATION_REFERENCE
+        data_type: VARCHAR(30)
+      - name: CD_POSTCODE
+        data_type: NUMBER(5,0)
+      - name: DS_POST_TOWN
+        data_type: VARCHAR
+      - name: CD_PROPERTY_NUMBER
+        data_type: VARCHAR(20)
+      - name: DS_STREET
+        data_type: VARCHAR

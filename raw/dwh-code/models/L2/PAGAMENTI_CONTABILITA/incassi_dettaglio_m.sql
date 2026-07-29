@@ -10,7 +10,6 @@ SELECT
     d.OXINREPD_NUM_RIGA AS NM_RIGA,
     d.OXINREPD_TIPO_PARTITA AS TP_PARTITA,
     d.OXINREPD_DES_PARTITA AS DS_PARTITA,
-    -- FIX: data model aveva CAST malformato; applico la regola standard EU_ (divisione /100, NUMBER(13,2))
     {{ custom_to_decimal('d.OXINREPD_IMPORTO', 13, 2) }} AS EU_INCASSO,
     d.OXINREPD_CAUSALE AS CD_CAUSALE,
     d.OXINREPD_DES_CAUSALE AS DS_CAUSALE,

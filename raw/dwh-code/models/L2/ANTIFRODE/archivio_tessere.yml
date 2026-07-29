@@ -1,0 +1,66 @@
+version: 2
+models:
+  - name: archivio_tessere
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_ANTIFRODE", "entita": "ARCHIVIO_TESSERE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, CD_PROGRESSIVO, TS_INSERIMENTO]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PROGRESSIVO
+        data_type: NUMBER(13)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PAN
+        data_type: NUMBER(16)
+      - name: CD_SEQ_NUM
+        data_type: NUMBER
+      - name: CD_CIRCUITO
+        data_type: VARCHAR(3)
+      - name: CD_ORIGINE
+        data_type: VARCHAR(10)
+      - name: DT_INIZIO_VALIDITA
+        data_type: DATE
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: TS_ATTIVAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_PROVIDER
+        data_type: VARCHAR(25)
+      - name: CD_STATO
+        data_type: VARCHAR(3)
+      - name: PR_PAN_PROVENIENZA
+        data_type: NUMBER(31)
+      - name: DS_INTESTAZIONE
+        data_type: VARCHAR
+      - name: NM_TENTATIVI_PIN
+        data_type: NUMBER(2)
+      - name: TP_TESSERA
+        data_type: VARCHAR(1)
+      - name: TS_INSERIMENTO_OPERATORE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_OPERATORE
+        data_type: VARCHAR(10)
+      - name: CD_CONTACT_LESS
+        data_type: VARCHAR(1)
+      - name: DT_ATTIV_NFC
+        data_type: DATE
+      - name: DT_INZIO_BLOCCO_AUTORIZ
+        data_type: DATE
+      - name: CD_BLOCCO
+        data_type: VARCHAR(2)
+      - name: DT_INIZIO_BLOCCO
+        data_type: DATE
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

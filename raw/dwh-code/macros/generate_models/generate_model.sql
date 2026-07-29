@@ -116,6 +116,9 @@
       {% do out.append('  *') %}
     {% endif %}
     {% do out.append('from {{ source(' ~ "'source_l0'," ~ "'" ~ table ~ "'" ~ ') }}') %}
+    {% if cluster is not none and (cluster | upper) == 'D' %}
+    {% do out.append("where {{ get_dt_osservazione('ts_riferimento') }} = {{ get_dt_osservazione() }}") %}
+    {% endif %}
     {% do out.append('---') %}
     {% do out.append('') %}
   {% endfor %}

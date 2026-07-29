@@ -11,7 +11,7 @@
 {% macro delete_month(column='DT_OSSERVAZIONE', date_expr=get_dt_osservazione()) %}
 {% if execute %}
   {% if adapter.get_relation(this.database, this.schema, this.identifier) %}
-    DELETE FROM {{ this }} WHERE DT_OSSERVAZIONE = {{ date_expr }};
+    DELETE FROM {{ this }} WHERE {{ column }} = {{ date_expr }};
   {% endif %}
 {% endif %}
 {% endmacro %}

@@ -1,0 +1,37 @@
+version: 2
+models:
+  - name: loan_chargeprof
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "LOAN_CHARGEPROF"}'
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO, DT_START]
+    columns:
+      - name: DT_RIFERIMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
+      - name: CD_PRATICA
+        data_type: VARCHAR(17)
+      - name: CD_PIANO
+        data_type: VARCHAR(30)
+      - name: CD_CERTIFICATO
+        data_type: NUMBER(8,0)
+      - name: CD_PAGATORE
+        data_type: VARCHAR(6)
+      - name: TP_INTERESSE_BASE
+        data_type: VARCHAR(7)
+      - name: PC_TASSO_BSE
+        data_type: NUMBER(5,4)
+      - name: NM_SPREAD_PIAN
+        data_type: NUMBER(5,4)
+      - name: NM_SPREAD_DLR
+        data_type: NUMBER(3,2)
+      - name: TP_CALCOLO
+        data_type: VARCHAR(7)
+      - name: DT_START
+        data_type: DATE
+      - name: DT_END
+        data_type: DATE

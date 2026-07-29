@@ -1,0 +1,77 @@
+version: 2
+models:
+  - name: accettazione_output
+    description: >
+      Entita' L2 ACCETTAZIONE_OUTPUT (SA SCORING), grana per Applicant.
+      Sorgente: StrategyOneResponse, ProcessCode='TARGATO'. Campi da Header, Richiesta/Variables e APPLICANT/Variables.
+      NOTA: CD_OPERATION non presente nel tracciato Response -> NULL con WARN.
+      ASSUNZIONI: landing=ref('cde'); ProcessCode 'TARGATO'; TS_INSERIMENTO=TS_RIFERIMENTO L1.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "ACCETTAZIONE_OUTPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_RUOLO, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR(1)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: CD_PROCESSVERSION
+        data_type: VARCHAR
+      - name: CD_LAYOUTVERSION
+        data_type: VARCHAR
+      - name: CD_INTERROGAZIONE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_PRATICA
+        data_type: VARCHAR
+      - name: CD_DECISIONE_FINALE
+        data_type: VARCHAR
+      - name: EU_RATA_MAX_SOSTENIBILE
+        data_type: NUMBER(16,2)
+      - name: CD_CONTESTO
+        data_type: VARCHAR
+      - name: CD_OPERATION
+        data_type: VARCHAR
+      - name: CD_ANAGRAFICA
+        data_type: NUMBER(16,0)
+      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+        data_type: NUMBER(16,0)
+      - name: EU_DBR_TOT_ENTRATE_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_TOT_USCITE_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_DBR_RATA_PRATICA
+        data_type: NUMBER(16,2)
+      - name: CD_POTERE_FIRMA
+        data_type: VARCHAR
+      - name: TP_SCIPAFI
+        data_type: VARCHAR
+      - name: FL_IN_ORARIO_SERVIZIO
+        data_type: VARCHAR(1)
+      - name: DS_MESSAGGIO
+        data_type: VARCHAR
+      - name: NM_ETA_CLIENTE_TERMINE_FINANZIAMENTO
+        data_type: NUMBER(16,0)
+      - name: NM_ETA
+        data_type: NUMBER(16,0)
+      - name: NM_ANZIANITA_LAVORATIVA
+        data_type: NUMBER(16,0)
+      - name: CD_ESITO
+        data_type: VARCHAR
+      - name: CD_FASCIA_RBP
+        data_type: VARCHAR
+      - name: FL_PERMETTI_VENDITA_CONGIUNTA
+        data_type: VARCHAR(1)
+      - name: EU_FIDO_MASSIMO_SCORING
+        data_type: NUMBER(16,2)
+      - name: CD_VALUTAZIONE_PRT
+        data_type: VARCHAR

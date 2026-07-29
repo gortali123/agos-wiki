@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: wfl_fase
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_ISTANZA, CD_FASE, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_ONBOARDING", "entita": "WFL_FASE"}'
+      pre_hook:
+        - "{{ delete_l2('wfisffa', ['CD_ISTANZA', 'CD_FASE'], ['WFISFA_ISTANZA', 'WFISFA_FASE']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_ISTANZA, CD_FASE, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_ISTANZA
+        data_type: NUMBER(12,0)
+      - name: CD_FASE
+        data_type: VARCHAR(10)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_WORKFLOW
+        data_type: VARCHAR(10)
+      - name: CD_STATO_FASE
+        data_type: VARCHAR(1)
+      - name: DS_STATO_FASE
+        data_type: VARCHAR(30)
+      - name: TS_APERTURA_FASE
+        data_type: TIMESTAMP_NTZ
+      - name: TS_CHIUSURA_FASE
+        data_type: TIMESTAMP_NTZ
+      - name: FL_RILAVORATA
+        data_type: VARCHAR(1)
+      - name: FL_RIAPRIBILE
+        data_type: VARCHAR(1)
+      - name: CD_FASE_PREC
+        data_type: VARCHAR(10)
+      - name: CD_FASE_PREC_2
+        data_type: VARCHAR(10)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

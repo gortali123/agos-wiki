@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: indice_rischio_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      unique_key: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+      pre_hook: "{{ delete_month() }}"
+      query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "INDICE_RISCHIO_M"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: DT_SIR_3
+        data_type: DATE
+      - name: DT_SIR_6
+        data_type: DATE
+      - name: DT_SIR_9
+        data_type: DATE
+      - name: DT_SIR_12
+        data_type: DATE
+      - name: DT_SIR_18
+        data_type: DATE
+      - name: DT_SIR_24
+        data_type: DATE
+      - name: DT_SIR_30
+        data_type: DATE
+      - name: DT_SIR_36
+        data_type: DATE
+      - name: FL_RATE_IMPAG_3
+        data_type: VARCHAR(1)
+      - name: FL_RATE_IMPAG_6
+        data_type: VARCHAR(1)
+      - name: FL_RATE_IMPAG_9
+        data_type: VARCHAR(1)
+      - name: FL_RATE_IMPAG_12
+        data_type: VARCHAR(1)
+      - name: FL_RATE_IMPAG_18
+        data_type: VARCHAR(1)
+      - name: FL_RATE_IMPAG_24
+        data_type: VARCHAR(1)
+      - name: FL_RATE_IMPAG_30
+        data_type: VARCHAR(1)
+      - name: FL_RATE_IMPAG_36
+        data_type: VARCHAR(1)
+      - name: FL_SIR_3
+        data_type: VARCHAR(1)
+      - name: FL_SIR_6
+        data_type: VARCHAR(1)
+      - name: FL_SIR_9
+        data_type: VARCHAR(1)
+      - name: FL_SIR_12
+        data_type: VARCHAR(1)
+      - name: FL_SIR_18
+        data_type: VARCHAR(1)
+      - name: FL_SIR_24
+        data_type: VARCHAR(1)
+      - name: FL_SIR_30
+        data_type: VARCHAR(1)
+      - name: FL_SIR_36
+        data_type: VARCHAR(1)
+      - name: NM_IMPAGATE
+        data_type: NUMBER(3)
+      - name: NM_MAX_RATE_IMPAGATE
+        data_type: NUMBER(3)
+      - name: NM_RATE_ACCODATE
+        data_type: NUMBER(3)

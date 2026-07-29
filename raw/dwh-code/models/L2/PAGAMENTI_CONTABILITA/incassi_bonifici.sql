@@ -25,13 +25,10 @@ SELECT
     bo.CBO_CLIENTE AS CD_CLIENTE,
     {{ custom_to_decimal('bo.CBO_IMPORTO', 13, 2) }} AS EU_IMPORTO,
     bo.CBO_IBAN_ORD AS CD_IBAN,
-    -- FIX: data model aveva virgola pendente 'AS CD_PAESE, FROM'
     SUBSTRING(bo.CBO_IBAN_ORD, 1, 2) AS CD_PAESE,
-    -- FIX: data model aveva virgola pendente 'AS CD_CIN, FROM'
     SUBSTRING(bo.CBO_IBAN_ORD, 2, 2) AS CD_CIN,
     bo.CBO_ABI_CLI AS CD_ABI,
     bo.CBO_CAB_CLI AS CD_CAB,
-    -- FIX: data model aveva virgola pendente 'AS CD_CC_CLIENTE, FROM'
     SUBSTRING(bo.CBO_IBAN_ORD, 16, 12) AS CD_CC_CLIENTE,
     NULL AS CD_TERZO_ORDINANTE, -- WARN: CD_TERZO_ORDINANTE senza sorgente/tipo nel data model
     bo.CBO_BENEF_INDIRIZZO AS CD_INDIRIZZO_BENEF,

@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: scoring_dettaglio_output
+    description: >
+      Estrazione + normalizzazione MODULO x REGRESSORE da payload XML StrategyOneResponse (landing CDE). ASSUNZIONI da validare: ref('cde') come landing + LASTMODIFIEDDATA esposta; filtro ProcessCode='SCORING' (lo xsd dichiara fixed 'SCOREX'); TS_INSERIMENTO=CURRENT_TIMESTAMP() (non presente nel data model); un modulo con almeno un regressore non emette la riga di solo modulo; moduli 01..10, regressori 0..49.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "SCORING_DETTAGLIO_OUTPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, PR_MODULO, PR_REGRESSORE, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: PR_MODULO
+        data_type: NUMBER(16,0)
+      - name: PR_REGRESSORE
+        data_type: NUMBER(16,0)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_SCORING_CODICE_FUNZIONE
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: CD_MODULO_OBJCODE
+        data_type: VARCHAR
+      - name: NM_MODULO_ALIGNED
+        data_type: NUMBER(16,0)
+      - name: TP_TIPOLOGIA_MODELLO
+        data_type: VARCHAR
+      - name: DS_MODULO_DESCRIZIONE_GRIGLIA
+        data_type: VARCHAR
+      - name: NM_MODULO_RAW
+        data_type: NUMBER(16,0)
+      - name: DS_REGRESSORE
+        data_type: VARCHAR
+      - name: TP_VALORE_PUNTUALE_REGRESSORE
+        data_type: VARCHAR
+      - name: CD_VAR
+        data_type: VARCHAR
+      - name: CD_VAR_RC
+        data_type: VARCHAR
+      - name: CD_VAR_RM
+        data_type: VARCHAR
+      - name: CD_VAR_VALUE
+        data_type: VARCHAR

@@ -1,0 +1,49 @@
+version: 2
+models:
+  - name: rbpcorto_output
+    description: >
+      Entita' L2 RBPCORTO_OUTPUT (subject area SCORING), storicizzazione S2.
+      Sorgente: landing XML CDE (L1_E_CDE.CDE), payload StrategyOneResponse,
+      filtro ProcessCode = 'RBPCORTO'. Campi estratti dai nodi XML via get_xml_path.
+      ASSUNZIONI da validare prima della produzione:
+      (1) nel payload il ProcessCode e' 'RBPCORTO' (lo xsd dichiara fixed="RBPCORTOX");
+      (2) TS_INSERIMENTO non valorizzato nel data model -> CURRENT_TIMESTAMP();
+      (3) la landing CDE espone LASTMODIFIEDDATA;
+      (4) DS_ERROR mappato sul tag Variables/DESC_ERROR (RF), non sul nodo Error/Description.
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "RBPCORTO_OUTPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR
+      - name: CD_PROCESSVERSION
+        data_type: VARCHAR
+      - name: CD_LAYOUTVERSION
+        data_type: NUMBER
+      - name: DS_NOTE1
+        data_type: VARCHAR
+      - name: DS_NOTE2
+        data_type: VARCHAR
+      - name: NM_FASCIA_RBP
+        data_type: NUMBER(16)
+      - name: TP_ESITO_RBP
+        data_type: VARCHAR
+      - name: FL_TABELLA
+        data_type: VARCHAR
+      - name: DS_ERROR
+        data_type: VARCHAR
+      - name: NM_IRR_MIN
+        data_type: NUMBER(16,2)
+      - name: CD_TAB_FIN_SUGGERITA
+        data_type: VARCHAR
+      - name: CD_RETE
+        data_type: VARCHAR

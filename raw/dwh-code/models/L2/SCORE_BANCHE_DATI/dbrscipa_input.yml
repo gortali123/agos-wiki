@@ -1,0 +1,159 @@
+version: 2
+
+models:
+  - name: dbrscipa_input
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_SCORE_BANCHE_DATI", "entita": "DBRSCIPA_INPUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INQUIRYCODE, CD_RUOLO, TS_INSERIMENTO]
+    columns:
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(255)
+      - name: CD_RUOLO
+        data_type: VARCHAR
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR(9)
+      - name: CD_PROCESSVERSION
+        data_type: VARCHAR
+      - name: CD_LAYOUTVERSION
+        data_type: VARCHAR
+      - name: CD_INTERROGAZIONE
+        data_type: VARCHAR
+      - name: CD_USER
+        data_type: VARCHAR
+      - name: DT_RICHIESTA
+        data_type: DATE
+      - name: TP_PROCEDURA
+        data_type: VARCHAR
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_CONTESTO
+        data_type: VARCHAR
+      - name: NM_RATE_1PERIODO
+        data_type: NUMBER(16,0)
+      - name: NM_RATE_2PERIODO
+        data_type: NUMBER(16,0)
+      - name: TP_MODALITA_PAGAMENTO
+        data_type: VARCHAR
+      - name: CD_TABELLA_FINANZIARIA
+        data_type: VARCHAR
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_FINANZIATO
+        data_type: NUMBER(16,2)
+      - name: EU_ANTICIPO
+        data_type: NUMBER(16,2)
+      - name: NM_TASSO_TAN
+        data_type: NUMBER(16,2)
+      - name: NM_DURATA_1PERIODO
+        data_type: NUMBER(16,0)
+      - name: NM_DURATA_2PERIODO
+        data_type: NUMBER(16,0)
+      - name: EU_IMPORTO_RATA_1PERIODO
+        data_type: NUMBER(16,2)
+      - name: EU_IMPORTO_RATA_2PERIODO
+        data_type: NUMBER(16,2)
+      - name: CD_OPERATION
+        data_type: VARCHAR
+      - name: FL_FIRMA_DOPPIA
+        data_type: VARCHAR
+      - name: EU_FIDO
+        data_type: NUMBER(16,2)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR
+      - name: TP_PRODOTTO
+        data_type: VARCHAR
+      - name: CD_CANALE
+        data_type: VARCHAR
+      - name: FL_CANALE_WEB
+        data_type: VARCHAR
+      - name: CD_EMETTITORE
+        data_type: VARCHAR
+      - name: FL_TIPO_VENDITA_CONGIUNTA
+        data_type: VARCHAR
+      - name: TP_DESTINAZIONE_FINANZIAMENTO
+        data_type: VARCHAR
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR
+      - name: PC_INDEBITAMENTO_PRATICA
+        data_type: NUMBER(16,2)
+      - name: EU_TOT_ENTRATE_MENSILI
+        data_type: NUMBER(16,2)
+      - name: EU_TOT_USCITE_MENSILI
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_PRATICA
+        data_type: NUMBER(16,2)
+      - name: TP_SCIPAFI_PRECEDENTE
+        data_type: VARCHAR
+      - name: CD_PROCESSO
+        data_type: VARCHAR
+      - name: CD_SCIPAFI_STATO
+        data_type: VARCHAR
+      - name: CD_CTCPOS_STATO
+        data_type: VARCHAR
+      - name: CD_EURISC_CRIF_STATO
+        data_type: VARCHAR
+      - name: CD_CERVED_CGSX_STATO
+        data_type: VARCHAR
+      - name: FL_CALL_CERVED_SI_NO_DB
+        data_type: VARCHAR
+      - name: FL_CALL_EURISC_SI_NO_DB
+        data_type: VARCHAR
+      - name: CD_SCIPAFI_ULTIMA_PRATICA_CLIENTE
+        data_type: NUMBER(16,0)
+      - name: DT_SCIPAFI_ULTIMA_CONSULTAZIONE_CLIENTE
+        data_type: DATE
+      - name: CD_ANAGRAFICA
+        data_type: NUMBER(16,0)
+      - name: CD_FORMA_GIURIDICA
+        data_type: VARCHAR
+      - name: CD_FISCALE
+        data_type: VARCHAR
+      - name: CD_PARTITA_IVA
+        data_type: VARCHAR
+      - name: EU_RATA_AGOS_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_RATA_CRIF_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_CRIF_OVR_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_CRIF_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_AGOS_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_AGOS_OVR_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_CUMULO_GRUPPO_BANCARIO
+        data_type: NUMBER(16,2)
+      - name: PC_INDEBITAMENTO_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_TOT_ENTRATE_MENSILI_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: EU_TOT_USCITE_MENSILI_APPLICANT
+        data_type: NUMBER(16,2)
+      - name: FL_CTCPOS_HIT_NOHIT
+        data_type: VARCHAR
+      - name: CD_SCIPAFI_ERROR_CODE
+        data_type: VARCHAR
+      - name: TS_SCIPAFI_RESPONSE
+        data_type: TIMESTAMP_NTZ
+      - name: TS_SCIPAFI_REQUEST
+        data_type: TIMESTAMP_NTZ
+      - name: DT_SCIPAFI_CONSULTAZIONE
+        data_type: DATE
+      - name: TS_SCIPAFI_CONSULTAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_SPID_ESITO
+        data_type: VARCHAR
+      - name: CD_SPID_IDENTITY_PROVIDER
+        data_type: VARCHAR
+      - name: CD_SPID_STATO
+        data_type: VARCHAR
