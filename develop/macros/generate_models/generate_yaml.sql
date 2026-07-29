@@ -111,7 +111,7 @@
         {% if is_ocs %}
           {% set is_d_monthly = true %}
           {% do model_yaml.append('      pre_hook:') %}
-          {% do model_yaml.append('        - "{{ delete_month(get_dt_osservazione(' ~ "'ts_riferimento'" ~ ')) }}"') %}
+          {% do model_yaml.append("        - \"{{ delete_dt_osservazione('DT_OSSERVAZIONE','monthly') }}\"") %}
         {% endif %}
       {% elif cu == 'TBD' %}
         {% do model_yaml.append("      materialized: table") %}
