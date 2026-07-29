@@ -3,7 +3,7 @@ select
   TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
   sys_change_operation,
   TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
-  {{ compute_dt_osservazione('ts_riferimento') }} as dt_osservazione,
+  {{ get_dt_osservazione('ts_riferimento') }} as dt_osservazione,
   TRY_CAST(OXCTFBP_CLIENTE AS NUMBER(9,0)) AS oxctfbp_cliente,
   TRY_CAST(OXCTFBP_PROGRESSIVO AS NUMBER(5,0)) AS oxctfbp_progressivo,
   TRY_CAST(OXCTFBP_DATA_INIZIO AS NUMBER(8,0)) AS oxctfbp_data_inizio,
@@ -24,4 +24,3 @@ select
   TRY_CAST(IFF(RTRIM(OXCTFBP_MOTIVO_INGRESSO) = '', ' ', RTRIM(OXCTFBP_MOTIVO_INGRESSO)) AS VARCHAR(3)) AS oxctfbp_motivo_ingresso,
   TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
 from {{ source('source_l0','oxctffbp_m') }}
-where dt_osservazione = {{ get_dt_osservazione() }}

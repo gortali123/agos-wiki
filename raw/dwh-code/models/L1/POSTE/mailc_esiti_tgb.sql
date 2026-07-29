@@ -13,4 +13,4 @@ select
   TRY_CAST(DS_CAUSALE AS VARCHAR(50)) AS ds_causale,
   TRY_CAST(ANOMALIA AS VARCHAR(255)) AS anomalia
 from {{ source('source_l0','mailc_esiti_tgb') }}
-where dt_accettazione = {{ get_dt_osservazione() }}
+where dt_accettazione = {{ get_dt_osservazione('weekly') }}

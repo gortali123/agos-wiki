@@ -92,6 +92,7 @@
     {% do model_yaml.append('### modulo: ' ~ modulo_path) %}
     {% do model_yaml.append('    config:') %}
 
+    {% set is_d_monthly = false %}
     {% if cluster is not none %}
       {% set cu = cluster | upper %}
       {% if cu in ['A', 'A1', 'A2'] %}
@@ -107,8 +108,11 @@
       {% elif cu == 'D' %}
         {% do model_yaml.append("      materialized: incremental") %}
         {% do model_yaml.append("      incremental_strategy: append") %}
-        {% do model_yaml.append('      pre_hook:') %}
-        {% do model_yaml.append('        - "{{ delete_month(get_dt_osservazione(' ~ "'ts_riferimento'" ~ ')) }}"') %}
+        {% if is_ocs %}
+          {% set is_d_monthly = true %}
+          {% do model_yaml.append('      pre_hook:') %}
+          {% do model_yaml.append('        - "{{ delete_month(get_dt_osservazione(' ~ "'ts_riferimento'" ~ ')) }}"') %}
+        {% endif %}
       {% elif cu == 'TBD' %}
         {% do model_yaml.append("      materialized: table") %}
       {% endif %}
@@ -125,7 +129,7 @@
     {% do model_yaml.append('      query_tag: \'{"app":"DBT", "sorgente":"' ~ (sorgente | upper) ~ '", "schema":"' ~ schema_tag ~ '", "archivio":"' ~ (model | upper) ~ '"}\'' ) %}
 
     {% if pk_cols | length > 0 and cluster is not none and cluster | upper != 'C' %}
-      {% set pk_constraint_cols = pk_cols + (['dt_osservazione'] if (cluster | upper) == 'D' else []) %}
+      {% set pk_constraint_cols = pk_cols + (['dt_osservazione'] if is_d_monthly else []) %}
       {% do model_yaml.append('    constraints:') %}
       {% do model_yaml.append('      - type: primary_key') %}
       {% do model_yaml.append('        warn_unenforced: false') %}
@@ -149,7 +153,7 @@
     {% do model_yaml.append('      - name: lastmodifieddata') %}
     {% do model_yaml.append('        data_type: TIMESTAMP_NTZ') %}
     {% endif %}
-    {% if cluster is not none and (cluster | upper) == 'D' %}
+    {% if is_d_monthly %}
     {% do model_yaml.append('      - name: dt_osservazione') %}
     {% do model_yaml.append('        data_type: DATE') %}
     {% endif %}
