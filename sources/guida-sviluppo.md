@@ -27,6 +27,15 @@ Sintesi di `raw/guida_sviluppo.docx` ("AGOS-X DWH — Guida Sviluppo v2.0", docu
 - Flusso job dbt Cloud: sviluppo modelli → `generate_jobs.ps1` (genera `jobs.yml`) → `dbt-jobs-as-code sync` (allinea dbt Cloud, senza cambiare `job_id` sugli update) → `fetch_dbt_jobs.py` / `fetch_dbt_dependencies.py` per esportare job ID e dipendenze in CSV.
 - **NB esplicito nel documento**: per eseguire modelli L1 serve `dbt build --select +modello` (non il solo `dbt run`), altrimenti snapshot e test sulle source non vengono eseguiti.
 
+## Layer L1 — cambio cluster di un archivio
+
+Procedura per cambiare il cluster (A/B/C) associato a un archivio in `TECH.CFG_L1_CLUSTER_STO`:
+
+1. Aggiornare il valore di cluster per l'archivio in `TECH.CFG_L1_CLUSTER_STO`.
+2. **Se il cluster di partenza è C** e il nuovo cluster è diverso (A o B): cancellare fisicamente stage e snapshot esistenti dell'archivio prima di rigenerare — il cluster C è l'unico che prevede snapshot, quindi uscendo da C questi oggetti restano orfani/incoerenti se non rimossi.
+3. Rilanciare `generate_models.ps1` (con `--force` se serve sovrascrivere yml/sql esistenti) per rigenerare source yml, modelli L1 e (solo se il nuovo cluster è C) gli snapshot yml.
+4. Verificare `dbt.exe compile` pulito prima della MR.
+
 ## Layer L2 — checklist implementativa
 
 Questa sezione è la più operativa/prescrittiva e integra (con più dettaglio SQL) quanto descritto in [[caricamento-layer-l2]]:
