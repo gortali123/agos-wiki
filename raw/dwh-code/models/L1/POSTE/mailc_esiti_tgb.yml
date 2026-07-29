@@ -6,7 +6,7 @@ models:
       materialized: incremental
       incremental_strategy: append
       pre_hook:
-        - "{{ delete_week('DT_ACCETTAZIONE', get_dt_accettazione()) }}"
+        - "{{ delete_dt_osservazione('DT_ACCETTAZIONE','weekly') }}"
       meta:
         cluster: ["D"]
       query_tag: '{"app":"DBT", "sorgente":"POSTE", "schema":"L1_E_POSTE", "archivio":"MAILC_ESITI_TGB"}'

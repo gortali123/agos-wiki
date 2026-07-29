@@ -1,0 +1,27 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  {{ compute_dt_osservazione('ts_riferimento') }} as dt_osservazione,
+  TRY_CAST(OXCTFBP_CLIENTE AS NUMBER(9,0)) AS oxctfbp_cliente,
+  TRY_CAST(OXCTFBP_PROGRESSIVO AS NUMBER(5,0)) AS oxctfbp_progressivo,
+  TRY_CAST(OXCTFBP_DATA_INIZIO AS NUMBER(8,0)) AS oxctfbp_data_inizio,
+  TRY_CAST(OXCTFBP_DATA_FINE AS NUMBER(8,0)) AS oxctfbp_data_fine,
+  TRY_CAST(OXCTFBP_DATA_USCITA AS NUMBER(8,0)) AS oxctfbp_data_uscita,
+  TRY_CAST(OXCTFBP_DATA_ANNULLO AS NUMBER(8,0)) AS oxctfbp_data_annullo,
+  TRY_CAST(OXCTFBP_DATA AS NUMBER(8,0)) AS oxctfbp_data,
+  TRY_CAST(OXCTFBP_ORA AS NUMBER(8,0)) AS oxctfbp_ora,
+  TRY_CAST(IFF(RTRIM(OXCTFBP_UTENTE) = '', ' ', RTRIM(OXCTFBP_UTENTE)) AS VARCHAR(10)) AS oxctfbp_utente,
+  TRY_CAST(IFF(RTRIM(OXCTFBP_PROCEDURA) = '', ' ', RTRIM(OXCTFBP_PROCEDURA)) AS VARCHAR(2)) AS oxctfbp_procedura,
+  TRY_CAST(OXCTFBP_PRATICA AS NUMBER(12,0)) AS oxctfbp_pratica,
+  TRY_CAST(OXCTFBP_PROGR_POST AS NUMBER(11,0)) AS oxctfbp_progr_post,
+  TRY_CAST(OXCTFBP_DATA_RIAVVIO AS NUMBER(8,0)) AS oxctfbp_data_riavvio,
+  TRY_CAST(OXCTFBP_GG_RIAVVIO AS NUMBER(5,0)) AS oxctfbp_gg_riavvio,
+  TRY_CAST(OXCTFBP_GG_SCADUTO AS NUMBER(5,0)) AS oxctfbp_gg_scaduto,
+  TRY_CAST(OXCTFBP_IMP_SCADUTO AS NUMBER(13,0)) AS oxctfbp_imp_scaduto,
+  TRY_CAST(OXCTFBP_DATA_MORATORIA AS NUMBER(8,0)) AS oxctfbp_data_moratoria,
+  TRY_CAST(IFF(RTRIM(OXCTFBP_MOTIVO_INGRESSO) = '', ' ', RTRIM(OXCTFBP_MOTIVO_INGRESSO)) AS VARCHAR(3)) AS oxctfbp_motivo_ingresso,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','oxctffbp_m') }}
+where dt_osservazione = {{ get_dt_osservazione() }}

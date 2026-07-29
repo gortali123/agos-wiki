@@ -98,6 +98,7 @@ if (Test-Path $L0Source) {
     Get-ChildItem -Path $L0Source -Directory | ForEach-Object {
         if ($_.Name -eq "OCS") {
             Mirror-Folder "models\L0\OCS\AIN"
+            Mirror-Folder "models\L0\OCS\CH1"
         } else {
             Mirror-Folder "models\L0\$($_.Name)"
         }
@@ -112,6 +113,7 @@ if (Test-Path $L1Source) {
     Get-ChildItem -Path $L1Source -Directory | ForEach-Object {
         if ($_.Name -eq "OCS") {
             Mirror-Folder "models\L1\OCS\AIN"
+            Mirror-Folder "models\L1\OCS\CH1"
         } else {
             Mirror-Folder "models\L1\$($_.Name)"
         }
@@ -126,6 +128,7 @@ if (Test-Path $SnapshotsSource) {
     Get-ChildItem -Path $SnapshotsSource -Directory | ForEach-Object {
         if ($_.Name -eq "OCS") {
             Mirror-Folder "snapshots\L1\OCS\AIN"
+            Mirror-Folder "snapshots\L1\OCS\CH1"
         } else {
             Mirror-Folder "snapshots\L1\$($_.Name)"
         }

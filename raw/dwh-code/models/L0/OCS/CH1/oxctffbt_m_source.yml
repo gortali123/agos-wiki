@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: oxctffbt_m
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [oxctfbt_procedura, oxctfbt_num_pratica, oxctfbt_progressivo]
+      - name: oxctffbt_m_deleted

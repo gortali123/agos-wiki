@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: oxctffbt_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook:
+        - "{{ delete_month(get_dt_osservazione('ts_riferimento')) }}"
+      meta:
+        cluster: ["D"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CH1", "archivio":"OXCTFFBT_M"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [oxctfbt_procedura, oxctfbt_num_pratica, oxctfbt_progressivo, dt_osservazione]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: dt_osservazione
+        data_type: DATE
+      - name: oxctfbt_procedura
+        data_type: VARCHAR(2)
+      - name: oxctfbt_num_pratica
+        data_type: NUMBER(12,0)
+      - name: oxctfbt_progressivo
+        data_type: NUMBER(5,0)
+      - name: oxctfbt_data_ingresso
+        data_type: NUMBER(8,0)
+      - name: oxctfbt_stato_ingresso
+        data_type: VARCHAR(3)
+      - name: oxctfbt_saldo_ingresso
+        data_type: NUMBER(13,0)
+      - name: oxctfbt_data_uscita
+        data_type: NUMBER(8,0)
+      - name: oxctfbt_data_annullo
+        data_type: NUMBER(8,0)
+      - name: oxctfbt_utente_annullo
+        data_type: VARCHAR(10)
+      - name: oxctfbt_progr_attivo
+        data_type: NUMBER(5,0)
+      - name: oxctfbt_saldo_perform
+        data_type: NUMBER(13,0)
+      - name: oxctfbt_cliente
+        data_type: NUMBER(9,0)
+      - name: oxctfbt_categoria
+        data_type: VARCHAR(2)
+      - name: oxctfbt_motivo_ingresso
+        data_type: VARCHAR(3)
+      - name: rowid
+        data_type: NUMBER(38, 0)
