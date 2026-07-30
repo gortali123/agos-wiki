@@ -1,4 +1,4 @@
-{% test primary_key_from_sql(model, pk_columns, where_clause=none) %}
+{% test primary_key_from_sql(model, pk_columns) %}
 {{ config(severity='error') }}
 
 {% if execute %}
@@ -38,7 +38,7 @@
     {% endfor %}
   {% endif %}
 
-  {# WHERE dell'L1 (se filtra righe): si applica insieme al parametro where_clause, non al suo posto #}
+  {# WHERE dell'L1 (se filtra righe): niente where_clause come parametro, solo questo #}
   {% set where_idx = sql_upper.find('WHERE') %}
   {% set where_clause_l1 = l1_sql[where_idx + 5:] if where_idx >= 0 else '' %}
 
@@ -53,7 +53,6 @@ with null_pks as (
     ) as failure_info
   from {{ model }}
   where 1=1
-    {% if where_clause %}and ({{ where_clause }}){% endif %}
     {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
     and (
       {% for col in pk_columns %}
@@ -82,11 +81,7 @@ duplicate_pks as (
         {% endfor %}
       ) as pk_count
     from {{ model }}
-    {% if where_clause or where_clause_l1 %}
-    where 1=1
-      {% if where_clause %}and ({{ where_clause }}){% endif %}
-      {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
-    {% endif %}
+    {% if where_clause_l1 %}where {{ where_clause_l1 }}{% endif %}
   )
   where pk_count > 1
 
@@ -103,7 +98,6 @@ cast_failed_pks as (
     ) as failure_info
   from {{ model }}
   where 1=1
-    {% if where_clause %}and ({{ where_clause }}){% endif %}
     {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
     and (
       1=0

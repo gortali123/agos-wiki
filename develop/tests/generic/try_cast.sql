@@ -1,4 +1,4 @@
-{% test try_cast(model, skip_columns=none, where_clause=none, accepted_values=none) %}
+{% test try_cast(model, skip_columns=none, accepted_values=none) %}
 
 {% if execute %}
 
@@ -36,7 +36,6 @@ with cast_results as (
       {% endfor %}
     ) as failure_info
   from {{ model }}
-  {% if where_clause %}where {{ where_clause }}{% endif %}
 )
 
 select

@@ -1,4 +1,4 @@
-{% test primary_key_positional(model, pk_columns, where_clause=none) %}
+{% test primary_key_positional(model, pk_columns) %}
 {{ config(severity='error') }}
 
 {% if execute %}
@@ -52,7 +52,6 @@ with null_pks as (
     ) as failure_info
   from {{ model }}
   where 1=1
-    {% if where_clause %}and ({{ where_clause }}){% endif %}
     {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
     and (
       {% for col in pk_exprs %}
@@ -83,11 +82,7 @@ duplicate_pks as (
         {% endfor %}
       ) as pk_count
     from {{ model }}
-    {% if where_clause or where_clause_l1 %}
-    where 1=1
-      {% if where_clause %}and ({{ where_clause }}){% endif %}
-      {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
-    {% endif %}
+    {% if where_clause_l1 %}where {{ where_clause_l1 }}{% endif %}
   )
   where pk_count > 1
 
