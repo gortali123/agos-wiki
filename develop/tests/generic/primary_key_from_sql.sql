@@ -35,10 +35,8 @@
     {% endfor %}
   {% endif %}
 
-  {% set where_clause = '' %}
-  {% if 'WHERE' in sql_upper %}
-    {% set where_clause = l1_sql.split('WHERE')[1] %}
-  {% endif %}
+  {% set where_idx = sql_upper.find('WHERE') %}
+  {% set where_clause = l1_sql[where_idx + 5:] if where_idx >= 0 else '' %}
 
 with null_pks as (
 
