@@ -20,13 +20,11 @@
   {% if select_idx >= 0 and from_idx > select_idx %}
     {% set after_select = l1_sql[select_idx + 6:from_idx] %}
     {% for line in after_select.split('\n') %}
+      {% set line = line.split('--')[0] %}
       {% set line_upper = line | upper %}
       {% if ' AS ' in line_upper %}
         {% set as_idx = line_upper.rfind(' AS ') %}
         {% set col_name = line[as_idx + 4:] | trim | replace(',', '') %}
-        {% if '--' in col_name %}
-          {% set col_name = col_name.split('--')[0] | trim %}
-        {% endif %}
         {% set col_expr = line[:as_idx] | trim %}
         {% if col_name | lower in pk_columns_lower %}
           {% do pk_exprs.append({'name': col_name, 'expr': render(col_expr)}) %}
