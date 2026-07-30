@@ -1,4 +1,4 @@
-{% test primary_key(model, pk_columns, where_clause=none) %}
+{% test primary_key_from_sql(model, pk_columns, where_clause=none) %}
 {{ config(severity='error') }}
 
 {% if execute %}
@@ -11,13 +11,36 @@
     {% endif %}
   {% endfor %}
 
-  {% set pk_cols_typed = [] %}
-  {% for col in pk_columns %}
-    {% set col_def = l1_node.columns.get(col | lower) or l1_node.columns.get(col) %}
-    {% if col_def %}
-      {% do pk_cols_typed.append({'name': col, 'data_type': col_def.data_type}) %}
-    {% endif %}
-  {% endfor %}
+  {% set pk_columns_lower = pk_columns | map('lower') | list %}
+
+  {# Parsing del raw_code L1 (stessa tecnica di try_cast_from_sql) per estrarre, per ogni
+     colonna PK, l'espressione di cast REALE usata in L1 — non un TRY_CAST(col AS tipo)
+     ricostruito a mano come fa primary_key.sql, che assume erroneamente una logica di
+     cast standard anche quando in L1 c'e' logica particolare (TRY_TO_DATE con formato
+     custom, REPLACE, SUBSTR, ecc.). #}
+  {% set l1_sql = l1_node.raw_code %}
+  {% set sql_upper = l1_sql | upper %}
+  {% set select_idx = sql_upper.find('SELECT') %}
+  {% set from_idx = sql_upper.find('FROM', select_idx) %}
+
+  {% set pk_exprs = [] %}
+  {% if select_idx >= 0 and from_idx > select_idx %}
+    {% set after_select = l1_sql[select_idx + 6:from_idx] %}
+    {% for line in after_select.split('\n') %}
+      {% set line_upper = line | upper %}
+      {% if ' AS ' in line_upper %}
+        {% set as_idx = line_upper.rfind(' AS ') %}
+        {% set col_name = line[as_idx + 4:] | trim | replace(',', '') %}
+        {% if '--' in col_name %}
+          {% set col_name = col_name.split('--')[0] | trim %}
+        {% endif %}
+        {% set col_expr = line[:as_idx] | trim %}
+        {% if col_name | lower in pk_columns_lower %}
+          {% do pk_exprs.append({'name': col_name, 'expr': col_expr}) %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
 with null_pks as (
 
@@ -68,8 +91,8 @@ cast_failed_pks as (
 
   select distinct
     object_construct(
-      {% for col in pk_cols_typed %}
-        '{{ col.name }}', iff({{ col.name }} is not null and try_cast({{ col.name }} as {{ col.data_type }}) is null, cast({{ col.name }} as varchar), null)
+      {% for col in pk_exprs %}
+        '{{ col.name }}', iff({{ col.name }} is not null and ({{ col.expr }}) is null, cast({{ col.name }} as varchar), null)
         {{ ',' if not loop.last else '' }}
       {% endfor %}
     ) as failure_info
@@ -78,8 +101,8 @@ cast_failed_pks as (
     {% if where_clause %}and ({{ where_clause }}){% endif %}
     and (
       1=0
-      {% for col in pk_cols_typed %}
-        or ({{ col.name }} is not null and try_cast({{ col.name }} as {{ col.data_type }}) is null)
+      {% for col in pk_exprs %}
+        or ({{ col.name }} is not null and ({{ col.expr }}) is null)
       {% endfor %}
     )
 

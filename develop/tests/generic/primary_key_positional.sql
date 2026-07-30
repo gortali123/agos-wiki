@@ -6,7 +6,7 @@
   {% set l1_model = (model.identifier | replace('_source', '')) | lower %}
   {% set l1_node = none %}
   {% for n in graph.nodes.values() %}
-    {% if n.name == ('stg_' ~ l1_model) or n.name == l1_model %}
+    {% if n.name | lower == ('stg_' ~ l1_model) or n.name | lower == l1_model %}
       {% set l1_node = n %}
     {% endif %}
   {% endfor %}
