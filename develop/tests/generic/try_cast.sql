@@ -1,14 +1,12 @@
-{% test try_cast(model, skip_columns=none, where_clause=none, accepted_values=none) %}
+{% test try_cast(model, skip_columns=none, accepted_values=none) %}
 
 {% if execute %}
 
-  {% set l1_model = (model.identifier | replace('_source', '')) | lower %}
-  {% set l1_node = none %}
-  {% for n in graph.nodes.values() %}
-    {% if n.name | lower == ('stg_' ~ l1_model) or n.name | lower == l1_model %}
-      {% set l1_node = n %}
-    {% endif %}
-  {% endfor %}
+  {% set l1_model = model.identifier | replace('_source', '') %}
+  {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', ('stg_' ~ l1_model)) | first %}
+  {% if not l1_node %}
+    {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
+  {% endif %}
 
   {% set columns_from_source = adapter.get_columns_in_relation(model) | map(attribute='column') | map('lower') | list %}
   {% set skip_columns_lower = (skip_columns or []) | map('lower') | list %}
@@ -36,7 +34,6 @@ with cast_results as (
       {% endfor %}
     ) as failure_info
   from {{ model }}
-  {% if where_clause %}where {{ where_clause }}{% endif %}
 )
 
 select

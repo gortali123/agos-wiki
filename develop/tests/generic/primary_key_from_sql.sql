@@ -1,19 +1,16 @@
-{% test primary_key_from_sql(model, pk_columns, where_clause=none) %}
+{% test primary_key_from_sql(model, pk_columns) %}
 {{ config(severity='error') }}
 
 {% if execute %}
 
-  {% set l1_model = (model.identifier | replace('_source', '')) | lower %}
-  {% set l1_node = none %}
-  {% for n in graph.nodes.values() %}
-    {% if n.name | lower == ('stg_' ~ l1_model) or n.name | lower == l1_model %}
-      {% set l1_node = n %}
-    {% endif %}
-  {% endfor %}
+  {% set l1_model = model.identifier | replace('_source', '') %}
+  {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', ('stg_' ~ l1_model)) | first %}
+  {% if not l1_node %}
+    {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
+  {% endif %}
 
   {% set pk_columns_lower = pk_columns | map('lower') | list %}
 
-  {# espressione di cast reale della/e colonna/e PK, parsata dal raw_code L1 (come try_cast_from_sql) #}
   {% set l1_sql = l1_node.raw_code %}
   {% set sql_upper = l1_sql | upper %}
   {% set select_idx = sql_upper.find('SELECT') %}
@@ -36,6 +33,11 @@
         {% endif %}
       {% endif %}
     {% endfor %}
+  {% endif %}
+
+  {% set where_clause = '' %}
+  {% if 'WHERE' in sql_upper %}
+    {% set where_clause = l1_sql.split('WHERE')[1] %}
   {% endif %}
 
 with null_pks as (

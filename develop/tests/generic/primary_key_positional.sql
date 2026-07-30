@@ -1,15 +1,13 @@
-{% test primary_key_positional(model, pk_columns, where_clause=none) %}
+{% test primary_key_positional(model, pk_columns) %}
 {{ config(severity='error') }}
 
 {% if execute %}
 
-  {% set l1_model = (model.identifier | replace('_source', '')) | lower %}
-  {% set l1_node = none %}
-  {% for n in graph.nodes.values() %}
-    {% if n.name | lower == ('stg_' ~ l1_model) or n.name | lower == l1_model %}
-      {% set l1_node = n %}
-    {% endif %}
-  {% endfor %}
+  {% set l1_model = model.identifier | replace('_source', '') %}
+  {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', ('stg_' ~ l1_model)) | first %}
+  {% if not l1_node %}
+    {% set l1_node = graph.nodes.values() | selectattr('name', 'equalto', l1_model) | first %}
+  {% endif %}
 
   {% set pk_columns_lower = pk_columns | map('lower') | list %}
 
@@ -37,6 +35,11 @@
     {% endfor %}
   {% endif %}
 
+  {% set where_clause_l1 = '' %}
+  {% if 'WHERE' in (l1_sql | upper) %}
+    {% set where_clause_l1 = l1_sql.split('WHERE')[1] %}
+  {% endif %}
+
 with null_pks as (
 
   select
@@ -48,7 +51,7 @@ with null_pks as (
     ) as failure_info
   from {{ model }}
   where 1=1
-    {% if where_clause %}and ({{ where_clause }}){% endif %}
+    {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
     and (
       {% for col in pk_exprs %}
         ({{ col.expr }}) is null
@@ -78,7 +81,7 @@ duplicate_pks as (
         {% endfor %}
       ) as pk_count
     from {{ model }}
-    {% if where_clause %}where {{ where_clause }}{% endif %}
+    {% if where_clause_l1 %}where {{ where_clause_l1 }}{% endif %}
   )
   where pk_count > 1
 
