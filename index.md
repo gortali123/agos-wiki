@@ -53,7 +53,8 @@
 
 ## Develop
 
-- [variazioni_anagrafiche](develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql) — ripristinata struttura `.old` (macro `is_incremental_S1`, no split ramo1/ramo2) integrando `AL_DATA_INSERIMENTO` come `TS_INIZIO_VALIDITA` solo per il vero primo record storico; sostituisce il fix con split del 2026-07-21 (non funzionante secondo l'utente), proposto, non ancora portato upstream
+- [variazioni_anagrafiche](develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche.sql) — riconfermata struttura S1 classica (macro `is_incremental_S1`, no split ramo1/ramo2, `BASE` rilegge tutta la storia da `ccanalog` a ogni run) con `AL_DATA_INSERIMENTO` come `TS_INIZIO_VALIDITA` solo per il vero primo record storico e `PR_CONTROPARTE` come semplice `ROW_NUMBER()` (nessun `OLD_PROGRESSIVO`); proposto, non ancora portato upstream
+- [variazioni_anagrafiche_day](develop/models/L2/ANAGR_CONTROPARTE/variazioni_anagrafiche_day.sql) — stessa conversione a S1 classica: nessuna union con la riga aperta nel target, `COMBINED`/`DAY` rileggono tutta la storia da `variazioni_anagrafiche` a ogni run, filtro incrementale (manuale, non `is_incremental_S1` perché qui non c'e' `HASHED_COLS`) replica lo stesso criterio LASTMODIFIEDDATA/boundary; proposto, non ancora portato upstream
 - [dm_ca_campioni](develop/models/L3/campioni_accettazione/dm_ca_campioni.sql) — DM_CA_CAMPIONI, proposto, non ancora portato upstream
 - [dm_co_campioni](develop/models/L3/campioni_accettazione/dm_co_campioni.sql) — DM_CO_CAMPIONI, proposto, non ancora portato upstream
 - [dm_ca_imp_rata](develop/models/L3/campioni_accettazione/dm_ca_imp_rata.sql) — DM_CA_IMP_RATA, proposto, non ancora portato upstream
