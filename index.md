@@ -68,7 +68,7 @@
 - [dm_co_matrix](develop/models/L3/campioni_accettazione/dm_co_matrix.sql) — DM_CO_MATRIX, proposto, non ancora portato upstream
 - [v_event_log](develop/views/logs/v_event_log.sql) — vista LOGS.V_EVENT_LOG corretta (rimosso filtro che nascondeva gli SKIPPED, timestamp con fallback), proposta
 - [v_last_run_status](develop/views/logs/v_last_run_status.sql) — vista di monitoring ultimo stato model/test per tabella, proposta
-- [log_run_results](develop/macros/log/log_run_results.sql) — fix macro logging (nm_execution_time con default(0) per evitare JSON invalido sugli SKIPPED), proposto
+- [log_run_results](develop/macros/log/log_run_results.sql) — fix macro logging: `default(0)`/`default("null")` sostituiscono solo gli undefined, non l'esplicito `None` dei nodi SKIPPED — usato `default(x, true)` su `nm_execution_time`/`nm_failures` per evitare il literal Python `None` nel JSON (errore Snowflake "unknown keyword None" in PARSE_JSON), proposto
 - [appuntamento](develop/models/L2/MAIN/appuntamento.sql) — APPUNTAMENTO (CONTATTI), proposto — PK e 4 RT con gap gravi nel data model, vedi WARN inline
 - [contatto_ngs](develop/models/L2/MAIN/contatto_ngs.sql) — CONTATTO_NGS (CONTATTI), proposto
 - [preventivi](develop/models/L2/MAIN/preventivi.sql) — PREVENTIVI (CONTATTI), proposto
