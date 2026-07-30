@@ -1,0 +1,41 @@
+-- Entita' L2: MANDATI_INCASSI_SDD
+-- Storicizzazione: S4 (incremental / insert_overwrite) -- confermata dall'utente (catalogo senza S)
+-- Main: ICMAFMAN (cluster A2 -> filtro FL_DELETED). Lookup: BNPTFCUC (cluster non indicato nel catalogo)
+
+SELECT
+    man.ICMAMAN_PROGRESSIVO AS PR_MANDATO,
+    man.ICMAMAN_MANDATO AS CD_MANDATO,
+    man.ICMAMAN_CID AS CD_CID,
+    -- RT: cuc.BNPTCUC_CODICE_SIA FROM ICMAFMAN JOIN BNPTFCUC ON ICMAMAN_CID = BNPTFCUC_CAMPO_CID
+    -- NB: la RT indicava JOIN; usato LEFT JOIN (lookup) per non filtrare la main.
+    -- WARN: prefissi colonna incoerenti nel data model (BNPTCUC_CODICE_SIA vs BNPTFCUC_CAMPO_CID) - trascritti come da RT
+    cuc.BNPTCUC_CODICE_SIA AS CD_SIA,
+    man.ICMAMAN_PROCEDURA AS TP_PROCEDURA,
+    man.ICMAMAN_PRATICA AS CD_PRATICA,
+    man.ICMAMAN_ABI AS CD_ABI_MANDATO,
+    man.ICMAMAN_CAB AS CD_CAB_MANDATO,
+    man.ICMAMAN_CONTO_CORRENTE AS CD_CONTO_CORRENTE,
+    man.ICMAMAN_CLIENTE AS CD_CLIENTE,
+    man.ICMAMAN_INTESTATARIO AS CD_INTESTATARIO,
+    man.ICMAMAN_FIRMATARIO AS CD_FIRMATARIO,
+    man.ICMAMAN_STATO AS CD_STATO,
+    {{ custom_to_date('man.ICMAMAN_DATA_FIRMA') }} AS DT_ATTIVAZIONE,
+    {{ custom_to_date('man.ICMAMAN_DATA_INS') }} AS DT_DELEGA,
+    man.ICMAMAN_TIPO_INS AS TP_INSERIMENTO,
+    {{ custom_to_timestamp_ntz('man.ICMAMAN_DATA_INS', 'man.ICMAMAN_ORA_INS') }} AS TS_INSERIMENTO,
+    man.ICMAMAN_UTE_INS AS CD_UTENTE_INSERIMENTO,
+    man.ICMAMAN_TIPO_VAR AS TP_VARIAZIONE,
+    {{ custom_to_timestamp_ntz('man.ICMAMAN_DATA_VAR', 'man.ICMAMAN_ORA_VAR') }} AS TS_VARIAZIONE,
+    man.ICMAMAN_UTE_VAR AS CD_UTENTE_VARIAZIONE,
+    man.ICMAMAN_TIPO_ANN AS TP_ANNULLO,
+    {{ custom_to_timestamp_ntz('man.ICMAMAN_DATA_ANN', 'man.ICMAMAN_ORA_ANN') }} AS TS_ANNULLO,
+    man.ICMAMAN_UTE_ANN AS CD_UTENTE_ANNULLO,
+    man.ICMAMAN_TIPO_MANDATO AS TP_MANDATO,
+    man.ICMAMAN_REINOLTRO_CAN AS FL_REINOLTRO_CAN,
+    man.ICMAMAN_NOME_INT_CC AS DS_NOME_INTEST_CC,
+    man.ICMAMAN_COGNOME_INT_CC AS DS_COGNOME_INTEST_CC,
+    man.ICMAMAN_TIPO_FLUSSO AS TP_FLUSSO
+FROM {{ ref('icmafman') }} man
+LEFT JOIN {{ ref('bnptfcuc') }} cuc
+    ON man.ICMAMAN_CID = cuc.BNPTCUC_CODICE_CUC
+WHERE man.FL_DELETED = 'N'

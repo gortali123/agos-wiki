@@ -1,0 +1,104 @@
+version: 2
+models:
+  - name: pagamenti_bonifici
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "PAGAMENTI_BONIFICI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PAGAMENTO]
+    columns:
+      - name: CD_PAGAMENTO
+        data_type: NUMBER(11)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_BONIFICO
+        data_type: VARCHAR(2)
+      - name: CD_ORIGINE_BONIFICO
+        data_type: VARCHAR(2)
+      - name: DS_BONIFICO
+        data_type: VARCHAR(45)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: TP_BENEFICIARIO
+        data_type: VARCHAR(2)
+      - name: CD_BENEFICIARIO
+        data_type: NUMBER(9)
+      - name: CD_ABI_BENEFICIARIO
+        data_type: NUMBER(5)
+      - name: CD_CAB_BENEFICIARIO
+        data_type: NUMBER(5)
+      - name: CD_CC_BENEFICIARIO
+        data_type: VARCHAR(12)
+      - name: CD_BANK_CODE_BENEFICIARIO
+        data_type: NUMBER(8)
+      - name: CD_SUB_NUMBER_BENEFICIARIO
+        data_type: NUMBER(4)
+      - name: CD_RAGIONE_SOC_INTESTATARIO
+        data_type: VARCHAR(60)
+      - name: DT_CREAZIONE
+        data_type: DATE
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: DT_PRESENTAZIONE
+        data_type: DATE
+      - name: DT_VALUTA
+        data_type: DATE
+      - name: DT_VALUTA_ACCR
+        data_type: DATE
+      - name: DT_RIENTRO
+        data_type: DATE
+      - name: DT_ESECUZIONE
+        data_type: DATE
+      - name: EU_IMPORTO
+        data_type: NUMBER(13,2)
+      #- name: EU_COMMISSIONI
+      #data_type: NUMBER(13,2)
+      - name: CD_BANCA_INTERNA
+        data_type: NUMBER(5)
+      - name: CD_IBAN_USCITA
+        data_type: NUMBER(5)
+      - name: CD_CAUSALE_RIENTRO
+        data_type: NUMBER(5)
+      - name: TP_ANOMALIA
+        data_type: VARCHAR(1)
+      - name: CD_NUMERO_FATTURA
+        data_type: VARCHAR(12)
+      - name: CD_DISTINTA_PRESENTAZ
+        data_type: NUMBER(11)
+      - name: CD_DISTINTA_ORIG
+        data_type: NUMBER(7)
+      - name: NM_RATA
+        data_type: NUMBER(3)
+      - name: CD_RAGIONE_SOCIALE_CLI_PRATICA
+        data_type: VARCHAR(35)
+      - name: BOW_PLICO
+        data_type: VARCHAR(8)
+      - name: BOW_MIR
+        data_type: VARCHAR(10)
+      - name: CD_CRO
+        data_type: VARCHAR(35)
+      - name: DS_NOTE
+        data_type: VARCHAR(110)
+      - name: TS_NOTE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_NOTE
+        data_type: VARCHAR(10)
+      - name: BOW_PROGR_PRAT
+        data_type: NUMBER(3)
+      - name: BOW_ESITO_6
+        data_type: VARCHAR(1)
+      - name: BOW_ESITO_7
+        data_type: VARCHAR(1)
+      - name: BOW_ESITO_9
+        data_type: VARCHAR(1)
+      - name: BOW_GROUP_STATUS
+        data_type: VARCHAR(4)
+      - name: BOW_DATA_DA
+        data_type: NUMBER(5)
+      - name: BOW_DATA_AL
+        data_type: NUMBER(5)

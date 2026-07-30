@@ -1,0 +1,58 @@
+-- Entita' L2: INCASSI_SDD
+-- Storicizzazione: S4 (incremental / insert_overwrite) -- confermata dall'utente (catalogo senza S)
+-- Main: CCCASTE (cluster A2 -> filtro FL_DELETED). Lookup: CCNEWABI (cluster C -> FL_DELETED nel join)
+
+SELECT
+    cas.CAS_NUMERO_DOCUMENTO AS CD_SDD,
+    cas.CAS_PROVENIENZA AS TP_PROCEDURA,
+    cas.CAS_TIPO AS TP_SDD,
+    cas.CAS_NUM_PRATICA AS CD_PRATICA,
+    cas.CAS_CLIENTE AS CD_CLIENTE,
+    cas.CAS_STATO AS CD_STATO,
+    cas.CAS_ATTRIBUTO AS CD_ATTRIBUTO,
+    cas.CAS_NUMERO_PRESENT AS CD_NUMERO_PRESENT,
+    cas.CAS_PRESENTAZIONE AS TP_PRESENTAZIONE,
+    {{ custom_to_decimal('cas.CAS_IMPORTO_TOTALE', 13, 2) }} AS EU_IMPORTO,
+    {{ custom_to_date('cas.CAS_DATA_SCADENZA') }} AS DT_SCADENZA,
+    {{ custom_to_date('cas.CAS_DATA_EMISSIONE') }} AS DT_PRESENTAZIONE,
+    {{ custom_to_date('cas.CAS_DATA_REG_INSOL') }} AS DT_REG_INSOLUTO,
+    cas.CAS_NUMERO_RATA AS NM_RATA,
+    {{ custom_to_date('cas.CAS_DATA_SCADENZA_ORIG') }} AS DT_SCADENZA_ORIG,
+    {{ custom_to_decimal('cas.CAS_IMPORTO_RATA', 13, 2) }} AS EU_IMPORTO_RATA,
+    cas.CAS_TIPO_RATA AS TP_RATA,
+    cas.CAS_CAUSALE_INSOLUTO AS CD_CAUSALE_INSOLUTO,
+    cas.CAS_MANDATO AS CD_MANDATO,
+    cas.CAS_BC_ABI AS CD_ABI_CLIENTE_PAG,
+    -- RT: LEFT JOIN CCNEWABI ON CCCASTE.CAS_BC_ABI = CCNEWABI.ABI_ABI
+    abi_bc.ABI_DENOMINAZIONE AS DS_ABI_CLIENTE_PAG,
+    cas.CAS_BC_CAB AS CD_CAB_CLIENTE_PAG,
+    cas.CAS_BC_CONTO_CORRENTE AS CD_CC_CLIENTE_PAG,
+    cas.CAS_CLIENTE_PAGANTE AS CD_CLIENTE_PAG,
+    cas.CAS_BA_CODICE AS CD_BA_PRESENTAZIONE,
+    cas.CAS_BA_ABI AS CD_BA_ABI,
+    -- RT: LEFT JOIN CCNEWABI ON CCCASTE.CAS_BA_ABI = CCNEWABI.ABI_ABI
+    -- WARN: data model tipizza DS_BA_ABI come NUMBER(80) ma la sorgente ABI_DENOMINAZIONE e' testo -> trattato come VARCHAR
+    abi_ba.ABI_DENOMINAZIONE AS DS_BA_ABI,
+    {{ custom_to_decimal('cas.CAS_SPESE_INCASSO', 13, 2) }} AS EU_SPESE_INCASSO,
+    cas.CAS_BC_PROVINCIA AS CD_BC_PROVINCIA,
+    {{ custom_to_decimal('cas.CAS_IMPORTO_BOLLI', 13, 2) }} AS EU_IMPORTO_BOLLI,
+    cas.CAS_A_VISTA AS CAS_A_VISTA,
+    cas.CAS_TIPO_ADDEBITO AS TP_ADDEBITO,
+    cas.CAS_TIPO_INSOL_RICH AS CAS_TIPO_INSOL_RICH,
+    cas.CAS_TIPO_EFFETTO AS CAS_TIPO_EFFETTO,
+    -- WARN: tipo 'NUMBER(S)(8)' nel data model interpretato come NUMBER(8)
+    cas.CAS_BA_BANK_CODE AS CAS_BA_BANK_CODE,
+    cas.CAS_BA_SUB_NUMBER AS CAS_BA_SUB_NUMBER,
+    cas.CAS_BC_BANK_CODE AS CAS_BC_BANK_CODE,
+    cas.CAS_BC_SUB_NUMBER AS CAS_BC_SUB_NUMBER,
+    cas.CAS_COD_DEBITORE AS CD_DEBITORE,
+    cas.CAS_COD_SIA AS CD_COD_SIA,
+    cas.CAS_CAUSALE_STORNO AS CD_CAUSALE_STORNO
+FROM {{ ref('cccaste') }} cas
+LEFT JOIN {{ ref('ccnewabi') }} abi_bc
+    ON cas.CAS_BC_ABI = abi_bc.ABI_ABI
+    AND abi_bc.FL_DELETED = 'N'
+LEFT JOIN {{ ref('ccnewabi') }} abi_ba
+    ON cas.CAS_BA_ABI = abi_ba.ABI_ABI
+    AND abi_ba.FL_DELETED = 'N'
+WHERE cas.FL_DELETED = 'N'

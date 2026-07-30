@@ -6,7 +6,7 @@ models:
       materialized: incremental
       incremental_strategy: append
       pre_hook:
-        - "{{ delete_month(get_dt_osservazione('ts_riferimento')) }}"
+        - "{{ delete_dt_osservazione('DT_OSSERVAZIONE','monthly') }}"
       meta:
         cluster: ["D"]
       query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CH1", "archivio":"OXCTFFBT_M"}'

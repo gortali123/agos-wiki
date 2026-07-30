@@ -20,7 +20,7 @@ models:
     constraints:
       - type: primary_key
         warn_unenforced: false
-        columns: [CD_INQUIRYCODE, CD_POLICY, TS_INSERIMENTO] # WARN: Da inserire CD_RUOLO come PK al momento risulta NULL
+        columns: [CD_INQUIRYCODE, CD_RUOLO, CD_POLICY, TS_INSERIMENTO]
     columns:
       - name: CD_INQUIRYCODE
         data_type: VARCHAR(255)
@@ -31,7 +31,7 @@ models:
       - name: TS_INSERIMENTO
         data_type: TIMESTAMP_NTZ
       - name: DS_POLICY
-        data_type: NUMBER(38,0)
+        data_type: VARCHAR
       - name: CD_POLICY_ESITO
         data_type: VARCHAR
       - name: CD_POLICY_FIRMA

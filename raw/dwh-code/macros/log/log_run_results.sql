@@ -5,7 +5,6 @@
 
     {% for res in results %}
 
-      {# --- MODELLI / SNAPSHOT (esclusi ephemeral e view) --- #}
       {% if res.node.resource_type in ('model', 'snapshot')
             and res.node.config.materialized not in ('ephemeral', 'view') %}
 
@@ -13,7 +12,7 @@
 {
   "execution_type": "MODEL",
   "ts_started_at": "{{ ts_started_at }}",
-  "nm_execution_time": {{ res.execution_time | default(0) }},
+  "nm_execution_time": {{ res.execution_time | default(0, true) }},
   "ds_schema": "{{ res.node.schema }}",
   "ds_tabella": "{{ (res.node.alias or res.node.name) | upper }}",
   "ds_status": "{{ res.status | upper }}",
@@ -27,7 +26,6 @@
 
         {% set ns.rows = ns.rows + [row] %}
 
-      {# --- TEST --- #}
       {% elif res.node.resource_type == 'test' %}
 
         {% set started = res.timing | selectattr("name","equalto","compile") | map(attribute="started_at") | first | default("") %}
@@ -43,12 +41,12 @@
 {
   "execution_type": "TEST",
   "ts_started_at": "{{ ts_started_at }}",
-  "nm_execution_time": {{ res.execution_time | default(0) }},
+  "nm_execution_time": {{ res.execution_time | default(0, true) }},
   "ds_schema": "{{ table_schema }}",
   "ds_tabella": "{{ table_name | upper }}",
   "ds_status": "{{ res.status | upper }}",
   "ds_test_name": "{{ (res.node.test_metadata.name | default("")) | upper }}",
-  "nm_failures": {{ res.failures | default("null") }},
+  "nm_failures": {{ res.failures | default("null", true) }},
   "ds_message": {{ res.message | tojson if res.message else "null" }},
   "cd_run_dbt": "{{ invocation_id }}",
   "cd_query_sf": "{{ res.adapter_response.query_id | default("") }}"

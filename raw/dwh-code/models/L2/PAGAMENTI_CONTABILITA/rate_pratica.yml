@@ -1,0 +1,48 @@
+version: 2
+models:
+  - name: rate_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "RATE_M"}'
+      pre_hook:
+        - "{{ delete_month() }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [TP_PROCEDURA, CD_PRATICA, NM_PROG_PIANO, NM_PROG_RATA, DT_OSSERVAZIONE]
+    columns:
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(16)
+      - name: NM_PROG_PIANO
+        data_type: NUMBER(5)
+      - name: NM_PROG_RATA
+        data_type: NUMBER(5)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: NM_RATA
+        data_type: NUMBER(3)
+      - name: NM_RATA_ORIG
+        data_type: NUMBER(3)
+      - name: TP_RATA
+        data_type: VARCHAR(1)
+      - name: DT_SCAD
+        data_type: DATE
+      - name: EU_IMPORTO_RATA
+        data_type: NUMBER(13,2)
+      - name: EU_CAPITALE
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI
+        data_type: NUMBER(13,2)
+      - name: EU_CAPITALE_RESIDUO
+        data_type: NUMBER(13,2)
+      - name: DT_SCAD_NEW
+        data_type: DATE
+      - name: DT_ACCODAMENTO
+        data_type: DATE
+      - name: TP_ACCODAMENTO
+        data_type: VARCHAR(1)
+      - name: FL_ACCODAMENTO
+        data_type: VARCHAR(1)

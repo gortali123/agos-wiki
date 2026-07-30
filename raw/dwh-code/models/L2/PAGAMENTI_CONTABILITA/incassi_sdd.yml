@@ -1,0 +1,94 @@
+version: 2
+models:
+  - name: incassi_sdd
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "INCASSI_SDD"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_SDD, TP_PROCEDURA, TP_SDD]
+    columns:
+      - name: CD_SDD
+        data_type: NUMBER(11)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TP_SDD
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR(2)
+      - name: CD_NUMERO_PRESENT
+        data_type: NUMBER(11)
+      - name: TP_PRESENTAZIONE
+        data_type: VARCHAR(1)
+      - name: EU_IMPORTO
+        data_type: NUMBER(13,2)
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: DT_PRESENTAZIONE
+        data_type: DATE
+      - name: DT_REG_INSOLUTO
+        data_type: DATE
+      - name: NM_RATA
+        data_type: NUMBER(4)
+      - name: DT_SCADENZA_ORIG
+        data_type: DATE
+      - name: EU_IMPORTO_RATA
+        data_type: NUMBER(13,2)
+      - name: TP_RATA
+        data_type: VARCHAR(1)
+      - name: CD_CAUSALE_INSOLUTO
+        data_type: VARCHAR(5)
+      - name: CD_MANDATO
+        data_type: VARCHAR(35)
+      - name: CD_ABI_CLIENTE_PAG
+        data_type: NUMBER(5)
+      - name: DS_ABI_CLIENTE_PAG
+        data_type: VARCHAR(80)
+      - name: CD_CAB_CLIENTE_PAG
+        data_type: NUMBER(5)
+      - name: CD_CC_CLIENTE_PAG
+        data_type: VARCHAR(15)
+      - name: CD_CLIENTE_PAG
+        data_type: NUMBER(9)
+      - name: CD_BA_PRESENTAZIONE
+        data_type: NUMBER(5)
+      - name: CD_BA_ABI
+        data_type: NUMBER(5)
+      - name: DS_BA_ABI
+        data_type: VARCHAR(80)
+      - name: EU_SPESE_INCASSO
+        data_type: NUMBER(13,2)
+      - name: CD_BC_PROVINCIA
+        data_type: VARCHAR(2)
+      - name: EU_IMPORTO_BOLLI
+        data_type: NUMBER(13,2)
+      - name: CAS_A_VISTA
+        data_type: VARCHAR(1)
+      - name: TP_ADDEBITO
+        data_type: VARCHAR(2)
+      - name: CAS_TIPO_INSOL_RICH
+        data_type: VARCHAR(1)
+      - name: CAS_TIPO_EFFETTO
+        data_type: VARCHAR(1)
+      - name: CAS_BA_BANK_CODE
+        data_type: NUMBER(8)
+      - name: CAS_BA_SUB_NUMBER
+        data_type: NUMBER(4)
+      - name: CAS_BC_BANK_CODE
+        data_type: NUMBER(8)
+      - name: CAS_BC_SUB_NUMBER
+        data_type: NUMBER(4)
+      - name: CD_DEBITORE
+        data_type: VARCHAR(16)
+      - name: CD_COD_SIA
+        data_type: VARCHAR(5)
+      - name: CD_CAUSALE_STORNO
+        data_type: VARCHAR(2)

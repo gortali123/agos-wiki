@@ -18,18 +18,26 @@ models:
         data_type: TIMESTAMP_NTZ
       - name: id
         data_type: VARCHAR(18)
+      - name: catalogoazioni__r_id
+        data_type: VARCHAR
       - name: catalogoazioni__r_name
-        data_type: VARCHAR(255)
+        data_type: VARCHAR
+      - name: createdbyid
+        data_type: VARCHAR
       - name: createdby_federationidentifier
-        data_type: VARCHAR(255)
+        data_type: VARCHAR
       - name: createddate
         data_type: TIMESTAMP_NTZ
       - name: descrizione__c
-        data_type: VARCHAR(300)
+        data_type: VARCHAR(255)
+      - name: iniziativa__r_id
+        data_type: VARCHAR
       - name: iniziativa__r_idiniziativa__c
-        data_type: VARCHAR(255)
+        data_type: VARCHAR
+      - name: lastmodifiedbyid
+        data_type: VARCHAR
       - name: lastmodifiedby_federationidentifier
-        data_type: VARCHAR(255)
+        data_type: VARCHAR
       - name: lastmodifieddate
         data_type: TIMESTAMP_NTZ
       - name: name

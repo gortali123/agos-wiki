@@ -19,7 +19,8 @@ WITH src AS (
     SELECT
         TS_RIFERIMENTO,
         VALUE AS xml_doc
-    FROM {{ ref('cde') }}          -- ASSUNZIONE: modello landing CDE = ref('cde'); VALIDARE nome reale
+    --FROM { re('cde') }}
+    FROM AGOS_DEV_16000.L1_E_CDE.CDE_TEST2
     WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneResponse'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'PRESCREENING'
     {% if is_incremental() %}
       AND TS_RIFERIMENTO > (SELECT COALESCE(MAX(TS_INSERIMENTO), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
@@ -101,37 +102,17 @@ raw AS (
     FROM categories_with_ruolo
     WHERE CAT_TAG = 'POLICY_RULES'
 
-),
-
--- 2. CONVERSIONE
-conv AS (
-
-    SELECT
-        CD_INQUIRYCODE,
-        CD_RUOLO,
-        CD_POLICY,
-        -- WARN: DS_POLICY ha TIPO NUMBER nel data model ma la RF (POLICY_DESCRIZIONE) e' una descrizione testuale;
-        --       tipizzato NUMBER come da data model, ma verificare (probabile refuso: dovrebbe essere VARCHAR).
-        TRY_CAST(DS_POLICY_RAW AS NUMBER(38,0)) AS DS_POLICY,
-        CD_POLICY_ESITO,
-        CD_POLICY_FIRMA,
-        DS_POLICY_MESSAGGIO,
-        CD_PROCESSCODE,
-        TS_RIFERIMENTO AS TS_INSERIMENTO
-    FROM raw
-
 )
 
 SELECT
-    -- PK
-    CD_INQUIRYCODE,
-    CD_RUOLO,
-    CD_POLICY,
-    -- campo tecnico di storicizzazione (S2)
-    TS_INSERIMENTO,
-    -- business
-    DS_POLICY,
-    CD_POLICY_ESITO,
-    CD_POLICY_FIRMA,
-    DS_POLICY_MESSAGGIO
-FROM conv
+        CD_INQUIRYCODE,
+        CD_RUOLO,
+        CD_POLICY,
+        TS_RIFERIMENTO AS TS_INSERIMENTO,
+        -- WARN: DS_POLICY ha TIPO NUMBER nel data model ma la RF (POLICY_DESCRIZIONE) e' una descrizione testuale;
+        --       tipizzato NUMBER come da data model, ma verificare (probabile refuso: dovrebbe essere VARCHAR).
+        DS_POLICY_RAW AS DS_POLICY,
+        CD_POLICY_ESITO,
+        CD_POLICY_FIRMA,
+        DS_POLICY_MESSAGGIO
+FROM raw

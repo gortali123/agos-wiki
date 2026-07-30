@@ -1,0 +1,70 @@
+version: 2
+models:
+  - name: mandati_incassi_sdd
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "MANDATI_INCASSI_SDD"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [PR_MANDATO]
+    columns:
+      - name: PR_MANDATO
+        data_type: NUMBER(9)
+      - name: CD_MANDATO
+        data_type: VARCHAR(35)
+      - name: CD_CID
+        data_type: VARCHAR(35)
+      - name: CD_SIA
+        data_type: VARCHAR(5)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: CD_ABI_MANDATO
+        data_type: NUMBER(5)
+      - name: CD_CAB_MANDATO
+        data_type: NUMBER(5)
+      - name: CD_CONTO_CORRENTE
+        data_type: VARCHAR(12)
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_INTESTATARIO
+        data_type: NUMBER(9)
+      - name: CD_FIRMATARIO
+        data_type: NUMBER(9)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: DT_ATTIVAZIONE
+        data_type: DATE
+      - name: DT_DELEGA
+        data_type: DATE
+      - name: TP_INSERIMENTO
+        data_type: VARCHAR(2)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_INSERIMENTO
+        data_type: VARCHAR(10)
+      - name: TP_VARIAZIONE
+        data_type: VARCHAR(2)
+      - name: TS_VARIAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_VARIAZIONE
+        data_type: VARCHAR(10)
+      - name: TP_ANNULLO
+        data_type: VARCHAR(2)
+      - name: TS_ANNULLO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_UTENTE_ANNULLO
+        data_type: VARCHAR(10)
+      - name: TP_MANDATO
+        data_type: VARCHAR(3)
+      - name: FL_REINOLTRO_CAN
+        data_type: VARCHAR(1)
+      - name: DS_NOME_INTEST_CC
+        data_type: VARCHAR(30)
+      - name: DS_COGNOME_INTEST_CC
+        data_type: VARCHAR(30)
+      - name: TP_FLUSSO
+        data_type: VARCHAR(1)

@@ -6,7 +6,7 @@ sources:
     tables:
       - name: documentirichiesti__c
         data_tests:
-          - try_cast
+          - try_cast_from_sql
           - primary_key:
               arguments:
                 pk_columns: [id]

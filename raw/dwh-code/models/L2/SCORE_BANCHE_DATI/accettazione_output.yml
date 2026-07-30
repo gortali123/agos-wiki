@@ -18,7 +18,7 @@ models:
       - name: CD_INQUIRYCODE
         data_type: VARCHAR(255)
       - name: CD_RUOLO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: TS_INSERIMENTO
         data_type: TIMESTAMP_NTZ
       - name: CD_PROCESSCODE
@@ -56,7 +56,7 @@ models:
       - name: TP_SCIPAFI
         data_type: VARCHAR
       - name: FL_IN_ORARIO_SERVIZIO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: DS_MESSAGGIO
         data_type: VARCHAR
       - name: NM_ETA_CLIENTE_TERMINE_FINANZIAMENTO
@@ -70,7 +70,7 @@ models:
       - name: CD_FASCIA_RBP
         data_type: VARCHAR
       - name: FL_PERMETTI_VENDITA_CONGIUNTA
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: EU_FIDO_MASSIMO_SCORING
         data_type: NUMBER(16,2)
       - name: CD_VALUTAZIONE_PRT

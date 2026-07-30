@@ -28,7 +28,8 @@ WITH src AS (
     SELECT
         VALUE AS xml_doc,
         TS_RIFERIMENTO
-    FROM {{ ref('cde') }}          -- ASSUNZIONE: modello landing = ref('cde'); VALIDARE nome reale
+    --FROM { re('cde') }}
+    FROM AGOS_DEV_16000.L1_E_CDE.CDE_TEST2
     WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneRequest'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'CUMRIS'
 
     {% if is_incremental() %}

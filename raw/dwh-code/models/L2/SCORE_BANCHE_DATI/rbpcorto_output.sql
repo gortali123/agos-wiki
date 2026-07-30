@@ -8,7 +8,8 @@ WITH src AS (
     SELECT
         VALUE AS xml_doc,
         TS_RIFERIMENTO
-    FROM {{ ref('cde') }}
+    --FROM { re('cde') }}
+    FROM AGOS_DEV_16000.L1_E_CDE.CDE_TEST2
     WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneResponse'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'RBPCORTO'
 
     {% if is_incremental() %}

@@ -24,14 +24,8 @@ models:
         data_type: NUMBER(6)
       - name: EU_INCASSO
         data_type: NUMBER(13,2)
-      - name: FL_STORNO
-        data_type: VARCHAR(1)
-      - name: CD_EVENTO_INCASSO_STORNATO
+      - name: CD_EVENTO_INCASSO_STORNO
         data_type: NUMBER(11)
-      - name: FL_STORNATO
-        data_type: VARCHAR(1)
-      - name: DT_REG_STORNO
-        data_type: DATE
       - name: CD_ORIGINE
         data_type: VARCHAR(3)
       - name: TP_FORMA_PAGAMENTO

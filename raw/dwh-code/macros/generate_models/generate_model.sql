@@ -64,6 +64,7 @@
       {% endif %}
     {% endif %}
     {% set is_ocs = sorgente is not none and (sorgente | upper) == 'OCS' %}
+    {% set is_d_monthly = cluster is not none and (cluster | upper) == 'D' and is_ocs %}
 
     {% set pk_cols = [] %}
     {% for row in rows %}
@@ -96,8 +97,8 @@
     {% do out.append('  sys_change_operation,') %}
     {% do out.append('  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,') %}
     {% endif %}
-    {% if cluster is not none and (cluster | upper) == 'D' %}
-    {% do out.append("  {{ get_dt_osservazione('ts_riferimento') }} as dt_osservazione,") %}
+    {% if is_d_monthly %}
+    {% do out.append("  {{ compute_dt_osservazione('ts_riferimento') }} as dt_osservazione,") %}
     {% endif %}
     {% if rows | length > 0 %}
       {% for row in rows %}
@@ -116,8 +117,8 @@
       {% do out.append('  *') %}
     {% endif %}
     {% do out.append('from {{ source(' ~ "'source_l0'," ~ "'" ~ table ~ "'" ~ ') }}') %}
-    {% if cluster is not none and (cluster | upper) == 'D' %}
-    {% do out.append("where {{ get_dt_osservazione('ts_riferimento') }} = {{ get_dt_osservazione() }}") %}
+    {% if is_d_monthly %}
+    {% do out.append("where dt_osservazione = {{ get_dt_osservazione() }}") %}
     {% endif %}
     {% do out.append('---') %}
     {% do out.append('') %}

@@ -24,6 +24,8 @@ models:
         data_type: VARCHAR
       - name: case_casenumber
         data_type: VARCHAR(255)
+      - name: createdbyid
+        data_type: VARCHAR
       - name: createddate
         data_type: TIMESTAMP_NTZ
       - name: field
@@ -34,5 +36,3 @@ models:
         data_type: VARCHAR(255)
       - name: newvalue
         data_type: VARCHAR(255)
-      - name: createdbyid
-        data_type: VARCHAR

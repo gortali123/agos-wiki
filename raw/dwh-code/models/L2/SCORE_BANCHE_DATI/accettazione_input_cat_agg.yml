@@ -18,7 +18,7 @@ models:
       - name: CD_INQUIRYCODE
         data_type: VARCHAR(255)
       - name: NM_POSIZIONE_AGG
-        data_type: NUMBER(16,0)
+        data_type: VARCHAR
       - name: TS_INSERIMENTO
         data_type: TIMESTAMP_NTZ
       - name: CD_PROCESSCODE

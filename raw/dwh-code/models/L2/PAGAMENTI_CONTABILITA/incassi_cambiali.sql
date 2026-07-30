@@ -1,0 +1,72 @@
+-- Entita' L2: INCASSI_CAMBIALI
+-- Storicizzazione: S4 (incremental / insert_overwrite) -- confermata dall'utente (catalogo senza S)
+-- Main: GAEFARC (cluster A2 -> filtro FL_DELETED)
+
+SELECT
+    ef.EF_NUM_EFFETTO AS PR_CAMBIALE,
+    ef.EF_MARCATURA AS CD_CAMBIALE,
+    ef.EF_TIPO_EFFETTO AS TP_CAMBIALE,
+    ef.EF_PROVENIENZA AS TP_PROCEDURA,
+    ef.EF_NUM_PRATICA AS CD_PRATICA,
+    ef.EF_NUM_RATA AS NM_RATA,
+    ef.EF_STATO AS CD_STATO,
+    {{ custom_to_date('ef.EF_DATA_CARICAMENTO') }} AS DT_REGISTRAZIONE,
+    {{ custom_to_date('ef.EF_DATA_SCADENZA') }} AS DT_INCASSO_PIAN,
+    {{ custom_to_decimal('ef.EF_IMPORTO', 11, 2) }} AS EU_IMPORTO,
+    -- RT (adattata alla main GAEFARC): FL_SPESE_PRES da EFEXFINCDE agganciata a GAEFARC su recuperatore + rapportino + prog_inc_rap
+    -- FIX: la RT originale scriveva 'EFEXFEDPS.EFEXCDE_*' nel join, ma il prefisso EFEXCDE_ e' di EFEXFINCDE (confermato dalle CHIAVI). Corretto.
+    -- NB: EFEXFEDPS della RT originale e' omessa: serviva solo come main in OPERAZIONI_CAMBIALE; qui la grana e' l'effetto GAEFARC e includerla duplicherebbe le righe.
+    --sp.EFEXCDE_FL_SP_PRES AS FL_SPESE_PRES,
+    --NULL AS FL_SPESE_PRES,
+    --NULL AS CD_FLUSSO,
+    --NULL AS TP_FLUSSO,
+    --NULL AS DT_INVIO_FLUSSO,
+    --NULL AS DT_VARIAZIONE,
+    ef.EF_CLIENTE AS CD_CLIENTE,
+    ef.EF_DEBITORE AS CD_DEBITORE,
+    ef.EF_ABI_DEBITORE AS CD_ABI_DEBITORE,
+    ef.EF_CAB_DEBITORE AS CD_CAB_DEBITORE,
+    {{ custom_to_date('ef.EF_DATA_SCADENZA_ORIG') }} AS DT_SCADENZA_ORIG_EFFETTO,
+    ef.EF_DISLOCAZIONE AS TP_DISLOCAZIONE,
+    {{ custom_to_date('ef.EF_DATA_PRESENTAZIONE') }} AS DT_PRESENTAZIONE,
+    ef.EF_NUM_PRESENTAZIONE AS CD_NUM_PRESENTAZIONE,
+    ef.EF_BANCA_PRESENTAZIONE AS CD_BANCA_PRESENTAZIONE,
+    ef.EF_ABI_PRESENTAZIONE AS CD_ABI_PRESENTAZIONE,
+    ef.EF_CAB_PRESENTAZIONE AS CD_CAB_PRESENTAZIONE,
+    ef.EF_TIPO_PRESENTAZIONE AS TP_PRESENTAZIONE,
+    {{ custom_to_date('ef.EF_DATA_INCASSO') }} AS DT_INCASSO,
+    {{ custom_to_date('ef.EF_DATA_RITORNO') }} AS DT_RITORNO,
+    ef.EF_MOTIVO_RICHIAMO AS CD_MOTIVO_RICHIAMO,
+    {{ custom_to_decimal('ef.EF_SPESE_PROTESTO', 11, 2) }} AS EU_SPESE_PROTESTO,
+    {{ custom_to_decimal('ef.EF_SPESE_BANCARIE', 11, 2) }} AS EU_SPESE_BANCARIE,
+    ef.EF_VALUTA_I_E AS TP_VALUTA,
+    ef.EF_RECUPERATORE AS CD_RECUPERATORE,
+    ef.EF_NUM_DOC_AP AS CD_NUM_DOC_AP,
+    ef.EF_COD_CAVEAU AS CD_CAVEAU,
+    ef.EF_EXTRA_CONTR AS FL_EXTRA_CONTRATTO,
+    ef.EF_COD_FILIALE AS CD_FILIALE_EFFETTO,
+    ef.EF_FLAG_ATT_GA AS FL_GARANZIA_ATTIVA,
+    ef.EF_ATTRIBUTO AS CD_ATTRIBUTO,
+    ef.EF_RAPPORTINO AS CD_RAPPORTINO,
+    ef.EF_LOTTO AS CD_LOTTO,
+    ef.EF_GESTORE AS CD_GESTORE,
+    ef.EF_PROG_INC_RAP AS PR_INC_RAPPORTINO,
+    ef.EF_DELEGATO AS CD_DELEGATO,
+    ef.EF_LOG_DELEGATO AS TP_LOG_DELEGATO,
+    ef.EF_EVENTO_INCASSO AS CD_EVENTO_INCASSO,
+    ef.EF_EVENTO_INSOLUT AS CD_EVENTO_INSOLUTO,
+    ef.EF_FLAG_SPESE_PROT_TEL AS FL_SPESE_PROT_TEL,
+    ef.EF_TELEMATICO AS TP_TELEMATICO,
+    {{ custom_to_date('ef.EF_DATA_RIENTRO') }} AS DT_RIENTRO,
+    {{ custom_to_decimal('ef.EF_IMP_RATE', 11, 2) }} AS EU_QUOTA_RATE,
+    {{ custom_to_decimal('ef.EF_IMP_MORA', 11, 2) }} AS EU_QUOTA_MORA,
+    {{ custom_to_decimal('ef.EF_IMP_SPESE', 11, 2) }} AS EU_QUOTA_SPESE,
+    {{ custom_to_decimal('ef.EF_IMP_ALTRI', 11, 2) }} AS EU_QUOTA_ALTRI
+FROM {{ ref('gaefarc') }} ef
+{#
+LEFT JOIN {{ref('efexfincde') }} sp
+    ON ef.EF_RECUPERATORE = sp.EFEXCDE_RECUPERATORE
+    AND ef.EF_RAPPORTINO = sp.EFEXCDE_RAPPORTINO
+    AND ef.EF_PROG_INC_RAP = sp.EFEXCDE_PROGR_INC
+#}
+WHERE ef.FL_DELETED = 'N'

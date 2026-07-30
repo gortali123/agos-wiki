@@ -2,9 +2,9 @@
 {%- if var('dt_osservazione', none) is not none -%}
   '{{ var("dt_osservazione") }}'::DATE
 {%- else -%}
-  {%- if {{ schedule }} = 'monthly' -%}
+  {%- if schedule == 'monthly' -%}
     LAST_DAY(DATEADD(MONTH, -1, CURRENT_DATE))
-  {%- elif {{ schedule }} = 'weekly' -%}
+  {%- elif schedule == 'weekly' -%}
     DATEADD(DAY, -MOD(DAYOFWEEKISO(CURRENT_DATE) - 5 + 7, 7), CURRENT_DATE)
   {%- endif -%}
 {%- endif -%}

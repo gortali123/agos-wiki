@@ -14,7 +14,8 @@ WITH src AS (
     SELECT
         TS_RIFERIMENTO,
         VALUE AS xml_doc
-    FROM {{ ref('cde') }}          -- ASSUNZIONE: landing CDE = ref('cde')
+    --FROM { re('cde') }}
+    FROM AGOS_DEV_16000.L1_E_CDE.CDE_TEST2
     WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneRequest'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'TARGATO'
     {% if is_incremental() %}
       AND TS_RIFERIMENTO > (SELECT COALESCE(MAX(TS_INSERIMENTO), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})

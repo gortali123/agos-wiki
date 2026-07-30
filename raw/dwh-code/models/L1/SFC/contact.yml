@@ -18,57 +18,69 @@ models:
         data_type: TIMESTAMP_NTZ
       - name: id
         data_type: VARCHAR(18)
-      - name: isdeleted
-        data_type: BOOLEAN
       - name: account_externalkey__c
+        data_type: VARCHAR
+      - name: account_name
         data_type: VARCHAR(255)
-      - name: ispersonaccount
-        data_type: BOOLEAN
-      - name: lastname
+      - name: birthdate
+        data_type: DATE
+      - name: createdbyid
+        data_type: VARCHAR
+      - name: createdby_federationidentifier
+        data_type: VARCHAR
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: email
         data_type: VARCHAR(255)
       - name: firstname
         data_type: VARCHAR(255)
-      - name: salutation
-        data_type: VARCHAR(40)
-      - name: middlename
-        data_type: VARCHAR(255)
-      - name: suffix
-        data_type: VARCHAR(255)
-      - name: name
-        data_type: VARCHAR(255)
-      - name: recordtype_name
-        data_type: VARCHAR(255)
-      - name: phone
-        data_type: VARCHAR(40)
-      - name: mobilephone
-        data_type: VARCHAR(40)
       - name: homephone
-        data_type: VARCHAR(40)
-      - name: otherphone
-        data_type: VARCHAR(40)
-      - name: email
-        data_type: VARCHAR(255)
-      - name: title
-        data_type: VARCHAR(255)
-      - name: birthdate
-        data_type: TIMESTAMP_NTZ
-      - name: owner_federationidentifier
-        data_type: VARCHAR(255)
-      - name: createddate
-        data_type: TIMESTAMP_NTZ
-      - name: createdby_federationidentifier
-        data_type: VARCHAR(255)
+        data_type: VARCHAR
+      - name: isdeleted
+        data_type: BOOLEAN
+      - name: ispersonaccount
+        data_type: BOOLEAN
+      - name: lastactivitydate
+        data_type: DATE
+      - name: lastmodifiedbyid
+        data_type: VARCHAR
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR
       - name: lastmodifieddate
         data_type: TIMESTAMP_NTZ
-      - name: lastmodifiedby_federationidentifier
+      - name: lastname
         data_type: VARCHAR(255)
-      - name: lastactivitydate
+      - name: lastreferenceddate
         data_type: TIMESTAMP_NTZ
       - name: lastvieweddate
         data_type: TIMESTAMP_NTZ
-      - name: lastreferenceddate
-        data_type: TIMESTAMP_NTZ
+      - name: middlename
+        data_type: VARCHAR(255)
+      - name: mobilephone
+        data_type: VARCHAR
+      - name: name
+        data_type: VARCHAR(255)
+      - name: otherphone
+        data_type: VARCHAR
+      - name: ownerid
+        data_type: VARCHAR
+      - name: owner_federationidentifier
+        data_type: VARCHAR
+      - name: phone
+        data_type: VARCHAR
+      - name: recordtype_id
+        data_type: VARCHAR
+      - name: recordtype_name
+        data_type: VARCHAR
+      - name: reportsto_name
+        data_type: VARCHAR(255)
       - name: ruolo__c
         data_type: VARCHAR(255)
+      - name: salutation
+        data_type: VARCHAR
+      - name: suffix
+        data_type: VARCHAR(255)
+      - name: title
+        data_type: VARCHAR(255)
       - name: noteconcorrenza__c
-        data_type: VARCHAR(32768)
+        data_type: VARCHAR

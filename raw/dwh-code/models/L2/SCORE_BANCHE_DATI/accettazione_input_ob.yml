@@ -45,15 +45,15 @@ models:
       - name: EU_OB_INVESTIMENTI_FINANZIARI_USCITE
         data_type: NUMBER(16,2)
       - name: FL_OB_ALERT_SPESE_MORE_RITARDI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: EU_OB_REDDITO_OPEN_BANKING
         data_type: NUMBER(16,2)
       - name: FL_OB_ESENZIONE_REDDITO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_OB_DUMMY_SIGNIFICATIVO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_OB_IBAN_SIGNIFICATIVO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_OB_IBAN_1
         data_type: VARCHAR
       - name: CD_OB_IBAN_2

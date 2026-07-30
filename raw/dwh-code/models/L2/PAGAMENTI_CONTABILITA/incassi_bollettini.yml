@@ -60,6 +60,8 @@ models:
         data_type: VARCHAR(4)
       - name: TP_OPERAZIONE
         data_type: VARCHAR(2)
+      - name: NM_RATA_PAGATA
+        data_type: NUMBER(3)
       - name: FL_MODIFICATO
         data_type: VARCHAR(1)
       - name: DT_ALLINEAMENTO_SCARTI

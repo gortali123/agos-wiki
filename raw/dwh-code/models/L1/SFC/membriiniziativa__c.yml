@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: membriiniziativa__c
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"MEMBRIINIZIATIVA__C"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id
+        data_type: VARCHAR(18)
+      - name: account__r_externalkey__c
+        data_type: VARCHAR
+      - name: name
+        data_type: VARCHAR
+      - name: iniziativa__r_id
+        data_type: VARCHAR
+      - name: iniziativa__r_idiniziativa__c
+        data_type: VARCHAR
+      - name: stato__c
+        data_type: VARCHAR
+      - name: statoiniziativa__c
+        data_type: VARCHAR
+      - name: scadenzainiziativa__c
+        data_type: DATE
+      - name: myrecordiniziativa__c
+        data_type: VARCHAR(255)
+      - name: createdbyid
+        data_type: VARCHAR
+      - name: createdby_federationidentifier
+        data_type: VARCHAR
+      - name: lastmodifiedbyid
+        data_type: VARCHAR
+      - name: lastmodifiedby_federationidentifier
+        data_type: VARCHAR
+      - name: createddate
+        data_type: TIMESTAMP_NTZ
+      - name: rete__c
+        data_type: VARCHAR(255)
+      - name: nomeiniziativa__c
+        data_type: VARCHAR(255)
+      - name: lastmodifieddate
+        data_type: TIMESTAMP_NTZ
+      - name: presaincaricomassiva__c
+        data_type: BOOLEAN
+      - name: idownerdealer__c
+        data_type: VARCHAR(255)

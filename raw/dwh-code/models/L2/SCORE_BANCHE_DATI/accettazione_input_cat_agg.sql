@@ -16,7 +16,8 @@ WITH src AS (
     SELECT
         TS_RIFERIMENTO,
         VALUE AS xml_doc
-    FROM {{ ref('cde') }}          -- ASSUNZIONE: landing CDE = ref('cde')
+    --FROM { re('cde') }}
+    FROM AGOS_DEV_16000.L1_E_CDE.CDE_TEST2
     WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneRequest'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'TARGATO'
     {% if is_incremental() %}
       AND TS_RIFERIMENTO > (SELECT COALESCE(MAX(TS_INSERIMENTO), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})
@@ -52,7 +53,7 @@ raw AS (
     SELECT
         {{ get_xml_path('n_header', 'InquiryCode', 'VARCHAR') }} AS CD_INQUIRYCODE,
         {{ get_xml_path('n_header', 'ProcessCode', 'VARCHAR') }} AS CD_PROCESSCODE,
-        {{ get_xml_path('n_cat_var', 'POSIZIONE_AGGIUNTIVA', 'VARCHAR') }} AS NM_POSIZIONE_AGG_RAW,
+        {{ get_xml_path('n_cat_var', 'POSIZIONE_AGGIUNTIVA', 'VARCHAR') }} AS NM_POSIZIONE_AGG,
         {{ get_xml_path('n_cat_var', 'RETE_VENDITA_AGGIUNTIVA', 'VARCHAR') }} AS CD_RETE_VENDITA_AGG,
         {{ get_xml_path('n_cat_var', 'AGENTE_AGGIUNTIVA', 'VARCHAR') }} AS CD_AGENTE_AGG,
         {{ get_xml_path('n_cat_var', 'SUBAGENTE_AGGIUNTIVA', 'VARCHAR') }} AS CD_SUBAGENTE_AGG,
@@ -71,38 +72,12 @@ raw AS (
         TS_RIFERIMENTO
     FROM catena
 
-),
-
--- 2. CONVERSIONE
-conv AS (
-
-    SELECT
-        CD_INQUIRYCODE,
-        CD_PROCESSCODE,
-        TRY_CAST(NM_POSIZIONE_AGG_RAW AS NUMBER(16,0)) AS NM_POSIZIONE_AGG,
-        CD_RETE_VENDITA_AGG,
-        CD_AGENTE_AGG,
-        CD_SUBAGENTE_AGG,
-        CD_MACROAREA_RETE_VENDITA,
-        CD_STATO_RETE_VENDITA,
-        CD_ATTRIBUTO_RETE_VENDITA,
-        TP_RETE_VENDITA,
-        CD_MACROAREA_AGENTE,
-        CD_STATO_AGENTE,
-        CD_ATTRIBUTO_AGENTE,
-        TP_AGENTE,
-        CD_MACROAREA_SUBAGENTE,
-        CD_STATO_SUBAGENTE,
-        CD_ATTRIBUTO_SUBAGENTE,
-        TP_SUBAGENTE,
-        TS_RIFERIMENTO AS TS_INSERIMENTO
-    FROM raw
-
 )
+
 SELECT
     CD_INQUIRYCODE,
     NM_POSIZIONE_AGG,
-    TS_INSERIMENTO,
+    TS_RIFERIMENTO AS TS_INSERIMENTO,
     CD_PROCESSCODE,
     CD_RETE_VENDITA_AGG,
     CD_AGENTE_AGG,
@@ -119,4 +94,4 @@ SELECT
     CD_STATO_SUBAGENTE,
     CD_ATTRIBUTO_SUBAGENTE,
     TP_SUBAGENTE
-FROM conv
+FROM raw

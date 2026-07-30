@@ -134,13 +134,13 @@ models:
       - name: CD_CANALE
         data_type: VARCHAR
       - name: FL_CANALE_WEB
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_EMETTITORE
         data_type: VARCHAR
       - name: FL_TIPO_VENDITA_CONGIUNTA
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_MORATORIA_ATTIVA
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_ORIGINE_MORATORIA_ATTIVA
         data_type: VARCHAR
       - name: NM_INSLV_CO_CA_120M
@@ -148,19 +148,19 @@ models:
       - name: NM_INSLV_TOT_120M
         data_type: NUMBER(16,0)
       - name: FL_RIVALUTAZIONE_PRESCREENING_KO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_ESITO_SIA_BANCOMAT
         data_type: VARCHAR
       - name: FL_RIVALUTAZIONE_FLG_CTC
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_RIVALUTAZIONE_FLG_PROTESTI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_RIVALUTAZIONE_FLG_CAI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_ANAGRAFICA
         data_type: VARCHAR
       - name: FL_DIPENDENTE
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_CITTADINANZA
         data_type: VARCHAR
       - name: CD_FISCALE
@@ -188,9 +188,9 @@ models:
       - name: TP_CLIENTE
         data_type: VARCHAR
       - name: FL_NEWDOD_DEFAULT_EBA
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_NEWDOD_FORBORNE
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: NM_NEWDOD_GIORNI_SUPERAMENTO_SOGLIA_MATERIALITA
         data_type: VARCHAR
       - name: EU_CUMULO_AGOS_APPLICANT
@@ -200,19 +200,19 @@ models:
       - name: DT_INIZIO_RESIDENZA
         data_type: DATE
       - name: FL_TRUFFATORE
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_TRUFFATO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_BUON_CLIENTE
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_CTC
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_PROTESTI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_TERRORISTI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_CAI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_FORMA_GIURIDICA
         data_type: VARCHAR
       - name: CD_PARTITA_IVA

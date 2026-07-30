@@ -1,0 +1,23 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  TRY_CAST(Id AS VARCHAR(18)) AS id,
+  TRY_CAST(Account__r_ExternalKey__c AS VARCHAR) AS account__r_externalkey__c,
+  TRY_CAST(Name AS VARCHAR) AS name,
+  TRY_CAST(Iniziativa__r_Id AS VARCHAR) AS iniziativa__r_id,
+  TRY_CAST(Iniziativa__r_IDIniziativa__c AS VARCHAR) AS iniziativa__r_idiniziativa__c,
+  TRY_CAST(Stato__c AS VARCHAR) AS stato__c,
+  TRY_CAST(StatoIniziativa__c AS VARCHAR) AS statoiniziativa__c,
+  TRY_TO_DATE(ScadenzaIniziativa__c, 'YYYY-MM-DD HH24:MI:SS') AS scadenzainiziativa__c,
+  TRY_CAST(MyRecordIniziativa__c AS VARCHAR(255)) AS myrecordiniziativa__c,
+  TRY_CAST(CreatedById AS VARCHAR) AS createdbyid,
+  TRY_CAST(CreatedBy_FederationIdentifier AS VARCHAR) AS createdby_federationidentifier,
+  TRY_CAST(LastModifiedById AS VARCHAR) AS lastmodifiedbyid,
+  TRY_CAST(LastModifiedBy_FederationIdentifier AS VARCHAR) AS lastmodifiedby_federationidentifier,
+  TRY_TO_TIMESTAMP_TZ(CreatedDate)::TIMESTAMP_NTZ AS CreatedDate,
+  TRY_CAST(Rete__c AS VARCHAR(255)) AS rete__c,
+  TRY_CAST(NomeIniziativa__c AS VARCHAR(255)) AS nomeiniziativa__c,
+  TRY_CAST(LastModifiedDate AS TIMESTAMP_NTZ) AS lastmodifieddate,
+  TRY_CAST(PresaInCaricoMassiva__c AS BOOLEAN) AS presaincaricomassiva__c,
+  TRY_CAST(IdOwnerDealer__c AS VARCHAR(255)) AS idownerdealer__c
+from {{ source('source_l0','membriiniziativa__c') }}

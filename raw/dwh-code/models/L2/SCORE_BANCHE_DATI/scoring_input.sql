@@ -9,8 +9,9 @@ WITH src AS (
     SELECT
         VALUE AS xml_doc,
         TS_RIFERIMENTO
-    FROM {{ ref('cde') }}          -- ASSUNZIONE: modello landing = ref('cde'); TS_RIFERIMENTO esposta dalla landing
-    WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneRequest'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'SCORING'
+    --FROM { re('cde') }}          -- ASSUNZIONE: modello landing = ref('cde'); TS_RIFERIMENTO esposta dalla landing
+    FROM AGOS_DEV_16000.L1_E_CDE.CDE_TEST2
+    WHERE XMLGET(XMLGET(XMLGET(VALUE, 'StrategyOneRequest'), 'Header'), 'ProcessCode'):"$"::VARCHAR = 'SCORE'
     
     {% if is_incremental() %}
         AND TS_RIFERIMENTO > (SELECT COALESCE(MAX(TS_INSERIMENTO), '1900-01-01'::TIMESTAMP_NTZ) FROM {{ this }})

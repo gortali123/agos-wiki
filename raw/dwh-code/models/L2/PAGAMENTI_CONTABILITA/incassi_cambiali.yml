@@ -1,0 +1,122 @@
+version: 2
+models:
+  - name: incassi_cambiali
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "INCASSI_CAMBIALI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [PR_CAMBIALE]
+    columns:
+      - name: PR_CAMBIALE
+        data_type: NUMBER(12)
+      - name: CD_CAMBIALE
+        data_type: NUMBER(10)
+      - name: TP_CAMBIALE
+        data_type: VARCHAR(2)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: NM_RATA
+        data_type: NUMBER(3)
+      - name: CD_STATO
+        data_type: VARCHAR(1)
+      - name: DT_REGISTRAZIONE
+        data_type: DATE
+      - name: DT_INCASSO_PIAN
+        data_type: DATE
+      - name: EU_IMPORTO
+        data_type: NUMBER(11,2)
+      #- name: FL_SPESE_PRES
+        #data_type: VARCHAR(5)
+      #- name: CD_FLUSSO
+        #data_type: VARCHAR(20)
+      #- name: TP_FLUSSO
+        #data_type: VARCHAR(2)
+      #- name: DT_INVIO_FLUSSO
+        #data_type: DATE
+      #- name: DT_VARIAZIONE
+        #data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(9)
+      - name: CD_DEBITORE
+        data_type: NUMBER(9)
+      - name: CD_ABI_DEBITORE
+        data_type: NUMBER(5)
+      - name: CD_CAB_DEBITORE
+        data_type: NUMBER(5)
+      - name: DT_SCADENZA_ORIG_EFFETTO
+        data_type: DATE
+      - name: TP_DISLOCAZIONE
+        data_type: VARCHAR(1)
+      - name: DT_PRESENTAZIONE
+        data_type: DATE
+      - name: CD_NUM_PRESENTAZIONE
+        data_type: NUMBER(7)
+      - name: CD_BANCA_PRESENTAZIONE
+        data_type: NUMBER(5)
+      - name: CD_ABI_PRESENTAZIONE
+        data_type: NUMBER(5)
+      - name: CD_CAB_PRESENTAZIONE
+        data_type: NUMBER(5)
+      - name: TP_PRESENTAZIONE
+        data_type: VARCHAR(1)
+      - name: DT_INCASSO
+        data_type: DATE
+      - name: DT_RITORNO
+        data_type: DATE
+      - name: CD_MOTIVO_RICHIAMO
+        data_type: VARCHAR(2)
+      - name: EU_SPESE_PROTESTO
+        data_type: NUMBER(11,2)
+      - name: EU_SPESE_BANCARIE
+        data_type: NUMBER(11,2)
+      - name: TP_VALUTA
+        data_type: VARCHAR(1)
+      - name: CD_RECUPERATORE
+        data_type: VARCHAR(5)
+      - name: CD_NUM_DOC_AP
+        data_type: NUMBER(7)
+      - name: CD_CAVEAU
+        data_type: NUMBER(9)
+      - name: FL_EXTRA_CONTRATTO
+        data_type: VARCHAR(1)
+      - name: CD_FILIALE_EFFETTO
+        data_type: VARCHAR(3)
+      - name: FL_GARANZIA_ATTIVA
+        data_type: VARCHAR(1)
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR(2)
+      - name: CD_RAPPORTINO
+        data_type: NUMBER(7)
+      - name: CD_LOTTO
+        data_type: NUMBER(7)
+      - name: CD_GESTORE
+        data_type: NUMBER(9)
+      - name: PR_INC_RAPPORTINO
+        data_type: NUMBER(11)
+      - name: CD_DELEGATO
+        data_type: NUMBER(9)
+      - name: TP_LOG_DELEGATO
+        data_type: VARCHAR(1)
+      - name: CD_EVENTO_INCASSO
+        data_type: NUMBER(11)
+      - name: CD_EVENTO_INSOLUTO
+        data_type: NUMBER(11)
+      - name: FL_SPESE_PROT_TEL
+        data_type: VARCHAR(1)
+      - name: TP_TELEMATICO
+        data_type: VARCHAR(1)
+      - name: DT_RIENTRO
+        data_type: DATE
+      - name: EU_QUOTA_RATE
+        data_type: NUMBER(11,2)
+      - name: EU_QUOTA_MORA
+        data_type: NUMBER(11,2)
+      - name: EU_QUOTA_SPESE
+        data_type: NUMBER(11,2)
+      - name: EU_QUOTA_ALTRI
+        data_type: NUMBER(11,2)

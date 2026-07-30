@@ -72,7 +72,7 @@ models:
       - name: CD_EMETTITORE
         data_type: VARCHAR
       - name: FL_TIPO_VENDITA_CONGIUNTA
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_RETE_VENDITA
         data_type: VARCHAR
       - name: CD_AGENTE
@@ -92,7 +92,7 @@ models:
       - name: CD_CANALE
         data_type: VARCHAR
       - name: FL_CANALE_WEB
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: CD_DESTINAZIONE_FINANZIAMENTO
         data_type: VARCHAR
       - name: CD_TRUFFA

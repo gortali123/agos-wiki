@@ -26,9 +26,9 @@ models:
       - name: CD_PROCESSCODE
         data_type: VARCHAR
       - name: CD_PROCESSVERSION
-        data_type: NUMBER(38,0)
+        data_type: VARCHAR
       - name: CD_LAYOUTVERSION
-        data_type: NUMBER(38,0)
+        data_type: VARCHAR
       - name: CD_INTERROGAZIONE
         data_type: NUMBER(16,0)
       - name: DT_RICHIESTA
