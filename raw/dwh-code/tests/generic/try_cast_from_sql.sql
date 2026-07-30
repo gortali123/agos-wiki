@@ -32,16 +32,14 @@
           {% set col_from_l1 = l1_node.columns.get(col_name | lower) or l1_node.columns.get(col_name) %}
           {% set col_data_type = col_from_l1.data_type | lower if col_from_l1 else '' %}
           {% set exclude_vals = accepted_values.get(col_data_type) or [] %}
-          {% do cols_to_check.append({'name': col_name, 'expr': col_expr, 'exclude_vals': exclude_vals}) %}
+          {% do cols_to_check.append({'name': col_name, 'expr': render(col_expr), 'exclude_vals': exclude_vals}) %}
         {% endif %}
       {% endif %}
     {% endfor %}
   {% endif %}
 
-  {% set where_clause = '' %}
-  {% if 'WHERE' in sql_upper %}
-    {% set where_clause = l1_sql.split('WHERE')[1] %}
-  {% endif %}
+  {% set where_idx = sql_upper.find('WHERE') %}
+  {% set where_clause = render(l1_sql[where_idx + 5:]) if where_idx >= 0 else '' %}
 
 with check_results as (
   select

@@ -48,10 +48,8 @@
     {% endfor %}
   {% endif %}
 
-  {% set where_clause = '' %}
-  {% if 'WHERE' in (l1_sql | upper) %}
-    {% set where_clause = l1_sql.split('WHERE')[1] %}
-  {% endif %}
+  {% set where_idx = sql_upper.find('WHERE') %}
+  {% set where_clause = render(l1_sql[where_idx + 5:]) if where_idx >= 0 else '' %}
 
 with check_results as (
   select

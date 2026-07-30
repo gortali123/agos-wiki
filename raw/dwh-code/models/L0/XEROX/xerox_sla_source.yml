@@ -7,6 +7,6 @@ sources:
       - name: xerox_sla
         data_tests:
           - try_cast_from_sql
-          - primary_key:
+          - primary_key_from_sql:
               arguments:
                 pk_columns: [itemnum, itemdate, codicepratica, onlineperagosdataora, dataoraconsegnata]
