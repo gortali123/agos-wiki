@@ -7,3 +7,6 @@ sources:
       - name: mailc_esiti_tgb
         data_tests:
           - try_cast_from_sql
+          - primary_key:
+              arguments:
+                pk_columns: [id_postalizzazione, dt_accettazione]

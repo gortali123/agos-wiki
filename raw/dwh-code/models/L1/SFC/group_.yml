@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: group
+  - name: group_
     config:
       materialized: table
       meta:

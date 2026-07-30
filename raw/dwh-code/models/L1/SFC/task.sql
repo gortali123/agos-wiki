@@ -3,7 +3,7 @@ select
   TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
   TRY_CAST(Id AS VARCHAR(18)) AS id,
   TRY_CAST(OwnerId AS VARCHAR) AS ownerid,
-  TRY_CAST(Description AS VARCHAR(3200)) AS description,
+  TRY_CAST(Description AS VARCHAR) AS description,
   TRY_CAST(What_Id AS VARCHAR(255)) AS what_id,
   TRY_CAST(CreatedById AS VARCHAR) AS createdbyid,
   TRY_CAST(CreatedBy_FederationIdentifier AS VARCHAR) AS createdby_federationidentifier,

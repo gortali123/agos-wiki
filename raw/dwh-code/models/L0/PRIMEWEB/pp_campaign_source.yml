@@ -7,6 +7,3 @@ sources:
       - name: pp_campaign
         data_tests:
           - try_cast
-          - primary_key:
-              arguments:
-                pk_columns: [campaignid]

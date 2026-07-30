@@ -4,9 +4,7 @@ sources:
   - name: source_l0
     schema: L0
     tables:
-      - name: GROUP
-        quoting:
-          identifier: true
+      - name: group_
         data_tests:
           - try_cast_from_sql
           - primary_key:
