@@ -1,5 +1,8 @@
 # Log
 
+## [2026-07-30] develop | render() anche in try_cast_from_sql/primary_key_from_sql
+Su richiesta dell'utente, aggiunto `render(col_expr)` anche nelle varianti `_from_sql` (finora lo faceva solo `_positional`): senza `render()`, un'espressione di colonna in L1 basata su una macro dbt (es. `{{ custom_to_date(...) }}`, non una funzione SQL diretta come `TRY_TO_DATE`) finirebbe come testo Jinja non renderizzato dentro l'SQL generato dal test, e non compilerebbe. Modificato `try_cast_from_sql.sql` (`cols_to_check.append`, campo `expr`) e `primary_key_from_sql.sql` (`pk_exprs.append`, campo `expr`). Non ancora portato upstream in `raw/dwh-code/` né nella repo live `dwh-x-dbt`.
+
 ## [2026-07-30] develop | rifatto il fix "WHERE non rilevato" dopo il riallineamento a raw
 Riscrivendo `develop/tests/generic/` a partire dallo stato in `raw/` (voce precedente), è tornato anche il bug già trovato e corretto in precedenza: la guardia `if 'WHERE' in sql_upper` (o `l1_sql | upper`) controlla il testo maiuscolizzato, ma poi `l1_sql.split('WHERE')[1]` fa lo split sul testo **originale**, case-sensitive — un `where` scritto minuscolo in L1 risulta rilevato dalla guardia ma non trovato dallo split, `[1]` va fuori indice. Utente ha confermato il problema è di nuovo presente in `try_cast_from_sql.sql`. Riapplicato lo stesso fix a indice (`where_idx = sql_upper.find('WHERE')`, poi `l1_sql[where_idx + 5:]`) nei 4 file che condividono questo pattern: `try_cast_from_sql.sql`, `try_cast_positional.sql`, `primary_key_positional.sql` (su `where_clause_l1`), `primary_key_from_sql.sql`. Non ancora portato upstream in `raw/dwh-code/` né nella repo live `dwh-x-dbt`.
 

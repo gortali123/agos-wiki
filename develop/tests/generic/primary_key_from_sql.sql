@@ -29,7 +29,7 @@
         {% endif %}
         {% set col_expr = line[:as_idx] | trim %}
         {% if col_name | lower in pk_columns_lower %}
-          {% do pk_exprs.append({'name': col_name, 'expr': col_expr}) %}
+          {% do pk_exprs.append({'name': col_name, 'expr': render(col_expr)}) %}
         {% endif %}
       {% endif %}
     {% endfor %}
