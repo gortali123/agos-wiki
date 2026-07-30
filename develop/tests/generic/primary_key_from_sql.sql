@@ -13,11 +13,7 @@
 
   {% set pk_columns_lower = pk_columns | map('lower') | list %}
 
-  {# Parsing del raw_code L1 (stessa tecnica di try_cast_from_sql) per estrarre, per ogni
-     colonna PK, l'espressione di cast REALE usata in L1 — non un TRY_CAST(col AS tipo)
-     ricostruito a mano come fa primary_key.sql, che assume erroneamente una logica di
-     cast standard anche quando in L1 c'e' logica particolare (TRY_TO_DATE con formato
-     custom, REPLACE, SUBSTR, ecc.). #}
+  {# espressione di cast reale della/e colonna/e PK, parsata dal raw_code L1 (come try_cast_from_sql) #}
   {% set l1_sql = l1_node.raw_code %}
   {% set sql_upper = l1_sql | upper %}
   {% set select_idx = sql_upper.find('SELECT') %}
@@ -42,6 +38,10 @@
     {% endfor %}
   {% endif %}
 
+  {# WHERE dell'L1 (se filtra righe): si applica insieme al parametro where_clause, non al suo posto #}
+  {% set where_idx = sql_upper.find('WHERE') %}
+  {% set where_clause_l1 = l1_sql[where_idx + 5:] if where_idx >= 0 else '' %}
+
 with null_pks as (
 
   select
@@ -54,6 +54,7 @@ with null_pks as (
   from {{ model }}
   where 1=1
     {% if where_clause %}and ({{ where_clause }}){% endif %}
+    {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
     and (
       {% for col in pk_columns %}
         {{ col }} is null
@@ -81,7 +82,11 @@ duplicate_pks as (
         {% endfor %}
       ) as pk_count
     from {{ model }}
-    {% if where_clause %}where {{ where_clause }}{% endif %}
+    {% if where_clause or where_clause_l1 %}
+    where 1=1
+      {% if where_clause %}and ({{ where_clause }}){% endif %}
+      {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
+    {% endif %}
   )
   where pk_count > 1
 
@@ -99,6 +104,7 @@ cast_failed_pks as (
   from {{ model }}
   where 1=1
     {% if where_clause %}and ({{ where_clause }}){% endif %}
+    {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
     and (
       1=0
       {% for col in pk_exprs %}
