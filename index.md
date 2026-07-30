@@ -116,3 +116,5 @@
 - [try_cast (fix match case-insensitive)](develop/tests/generic/try_cast.sql) — la ricerca del nodo L1 (`selectattr('name','equalto',...)`, case-sensitive) falliva per `GROUP` (SFC): il source L0 è forzato in maiuscolo perché `GROUP` è keyword riservata Snowflake, ma il modello L1 è `group.sql` (nodo `group`, minuscolo) — mai un match, da cui "No first item, sequence was empty." Sostituito con loop case-insensitive su `graph.nodes.values()`, proposto
 - [try_cast_from_sql (stesso fix)](develop/tests/generic/try_cast_from_sql.sql) — stesso bug/fix di `try_cast` (righe 5-9 identiche), proposto
 - [try_cast_positional (stesso fix)](develop/tests/generic/try_cast_positional.sql) — stesso bug/fix di `try_cast` (righe 5-9 identiche), proposto
+- [primary_key (stesso fix)](develop/tests/generic/primary_key.sql) — stesso bug/fix di `try_cast` (righe 6-10 identiche), proposto
+- [primary_key_positional (stesso fix)](develop/tests/generic/primary_key_positional.sql) — stesso bug/fix di `try_cast` (righe 6-10 identiche), proposto
