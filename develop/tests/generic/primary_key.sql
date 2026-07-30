@@ -1,4 +1,4 @@
-{% test primary_key(model, pk_columns) %}
+{% test primary_key(model, pk_columns, where_clause=none) %}
 {{ config(severity='error') }}
 
 {% if execute %}
@@ -30,6 +30,7 @@ with null_pks as (
     ) as failure_info
   from {{ model }}
   where 1=1
+    {% if where_clause %}and ({{ where_clause }}){% endif %}
     and (
       {% for col in pk_columns %}
         {{ col }} is null
@@ -57,6 +58,7 @@ duplicate_pks as (
         {% endfor %}
       ) as pk_count
     from {{ model }}
+    {% if where_clause %}where {{ where_clause }}{% endif %}
   )
   where pk_count > 1
 
@@ -73,6 +75,7 @@ cast_failed_pks as (
     ) as failure_info
   from {{ model }}
   where 1=1
+    {% if where_clause %}and ({{ where_clause }}){% endif %}
     and (
       1=0
       {% for col in pk_cols_typed %}

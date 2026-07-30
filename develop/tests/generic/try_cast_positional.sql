@@ -1,4 +1,4 @@
-{% test try_cast_positional(model, skip_columns=none, accepted_values=none) %}
+{% test try_cast_positional(model, skip_columns=none, where_clause=none, accepted_values=none) %}
 
 {% if execute %}
 
@@ -49,10 +49,6 @@
       {% endif %}
     {% endfor %}
   {% endif %}
-
-  {# indice, non split case-sensitive: WHERE minuscolo in L1 altrimenti non viene trovato #}
-  {% set where_idx = sql_upper.find('WHERE') %}
-  {% set where_clause = l1_sql[where_idx + 5:] if where_idx >= 0 else '' %}
 
 with check_results as (
   select

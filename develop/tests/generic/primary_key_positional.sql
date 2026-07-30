@@ -1,4 +1,4 @@
-{% test primary_key_positional(model, pk_columns) %}
+{% test primary_key_positional(model, pk_columns, where_clause=none) %}
 {{ config(severity='error') }}
 
 {% if execute %}
@@ -37,10 +37,6 @@
     {% endfor %}
   {% endif %}
 
-  {# indice, non split case-sensitive: WHERE minuscolo in L1 altrimenti non viene trovato #}
-  {% set where_idx = sql_upper.find('WHERE') %}
-  {% set where_clause_l1 = l1_sql[where_idx + 5:] if where_idx >= 0 else '' %}
-
 with null_pks as (
 
   select
@@ -52,7 +48,7 @@ with null_pks as (
     ) as failure_info
   from {{ model }}
   where 1=1
-    {% if where_clause_l1 %}and ({{ where_clause_l1 }}){% endif %}
+    {% if where_clause %}and ({{ where_clause }}){% endif %}
     and (
       {% for col in pk_exprs %}
         ({{ col.expr }}) is null
@@ -82,7 +78,7 @@ duplicate_pks as (
         {% endfor %}
       ) as pk_count
     from {{ model }}
-    {% if where_clause_l1 %}where {{ where_clause_l1 }}{% endif %}
+    {% if where_clause %}where {{ where_clause }}{% endif %}
   )
   where pk_count > 1
 
