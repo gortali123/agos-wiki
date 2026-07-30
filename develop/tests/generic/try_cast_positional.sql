@@ -49,7 +49,7 @@
   {% endif %}
 
   {% set where_idx = sql_upper.find('WHERE') %}
-  {% set where_clause = l1_sql[where_idx + 5:] if where_idx >= 0 else '' %}
+  {% set where_clause = render(l1_sql[where_idx + 5:]) if where_idx >= 0 else '' %}
 
 with check_results as (
   select
