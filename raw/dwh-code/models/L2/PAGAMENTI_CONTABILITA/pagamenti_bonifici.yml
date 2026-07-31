@@ -60,8 +60,6 @@ models:
       #data_type: NUMBER(13,2)
       - name: CD_BANCA_INTERNA
         data_type: NUMBER(5)
-      - name: CD_IBAN_USCITA
-        data_type: NUMBER(5)
       - name: CD_CAUSALE_RIENTRO
         data_type: NUMBER(5)
       - name: TP_ANOMALIA

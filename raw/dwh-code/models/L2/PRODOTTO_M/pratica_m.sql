@@ -539,20 +539,10 @@ cte_crcarblo_cc AS (
 cte_crcarblo_db AS (
     SELECT
         CAB_PRATICA,
-        MAX({{ custom_to_date('CAB_DATA_IMMISSIONE') }}) AS DT_DBT
+        {{ custom_to_date('CAB_DATA_IMMISSIONE') }}  AS DT_DBT,
+        CAB_OPE_IMMISSIONE                           AS CD_USER_DBT
     FROM {{ ref('crcarblo') }}
     WHERE CAB_COD_BLOCCO_OCS = 'DB'
-      AND TRIM(CAB_STATO) = ''
-      AND FL_DELETED = 'N'
-    GROUP BY CAB_PRATICA
-),
-
-cte_crcarblo_dt AS (
-    SELECT
-        CAB_PRATICA,
-        CAB_OPE_IMMISSIONE AS CD_USER_DBT
-    FROM {{ ref('crcarblo') }}
-    WHERE CAB_COD_BLOCCO_OCS = 'DT'
       AND TRIM(CAB_STATO) = ''
       AND FL_DELETED = 'N'
     QUALIFY ROW_NUMBER() OVER (
@@ -638,32 +628,36 @@ cte_cctrcamp_ca AS (
 
 cte_crcarblo_storno_ca AS (
     SELECT
-        CAB_PROVENIENZA,
         CAB_PRATICA,
-        CAB_COD_BLOCCO_OCS                            AS CD_BLOCCO_STORNO,
-        {{ custom_to_date('CAB_DATA_IMMISSIONE') }}   AS DT_STORNATA,
-        ROW_NUMBER() OVER (
-            PARTITION BY CAB_PROVENIENZA, CAB_PRATICA
-            ORDER BY CAB_DATA_IMMISSIONE DESC
-        ) AS N_STORNATA
+        CAB_COD_BLOCCO_OCS AS CD_BLOCCO_STORNO,
+        {{ custom_to_date('CAB_DATA_IMMISSIONE') }}  AS DT_STORNATA,
+        CAB_OPE_IMMISSIONE                           AS CD_USER_STORNO
+
     FROM {{ ref('crcarblo') }}
     WHERE CAB_COD_BLOCCO_OCS IN ('RA', 'R2', 'R3')
-    AND CAB_STATO <> 'A'
+      AND TRIM(CAB_STATO) = ''
+      AND FL_DELETED = 'N'
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY CAB_PRATICA
+        ORDER BY CAB_DATA_IMMISSIONE DESC, CAB_ORA_IMMISSIONE DESC
+    ) = 1
 ),
 
 cte_crcarblo_ea_ca AS (
     SELECT
-        CAB_PROVENIENZA,
         CAB_PRATICA,
-        CAB_COD_BLOCCO_OCS                            AS CD_BLOCCO_EA,
-        {{ custom_to_date('CAB_DATA_IMMISSIONE') }}   AS DT_ESTINZIONE_ANTICIPATA,
-        ROW_NUMBER() OVER (
-            PARTITION BY CAB_PROVENIENZA, CAB_PRATICA
-            ORDER BY CAB_DATA_IMMISSIONE DESC
-        ) AS N_EA
+        CAB_COD_BLOCCO_OCS AS CD_BLOCCO_EA,
+        {{ custom_to_date('CAB_DATA_IMMISSIONE') }}  AS DT_ESTINZIONE_ANTICIPATA,
+        CAB_OPE_IMMISSIONE                           AS CD_USER_ESTINZIONE_ANT
+
     FROM {{ ref('crcarblo') }}
     WHERE CAB_COD_BLOCCO_OCS IN ('RS', 'RR', 'RU', 'EA')
-    AND CAB_STATO <> 'A'
+      AND TRIM(CAB_STATO) = ''
+      AND FL_DELETED = 'N'
+    QUALIFY ROW_NUMBER() OVER (
+        PARTITION BY CAB_PRATICA
+        ORDER BY CAB_DATA_IMMISSIONE DESC, CAB_ORA_IMMISSIONE DESC
+    ) = 1
 ),
 
 TAB_FIN_CARTA AS (
@@ -782,13 +776,13 @@ TAB_FIN_CARTA AS (
         CRCAR.CRCAR_ST_OPERATORE_3                        AS CD_USER_APPROVAZIONE,
         CRCAR.CRCAR_ST_OPERATORE_4                        AS CD_USER_RESPINTA,
         NULL                                        AS CD_USER_LIQUIDAZIONE,
-        NULL                                        AS CD_USER_STORNO,
+        STO.CD_USER_STORNO                          AS CD_USER_STORNO,
         NULL                                        AS CD_USER_CHIUSURA_REGOLARE,
-        NULL                                        AS CD_USER_ESTINZIONE_ANT,
+        EA.CD_USER_ESTINZIONE_ANT                   AS CD_USER_ESTINZIONE_ANT,
         NULL                                        AS CD_USER_MESSA_IN_MORA,
         RT.CD_USER_RITIRATA,
         PP.CD_USER_PASSAGGIO_PERDITA,
-        DT_USR.CD_USER_DBT,
+        DB.CD_USER_DBT,
         NULL                                        AS CD_TABELLA_FINANZIARIA,
         NULL                                        AS DS_TABELLA_FINANZIARIA,
         CAST(NULL AS NUMBER(3))                     AS NM_GIORNI,
@@ -829,7 +823,6 @@ TAB_FIN_CARTA AS (
     LEFT JOIN cte_crcarblo_pp   AS PP   ON CRCAR.CRCAR_KEY_N        = PP.CAB_PRATICA
     LEFT JOIN cte_crcarblo_cc   AS CC   ON CRCAR.CRCAR_KEY_N        = CC.CAB_PRATICA
     LEFT JOIN cte_crcarblo_db   AS DB   ON CRCAR.CRCAR_KEY_N        = DB.CAB_PRATICA
-    LEFT JOIN cte_crcarblo_dt   AS DT_USR ON CRCAR.CRCAR_KEY_N      = DT_USR.CAB_PRATICA
     LEFT JOIN cte_cnslflog_ca   AS LOG  ON CRCAR.CRCAR_KEY_N        = LOG.CNSLLOG_PRATICA
     LEFT JOIN cte_oxctfpafd_ca  AS OXC  ON CRCAR.CRCAR_KEY_N        = OXC.OXCTPAFD_NUM_PRATICA
     LEFT JOIN cte_oxscfpra_ca   AS OXS  ON CRCAR.CRCAR_KEY_N        = OXS.OXSCPRA_PRATICA
@@ -840,14 +833,8 @@ TAB_FIN_CARTA AS (
     AND CRCAR.DT_OSSERVAZIONE = SER.DT_OSSERVAZIONE
     LEFT JOIN cte_re2praba_ca   AS RE2  ON CRCAR.CRCAR_KEY_N        = RE2.DPRBA_PRATICA
     AND CRCAR.DT_OSSERVAZIONE = RE2.DT_OSSERVAZIONE
-    LEFT JOIN cte_crcarblo_storno_ca AS STO
-        ON CRCAR.CRCAR_KEY_N = STO.CAB_PRATICA
-        AND STO.CAB_PROVENIENZA = 'CA'
-        AND STO.N_STORNATA = 1
-    LEFT JOIN cte_crcarblo_ea_ca AS EA
-        ON CRCAR.CRCAR_KEY_N = EA.CAB_PRATICA
-        AND EA.CAB_PROVENIENZA = 'CA'
-        AND EA.N_EA = 1
+    LEFT JOIN cte_crcarblo_storno_ca AS STO ON CRCAR.CRCAR_KEY_N = STO.CAB_PRATICA
+    LEFT JOIN cte_crcarblo_ea_ca AS EA ON CRCAR.CRCAR_KEY_N = EA.CAB_PRATICA
     LEFT JOIN {{ref ('ccanainin')}} AS N_CA ON N_CA.INT_CODICE      = BPI.CD_SUB_AGENTE
     LEFT JOIN {{ ref('ccanainin') }} AS N_INT
     ON N_INT.INT_CODICE = COALESCE(

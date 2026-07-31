@@ -1,0 +1,28 @@
+version: 2
+models:
+  - name: ana_campagne_tig
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_DIGITAL", "entita": "ANA_CAMPAGNE_TIG"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_CAMPAGNA]
+    columns:
+      - name: CD_CAMPAGNA
+        data_type: NUMBER(8)
+      - name: DS_CAMPAGNA
+        data_type: VARCHAR(100)
+      - name: CD_INIZIATIVA_COMMERCIALE
+        data_type: VARCHAR(2)
+      - name: CD_CATEGORIA
+        data_type: VARCHAR(100)
+      - name: TP_CAMPAGNA
+        data_type: VARCHAR(100)
+      - name: CD_RUOLO
+        data_type: VARCHAR(36)
+      - name: FL_ATTIVA
+        data_type: VARCHAR(5)
+      - name: FL_SUBSIDIARY_FROM_ZIP
+        data_type: VARCHAR(5)

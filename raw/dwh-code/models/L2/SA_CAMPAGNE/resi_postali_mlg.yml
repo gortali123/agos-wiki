@@ -1,0 +1,45 @@
+version: 2
+models:
+  - name: resi_postali_mlg
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [ID_SPEDIZIONE, CD_CLIENTE, ID_POSTALIZZAZIONE, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_SA_CAMPAGNE", "entita": "RESI_POSTALI_MLG"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [ID_SPEDIZIONE, CD_CLIENTE, ID_POSTALIZZAZIONE, TS_INIZIO_VALIDITA]
+    columns:
+      - name: ID_SPEDIZIONE
+        data_type: VARCHAR(7)
+      - name: CD_CLIENTE
+        data_type: VARCHAR(9)
+      - name: ID_POSTALIZZAZIONE
+        data_type: NUMBER(8)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: ID_SAP
+        data_type: NUMBER(8)
+      - name: DT_ACCETTAZIONE
+        data_type: DATE
+      - name: DS_CENTRO_ACCETTANTE
+        data_type: VARCHAR(100)
+      - name: DT_PROSSIMO_TENTATIVO_CONSEGNA
+        data_type: DATE
+      - name: CD_CAP
+        data_type: VARCHAR(8)
+      - name: DS_LOCALITA
+        data_type: VARCHAR(100)
+      - name: CD_2DCOMM
+        data_type: VARCHAR(100)
+      - name: CD_ESITO
+        data_type: VARCHAR(10)
+      - name: DS_CAUSALE
+        data_type: VARCHAR(50)
+      - name: DS_ANOMALIA
+        data_type: VARCHAR(255)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

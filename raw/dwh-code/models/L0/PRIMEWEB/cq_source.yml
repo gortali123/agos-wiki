@@ -6,4 +6,4 @@ sources:
     tables:
       - name: cq
         data_tests:
-          - try_cast_from_sql
+          - try_cast

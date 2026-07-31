@@ -1,0 +1,44 @@
+version: 2
+models:
+  - name: recensioni
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_CONTATTI", "entita": "RECENSIONI"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_RECENSIONE]
+    columns:
+      - name: CD_RECENSIONE
+        data_type: VARCHAR(24)
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(8)
+      - name: CD_FILIALE
+        data_type: VARCHAR(50)
+      - name: DS_INDIRIZZO_FILIALE
+        data_type: VARCHAR(50)
+      - name: CD_CITTA_FILIALE
+        data_type: VARCHAR(50)
+      - name: CD_STARS
+        data_type: NUMBER(1)
+      - name: DT_CREATE_RECENSIONE
+        data_type: TIMESTAMP_NTZ
+      - name: TX_COMMENT
+        data_type: VARCHAR(5000)
+      - name: DS_REVIEWER
+        data_type: VARCHAR(100)
+      - name: DS_SENTIMENT
+        data_type: NUMBER(1)
+      - name: DT_RISPOSTA_AGOS
+        data_type: DATE
+      - name: TX_REPLY_UPDATE_TIME
+        data_type: TIMESTAMP_NTZ
+      - name: FL_CONT_POST_RECENSIONE
+        data_type: VARCHAR(1)
+      - name: FL_RISPOSTA_AGOS
+        data_type: VARCHAR(1)
+      - name: TX_RISPOSTA_CLIENTE
+        data_type: VARCHAR(5000)
+      - name: DT_UPDATE
+        data_type: TIMESTAMP_NTZ

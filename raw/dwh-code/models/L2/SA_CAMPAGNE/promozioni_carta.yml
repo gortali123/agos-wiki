@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: promozioni_carta
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_CAMPAGNE", "entita": "PROMOZIONI_CARTA"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, ID_EVENTO_PROMOZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: ID_EVENTO_PROMOZIONE
+        data_type: NUMBER(13)
+      - name: CD_PROMOZIONE
+        data_type: VARCHAR(5)
+      - name: CD_AZIONE
+        data_type: VARCHAR(5)
+      - name: TP_AZIONE
+        data_type: VARCHAR(3)
+      - name: CD_STATO_AZIONE
+        data_type: VARCHAR(2)

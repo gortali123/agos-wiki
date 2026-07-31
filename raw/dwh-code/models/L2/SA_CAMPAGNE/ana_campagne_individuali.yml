@@ -1,0 +1,76 @@
+version: 2
+models:
+  - name: ana_campagne_individuali
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_PROCEDURA, CD_CAMPAGNA, CD_SET_CAMPAGNA, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_CAMPAGNE", "entita": "ANA_CAMPAGNE_INDIVIDUALI"}'
+      # WARN: pre-hook delete_l2 non aggiunto - cluster della tabella main (OXCIFTCA) non specificato nel
+      # data model (nessuna mappatura sorgente->cluster in Catalogo Entita'). Verificare se OXCIFTCA e'
+      # cluster A1/A2/C (in tal caso servirebbe delete_l2) o B1 (nessun pre-hook).
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PROCEDURA, CD_CAMPAGNA, CD_SET_CAMPAGNA, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_CAMPAGNA
+        data_type: VARCHAR(5)
+      - name: CD_SET_CAMPAGNA
+        data_type: NUMBER(3)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: DS_CAMPAGNA
+        data_type: VARCHAR(30)
+      - name: DT_INIZIO_VALIDITA
+        data_type: DATE
+      - name: DT_FINE_VALIDITA
+        data_type: DATE
+      - name: FL_GESTIONE_CARTE
+        data_type: VARCHAR(1)
+      - name: FL_GESTIONE_CONSUMO
+        data_type: VARCHAR(1)
+      - name: FL_ACCETTAZIONE_OBBLIGATORIA
+        data_type: VARCHAR(1)
+      - name: CD_PROPOSTA
+        data_type: VARCHAR(3)
+      - name: DS_PROPOSTA
+        data_type: VARCHAR(30)
+      - name: FL_ESTRAZIONE_STATISTICA
+        data_type: VARCHAR(1)
+      - name: DS_SET_CAMPAGNA
+        data_type: VARCHAR(30)
+      - name: TP_ISTRUTTORIA
+        data_type: VARCHAR(1)
+      - name: NM_GIORNI_VALIDITA
+        data_type: NUMBER(3)
+      - name: CD_PROMOZIONE
+        data_type: VARCHAR(5)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_TABELLA_FINANZIARIA
+        data_type: VARCHAR(3)
+      - name: EU_FIDO
+        data_type: NUMBER(13,2)
+      - name: EU_RISERVA_PRINCIPALE
+        data_type: NUMBER(13,2)
+      - name: EU_RISERVA_SALVADANAIO
+        data_type: NUMBER(13,2)
+      - name: EU_RISERVA_INTERNET
+        data_type: NUMBER(13,2)
+      - name: CD_AGENTE
+        data_type: NUMBER(9)
+      - name: FL_CONTROLLO_EMETTITORE
+        data_type: VARCHAR(1)
+      - name: FL_CONTROLLO_PRODOTTO
+        data_type: VARCHAR(1)
+      - name: FL_ESCLUSIONE_SELEZIONE
+        data_type: VARCHAR(1)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

@@ -33,8 +33,6 @@ SELECT
     -- WARN: EU_COMMISSIONI senza sorgente ne' regola tecnica nel data model -> NULL
     --NULL AS EU_COMMISSIONI, -> aggiornare quando sarà presente il campo sorgente 
     b.BOW_BANCA_ADDEBITO AS CD_BANCA_INTERNA,
-    -- WARN: CD_IBAN_USCITA mappato su BOW_BANCA_ADDEBITO (stessa sorgente di CD_BANCA_INTERNA) come da data model
-    b.BOW_BANCA_ADDEBITO AS CD_IBAN_USCITA,
     b.BOW_CAUSALE_RIENTRO AS CD_CAUSALE_RIENTRO,
     b.BOW_TIPO_ANOMALIA AS TP_ANOMALIA,
     b.BOW_NUMERO_FATTURA AS CD_NUMERO_FATTURA,

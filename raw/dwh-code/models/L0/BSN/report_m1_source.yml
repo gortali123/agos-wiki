@@ -5,3 +5,5 @@ sources:
     schema: L0
     tables:
       - name: report_m1
+        data_tests:
+          - try_cast_positional

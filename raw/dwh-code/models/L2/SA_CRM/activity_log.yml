@@ -1,0 +1,32 @@
+version: 2
+models:
+  - name: activity_log
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [ID, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_SA_CRM", "entita": "ACTIVITY_LOG"}'
+      #pre_hook: "{ delete_l2('4414_activity_log', ['ID'], ['ID']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [ID, TS_INIZIO_VALIDITA]
+    columns:
+      - name: ID
+        data_type: NUMBER(11)
+      - name: ID_APPLICAZIONE
+        data_type: NUMBER(11)
+      - name: ID_FUNZIONE
+        data_type: NUMBER(11)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: DS_DESCRIZIONE
+        data_type: VARCHAR(255)
+      - name: CD_USER_CREAZIONE
+        data_type: VARCHAR(10)
+      - name: CD_USER_MODIFICA
+        data_type: VARCHAR(10)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

@@ -279,6 +279,10 @@ models:
         +schema: L2_PRODOTTO
         +meta: {subject_area: "CARTE"}
         +tags: ["CARTE"]
+      FORM_E_PREVENTIVATORI:
+        +schema: L2_FORM_E_PREVENTIVATORI
+        +meta: {subject_area: "FORM_E_PREVENTIVATORI"}
+        +tags: ["FORM_E_PREVENTIVATORI"]
       GESTIONE_CREDITI:
         +schema: L2_GESTIONE_CREDITI
         +meta: {subject_area: "GESTIONE_CREDITI"}
@@ -315,6 +319,15 @@ models:
         +schema: L2_SWORD
         +meta: {subject_area: "SWORD"}
         +tags: ["SWORD"]
+      SA_CAMPAGNE:
+        +schema: L2_SA_CAMPAGNE
+        +meta: {subject_area: "SA_CAMPAGNE"}
+        +tags: ["SA_CAMPAGNE"]
+      SA_CRM:
+        +schema: L2_SA_CRM
+        +meta: {subject_area: "SA_CRM"}
+        +tags: ["SA_CRM"]
+
       PAGAMENTI_CONTABILITA:
         +schema: L2_PAGAMENTI_CONTABILITA
         +meta: {subject_area: "PAGAMENTI_CONTABILITA"}
