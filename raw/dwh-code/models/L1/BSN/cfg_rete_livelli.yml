@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: cfg_rete_livelli
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"CFG_RETE_LIVELLI"}'
+    columns:
+      - name: ds_rete
+        data_type: VARCHAR(50)
+      - name: cd_rete
+        data_type: VARCHAR(10)
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_inizio_validita
+        data_type: TIMESTAMP_NTZ
+      - name: ts_fine_validita
+        data_type: TIMESTAMP_NTZ
+      - name: ds_ger_territoriale_1
+        data_type: VARCHAR(50)
+      - name: cd_ger_territoriale_1
+        data_type: VARCHAR(10)
+      - name: ds_ger_territoriale_2
+        data_type: VARCHAR(50)          
+      - name: cd_ger_territoriale_2
+        data_type: VARCHAR(10)         
+      - name: ds_ger_territoriale_3
+        data_type: VARCHAR(80)
+      - name: cd_ger_territoriale_3
+        data_type: VARCHAR(10)
+      - name: ds_ger_territoriale_4
+        data_type: VARCHAR(80)       
+      - name: cd_ger_territoriale_4
+        data_type: VARCHAR(10)
+      - name: ds_nodo_foglia
+        data_type: VARCHAR(80)
+      - name: cd_nodo_foglia
+        data_type: VARCHAR(10)         
+      

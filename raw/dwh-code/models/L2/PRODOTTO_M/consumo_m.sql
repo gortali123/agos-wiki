@@ -391,5 +391,5 @@ LEFT JOIN {{ ref('plpratca_m') }} K
     ON A.PLC_NUM_PRATICA = K.PLCCA_NUM_PRATICA
     AND a.DT_OSSERVAZIONE = k.DT_OSSERVAZIONE
 {% if is_incremental() %}
-WHERE A.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+WHERE A.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}

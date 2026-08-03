@@ -3,7 +3,7 @@ version: 2
 models:
   - name: dm_basilea_co_var_pv_k_m
     config:
-      pre_hook: "{{ delete_last_month('DT_ESTRAZIONE') }}"
+      pre_hook: "{{ delete_dt_osservazione('DT_ESTRAZIONE') }}"
       materialized: incremental
       incremental_strategy: append   
     constraints:

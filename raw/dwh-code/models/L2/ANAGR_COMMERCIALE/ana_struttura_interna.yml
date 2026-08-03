@@ -1,0 +1,28 @@
+version: 2
+models:
+  - name: ana_struttura_interna
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_COMMERCIALE", "entita": "ANA_STRUTTURA_INTERNA"}'
+    constraints:
+      - type: primary_key
+        columns: [CD_FILIALE]
+    columns:
+      - name: CD_FILIALE
+        data_type: CHAR(3)
+      - name: DS_FILIALE
+        data_type: CHAR(30)
+      - name: CD_DISTRETTO_FILIALE
+        data_type: CHAR(3)
+      - name: DS_DISTRETTO_FILIALE
+        data_type: CHAR(30)
+      - name: CD_AREA_FILIALE
+        data_type: CHAR(3)
+      - name: DS_AREA_FILIALE
+        data_type: CHAR(30)
+      - name: FL_VIRTUALE_FILIALE
+        data_type: VARCHAR(1)
+      - name: FL_ABILITAZIONE_WEB_FILIALE
+        data_type: VARCHAR(1)
+      

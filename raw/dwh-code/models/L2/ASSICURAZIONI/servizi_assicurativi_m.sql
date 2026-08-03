@@ -125,5 +125,5 @@ LEFT JOIN {{ ref('otsqfdov') }} AS O
     AND A.DT_OSSERVAZIONE >= O.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < O.TS_FINE_VALIDITA
 
 {% if is_incremental() %}
-    WHERE A.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE A.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}

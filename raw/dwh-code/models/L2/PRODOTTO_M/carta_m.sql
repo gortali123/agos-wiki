@@ -362,7 +362,7 @@ LEFT JOIN crvouf_1 H
     AND 1 = H.KEY_PROG
 
 {% if is_incremental() %}
-WHERE A.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+WHERE A.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}
 
 --PRENDO SOLO I RECORD CON LA MAX DATA CALCOLO DA CREMEP

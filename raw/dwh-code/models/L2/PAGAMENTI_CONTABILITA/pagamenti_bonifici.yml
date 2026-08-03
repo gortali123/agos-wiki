@@ -74,9 +74,9 @@ models:
         data_type: NUMBER(3)
       - name: CD_RAGIONE_SOCIALE_CLI_PRATICA
         data_type: VARCHAR(35)
-      - name: BOW_PLICO
+      - name: CD_PLICO
         data_type: VARCHAR(8)
-      - name: BOW_MIR
+      - name: CD_MIR
         data_type: VARCHAR(10)
       - name: CD_CRO
         data_type: VARCHAR(35)
@@ -86,17 +86,11 @@ models:
         data_type: TIMESTAMP_NTZ
       - name: CD_UTENTE_NOTE
         data_type: VARCHAR(10)
-      - name: BOW_PROGR_PRAT
+      - name: PR_PRATICA
         data_type: NUMBER(3)
-      - name: BOW_ESITO_6
-        data_type: VARCHAR(1)
-      - name: BOW_ESITO_7
-        data_type: VARCHAR(1)
-      - name: BOW_ESITO_9
-        data_type: VARCHAR(1)
       - name: BOW_GROUP_STATUS
         data_type: VARCHAR(4)
-      - name: BOW_DATA_DA
+      - name: DT_COMPETENZA_PRV_DA
         data_type: NUMBER(5)
-      - name: BOW_DATA_AL
+      - name: DT_COMPETENZA_PRV_AL
         data_type: NUMBER(5)

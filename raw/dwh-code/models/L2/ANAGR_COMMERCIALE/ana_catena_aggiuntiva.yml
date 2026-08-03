@@ -1,0 +1,66 @@
+version: 2
+models:
+  - name: ana_catena_aggiuntiva
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [TP_INTERM_PRINCIPALE, CD_INTERM_PRINCIPALE, TP_INTERM_AGGIUNTIVO, CD_INTERM_AGGIUNTIVO, TS_INIZIO_VALIDITA, PR_PK]
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_COMMERCIALE", "entita": "ANA_CATENA_AGGIUNTIVA"}'
+      pre_hook: "{{ delete_l2('ccintlca', ['TP_INTERM_PRINCIPALE', 'CD_INTERM_PRINCIPALE', 'TP_INTERM_AGGIUNTIVO', 'CD_INTERM_AGGIUNTIVO'], ['INTLCA_TIPO_INTERM', 'INTLCA_INTERM', 'INTLCA_TIPO_INTERM_A', 'INTLCA_INTERM_A']) }}"
+    constraints:
+      - type: primary_key
+        columns: [TP_INTERM_PRINCIPALE, CD_INTERM_PRINCIPALE, TP_INTERM_AGGIUNTIVO, CD_INTERM_AGGIUNTIVO, TS_INIZIO_VALIDITA, PR_PK]
+    columns:
+      - name: TP_INTERM_PRINCIPALE
+        data_type: VARCHAR(2)
+      - name: CD_INTERM_PRINCIPALE
+        data_type: NUMBER(9)
+      - name: TP_INTERM_AGGIUNTIVO
+        data_type: VARCHAR(2)
+      - name: CD_INTERM_AGGIUNTIVO
+        data_type: NUMBER(9)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: PR_PK
+        data_type: NUMBER(38,0)
+      - name: DT_INIZIO_CATENA
+        data_type: DATE
+      - name: DT_FINE_CATENA
+        data_type: DATE
+      - name: CD_ACCORDO
+        data_type: VARCHAR(6)
+        # data_type: NUMBER(9)
+      - name: DS_ACCORDO
+        data_type: CHAR(50)
+      - name: TP_ACCORDO
+        data_type: CHAR(5)
+      - name: DS_MARCA
+        data_type: CHAR(5)
+      - name: FL_ABIL_CO
+        data_type: VARCHAR(1)
+      - name: FL_ABIL_CA
+        data_type: VARCHAR(1)
+      - name: FL_ABIL_CQ
+        data_type: VARCHAR(1)
+      - name: FL_OBBL_CO
+        data_type: VARCHAR(1)
+      - name: FL_OBBL_CA
+        data_type: VARCHAR(1)
+      - name: FL_OBBL_CQ
+        data_type: VARCHAR(1)
+      - name: FL_FORZ_AUT_CO
+        data_type: VARCHAR(1)
+      - name: TP_FORZ_AUT_CO
+        data_type: CHAR(1)
+      - name: FL_FORZ_AUT_CA
+        data_type: VARCHAR(1)
+      - name: CD_RETE_VENDITA_AGG
+        data_type: NUMBER(9)
+      - name: CD_AGENTE_AGG
+        data_type: NUMBER(9)
+      - name: CD_SUBAGENTE_AGG
+        data_type: NUMBER(9)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

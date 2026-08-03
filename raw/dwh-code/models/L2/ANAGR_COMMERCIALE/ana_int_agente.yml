@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: ana_int_agente
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_INTERMEDIARIO, TP_INTERMEDIARIO, TP_PROCEDURA, TS_INIZIO_VALIDITA, PR_PK]
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_COMMERCIALE", "entita": "ANA_INT_AGENTE"}'
+      pre_hook: "{{ delete_l2('ccintlag', ['CD_INTERMEDIARIO', 'TP_INTERMEDIARIO', 'TP_PROCEDURA'], ['INTLAG_INTERM', 'INTLAG_TIPO_INTERM', 'INTLAG_PROCEDURA']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INTERMEDIARIO, TP_INTERMEDIARIO, TP_PROCEDURA, TS_INIZIO_VALIDITA, PR_PK]
+    columns:
+      - name: CD_INTERMEDIARIO
+        data_type: NUMBER(9,0)
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR(2)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: PR_PK
+        data_type: NUMBER(38,0)
+      - name: DT_INIZIO_CONV
+        data_type: DATE
+      - name: DT_FINE_CONV
+        data_type: DATE
+      - name: CD_CAUSALE_ANNULLO
+        data_type: VARCHAR(3)
+      - name: CD_RETE_VENDITA
+        data_type: NUMBER(9,0)
+      - name: CD_RESPONSABILE
+        data_type: VARCHAR(8)
+      - name: FL_GESTIONE_SA
+        data_type: VARCHAR(1)
+      - name: FL_GESTIONE_VE
+        data_type: VARCHAR(1)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ
+

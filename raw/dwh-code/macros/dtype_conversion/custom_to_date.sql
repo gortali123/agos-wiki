@@ -1,8 +1,10 @@
 {% macro custom_to_date(column, zero='null') %}
 
+
 {% if (column | string | length) == 5 %}
 {{ exceptions.raise_compiler_error( "to_date: column value '" ~ column ~ "' has length 5, which is not a supported date format (expected YYYYMMDD or YYYYMM)."    ) }}
 {% endif %}
+
 
 CASE
     WHEN CAST({{ column }} AS VARCHAR) = '99999999'
@@ -10,6 +12,7 @@ CASE
     WHEN CAST({{ column }} AS VARCHAR) = '0'
         THEN
             {% if   zero == 'max'     %} TO_DATE('99991231', 'YYYYMMDD')
+            {% elif   zero == 'min'     %} TO_DATE('19000101', 'YYYYMMDD')
             {% elif zero == 'current' %} CURRENT_DATE
             {% else                   %} NULL
             {% endif %}

@@ -68,7 +68,7 @@
 
     {% set pk_cols = [] %}
     {% for row in rows %}
-      {% if (row[7] | string) | upper == 'S' %}
+      {% if (row[7] | string) | upper in ('S','Y') %}
         {% do pk_cols.append(row[3] | string | trim | lower) %}
       {% endif %}
     {% endfor %}

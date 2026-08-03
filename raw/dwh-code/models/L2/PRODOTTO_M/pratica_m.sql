@@ -419,7 +419,7 @@ TAB_FIN_CONSUMO AS (
         ON P.PLC_INIZIATIVA_COMM = CAST(CAMP_CO.TRCA_NUM_PRATICA AS VARCHAR(12))
 
     {% if is_incremental() %}
-    WHERE P.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE P.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     {% endif %}
 ),
 
@@ -753,6 +753,8 @@ TAB_FIN_CARTA AS (
                 THEN CC.DT_CESSIONE
             WHEN PP.DT_PASSAGGIO_PERDITA IS NOT NULL
                 THEN PP.DT_PASSAGGIO_PERDITA
+            WHEN EA.DT_ESTINZIONE_ANTICIPATA IS NOT NULL
+                THEN EA.DT_ESTINZIONE_ANTICIPATA
             ELSE {{ ole_to_date('CRCAR.CRCAR_DATA_SCADENZA') }}
         END AS DT_CHIUSURA_ANZIANITA,
         {{ ole_to_date('CRCAR.CRCAR_DATA_PRIMA_SCADENZA') }}    AS DT_PRIMA_SCADENZA,
@@ -869,7 +871,7 @@ TAB_FIN_CARTA AS (
         ON CRCAR.CRCAR_COD_INIZIATIVA = CAST(CAMP_CA.TRCA_NUM_PRATICA AS VARCHAR(12))
 
     {% if is_incremental() %}
-    WHERE CRCAR.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE CRCAR.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     {% endif %}
 ),
 
@@ -1196,7 +1198,7 @@ TAB_FIN_CQS AS (
         AND A.DT_OSSERVAZIONE >= MKT_FIL.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < MKT_FIL.TS_FINE_VALIDITA
 
     {% if is_incremental() %}
-    WHERE A.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE A.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     {% endif %}
 )
 

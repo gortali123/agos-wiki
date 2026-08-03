@@ -3,7 +3,7 @@ version: 2
 models:
   - name: dm_controlli_basilea_m
     config:
-      pre_hook: "{{ delete_last_month('DT_CONTROLLO') }}"
+      pre_hook: "{{ delete_dt_osservazione('DT_CONTROLLO') }}"
       materialized: incremental
       incremental_strategy: append   
       contract: 

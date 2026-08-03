@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: ana_int_rete_vendita
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_INTERMEDIARIO, TP_INTERMEDIARIO, TP_PROCEDURA, TS_INIZIO_VALIDITA, PR_PK]
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_COMMERCIALE", "entita": "ANA_INT_RETE_VENDITA"}'
+      pre_hook: "{{ delete_l2('ccintlrv', ['CD_INTERMEDIARIO', 'TP_INTERMEDIARIO', 'TP_PROCEDURA'], ['INTLRV_INTERM', 'INTLRV_TIPO_INTERM', 'INTLRV_PROCEDURA']) }}"
+    constraints:
+      - type: primary_key
+        columns: [CD_INTERMEDIARIO, TP_INTERMEDIARIO, TP_PROCEDURA, TS_INIZIO_VALIDITA, PR_PK]
+    columns:
+      - name: CD_INTERMEDIARIO
+        data_type: NUMBER(9,0)
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR(2)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: PR_PK
+        data_type: NUMBER(38,0)
+      - name: CD_CAUSALE_ANNULLO
+        data_type: VARCHAR(3)
+      - name: FL_GESTIONE_AGENTI
+        data_type: VARCHAR(1)
+      - name: CD_SETTORE_MERC
+        data_type: VARCHAR(5)
+      - name: CD_RESP_PARTNER
+        data_type: VARCHAR(30)
+      - name: CD_RESP_CREDITO
+        data_type: VARCHAR(30)
+      - name: CD_RESP_IT
+        data_type: VARCHAR(30)
+      - name: CD_RESP_MARKETING
+        data_type: VARCHAR(30)
+      - name: CD_RESP_LEGALE
+        data_type: VARCHAR(30)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

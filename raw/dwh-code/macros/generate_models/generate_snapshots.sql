@@ -64,7 +64,7 @@
         {% set modulo_l1 = rows[0][6] | string | trim %}
       {% endif %}
       {% for row in rows %}
-        {% if (row[5] | string | trim | upper) == 'S' %}
+        {% if (row[5] | string | trim | upper) in ('S','Y') %}
           {% do pk_cols.append(row[4] | string | trim | lower) %}
         {% endif %}
       {% endfor %}

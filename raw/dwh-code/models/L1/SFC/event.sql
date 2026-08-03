@@ -10,7 +10,7 @@ select
   TRY_CAST(NoteEsito__c AS VARCHAR(255)) AS noteesito__c,
   TRY_CAST(ErogazioneEvento__c AS VARCHAR) AS erogazioneevento__c,
   TRY_CAST(IsAllDayEvent AS BOOLEAN) AS isalldayevent,
-  TRY_CAST(Description AS VARCHAR(32000)) AS description,
+  TRY_CAST(Description AS VARCHAR) AS description,
   TRY_TO_TIMESTAMP_TZ(StartDateTime)::TIMESTAMP_NTZ AS StartDateTime,
   TRY_TO_TIMESTAMP_TZ(EndDateTime)::TIMESTAMP_NTZ AS EndDateTime,
   TRY_CAST(CreatedById AS VARCHAR) AS createdbyid,

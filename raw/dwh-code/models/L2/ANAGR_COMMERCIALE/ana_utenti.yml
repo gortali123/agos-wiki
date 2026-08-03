@@ -1,0 +1,64 @@
+version: 2
+models:
+  - name: ana_utenti
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_UTENZA, CD_TIPOLOGIA_UTENTE, CD_INTERMEDIARIO, TS_INIZIO_VALIDITA]
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_COMMERCIALE", "entita": "ANA_UTENTI"}'
+      #pre_hook: "{{ delete_l2('4338_responsabile_active', ['CD_UTENZA', 'CD_TIPOLOGIA_UTENTE'], ['\"Codice Utente\"', '\"Tipologia (Dominio definito da OCS)\"']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_UTENZA, CD_TIPOLOGIA_UTENTE, CD_INTERMEDIARIO, TS_INIZIO_VALIDITA]
+    columns:
+      - name: CD_UTENZA
+        data_type: CHAR(10)
+      - name: CD_TIPOLOGIA_UTENTE
+        data_type: CHAR(10)
+      - name: CD_INTERMEDIARIO
+        data_type: NUMBER(9)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_RESPONSABILE_AD
+        data_type: CHAR(3)
+      - name: DS_UTENZA
+        data_type: CHAR(30)
+      - name: DS_TELEFONO
+        data_type: CHAR(15)
+      - name: DS_EMAIL_UTENTE
+        data_type: CHAR(50)
+      - name: CD_PROFILO_SICUREZZA
+        data_type: CHAR(10)
+      - name: CD_OPERATORE_CONTABILE
+        data_type: CHAR(2)
+      - name: CD_CANALI_ABBINATI
+        data_type: CHAR(3)
+      - name: FL_CAPO_CATENA
+        data_type: CHAR(1)
+      - name: CD_OPERATORE
+        data_type: CHAR(3)
+      - name: CD_RECUPERATORI
+        data_type: CHAR(5)
+      - name: CD_FILIALE
+        data_type: CHAR(3)
+      - name: CD_AREA
+        data_type: CHAR(3)
+      - name: CD_DISTRETTO
+        data_type: CHAR(3)
+      - name: FL_TUTTE_FILIALI
+        data_type: CHAR(1)
+      - name: FL_RESPONSABILE
+        data_type: CHAR(1)
+      - name: FL_ABIL_SAS
+        data_type: CHAR(1)
+      - name: TP_PROFILO
+        data_type: CHAR(1)
+      - name: TP_ACCESSO
+        data_type: CHAR(2)
+      - name: CD_APPLICAZIONE
+        data_type: CHAR(2)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

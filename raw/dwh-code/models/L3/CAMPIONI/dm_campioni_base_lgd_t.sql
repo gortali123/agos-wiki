@@ -1,7 +1,7 @@
 -- =============================================================================
 -- MODELLO   : DM_CAMPIONI_BASE_LGD_T
 -- PROCESSO  : 13_Campioni.LGD  |  LAYER: L3 - DataMart
--- STRATEGIA : incremental / append + pre_hook delete_last_month('DT_OSSERVAZIONE')
+-- STRATEGIA : incremental / append + pre_hook 
 -- PK        : CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE
 -- =============================================================================
 -- ATTENZIONE: versione TEST su branch personale. ref() sostituiti con path
@@ -25,9 +25,9 @@ perimetro AS (
         FL_OBSERVATION_F, FL_OBSERVATION_NF, FL_PROLUNGATION_F, FL_PROLUNGATION_NF,
         CD_STATO, CD_TIPO_PRODOTTO,
         ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, TP_PROCEDURA ORDER BY DT_INGRS_DFLT_EBA) AS NM_DEF,
-        'Q' || TO_CHAR({{ last_day_past_month() }}, 'Q') AS CD_TRIMESTRE_RIFERIMENTO
+        'Q' || TO_CHAR({{ get_dt_osservazione() }}, 'Q') AS CD_TRIMESTRE_RIFERIMENTO
     FROM {{ ref('dm_pratiche_default_m') }}
-    WHERE DT_OSSERVAZIONE >= ADD_MONTHS({{ last_day_past_month() }}, -2)
+    WHERE DT_OSSERVAZIONE >= ADD_MONTHS({{ get_dt_osservazione() }}, -2)
 ),
 
 pratica_m_raw AS (
@@ -97,7 +97,7 @@ fido_default AS (
                 LAST_DAY(d.DT_INGRS_DFLT_EBA),
                 LAST_DAY(ADD_MONTHS(d.DT_INGRS_DFLT_EBA, -1))
             )
-    WHERE d.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE d.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     GROUP BY d.CD_PRATICA, d.TP_PROCEDURA, d.DT_OSSERVAZIONE
 ),
 
@@ -136,7 +136,7 @@ flag_contratti_default AS (
     LEFT JOIN (
         SELECT CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE, MIN(DT_SCADENZA) AS DT_MIN_SCADENZA
         FROM AGOS_DEV_16000.L2_PAGAMENTI_CONTABILITA.CAMBIALI_TEST
-        WHERE CD_TIPO_PARTITA IN ('AA','AN','IM','MP','RP') AND TS_INSERIMENTO <= {{ last_day_past_month() }}
+        WHERE CD_TIPO_PARTITA IN ('AA','AN','IM','MP','RP') AND TS_INSERIMENTO <= {{ get_dt_osservazione() }}
         GROUP BY 1, 2, 3
     ) ms ON ms.CD_PRATICA = d.CD_PRATICA AND ms.TP_PROCEDURA = d.TP_PROCEDURA AND ms.DT_OSSERVAZIONE = d.DT_OSSERVAZIONE
     LEFT JOIN AGOS_DEV_16000.L2_SALDI.SALDO_GESTIONALE_M s
@@ -205,14 +205,14 @@ SELECT
     fc.FL_DBT_AV, fc.FL_CAMBIALI,
     p.FL_OBSERVATION_F, p.FL_OBSERVATION_NF, p.FL_PROLUNGATION_F, p.FL_PROLUNGATION_NF,
     fc.FL_DEFAULT_AVERE,
-    CASE WHEN p.TP_PROCEDURA IN ('CO','CQ') AND p.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    CASE WHEN p.TP_PROCEDURA IN ('CO','CQ') AND p.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
               AND EXISTS (
                   SELECT 1 FROM {{ ref('consolidamenti') }} cons
                   WHERE cons.CD_PRATICA_CONSOLIDANTE = p.CD_PRATICA
                     AND cons.TP_PROC_CONSOLIDANTE = p.TP_PROCEDURA
               )
          THEN 'S' ELSE 'N' END AS FL_RIF,
-    CASE WHEN p.TP_PROCEDURA = 'CA' AND p.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    CASE WHEN p.TP_PROCEDURA = 'CA' AND p.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
               AND p.DT_USCITA_DFLT_EBA IS NOT NULL
               AND (pm.DT_CESSIONE IS NOT NULL OR pm.DT_PERDITA IS NOT NULL)
          THEN 'S' ELSE 'N' END AS FL_EX_FORZ_DT_PERD,

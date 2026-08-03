@@ -5,7 +5,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
-      pre_hook: "{{ delete_month() }}"
+      pre_hook: "{{ delete_dt_osservazione() }}"
       query_tag: '{"app": "DBT", "schema": "L2_RISCHI_ADEMPIMENTI", "entita": "STATO_CREDITIZIO_M"}'
     constraints:
       - type: primary_key

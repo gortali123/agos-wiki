@@ -1,0 +1,33 @@
+version: 2
+models:
+  - name: ana_gerarchia_territoriale
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_COMMERCIALE", "entita": "ANA_GERARCHIA_TERRITORIALE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        #columns: [CD_NODO_FOGLIA]
+        columns: [CD_GER_TERRITORIALE_1]
+    columns:
+      - name: CD_GER_TERRITORIALE_1
+        data_type: VARCHAR(10)
+      - name: DS_GER_TERRITORIALE_1
+        data_type: VARCHAR(50)
+      - name: CD_GER_TERRITORIALE_2
+        data_type: VARCHAR(10)
+      - name: DS_GER_TERRITORIALE_2
+        data_type: VARCHAR(50)
+      - name: CD_GER_TERRITORIALE_3
+        data_type: VARCHAR(10)
+      - name: DS_GER_TERRITORIALE_3
+        data_type: VARCHAR(50)
+      - name: CD_GER_TERRITORIALE_4
+        data_type: VARCHAR(10)
+      - name: DS_GER_TERRITORIALE_4
+        data_type: VARCHAR(50)
+      - name: CD_NODO_FOGLIA
+        data_type: VARCHAR(10)
+      - name: DS_NODO_FOGLIA
+        data_type: VARCHAR(50)

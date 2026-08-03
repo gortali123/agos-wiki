@@ -1,4 +1,4 @@
--- FREQUENZA : Mensile — incremental append + delete_last_month
+-- FREQUENZA : Mensile — incremental append + prehook
 
 WITH
 perimetro AS (
@@ -9,7 +9,7 @@ perimetro AS (
       AND TS_FINE_VALIDITA = TO_TIMESTAMP_NTZ('9999-12-31 00:00:00.000')
     {% if is_incremental() %}
       -- Clienti con validità nel mese precedente (solo in modalità incrementale).
-      AND LAST_DAY(DT_INIZIO_VALIDITA::DATE) = {{ last_day_past_month() }}
+      AND LAST_DAY(DT_INIZIO_VALIDITA::DATE) = {{ get_dt_osservazione() }}
     {% endif %}
 ),
 
@@ -47,7 +47,7 @@ ciclo_attivo AS (
     SELECT
         CD_CONTROPARTE, DT_INGRESSO_DEFAULT, DT_USCITA_DEFAULT
     FROM cicli_agg
-    WHERE {{ last_day_past_month() }} BETWEEN DT_INGRESSO_DEFAULT AND DT_USCITA_DEFAULT
+    WHERE {{ get_dt_osservazione() }} BETWEEN DT_INGRESSO_DEFAULT AND DT_USCITA_DEFAULT
 ),
 
 cicli_completi AS (
@@ -121,15 +121,15 @@ ultimo_attivo AS (
         CD_CONTROPARTE, DS_SEGNALAZIONE,
         ROW_NUMBER() OVER (PARTITION BY CD_CONTROPARTE ORDER BY DT_INIZIO DESC, CD_RISCHIO DESC) AS RN
     FROM segnalazioni_default_cl
-    WHERE DT_INIZIO <= {{ last_day_past_month() }}
-      AND (DT_FINE IS NULL OR DT_FINE >= {{ last_day_past_month() }})
+    WHERE DT_INIZIO <= {{ get_dt_osservazione() }}
+      AND (DT_FINE IS NULL OR DT_FINE >= {{ get_dt_osservazione() }})
 ),
 
 pratica_raw AS (
     SELECT
         CD_CLIENTE, CD_PRATICA, TP_PROCEDURA, FL_DBT
     FROM {{ ref('pratica_m') }}
-    WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 ),
 
 pratica_cliente_agg AS (
@@ -158,7 +158,7 @@ stato_creditizio_agg AS (
     FROM perimetro  P
     LEFT JOIN {{ ref('stato_creditizio_m') }} SC
         ON SC.CD_CONTROPARTE = P.CD_CONTROPARTE
-        AND SC.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+        AND SC.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     GROUP BY P.CD_CONTROPARTE
 ),
 
@@ -167,7 +167,7 @@ performing_raw AS (
         CD_CLIENTE, FL_FORBEARANCE, DT_INGRS_OBSERVATION, DT_USCITA_OBSERVATION, DT_INGRS_PROBATION,
         DT_USCITA_PROBATION_STIMATA, DT_USCITA_PROBATION
     FROM {{ ref('performing_m') }}
-    WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 ),
 
 perf_ciclo_attivo AS (
@@ -209,11 +209,11 @@ forborne_aggr AS (
     FROM perimetro  P
     LEFT JOIN ristrutturazione_cliente FB
         ON FB.CD_CLIENTE = P.CD_CONTROPARTE
-        AND FB.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+        AND FB.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
         AND FB.RN = 1
     LEFT JOIN forborne_cliente FO
         ON FO.CD_CLIENTE = P.CD_CONTROPARTE
-        AND FO.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+        AND FO.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 ),
 
 giorni_scaduto_raw AS (
@@ -221,38 +221,38 @@ giorni_scaduto_raw AS (
         CD_CONTROPARTE, NM_GG_SCADUTO_EBA_CLI, NM_GG_SCADUTO_CLI, NM_GG_SCADUTO_CONT, EU_SCADUTO_IMPAG_EBA, EU_IMPIEGO_TOT_EBA,
         ROW_NUMBER() OVER (PARTITION BY CD_CONTROPARTE ORDER BY TS_INSERIMENTO DESC) AS RN
     FROM {{ ref('giorni_scaduto') }}
-    WHERE TS_INSERIMENTO <= {{ last_day_past_month() }}
+    WHERE TS_INSERIMENTO <= {{ get_dt_osservazione() }}
 )
 
 SELECT
     P.CD_CONTROPARTE,
-    {{ last_day_past_month() }} AS DT_OSSERVAZIONE,
+    {{ get_dt_osservazione() }} AS DT_OSSERVAZIONE,
     CA.DT_INGRESSO_DEFAULT AS DT_INGRS_DFLT_EBA,
     CA.DT_USCITA_DEFAULT AS DT_USCITA_DFLT_EBA,
     CASE
         WHEN PE.FL_FORBEARANCE = 'F' AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-        AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
-        OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
+        AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
+        OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_OBSERVATION_F,
     CASE
         WHEN PE.FL_FORBEARANCE = 'NF' AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-        AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
-        OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
+        AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
+        OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_OBSERVATION_NF,
     CASE
         WHEN PE.FL_FORBEARANCE = 'F' AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-        AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
-        OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
-        AND {{ last_day_past_month() }} > DATEADD(DAY, 365, PE.DT_INGRS_OBSERVATION)
+        AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
+        OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
+        AND {{ get_dt_osservazione() }} > DATEADD(DAY, 365, PE.DT_INGRS_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_PROLUNGATION_F,
     CASE
         WHEN PE.FL_FORBEARANCE = 'NF' AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-        AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
-        OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
-        AND {{ last_day_past_month() }} > DATEADD(DAY, 730, PE.DT_INGRS_OBSERVATION)
+        AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION AND (PE.DT_USCITA_OBSERVATION IS NULL
+        OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
+        AND {{ get_dt_osservazione() }} > DATEADD(DAY, 730, PE.DT_INGRS_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_PROLUNGATION_NF,
     CASE WHEN PCL.FL_DBT_CLI = 'S' THEN 'S' ELSE 'N' END AS FL_DBT_CLI,
@@ -305,10 +305,10 @@ LEFT JOIN ultimo_chiuso UC
     ON UC.CD_CONTROPARTE = P.CD_CONTROPARTE
     AND UC.RN = 1
     AND COALESCE(SC.FL_DFLT_EBA_CLI, 'N') = 'N'
-    AND {{ last_day_past_month() }} <= LAST_DAY(DATEADD(MONTH, 1, UC.DT_FINE))
+    AND {{ get_dt_osservazione() }} <= LAST_DAY(DATEADD(MONTH, 1, UC.DT_FINE))
 LEFT JOIN perf_ciclo_attivo PCA ON PCA.CD_CLIENTE = P.CD_CONTROPARTE
 
 {% if is_incremental() %}
-    WHERE P.TS_INIZIO_VALIDITA <= {{ last_day_past_month() }}
-    AND P.TS_FINE_VALIDITA > {{ last_day_past_month() }}
+    WHERE P.TS_INIZIO_VALIDITA <= {{ get_dt_osservazione() }}
+    AND P.TS_FINE_VALIDITA > {{ get_dt_osservazione() }}
 {% endif %}

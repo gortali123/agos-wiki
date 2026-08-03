@@ -35,7 +35,7 @@ models:
       - name: isalldayevent
         data_type: BOOLEAN
       - name: description
-        data_type: VARCHAR(32000)
+        data_type: VARCHAR
       - name: startdatetime
         data_type: TIMESTAMP_NTZ
       - name: enddatetime

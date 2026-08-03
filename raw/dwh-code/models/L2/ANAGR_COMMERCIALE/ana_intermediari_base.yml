@@ -1,0 +1,76 @@
+version: 2
+models:
+  - name: ana_intermediari_base
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_INTERMEDIARIO, TP_INTERMEDIARIO, TP_PROCEDURA, TS_INIZIO_VALIDITA, PR_PK]
+      query_tag: '{"app": "DBT", "schema": "L2_ANAGR_COMMERCIALE", "entita": "ANA_INTERMEDIARI_BASE"}'
+      pre_hook: "{{ delete_l2('ccintlin', ['CD_INTERMEDIARIO', 'TP_INTERMEDIARIO', 'TP_PROCEDURA'], ['INTLIN_INTERM', 'INTLIN_TIPO_INTERM', 'INTLIN_PROCEDURA']) }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_INTERMEDIARIO, TP_INTERMEDIARIO, TP_PROCEDURA, TS_INIZIO_VALIDITA, PR_PK]
+    columns:
+      - name: CD_INTERMEDIARIO
+        data_type: NUMBER(9)
+      - name: TP_INTERMEDIARIO
+        data_type: VARCHAR(2)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: PR_PK
+        data_type: NUMBER(38,0)
+      - name: DS_RAGIONE_SOCIALE
+        data_type: VARCHAR(61)
+      - name: CD_CODICE_FISCALE
+        data_type: VARCHAR(16)
+      - name: CD_PARTITA_IVA
+        data_type: VARCHAR(11)
+      - name: TP_ANAGRAFICA
+        data_type: VARCHAR(1)
+      - name: CD_FORMA_GIURIDICA
+        data_type: VARCHAR(5)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR(2)
+      - name: FL_ATTIVO
+        data_type: VARCHAR(1)
+      - name: DT_ULTIMO_STATO
+        data_type: DATE
+      - name: CD_CAUSALE_ANNULLO
+        data_type: VARCHAR(3)
+      - name: DT_ANNULLO
+        data_type: DATE
+      - name: CD_FILIALE
+        data_type: VARCHAR(3)
+      - name: CD_MACROAREA
+        data_type: VARCHAR(5)
+      - name: CD_TIPOLOGIA
+        data_type: VARCHAR(5)
+      - name: FL_MEDIATORE
+        data_type: VARCHAR(1)
+      - name: FL_ABIL_IVASS
+        data_type: VARCHAR(1)
+      - name: CD_COD_ISC_OAM
+        data_type: VARCHAR(20)
+      - name: FL_FATT_RICEVUTA
+        data_type: VARCHAR(1)
+      - name: CD_RETE_VENDITA_CATENA
+        data_type: NUMBER(9)
+      - name: CD_AGENTE_CATENA
+        data_type: NUMBER(9)
+      - name: CD_SUBAGENTE_CATENA
+        data_type: NUMBER(9)
+      - name: CD_CONVENZIONATO_CATENA
+        data_type: NUMBER(9)
+      - name: CD_PUNTO_VENDITA_CATENA
+        data_type: NUMBER(9)
+      - name: CD_VENDITORE_CATENA
+        data_type: NUMBER(9)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

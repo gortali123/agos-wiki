@@ -40,7 +40,7 @@ BASE AS (
         AND G.DT_OSSERVAZIONE >= T.DT_INSERIMENTO
     WHERE T.CD_PRATICA IS NULL  /* prendo solo le pratiche che non sono truffe */
     {% if is_incremental() %}
-    AND G.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    AND G.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     {% endif %}
 	
 	
@@ -76,7 +76,7 @@ BASE AS (
         AND C.DT_OSSERVAZIONE >= T.DT_INSERIMENTO
     WHERE T.CD_PRATICA IS NULL
     {% if is_incremental() %}
-    AND C.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    AND C.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     {% endif %}
 
 )

@@ -26,5 +26,5 @@ WHERE DRPRA_TIPO = 'AN'
     /*AND {{ custom_to_date('DRPRA_DATA_ESTRAZIONE') }} = LAST_DAY(DATEADD('month', -1, CURRENT_DATE()))*/
 
 {% if is_incremental() %}
-WHERE {{ custom_to_date('DT_OSSERVAZIONE') }} = {{ last_day_past_month() }}
+WHERE {{ custom_to_date('DT_OSSERVAZIONE') }} = {{ get_dt_osservazione() }}
 {% endif %}

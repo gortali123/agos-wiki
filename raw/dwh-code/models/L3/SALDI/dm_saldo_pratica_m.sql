@@ -48,7 +48,7 @@ BASE AS (
         EU_RISCONTI_INTERESSI
     FROM {{ ref('saldo_gestionale_m') }}
     {% if is_incremental() %}
-    WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}  /* ci entra dalla seconda volta che gira il modello */
+    WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}  /* ci entra dalla seconda volta che gira il modello */
     {% endif %}
 
 
@@ -81,7 +81,7 @@ BASE AS (
         EU_RISCONTI_INTERESSI
     FROM {{ ref('saldo_contabile_m') }}
     {% if is_incremental() %}
-    WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     {% endif %}
 
 )

@@ -7,7 +7,7 @@ select
   TRY_CAST(CreatedById AS VARCHAR) AS createdbyid,
   TRY_CAST(CreatedBy_FederationIdentifier AS VARCHAR) AS createdby_federationidentifier,
   TRY_TO_TIMESTAMP_TZ(CreatedDate)::TIMESTAMP_NTZ AS CreatedDate,
-  TRY_CAST(Descrizione__c AS VARCHAR(255)) AS descrizione__c,
+  TRY_CAST(Descrizione__c AS VARCHAR) AS descrizione__c,
   TRY_CAST(Iniziativa__r_Id AS VARCHAR) AS iniziativa__r_id,
   TRY_CAST(Iniziativa__r_IDIniziativa__c AS VARCHAR) AS iniziativa__r_idiniziativa__c,
   TRY_CAST(LastModifiedById AS VARCHAR) AS lastmodifiedbyid,

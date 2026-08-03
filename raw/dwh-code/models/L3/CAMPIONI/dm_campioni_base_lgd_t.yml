@@ -8,7 +8,7 @@ models:
       contract:
         enforced: false
       pre_hook:
-        -  "{{ delete_month(column='DT_OSSERVAZIONE', date_expr=last_day_past_month()) }}"
+        -  "{{ delete_dt_osservazione() }}"
     constraints:
       - type: primary_key
         warn_unenforced: false

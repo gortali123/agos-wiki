@@ -71,7 +71,7 @@
     {%- set payload_cols = biz_cols | reject('in', key_cols) | list -%}
 {%- endif -%}
 
-{%- set rme = ref_month_end if ref_month_end is not none else last_day_past_month() -%}
+{%- set rme = ref_month_end if ref_month_end is not none else get_dt_osservazione() -%}
 
 WITH {% if pre_ctes %}{{ pre_ctes }}
 {% endif %}{{ src_ref }} AS (

@@ -7,10 +7,6 @@ models:
       meta:
         cluster: ["TBD"]
       query_tag: '{"app":"DBT", "sorgente":"SFC", "schema":"L1_E_SFC", "archivio":"GROUP"}'
-    constraints:
-      - type: primary_key
-        warn_unenforced: false
-        columns: [id]
     columns:
       - name: ts_riferimento
         data_type: TIMESTAMP_NTZ

@@ -70,22 +70,10 @@ models:
         data_type: VARCHAR(2)
       - name: EU_IMPORTO_BOLLI
         data_type: NUMBER(13,2)
-      - name: CAS_A_VISTA
-        data_type: VARCHAR(1)
       - name: TP_ADDEBITO
         data_type: VARCHAR(2)
-      - name: CAS_TIPO_INSOL_RICH
+      - name: TP_EFFETTO
         data_type: VARCHAR(1)
-      - name: CAS_TIPO_EFFETTO
-        data_type: VARCHAR(1)
-      - name: CAS_BA_BANK_CODE
-        data_type: NUMBER(8)
-      - name: CAS_BA_SUB_NUMBER
-        data_type: NUMBER(4)
-      - name: CAS_BC_BANK_CODE
-        data_type: NUMBER(8)
-      - name: CAS_BC_SUB_NUMBER
-        data_type: NUMBER(4)
       - name: CD_DEBITORE
         data_type: VARCHAR(16)
       - name: CD_COD_SIA

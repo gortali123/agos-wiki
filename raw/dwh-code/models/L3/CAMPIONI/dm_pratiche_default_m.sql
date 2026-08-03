@@ -1,4 +1,4 @@
--- FREQUENZA : Mensile — incremental append + delete_last_month
+-- FREQUENZA : Mensile — incremental append + prehook
 WITH 
 perimetro AS (
     SELECT 
@@ -7,7 +7,7 @@ perimetro AS (
     FROM {{ ref('pratica_m') }}
     WHERE TP_PROCEDURA IN ('CO', 'CA', 'CQ')
     {% if is_incremental() %}
-      AND DT_OSSERVAZIONE = {{ last_day_past_month() }}
+      AND DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     {% endif %}
 ),
 
@@ -51,7 +51,7 @@ ciclo_attivo AS (
     SELECT
         CD_CONTROPARTE, DT_INGRESSO_DEFAULT, DT_USCITA_DEFAULT
     FROM cicli_agg
-    WHERE {{ last_day_past_month() }} BETWEEN DT_INGRESSO_DEFAULT AND DT_USCITA_DEFAULT
+    WHERE {{ get_dt_osservazione() }} BETWEEN DT_INGRESSO_DEFAULT AND DT_USCITA_DEFAULT
 ),
 
 cicli_completi AS (
@@ -114,7 +114,7 @@ performing_raw AS (
         CD_CLIENTE, FL_FORBEARANCE, DT_INGRS_OBSERVATION, DT_USCITA_OBSERVATION, DT_INGRS_PROBATION,
         DT_USCITA_PROBATION_STIMATA, DT_USCITA_PROBATION
     FROM {{ ref('performing_m') }}
-    WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 ),
 
 perf_ciclo_attivo AS (
@@ -148,12 +148,12 @@ segnalazioni_controparte AS (
         S.DT_INIZIO,
         S.DT_FINE,
         CASE
-            WHEN S.DT_INIZIO <= {{ last_day_past_month() }}AND (S.DT_FINE IS NULL
-            OR S.DT_FINE >= {{ last_day_past_month() }})
+            WHEN S.DT_INIZIO <= {{ get_dt_osservazione() }}AND (S.DT_FINE IS NULL
+            OR S.DT_FINE >= {{ get_dt_osservazione() }})
             THEN 1 ELSE 0
         END AS FL_ATTIVA
     FROM segnalazioni_default S
-    WHERE S.DT_INIZIO <= {{ last_day_past_month() }}
+    WHERE S.DT_INIZIO <= {{ get_dt_osservazione() }}
 ),
 
 stato_cred_pratica AS (
@@ -170,7 +170,7 @@ stato_cred_pratica AS (
         ON  P.CD_PRATICA      = SC.CD_PRATICA
         AND P.TP_PROCEDURA    = SC.TP_PROCEDURA
         AND P.DT_OSSERVAZIONE = SC.DT_OSSERVAZIONE
-    WHERE SC.DT_OSSERVAZIONE  = {{ last_day_past_month() }}
+    WHERE SC.DT_OSSERVAZIONE  = {{ get_dt_osservazione() }}
     GROUP BY SC.DT_OSSERVAZIONE, P.CD_CLIENTE
 ),
 
@@ -229,7 +229,7 @@ SELECT
     P.CD_PRATICA,
     P.TP_PROCEDURA,
     P.CD_CLIENTE AS CD_CONTROPARTE,
-    {{ last_day_past_month() }} AS DT_OSSERVAZIONE,
+    {{ get_dt_osservazione() }} AS DT_OSSERVAZIONE,
     P.CD_TIPO_PRODOTTO,
     P.CD_EMETTITORE,
     P.CD_PRODOTTO,
@@ -244,35 +244,35 @@ SELECT
     CASE
         WHEN PE.FL_FORBEARANCE = 'F'
          AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-         AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION
+         AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION
          AND (PE.DT_USCITA_OBSERVATION IS NULL
-              OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
+              OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_OBSERVATION_F,
     CASE
         WHEN PE.FL_FORBEARANCE = 'NF'
          AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-         AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION
+         AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION
          AND (PE.DT_USCITA_OBSERVATION IS NULL
-              OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
+              OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_OBSERVATION_NF,
     CASE
         WHEN PE.FL_FORBEARANCE = 'F'
          AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-         AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION
+         AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION
          AND (PE.DT_USCITA_OBSERVATION IS NULL
-              OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
-         AND {{ last_day_past_month() }} > DATEADD(DAY, 365, PE.DT_INGRS_OBSERVATION)
+              OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
+         AND {{ get_dt_osservazione() }} > DATEADD(DAY, 365, PE.DT_INGRS_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_PROLUNGATION_F,
     CASE
         WHEN PE.FL_FORBEARANCE = 'NF'
          AND PE.DT_INGRS_OBSERVATION IS NOT NULL
-         AND {{ last_day_past_month() }} >= PE.DT_INGRS_OBSERVATION
+         AND {{ get_dt_osservazione() }} >= PE.DT_INGRS_OBSERVATION
          AND (PE.DT_USCITA_OBSERVATION IS NULL
-              OR {{ last_day_past_month() }} <= PE.DT_USCITA_OBSERVATION)
-         AND {{ last_day_past_month() }} > DATEADD(DAY, 730, PE.DT_INGRS_OBSERVATION)
+              OR {{ get_dt_osservazione() }} <= PE.DT_USCITA_OBSERVATION)
+         AND {{ get_dt_osservazione() }} > DATEADD(DAY, 730, PE.DT_INGRS_OBSERVATION)
         THEN 'S' ELSE 'N'
     END AS FL_PROLUNGATION_NF,
     P.FL_DBT,
@@ -320,7 +320,7 @@ LEFT JOIN {{ ref('giorni_scaduto') }} GS
     ON GS.CD_CONTROPARTE = P.CD_CLIENTE 
     AND GS.CD_PRATICA = P.CD_PRATICA
 	AND GS.TP_PROCEDURA = P.TP_PROCEDURA
-    AND GS.TS_INSERIMENTO = {{ last_day_past_month() }}
+    AND GS.TS_INSERIMENTO = {{ get_dt_osservazione() }}
 LEFT JOIN stato_cred_pratica SCP
     ON SCP.CD_CONTROPARTE = P.CD_CLIENTE
 LEFT JOIN primo_ingresso PI
@@ -334,10 +334,10 @@ LEFT JOIN ultimo_chiuso UC
     ON  UC.CD_CONTROPARTE = P.CD_CLIENTE
     AND UC.RN = 1
     AND COALESCE(SCP.FL_DEFAULT_EBA, 'N') = 'N'
-    AND {{ last_day_past_month() }} <= LAST_DAY(DATEADD(MONTH, 1, UC.DT_FINE))
+    AND {{ get_dt_osservazione() }} <= LAST_DAY(DATEADD(MONTH, 1, UC.DT_FINE))
 LEFT JOIN ristrutturazione_cliente FB
     ON  FB.CD_CLIENTE = P.CD_CLIENTE
-    AND FB.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    AND FB.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
     AND FB.RN = 1
 LEFT JOIN {{ ref('stato_creditizio_m') }} SC
     ON SC.CD_PRATICA = P.CD_PRATICA
@@ -345,10 +345,10 @@ LEFT JOIN {{ ref('stato_creditizio_m') }} SC
     AND SC.DT_OSSERVAZIONE = P.DT_OSSERVAZIONE
 LEFT JOIN flag_dbt_cli FDBT
     ON FDBT.CD_CLIENTE = P.CD_CLIENTE
-    AND FDBT.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    AND FDBT.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 LEFT JOIN flag_forborne_cli FFRB
     ON FFRB.CD_CLIENTE = P.CD_CLIENTE
 
 {% if is_incremental() %}
-    WHERE P.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+    WHERE P.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}

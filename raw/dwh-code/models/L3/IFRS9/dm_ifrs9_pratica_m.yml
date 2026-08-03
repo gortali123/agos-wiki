@@ -1,0 +1,152 @@
+version: 2
+
+models:
+  - name: dm_ifrs9_pratica_m
+    config:
+      pre_hook: "{{ delete_dt_osservazione('DT_OSSERVAZIONE') }}"
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        columns: [CD_PRATICA, TP_PROCEDURA]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_TIPO_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: CD_EMETTITORE
+        data_type: NUMBER(3,0)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(2)
+      - name: TP_CATEGORIA_CARTE
+        data_type: VARCHAR(10)
+      - name: CD_BLOCCO
+        data_type: VARCHAR(2)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: DS_STATO
+        data_type: VARCHAR(20)
+      - name: TP_ORIGINE_PRATICA
+        data_type: VARCHAR(1)
+      - name: NM_DURATA_FINANZIAMENTO
+        data_type: NUMBER(2,0)
+      - name: CD_ULTIMA_PRATICA_OLD
+        data_type: NUMBER(12,0)
+      - name: NM_MESI_IMPAGATO
+        data_type: NUMBER(5,0)
+      - name: CD_PROVINCIA_RESIDENZA
+        data_type: VARCHAR(2)
+      - name: CD_REGIONE_RESIDENZA
+        data_type: VARCHAR(2)
+      - name: EU_REDDITO_ANNUO_CLIENTE
+        data_type: NUMBER(13,2)
+      - name: CD_STATO_CIVILE
+        data_type: VARCHAR(3)
+      - name: CD_OCCUPAZIONE
+        data_type: VARCHAR(3)
+      - name: TP_PERIMETRO
+        data_type: VARCHAR(4)
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_ESTINZIONE_ANTICIPATA
+        data_type: DATE
+      - name: DT_PASSAGGIO_PERDITA
+        data_type: DATE
+      - name: DT_CESSIONE
+        data_type: DATE
+      - name: DT_LIQUIDAZIONE
+        data_type: DATE
+      - name: DT_DECORRENZA
+        data_type: DATE
+      - name: DT_CARICAMENTO
+        data_type: DATE
+      - name: DT_STORNO
+        data_type: DATE
+      - name: DT_ATTIVAZIONE
+        data_type: DATE
+      - name: DT_RINNOVO
+        data_type: DATE
+      - name: DT_PRIMO_UTILIZZO
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA
+        data_type: DATE
+      - name: FL_PASSATE_GESTIONE
+        data_type: VARCHAR(1)
+      - name: FL_TRUFFA
+        data_type: VARCHAR(1)
+      - name: FL_SECUR
+        data_type: VARCHAR(1)
+      - name: FL_SRT
+        data_type: VARCHAR(3)
+      - name: FL_SOVRAINDEBITAMENTO
+        data_type: VARCHAR(1)
+      - name: FL_DBT
+        data_type: VARCHAR(1)
+      - name: FL_RIFIN
+        data_type: VARCHAR(1)
+      - name: FL_RIF_CONTENZIOSO
+        data_type: VARCHAR(1)
+      - name: FL_DEFAULT_EBA
+        data_type: VARCHAR(1)
+      - name: FL_ATC
+        data_type: VARCHAR(1)
+      - name: FL_SME
+        data_type: VARCHAR(1)
+      - name: FL_BASE_DATI
+        data_type: VARCHAR(1)
+      - name: FL_AQR
+        data_type: VARCHAR(1)
+      - name: TP_SUBPTF
+        data_type: VARCHAR(30)
+      - name: CD_SUBPTF_DET
+        data_type: VARCHAR(3)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(30)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: PC_INDEBITAMENTO
+        data_type: NUMBER(5,2)    # AGON1AM: Da correggere quando ci sarà la conferma da parte di CDE sul data type del campo
+      - name: EU_FINANZIATO
+        data_type: NUMBER(13,2)
+      - name: EU_RATA_ORIGINE    # AGON1AM: da confermare
+        data_type: NUMBER(13,2)
+      - name: EU_ULTIMA_RATA     # AGON1AM: da confermare
+        data_type: NUMBER(13,2)
+      - name: EU_FIDO
+        data_type: NUMBER(13,2)
+      - name: EU_ON_BALANCE
+        data_type: NUMBER(13,2)
+      - name: EU_OFF_BALANCE
+        data_type: NUMBER(13,2)
+      - name: EU_IMPIEGO_GESTIONALE
+        data_type: NUMBER(13,2)
+      - name: EU_INCASSO    # AGON1AM: da confermare
+        data_type: NUMBER(13,2)
+      - name: EU_INCASSO_CESSIONE
+        data_type: NUMBER(13,2)  # AGON1AM: da confermare
+      - name: EU_SCADUTO
+        data_type: NUMBER(13,2)
+      - name: NM_GG_SCADUTO_EBA
+        data_type: NUMBER(5,0)
+      - name: DT_INGRS_DEFAULT_EBA
+        data_type: DATE
+      - name: DT_USCITA_DEFAULT_EBA
+        data_type: DATE

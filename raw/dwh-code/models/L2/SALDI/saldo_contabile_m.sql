@@ -110,5 +110,5 @@ WHERE P.FL_DELETED = 'N'
 /*AND {{ custom_to_date('P.DRPRA_DATA_ESTRAZIONE') }} = LAST_DAY(DATEADD('month', -1, CURRENT_DATE()))*/
 
 {% if is_incremental() %}
-WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}
+WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}

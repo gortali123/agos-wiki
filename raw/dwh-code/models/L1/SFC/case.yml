@@ -53,7 +53,7 @@ models:
       - name: decessodormiente__c
         data_type: BOOLEAN
       - name: description
-        data_type: VARCHAR(3200)
+        data_type: VARCHAR
       - name: emailcliente__c
         data_type: VARCHAR(255)
       - name: entitlement_name

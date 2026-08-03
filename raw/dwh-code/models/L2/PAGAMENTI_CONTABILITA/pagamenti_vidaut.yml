@@ -1,0 +1,99 @@
+version: 2
+models:
+  - name: pagamenti_vidaut
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: [CD_PAG_VIDAUT]
+      query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "PAGAMENTI_VIDAUT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PAG_VIDAUT]
+    columns:
+      - name: CD_PAG_VIDAUT
+        data_type: NUMBER(7)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_PRATICA
+        data_type: NUMBER(12)
+      - name: TP_MOTIVO
+        data_type: VARCHAR(2)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: CD_ATTRIBUTO
+        data_type: VARCHAR(2)
+      - name: CD_BANCA_INTERNA
+        data_type: NUMBER(5)
+      - name: CD_ABI_BAN_PAGAM
+        data_type: NUMBER(5)
+      - name: CD_CAB_BAN_PAGAM
+        data_type: NUMBER(5)
+      - name: DT_PAGAMENTO
+        data_type: DATE
+      - name: DT_VALUTA
+        data_type: DATE
+      - name: DT_REG_CONTABILE
+        data_type: DATE
+      - name: DT_SCADENZA
+        data_type: DATE
+      - name: EU_PAGAMENTO
+        data_type: NUMBER(13,2)
+      - name: CD_DESTINATARIO
+        data_type: NUMBER(9)
+      - name: TP_DESTINATARIO
+        data_type: VARCHAR(2)
+      - name: CD_LETTERA_DESTINATARIO
+        data_type: VARCHAR(4)
+      - name: CD_ABI_DESTINATARIO
+        data_type: NUMBER(5)
+      - name: CD_CAB_DESTINATARIO
+        data_type: NUMBER(5)
+      - name: CD_CC_DESTINATARIO
+        data_type: VARCHAR(12)
+      - name: CD_BANK_CODE_DESTINATARIO
+        data_type: NUMBER(8)
+      - name: CD_SUB_NUMBER_DESTINATARIO
+        data_type: NUMBER(4)
+      - name: FL_CONTR_ANTIRICICLAGGIO
+        data_type: VARCHAR(1)
+      - name: DT_CONTR_ANTIRICICLAGGIO
+        data_type: DATE
+      - name: TP_EMISSIONE_ASSEGNO
+        data_type: VARCHAR(1)
+      - name: CD_ORIGINE_PAGAMENTO
+        data_type: VARCHAR(5)
+      - name: CD_NUM_OPERAZ_PAG
+        data_type: VARCHAR(12)
+      - name: CD_OPE_REG_CONTAB
+        data_type: VARCHAR(10)
+      - name: CD_ARTICOLO_CONT
+        data_type: NUMBER(7)
+      - name: CD_KEY_EC
+        data_type: VARCHAR(100)
+      - name: CD_KEY_EC_RIM
+        data_type: VARCHAR(100)
+      - name: PR_PRATICA
+        data_type: NUMBER(3)
+      - name: FL_CUMULATO
+        data_type: VARCHAR(1)
+      - name: CD_CONTROPARTE_CNT
+        data_type: NUMBER(9)
+      - name: PR_PRESENTAZIONE
+        data_type: NUMBER(11)
+      - name: PR_NUOVO_PAG_RIEMISSIONE
+        data_type: NUMBER(7)
+      - name: CD_CRO
+        data_type: VARCHAR(35)
+      - name: CD_FILIALE
+        data_type: VARCHAR(3)
+      - name: CD_SOTTOCAUSALE
+        data_type: NUMBER(2)
+      - name: CD_ID_CARTA
+        data_type: NUMBER(16)
+      - name: CD_PRODOTTO_CARTA
+        data_type: VARCHAR(6)
+      - name: CD_CAU_RIFIUTO
+        data_type: VARCHAR(8)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

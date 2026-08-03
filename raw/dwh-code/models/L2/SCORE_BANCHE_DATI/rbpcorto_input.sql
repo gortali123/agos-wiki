@@ -45,8 +45,7 @@ raw AS (
         {{ get_xml_path('n_req_var', 'DURATA', 'VARCHAR') }} AS NM_DURATA_RAW,
         {{ get_xml_path('n_req_var', 'IRR', 'VARCHAR') }} AS NM_IRR_RAW,
         {{ get_xml_path('n_req_var', 'CANALE', 'VARCHAR') }} AS CD_CANALE,
-        -- NOTA: RF = 'TIPO_CANALE'; il tag reale nello xsd e' 'Type_CANALE'
-        {{ get_xml_path('n_req_var', 'Type_CANALE', 'VARCHAR') }} AS TP_CANALE,
+        {{ get_xml_path('n_req_var', 'CANALE_WEB', 'VARCHAR') }} AS TP_CANALE,
         {{ get_xml_path('n_req_var', 'CD_TIPO_CLIENTE', 'VARCHAR') }} AS CD_TIPO_CLIENTE,
         {{ get_xml_path('n_req_var', 'NOTE1', 'VARCHAR') }} AS DS_NOTE1,
         {{ get_xml_path('n_req_var', 'NOTE2', 'VARCHAR') }} AS DS_NOTE2,

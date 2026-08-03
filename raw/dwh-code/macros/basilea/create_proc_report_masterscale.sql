@@ -126,7 +126,7 @@ def build_sheet_KPI(wb: openpyxl.Workbook, df1, df2, sheet_name: str) -> None:
     KPI_TITLE_ROW      = 1
     KPI_SUBTITLE_ROW   = 2
     KPI_EMPTY_1        = 3
-    KPI_SUBTITLE_ROW_2 = 4
+    KPI_SUBTITLE_ROW_2 = 4 
     KPI_EMPTY_2        = 5
     KPI_HEADER_ROW     = 6
     KPI_DATA_START     = 7
@@ -250,8 +250,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             null as EU_DISPONIBILE_NOUTI,
             EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB_GROSS_SRT,
@@ -281,8 +281,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_DISPONIBILE_NOUTI,
             EU_EAD_STIMATA_FLOOR as EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL as EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR as EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA as EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB as EU_PV_IRB_GROSS_SRT,
@@ -297,7 +297,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
         SELECT 
             NVL(FL_SME, 'TOTALE') AS SME
             ,TP_CLASSE_RISCHIO AS "PD CLASS"
-            ,FL_SRT AS "Y"
+            ,FL_SRT AS "SRT"
             ,TP_LGD_CLASSE_RISC AS "LGD CLASS"
             ,TP_CCF_CLASSE_RISC AS "CCF CLASS"
             ,CASE 
@@ -317,7 +317,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             ,ROUND(SUM(NVL(EU_IMPIEGHI,0))) AS "Outstanding on balance sheet"
             ,ROUND(SUM(GREATEST(NVL(EU_DISPONIBILE_NOUTI, 0), 0))) AS "Available amounts not used at the end of the month"
             ,ROUND(SUM(NVL(IFF(TP_CO_RE = 1,EU_EAD_FLOOR_GROSS_SRT, EU_EAD_STIMATA_FLOOR),0))) AS EAD
-            ,ROUND(SUM(NVL(IFF(TP_CO_RE = 1,EU_EL_GROSS_SRT,EU_EL),0))) AS EL
+            ,ROUND(SUM(NVL(IFF(TP_CO_RE = 1,EU_EL_FLOOR_GROSS_SRT,EU_EL_FLOOR),0))) AS EL_FLOOR
             ,ROUND(SUM(NVL(IFF(TP_CO_RE = 1,EU_RWA_GROSS_SRT,EU_RWA),0))) AS RWA
             ,ROUND(SUM(NVL(IFF(TP_CO_RE = 1,EU_PV_IRB_GROSS_SRT,EU_PV_IRB),0))) AS "Capital Requirement"
             ,CASE 
@@ -357,8 +357,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             null as EU_DISPONIBILE_NOUTI,
             EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB_GROSS_SRT,
@@ -388,8 +388,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_DISPONIBILE_NOUTI,
             EU_EAD_STIMATA_FLOOR as EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL as EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR as EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA as EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB as EU_PV_IRB_GROSS_SRT,
@@ -403,7 +403,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
     ,AGGREGAZIONE AS (
         SELECT 
             NVL(FL_SME, 'TOTALE') AS SME
-            ,FL_SRT AS "Y"
+            ,FL_SRT AS "SRT"
             ,TP_CLASSE_RISCHIO AS "PD CLASS"
             ,TP_LGD_CLASSE_RISC AS "LGD CLASS"
             ,TP_CCF_CLASSE_RISC AS "CCF CLASS"    
@@ -424,7 +424,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             ,ROUND(SUM(NVL(EU_IMPIEGHI,0))) AS "Outstanding on balance sheet"
             ,ROUND(SUM(GREATEST(NVL(EU_DISPONIBILE_NOUTI, 0), 0))) AS "Available amounts not used at the end of the month"
             ,ROUND(SUM(NVL(EU_EAD_FLOOR_GROSS_SRT,0))) AS EAD
-            ,ROUND(SUM(NVL(EU_EL_GROSS_SRT,0))) AS EL
+            ,ROUND(SUM(NVL(EU_EL_FLOOR_GROSS_SRT,0))) AS EL_FLOOR
             ,ROUND(SUM(NVL(EU_RWA_GROSS_SRT,0))) AS RWA
             ,ROUND(SUM(NVL(EU_PV_IRB_GROSS_SRT,0))) AS "Capital Requirement"
         FROM PERIMETRO
@@ -456,8 +456,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             null as EU_DISPONIBILE_NOUTI,
             EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB_GROSS_SRT,
@@ -487,8 +487,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_DISPONIBILE_NOUTI,
             EU_EAD_STIMATA_FLOOR as EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL as EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR as EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA as EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB as EU_PV_IRB_GROSS_SRT,
@@ -554,8 +554,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             null as EU_DISPONIBILE_NOUTI,
             EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB_GROSS_SRT,
@@ -585,8 +585,8 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
             EU_DISPONIBILE_NOUTI,
             EU_EAD_STIMATA_FLOOR as EU_EAD_FLOOR_GROSS_SRT,
             EU_EAD_STIMATA_FLOOR,
-            EU_EL as EU_EL_GROSS_SRT,
-            EU_EL,
+            EU_EL_FLOOR as EU_EL_FLOOR_GROSS_SRT,
+            EU_EL_FLOOR,
             EU_RWA as EU_RWA_GROSS_SRT,
             EU_RWA,
             EU_PV_IRB as EU_PV_IRB_GROSS_SRT,
@@ -599,7 +599,7 @@ def main(session: snowpark.Session, anno_mese_rif:  str) -> str:
     )
     SELECT 
         ROUND(SUM(EU_RWA))                AS RWA
-        ,ROUND(SUM(EU_EL))                AS EL
+        ,ROUND(SUM(EU_EL_FLOOR))                AS EL_FLOOR
         ,ROUND(SUM(EU_EAD_STIMATA_FLOOR)) AS EAD
     FROM PERIMETRO
     """

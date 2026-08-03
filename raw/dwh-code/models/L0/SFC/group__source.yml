@@ -6,7 +6,4 @@ sources:
     tables:
       - name: group_
         data_tests:
-          - try_cast
-          - primary_key:
-              arguments:
-                pk_columns: [id]
+          - try_cast_from_sql

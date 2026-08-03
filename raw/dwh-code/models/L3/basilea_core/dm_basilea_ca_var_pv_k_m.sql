@@ -94,21 +94,99 @@ WITH BASE AS (
     CAST( {{ custom_to_decimal('CC.PVKCA_EAD_STIMATA',     precision=13,      decimal=2)  }} AS NUMBER(13,2))   AS EU_EAD_STIMATA,
     CAST( {{ custom_to_decimal('CC.PVKCA_EAD_STIMATA_FLOOR',  precision=13,   decimal=2)  }} AS NUMBER(13,2))   AS EU_EAD_STIMATA_FLOOR 
    FROM {{ env_var('DBT_DATABASE') }}.L1_O_BAS.IFBLFPVKCA_TEST AS CC    -- Da sostituire con la ref del modello dbt associato quando verrrano inviati i tracciati mensili da ocs. 
-    where cc.PVKCA_DATA_ESTRAZIONE = LAST_DAY(DATEADD(MONTH, -4, CURRENT_DATE()))
+    where cc.PVKCA_DATA_ESTRAZIONE = LAST_DAY(DATEADD(MONTH, -5, CURRENT_DATE()))
 ),
- CTE_CORR AS (
+
+CTE_CORR AS (
     SELECT 
-        cc.*,
+        cc.DATA_ESTRAZIONE,
+        cc.CD_PROVENIENZA,
+        cc.CD_PRATICA,
+        cc.CD_PRODOTTO,
+        cc.CD_EMETTITORE,
+        cc.TP_EMETTITORE,
+        cc.TP_CIRCUITO,
+        cc.CD_SOCIETA,
+        cc.TP_CO_RE,
+        cc.CD_PRVN_INFO,
+        cc.CD_FILIALE,
+        cc.TP_SUBPTF,
+        cc.CD_BLOCCO,
+        cc.CD_NDG_CLIENTE,
+        cc.CD_NDG_MST,
+        cc.TP_CLASSE_RISCHIO,
+        cc.TP_CLASSE_RISCHIO_PRT,
+        cc.FL_DEFAULT,
+        cc.DATA_INGRS_DFLT_EBA,
+        cc.FL_SME,
+        cc.CD_GRIGLIA,
+        cc.DS_GRIGLIA,
+        cc.TP_TREATMENT,
+        cc.CD_RAGGR_IRB,
+        cc.EU_DISPONIBILE_NOUTI,
+        cc.EU_IMPIEGO_SALDO,
+        cc.EU_IMPIEGHI,
+        cc.EU_RATEO,
+        cc.EU_RISCONTO,
+        cc.EU_FIDO,
+        cc.EU_LATE_FEES,
+        cc.EU_MORA,
+        cc.NM_MESI_IMPAGATO,
+        cc.NM_GG_SCAD,
+        cc.DS_STATUS,
+        cc.NM_PD,
+        cc.NM_PD_FLOOR,
+        cc.TP_PD_TYPE,
+        cc.NM_PD_TOT,
+        cc.PC_PD_SCORE,
+        cc.PC_PD_SCORE_FLOOR,
+        cc.DS_PD_DSC_SCORE,
+        cc.NM_PD_TOT_PRT,
+        cc.PC_PD_SCORE_PRT,
+        cc.PC_PD_SCORE_FLOOR_PRT,
+        cc.TP_LGD_CLASSE_RISC,
+        cc.TP_CLUSTER_LGD,
+        cc.NM_LGD,
+        cc.NM_LGD_FLOOR,
+        cc.TP_LGD_TYPE,
+        cc.PC_LGD_SCORE,
+        cc.PC_LGD_SCORE_FLOOR,
+        cc.DS_LGD_DSC_SCORE,
+        cc.NM_MESI_ELBE,
+        cc.NM_MM_ELBE,
+        cc.NM_ELBE_CLASSE_RISC,
+        cc.TP_CLUSTER_ELBE,
+        cc.TP_ELBE_TYPE,
+        cc.NM_ELBE,
+        cc.PC_ELBE_SCORE,
+        cc.DS_ELBE_DSC_SCORE,
+        cc.TP_CCF_CLASSE_RISC,
+        cc.TP_CLUSTER_CCF,
+        cc.TP_CCF_TYPE,
+        cc.NM_CCF,
+        cc.PC_CCF,
+        cc.DS_PARAM_CCF,
+        cc.TP_K_CLASSE_RISC,
+        cc.TP_CLUSTER_K,
+        cc.TP_K_TYPE,
+        cc.NM_K,
+        cc.PC_K,
+        cc.DS_PARAM_K,
+        cc.NM_SUPPORTING_FACTOR,
+        cc.EU_EL,
+        cc.EU_EL_FLOOR,
+        cc.EU_EAD_STIMATA,
+        cc.EU_EAD_STIMATA_FLOOR,
         CA.SCRCA_CARTA_UTILIZZATA,
-CASE 
- WHEN CC.NM_PD_FLOOR <> 1 THEN
-        CASE
-            WHEN CC.FL_SME = 'S' THEN
-                0.03 * (1 - EXP(-35 * cc.NM_PD_FLOOR  )) / (1 - EXP(-35))
-                + 0.16 * (1 - (1 - EXP(-35 * cc.NM_PD_FLOOR )) / (1 - EXP(-35)))
-            ELSE 0.04
-        END 
-        ELSE null
+        CASE 
+            WHEN CC.NM_PD_FLOOR <> 1 THEN
+                CASE
+                    WHEN CC.FL_SME = 'S' THEN
+                        0.03 * (1 - EXP(-35 * cc.NM_PD_FLOOR  )) / (1 - EXP(-35))
+                        + 0.16 * (1 - (1 - EXP(-35 * cc.NM_PD_FLOOR )) / (1 - EXP(-35)))
+                    ELSE 0.04
+                END 
+            ELSE null
         END  AS CORR_CALC, 
         DATEDIFF('MONTH', CM.DT_SCADENZA, CC.DATA_ESTRAZIONE) AS NM_ANZIANITA_CARTA 
     FROM  BASE AS cc 
@@ -124,17 +202,96 @@ CASE
 
 CTE_CAP AS (
     SELECT
-        CR.*,
+        CR.DATA_ESTRAZIONE,
+        CR.CD_PROVENIENZA,
+        CR.CD_PRATICA,
+        CR.CD_PRODOTTO,
+        CR.CD_EMETTITORE,
+        CR.TP_EMETTITORE,
+        CR.TP_CIRCUITO,
+        CR.CD_SOCIETA,
+        CR.TP_CO_RE,
+        CR.CD_PRVN_INFO,
+        CR.CD_FILIALE,
+        CR.TP_SUBPTF,
+        CR.CD_BLOCCO,
+        CR.CD_NDG_CLIENTE,
+        CR.CD_NDG_MST,
+        CR.TP_CLASSE_RISCHIO,
+        CR.TP_CLASSE_RISCHIO_PRT,
+        CR.FL_DEFAULT,
+        CR.DATA_INGRS_DFLT_EBA,
+        CR.FL_SME,
+        CR.CD_GRIGLIA,
+        CR.DS_GRIGLIA,
+        CR.TP_TREATMENT,
+        CR.CD_RAGGR_IRB,
+        CR.EU_DISPONIBILE_NOUTI,
+        CR.EU_IMPIEGO_SALDO,
+        CR.EU_IMPIEGHI,
+        CR.EU_RATEO,
+        CR.EU_RISCONTO,
+        CR.EU_FIDO,
+        CR.EU_LATE_FEES,
+        CR.EU_MORA,
+        CR.NM_MESI_IMPAGATO,
+        CR.NM_GG_SCAD,
+        CR.DS_STATUS,
+        CR.NM_PD,
+        CR.NM_PD_FLOOR,
+        CR.TP_PD_TYPE,
+        CR.NM_PD_TOT,
+        CR.PC_PD_SCORE,
+        CR.PC_PD_SCORE_FLOOR,
+        CR.DS_PD_DSC_SCORE,
+        CR.NM_PD_TOT_PRT,
+        CR.PC_PD_SCORE_PRT,
+        CR.PC_PD_SCORE_FLOOR_PRT,
+        CR.TP_LGD_CLASSE_RISC,
+        CR.TP_CLUSTER_LGD,
+        CR.NM_LGD,
+        CR.NM_LGD_FLOOR,
+        CR.TP_LGD_TYPE,
+        CR.PC_LGD_SCORE,
+        CR.PC_LGD_SCORE_FLOOR,
+        CR.DS_LGD_DSC_SCORE,
+        CR.NM_MESI_ELBE,
+        CR.NM_MM_ELBE,
+        CR.NM_ELBE_CLASSE_RISC,
+        CR.TP_CLUSTER_ELBE,
+        CR.TP_ELBE_TYPE,
+        CR.NM_ELBE,
+        CR.PC_ELBE_SCORE,
+        CR.DS_ELBE_DSC_SCORE,
+        CR.TP_CCF_CLASSE_RISC,
+        CR.TP_CLUSTER_CCF,
+        CR.TP_CCF_TYPE,
+        CR.NM_CCF,
+        CR.PC_CCF,
+        CR.DS_PARAM_CCF,
+        CR.TP_K_CLASSE_RISC,
+        CR.TP_CLUSTER_K,
+        CR.TP_K_TYPE,
+        CR.NM_K,
+        CR.PC_K,
+        CR.DS_PARAM_K,
+        CR.NM_SUPPORTING_FACTOR,
+        CR.EU_EL,
+        CR.EU_EL_FLOOR,
+        CR.EU_EAD_STIMATA,
+        CR.EU_EAD_STIMATA_FLOOR,
+        CR.SCRCA_CARTA_UTILIZZATA,
+        CR.CORR_CALC,
+        CR.NM_ANZIANITA_CARTA,
         CR.CORR_CALC AS CORRELATION,
-CASE 
- WHEN CR.NM_PD_FLOOR <> 1 THEN
-         CR.NM_LGD_FLOOR  * {{ env_var('DBT_DATABASE') }}.TECH.PROBNORM(
-            POWER(1 - CR.CORR_CALC, -0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT( CR.NM_PD_FLOOR )
-            + POWER(CR.CORR_CALC / (1 - CR.CORR_CALC), 0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT(0.999)
-        ) - CR.NM_PD_FLOOR  *  CR.NM_LGD_FLOOR 
-        Else null
-END AS CAPITAL_REQUIREMENT,
-
+        CASE 
+            WHEN CR.NM_PD_FLOOR <> 1 THEN
+                CR.NM_LGD_FLOOR  * {{ env_var('DBT_DATABASE') }}.TECH.PROBNORM(
+                    POWER(1 - CR.CORR_CALC, -0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT( CR.NM_PD_FLOOR )
+                    + POWER(CR.CORR_CALC / (1 - CR.CORR_CALC), 0.5) * {{ env_var('DBT_DATABASE') }}.TECH.PROBIT(0.999)
+                ) - CR.NM_PD_FLOOR  *  CR.NM_LGD_FLOOR 
+            ELSE null
+        END AS CAPITAL_REQUIREMENT,
         CASE
             WHEN CR.SCRCA_CARTA_UTILIZZATA = 'N' THEN 'PDRF'
             WHEN CR.NM_ANZIANITA_CARTA < 4 THEN 'PDRG'
@@ -145,28 +302,110 @@ END AS CAPITAL_REQUIREMENT,
 
 CTE_CALC AS (
     SELECT
-        CC.*,
+        CC.DATA_ESTRAZIONE,
+        CC.CD_PROVENIENZA,
+        CC.CD_PRATICA,
+        CC.CD_PRODOTTO,
+        CC.CD_EMETTITORE,
+        CC.TP_EMETTITORE,
+        CC.TP_CIRCUITO,
+        CC.CD_SOCIETA,
+        CC.TP_CO_RE,
+        CC.CD_PRVN_INFO,
+        CC.CD_FILIALE,
+        CC.TP_SUBPTF,
+        CC.CD_BLOCCO,
+        CC.CD_NDG_CLIENTE,
+        CC.CD_NDG_MST,
+        CC.TP_CLASSE_RISCHIO,
+        CC.TP_CLASSE_RISCHIO_PRT,
+        CC.FL_DEFAULT,
+        CC.DATA_INGRS_DFLT_EBA,
+        CC.FL_SME,
+        CC.CD_GRIGLIA,
+        CC.DS_GRIGLIA,
+        CC.TP_TREATMENT,
+        CC.CD_RAGGR_IRB,
+        CC.EU_DISPONIBILE_NOUTI,
+        CC.EU_IMPIEGO_SALDO,
+        CC.EU_IMPIEGHI,
+        CC.EU_RATEO,
+        CC.EU_RISCONTO,
+        CC.EU_FIDO,
+        CC.EU_LATE_FEES,
+        CC.EU_MORA,
+        CC.NM_MESI_IMPAGATO,
+        CC.NM_GG_SCAD,
+        CC.DS_STATUS,
+        CC.NM_PD,
+        CC.NM_PD_FLOOR,
+        CC.TP_PD_TYPE,
+        CC.NM_PD_TOT,
+        CC.PC_PD_SCORE,
+        CC.PC_PD_SCORE_FLOOR,
+        CC.DS_PD_DSC_SCORE,
+        CC.NM_PD_TOT_PRT,
+        CC.PC_PD_SCORE_PRT,
+        CC.PC_PD_SCORE_FLOOR_PRT,
+        CC.TP_LGD_CLASSE_RISC,
+        CC.TP_CLUSTER_LGD,
+        CC.NM_LGD,
+        CC.NM_LGD_FLOOR,
+        CC.TP_LGD_TYPE,
+        CC.PC_LGD_SCORE,
+        CC.PC_LGD_SCORE_FLOOR,
+        CC.DS_LGD_DSC_SCORE,
+        CC.NM_MESI_ELBE,
+        CC.NM_MM_ELBE,
+        CC.NM_ELBE_CLASSE_RISC,
+        CC.TP_CLUSTER_ELBE,
+        CC.TP_ELBE_TYPE,
+        CC.NM_ELBE,
+        CC.PC_ELBE_SCORE,
+        CC.DS_ELBE_DSC_SCORE,
+        CC.TP_CCF_CLASSE_RISC,
+        CC.TP_CLUSTER_CCF,
+        CC.TP_CCF_TYPE,
+        CC.NM_CCF,
+        CC.PC_CCF,
+        CC.DS_PARAM_CCF,
+        CC.TP_K_CLASSE_RISC,
+        CC.TP_CLUSTER_K,
+        CC.TP_K_TYPE,
+        CC.NM_K,
+        CC.PC_K,
+        CC.DS_PARAM_K,
+        CC.NM_SUPPORTING_FACTOR,
+        CC.EU_EL,
+        CC.EU_EL_FLOOR,
+        CC.EU_EAD_STIMATA,
+        CC.EU_EAD_STIMATA_FLOOR,
+        CC.SCRCA_CARTA_UTILIZZATA,
+        CC.CORR_CALC,
+        CC.NM_ANZIANITA_CARTA,
+        CC.CORRELATION,
+        CC.CAPITAL_REQUIREMENT,
+        CC.DS_PD_CLASSIFICAZIONE_ANZIANITA,
         CASE
-              WHEN CC.NM_PD_FLOOR <> 1 THEN
-              CASE
-                  WHEN CC.FL_SME = 'S' THEN
-                CC.CAPITAL_REQUIREMENT * 12.5 *  cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }}
-            ELSE CC.CAPITAL_REQUIREMENT * 12.5 *  cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }}
-            END
+            WHEN CC.NM_PD_FLOOR <> 1 THEN
+                CASE
+                    WHEN CC.FL_SME = 'S' THEN
+                        CC.CAPITAL_REQUIREMENT * 12.5 *  cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }}
+                    ELSE CC.CAPITAL_REQUIREMENT * 12.5 *  cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }}
+                END
             ELSE GREATEST(0, 12.5 * (cc.PC_LGD_SCORE_FLOOR - cc.PC_ELBE_SCORE)) 
                        * {{ NM_MANUAL_ADJ }} / 100 * cc.EU_EAD_STIMATA_FLOOR
         END AS EU_RWA,
 
--- PV_IRB
-
-       CASE
-             WHEN CC.NM_PD_FLOOR <> 1 THEN
-             CASE
-                  WHEN CC.FL_SME = 'S' THEN
-                CC.CAPITAL_REQUIREMENT * 12.5 * cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }} * 0.08
-            ELSE CC.CAPITAL_REQUIREMENT * 12.5 * cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }} * 0.08
-            END
-         ELSE GREATEST(0, 12.5 * (cc.PC_LGD_SCORE_FLOOR - cc.PC_ELBE_SCORE)) 
+        -- PV_IRB
+        CASE
+            WHEN CC.NM_PD_FLOOR <> 1 THEN
+                CASE
+                    WHEN CC.FL_SME = 'S' THEN
+                        CC.CAPITAL_REQUIREMENT * 12.5 * cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }} * 0.08
+                    ELSE CC.CAPITAL_REQUIREMENT * 12.5 * cc.EU_EAD_STIMATA_FLOOR * cc.NM_SUPPORTING_FACTOR   * {{ NM_MANUAL_ADJ }} * 0.08
+                END
+            ELSE GREATEST(0, 12.5 * (cc.PC_LGD_SCORE_FLOOR - cc.PC_ELBE_SCORE)) 
                        * {{ NM_MANUAL_ADJ }} / 100 * cc.EU_EAD_STIMATA_FLOOR * 0.08
         END  AS EU_PV_IRB,
         CASE

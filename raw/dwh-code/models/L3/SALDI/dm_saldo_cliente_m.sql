@@ -24,7 +24,7 @@ WITH BASE AS (
     FROM {{ ref('dm_saldo_pratica_m') }}
     WHERE FL_TRUFFA = 'N'
     {% if is_incremental() %}
-    AND DT_OSSERVAZIONE = {{ last_day_past_month() }}  /* anche il DM_SALDO_PRATICA è mensile, quindi serve filtrare dal secondo giro */
+    AND DT_OSSERVAZIONE = {{ get_dt_osservazione() }}  /* anche il DM_SALDO_PRATICA è mensile, quindi serve filtrare dal secondo giro */
     {% endif %}
 
 )

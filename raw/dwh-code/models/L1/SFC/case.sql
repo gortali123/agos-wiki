@@ -19,7 +19,7 @@ select
   TRY_TO_DATE(DataEvento__c) AS dataevento__c,
   TRY_TO_TIMESTAMP_TZ(ClosedDate)::TIMESTAMP_NTZ AS closeddate,
   TRY_CAST(DecessoDormiente__c AS BOOLEAN) AS decessodormiente__c,
-  TRY_CAST(Description AS VARCHAR(3200)) AS description,
+  TRY_CAST(Description AS VARCHAR) AS description,
   TRY_CAST(EmailCliente__c AS VARCHAR(255)) AS emailcliente__c,
   TRY_CAST(Entitlement_Name AS VARCHAR(255)) AS entitlement_name,
   TRY_CAST(EsclusivitaCompagnia__c AS VARCHAR(255)) AS esclusivitacompagnia__c,

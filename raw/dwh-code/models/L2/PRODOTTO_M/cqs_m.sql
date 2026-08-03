@@ -362,5 +362,5 @@ LEFT JOIN {{ source('l1_e_bsn', 'lkp_gerarchia_tipo_cliente_cq') }} I
     AND A.DT_OSSERVAZIONE >= I.TS_INIZIO_VALIDITA AND A.DT_OSSERVAZIONE < I.TS_FINE_VALIDITA
 
 {% if is_incremental() %}
-WHERE A.DT_OSSERVAZIONE = {{ last_day_past_month() }}
+WHERE A.DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
 {% endif %}
