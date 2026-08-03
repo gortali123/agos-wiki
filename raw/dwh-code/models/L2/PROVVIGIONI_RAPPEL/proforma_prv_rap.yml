@@ -3,7 +3,7 @@ models:
   - name: proforma_prv_rap
     config:
       materialized: incremental
-      incremental_strategy: append
+      incremental_strategy: insert_overwrite
       query_tag: '{"app": "DBT", "schema": "L2_PROVVIGIONI_RAPPEL", "entita": "PROFORMA_PRV_RAP"}'
     constraints:
       - type: primary_key

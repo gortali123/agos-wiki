@@ -93,6 +93,10 @@ models:
         +meta: {source: "PRIMEWEB"}
         +schema: L1_E_PWB
         +tags: ["primeweb","noocs"]
+      OPENBANKING:
+        +meta: {source: "OPENBANKING"}
+        +schema: L1_E_OPB
+        +tags: ["openbanking","noocs"]
       POSTE:
         +meta: {source: "POSTE"}
         +schema: L1_E_BSN

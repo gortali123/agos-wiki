@@ -4,6 +4,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
+      pre_hook: "{{ delete_l2('cactfpan', ['cactpan_progressivo'], ['cd_progressivo']) }}"
       query_tag: '{"app": "DBT", "schema": "L2_ANTIFRODE", "entita": "ARCHIVIO_TESSERE"}'
     constraints:
       - type: primary_key

@@ -6,6 +6,9 @@ models:
       incremental_strategy: merge
       unique_key: [TP_PROCEDURA, CD_TABELLA_FINANZIARIA, TS_INIZIO_VALIDITA]
       query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "TABELLE_FINANZIARIE"}'
+      pre_hook:
+        - "{{ delete_l2('cqtbftafb', ['CD_TABELLA_FINANZIARIA','TS_INIZIO_VALIDITA'], ['CQTBB_TABELLA','TS_INIZIO_VALIDITA']) }}"
+        - "{{ delete_l2('oxprftafb', ['CD_TABELLA_FINANZIARIA','TS_INIZIO_VALIDITA'], ['OXTB_CODICE','TS_INIZIO_VALIDITA']) }}"
     constraints:
       - type: primary_key
         warn_unenforced: false

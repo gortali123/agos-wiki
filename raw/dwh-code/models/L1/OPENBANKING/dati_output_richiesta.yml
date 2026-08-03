@@ -1,0 +1,134 @@
+version: 2
+
+models:
+  - name: dati_output_richiesta
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"OPENBANKING", "schema":"L1_E_OPENBANKING", "archivio":"DATI_OUTPUT_RICHIESTA"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [id_dati_output_pk]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: id_dati_output_pk
+        data_type: VARCHAR(32)
+      - name: id_richiesta_fk
+        data_type: VARCHAR(32)
+      - name: codice_pratica_aisp
+        data_type: NUMBER(38, 0)
+      - name: account_id
+        data_type: VARCHAR
+      - name: aspsp
+        data_type: VARCHAR
+      - name: aspspproduct
+        data_type: VARCHAR
+      - name: selectedaccountcount
+        data_type: VARCHAR
+      - name: totalaccountcount
+        data_type: VARCHAR
+      - name: details
+        data_type: VARCHAR
+      - name: balance_currency
+        data_type: VARCHAR
+      - name: balance_amount
+        data_type: VARCHAR
+      - name: balance_type
+        data_type: VARCHAR
+      - name: balance_type_harmonized
+        data_type: VARCHAR
+      - name: last_change_date_time
+        data_type: VARCHAR
+      - name: reference_date
+        data_type: VARCHAR
+      - name: last_committed_transaction
+        data_type: VARCHAR
+      - name: credit_limit_included
+        data_type: VARCHAR
+      - name: status
+        data_type: VARCHAR
+      - name: last_updating_process_start
+        data_type: VARCHAR
+      - name: last_updated
+        data_type: VARCHAR
+      - name: provider_id
+        data_type: VARCHAR
+      - name: imported_transactions_from
+        data_type: VARCHAR
+      - name: imported_transactions_to
+        data_type: VARCHAR
+      - name: iban
+        data_type: VARCHAR
+      - name: end_to_end_id
+        data_type: VARCHAR
+      - name: mandate_id
+        data_type: VARCHAR
+      - name: check_id
+        data_type: VARCHAR
+      - name: creditor_id
+        data_type: VARCHAR
+      - name: value_date
+        data_type: VARCHAR
+      - name: entry_reference
+        data_type: VARCHAR
+      - name: creditor_name
+        data_type: VARCHAR
+      - name: creditor_account
+        data_type: VARCHAR
+      - name: ultimate_creditor
+        data_type: VARCHAR
+      - name: ultimate_debtor
+        data_type: VARCHAR
+      - name: debtor_name
+        data_type: VARCHAR
+      - name: debtor_account
+        data_type: VARCHAR
+      - name: remittance_information_unstructured
+        data_type: VARCHAR
+      - name: remittance_information_structured
+        data_type: VARCHAR
+      - name: additional_information
+        data_type: VARCHAR
+      - name: purpose_code
+        data_type: VARCHAR
+      - name: bank_transaction_code
+        data_type: VARCHAR
+      - name: transaction_type
+        data_type: VARCHAR
+      - name: accountidtrscn
+        data_type: VARCHAR
+      - name: business_hash
+        data_type: VARCHAR
+      - name: booking_status
+        data_type: VARCHAR
+      - name: transaction_id
+        data_type: VARCHAR
+      - name: duplicated
+        data_type: VARCHAR
+      - name: orphan
+        data_type: VARCHAR
+      - name: booking_date
+        data_type: VARCHAR
+      - name: transaction_amountcurrency
+        data_type: VARCHAR
+      - name: transaction_amount
+        data_type: VARCHAR
+      - name: currency_exchange
+        data_type: VARCHAR
+      - name: proprietary_bank_transaction_code
+        data_type: VARCHAR
+      - name: remittance_information_harmonized_locale
+        data_type: VARCHAR
+      - name: remittance_information_harmonized_value
+        data_type: VARCHAR
+      - name: created_at
+        data_type: VARCHAR
+      - name: updated_at
+        data_type: VARCHAR
+      - name: owner_name
+        data_type: VARCHAR

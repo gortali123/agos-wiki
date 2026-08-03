@@ -4,6 +4,7 @@ models:
     config:
       materialized: incremental
       incremental_strategy: append
+      pre_hook: "{{ delete_l2('oxtrftru', ['oxtrtru_procedura', 'oxtrtru_pratica', 'oxtrtru_truffa', 'oxtrtru_progressivo'], ['tp_procedura','cd_pratica','cd_truffa','pr_truffa']) }}"
       query_tag: '{"app": "DBT", "schema": "L2_ANTIFRODE", "entita": "GESTIONE_TRUFFE"}'
     constraints:
       - type: primary_key

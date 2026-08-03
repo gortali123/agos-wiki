@@ -1,48 +1,112 @@
+# =============================================================================
+# L2 - PAGAMENTI E CONTABILITA - RATE_PRATICA - S4 (incremental / insert_overwrite)
+# Colonne e ordine allineati all'output del SELECT finale del .sql.
+#
+# WARN PK vs grain: il GROUP BY del SQL include 'evento' (non emesso). La PK qui
+#   dichiarata a 5 colonne potrebbe NON essere univoca se, a parita' di 5 chiavi,
+#   coesistono piu' eventi. Verificare/aggiungere l'evento alla grain se serve.
+# WARN pre_hook delete_l2: main cluster A2 -> incluso, ma la main e' un UNION
+#   (OXCTFPAFD + OXCTFPAFA) con lookup OXCTFPAFT: agganciato solo a OXCTFPAFD e
+#   potenzialmente ridondante con insert_overwrite. DA CONFERMARE.
+# WARN query_tag: schema L2_PAGAMENTI_E_CONTABILITA -> adeguare al codice area
+#   funzionale reale se diverso.
+# =============================================================================
 version: 2
 models:
-  - name: rate_m
+  - name: rate_pratica
     config:
       materialized: incremental
-      incremental_strategy: append
-      query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "RATE_M"}'
-      pre_hook:
-        - "{{ delete_dt_osservazione() }}"
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_PAGAMENTI_E_CONTABILITA", "entita": "RATE_PRATICA"}'
+    
     constraints:
       - type: primary_key
         warn_unenforced: false
-        columns: [TP_PROCEDURA, CD_PRATICA, NM_PROG_PIANO, NM_PROG_RATA, DT_OSSERVAZIONE]
+        columns: [TP_PROCEDURA, CD_PRATICA, NM_PROG_RATA, DT_INIZIO_VALIDITA, DT_FINE_VALIDITA]
     columns:
       - name: TP_PROCEDURA
         data_type: VARCHAR(2)
       - name: CD_PRATICA
         data_type: NUMBER(16)
-      - name: NM_PROG_PIANO
-        data_type: NUMBER(5)
+      - name: DS_COMPONENTI_PIANO
+        data_type: VARCHAR(200)
       - name: NM_PROG_RATA
         data_type: NUMBER(5)
-      - name: DT_OSSERVAZIONE
-        data_type: DATE
+      - name: DT_INIZIO_VALIDITA
+        data_type: NUMBER(8)
+      - name: DT_FINE_VALIDITA
+        data_type: NUMBER(8)
       - name: NM_RATA
         data_type: NUMBER(3)
       - name: NM_RATA_ORIG
         data_type: NUMBER(3)
       - name: TP_RATA
         data_type: VARCHAR(1)
-      - name: DT_SCAD
+      - name: DT_SCADENZA
         data_type: DATE
-      - name: EU_IMPORTO_RATA
+      - name: EU_IMPORTO_RATA_TOT
+        data_type: NUMBER(16,2)
+      - name: EU_COMP_FIN
         data_type: NUMBER(13,2)
-      - name: EU_CAPITALE
+      - name: EU_COMP_FIN_CAPITALE
         data_type: NUMBER(13,2)
-      - name: EU_INTERESSI
+      - name: EU_COMP_FIN_INTERESSI
         data_type: NUMBER(13,2)
-      - name: EU_CAPITALE_RESIDUO
+      - name: EU_COMP_FIN_CAPITALE_RESIDUO
         data_type: NUMBER(13,2)
-      - name: DT_SCAD_NEW
+      - name: EU_COMP_SPI
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_ASS
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_DLR
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_SPE
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_BOL
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_SCO
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_IAI
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_IAD
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_TRA
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_IAS
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_IND
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_DL1
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_ADD
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_RIP
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_BLR
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_IDE
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_CDE
+        data_type: NUMBER(13,2)
+      - name: EU_COMP_SEL
+        data_type: NUMBER(13,2)
+      - name: DT_SCADENZA_NUOVA
         data_type: DATE
       - name: DT_ACCODAMENTO
         data_type: DATE
       - name: TP_ACCODAMENTO
         data_type: VARCHAR(1)
       - name: FL_ACCODAMENTO
+        data_type: VARCHAR(1)
+      - name: EU_INTERESSI_INT
+        data_type: NUMBER(13,2)
+      - name: EU_INTERESSI_CNV
+        data_type: NUMBER(13,2)
+      - name: CD_NUM_DOC_CASTELLETTO
+        data_type: NUMBER(11)
+      - name: TP_MOD_PAGAMENTO
+        data_type: VARCHAR(2)
+      - name: TP_DETT_RATA
+        data_type: VARCHAR(1)
+      - name: FL_ESCLUSIONE_BOLLO
         data_type: VARCHAR(1)

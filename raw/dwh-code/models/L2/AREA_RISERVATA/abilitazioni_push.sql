@@ -1,0 +1,79 @@
+WITH base_raw AS (
+
+    SELECT
+        D.ID_DISPOSITIVO_PK AS ID_DISPOSITIVO,
+        D.CODICE_CONTROPARTE AS CD_CLIENTE,
+        COALESCE(
+            {{ custom_to_timestamp_ntz('D.TIMESTAMP_MODIFICA') }},
+            {{ custom_to_timestamp_ntz('D.TIMESTAMP_CREAZIONE') }}
+            ) AS TS_INIZIO_VALIDITA,
+        D.CODICE_UUID_DISPOSITIVO AS CD_UUID_DISPOSITIVO,
+        D.CODICE_MODELLO AS CD_MODELLO,
+        D.DENOMINAZIONE_PRODUTTORE AS DS_PRODUTTORE,
+        D.CODICE_SISTEMA_OPERATIVO AS CD_SISTEMA_OPERATIVO,
+        D.CODICE_VERSIONE_SISTEMA_OPERATIVO AS CD_VERSIONE_SO,
+        D.CODICE_FIREBASE AS CD_FIREBASE,
+        D.CODICE_INTESI AS CD_INTESI,
+        D.INDICATORE_ASSOCIAZIONE_ATTIVA AS FL_ASSOCIAZIONE_ATTIVA
+    FROM AGOS_DEV_16000.L1_TEST.DISPOSITIVO_TEST AS D
+
+),
+
+base as (
+    select *, --TODO: rimuovere *
+        {{ ts_fine_validita('ID_DISPOSITIVO','TS_INIZIO_VALIDITA') }} AS TS_FINE_VALIDITA
+    from base_raw
+),
+
+dedup AS (
+
+    SELECT
+        ID_DISPOSITIVO,
+        CD_CLIENTE,
+        TS_INIZIO_VALIDITA,
+        TS_FINE_VALIDITA,
+        CD_UUID_DISPOSITIVO,
+        CD_MODELLO,
+        DS_PRODUTTORE,
+        CD_SISTEMA_OPERATIVO,
+        CD_VERSIONE_SO,
+        CD_FIREBASE,
+        CD_INTESI,
+        FL_ASSOCIAZIONE_ATTIVA,
+
+        {{ hash_cols([
+            'ID_DISPOSITIVO',
+            'CD_CLIENTE',
+            'CD_UUID_DISPOSITIVO',
+            'CD_MODELLO',
+            'DS_PRODUTTORE',
+            'CD_SISTEMA_OPERATIVO',
+            'CD_VERSIONE_SO',
+            'CD_FIREBASE',
+            'CD_INTESI',
+            'FL_ASSOCIAZIONE_ATTIVA'
+        ]) }} AS HASHED_COLS
+
+    FROM base
+
+    {{ is_incremental_S1('ID_DISPOSITIVO', lastmodified='TS_INIZIO_VALIDITA') }}
+
+)
+
+SELECT
+    H.ID_DISPOSITIVO,
+    H.CD_CLIENTE,
+    H.TS_INIZIO_VALIDITA,
+    {{ ts_fine_validita(
+        'H.ID_DISPOSITIVO',
+        'H.TS_INIZIO_VALIDITA'
+    ) }} AS TS_FINE_VALIDITA,
+    H.CD_UUID_DISPOSITIVO,
+    H.CD_MODELLO,
+    H.DS_PRODUTTORE,
+    H.CD_SISTEMA_OPERATIVO,
+    H.CD_VERSIONE_SO,
+    H.CD_FIREBASE,
+    H.CD_INTESI,
+    H.FL_ASSOCIAZIONE_ATTIVA
+FROM dedup AS H

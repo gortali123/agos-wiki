@@ -1,3 +1,4 @@
+# TODO -- NOTA BENE. ADESSO VA IN ERRORE CON QUESTO YML PERCHE' CI SONO I DATI SINTETICI
 version: 2
 models:
   - name: sintesi_accettazione
@@ -30,6 +31,8 @@ models:
         data_type: VARCHAR(2)
       - name: TP_OVERRIDE
         data_type: VARCHAR(30)
+      - name: CD_INQUIRYCODE
+        data_type: NUMBER(15)
       - name: CD_ESITO_ELAB_CDE
         data_type: VARCHAR(2)
       - name: DS_ESITO_ELAB_CDE
@@ -158,8 +161,6 @@ models:
         data_type: VARCHAR
       - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
         data_type: NUMBER
-      - name: CD_INQUIRYCODE
-        data_type: VARCHAR
       - name: CD_PROCESSCODE
         data_type: VARCHAR
       - name: CD_INDICATORE_PREQUALIFICA_CLI

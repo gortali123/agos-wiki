@@ -6,6 +6,10 @@ models:
     incremental_strategy: merge
     unique_key: [TP_PROCEDURA, CD_PRATICA, TS_INIZIO_VALIDITA]
     query_tag: '{"app": "DBT", "schema": "L2_PRODOTTO", "entita": "VARIAZIONI_STATO_PRAT"}'
+    pre_hook:
+        - "{{ delete_l2('plpratst',  ['CD_PRATICA','TS_INIZIO_VALIDITA'], ['PLPRA_NUM_PRATICA','TS_INIZIO_VALIDITA']) }}"
+        - "{{ delete_l2('crlogstbl', ['CD_PRATICA','TS_INIZIO_VALIDITA'], ['LOGSB_NUM_CARTA','TS_INIZIO_VALIDITA']) }}"
+        - "{{ delete_l2('qsprast',   ['CD_PRATICA','TS_INIZIO_VALIDITA'], ['QPRST_NUM_PRATICA','TS_INIZIO_VALIDITA']) }}"
   constraints:
     - type: primary_key
       warn_unenforced: false

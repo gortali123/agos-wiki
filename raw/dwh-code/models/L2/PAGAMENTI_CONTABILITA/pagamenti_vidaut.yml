@@ -3,7 +3,7 @@ models:
   - name: pagamenti_vidaut
     config:
       materialized: incremental
-      incremental_strategy: merge
+      incremental_strategy: insert_overwrite
       unique_key: [CD_PAG_VIDAUT]
       query_tag: '{"app": "DBT", "schema": "L2_PRD_PGM", "entita": "PAGAMENTI_VIDAUT"}'
     constraints:

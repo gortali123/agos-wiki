@@ -19,6 +19,9 @@
 -- vera UNION SQL. E' stata interpretata come "basi distinte per ramo" (perim_ifkcfrsi per Consumo/CARTE,
 -- QSPRA diretta per CQS), preservando l'intento di business senza produrre SQL non eseguibile.
 
+-- TODO -- NOTA BENE. ADESSO VA IN ERRORE CON QUESTO YML PERCHE' CI SONO I DATI SINTETICI
+
+
 with
 
 light_ranked as (
@@ -150,7 +153,6 @@ accettazione_input_agg as (
         max(case when b.cd_ruolo = 'R' then b.cd_eurisc_crif_stato end) as cd_eurisc_crif_stato_cli,
         max(case when b.cd_ruolo = 'G' then b.cd_eurisc_crif_stato end) as cd_eurisc_crif_stato_coo,
         max(case when b.cd_ruolo = 'G' then b.pc_dbr_perc_indebitamento_pratica end) as pc_dbr_perc_indebitamento_pratica,
-        max(case when b.cd_ruolo = 'G' then b.cd_inquirycode end) as cd_inquirycode_out,
         max(case when b.cd_ruolo = 'G' then b.cd_processcode end) as cd_processcode,
         max(case when b.cd_ruolo = 'R' then b.cd_indicatore_prequalifica end) as cd_indicatore_prequalifica_cli,
         max(case when b.cd_ruolo = 'G' then b.cd_indicatore_prequalifica end) as cd_indicatore_prequalifica_coo,
@@ -234,13 +236,14 @@ consumo as (
         pl.plc_autore_overr as cd_user_esito_finale,
         pl.plc_motivo_overr as cd_motivo_override,
         cm.cremo_tipo_override as tp_override,
+        t.ifkcrsi_richiesta as cd_inquirycode,
         t.ifkcrsi_esito_elab_cde as cd_esito_elab_cde,
         t.ifkcrsi_ds_esito_elab_cde as ds_esito_elab_cde,
         t.ifkcrsi_esito_chiamata as cd_esito_chiamata,
         t.ifkcrsi_esito_codice as cd_esito_codice,
         t.ifkcrsi_esito_messaggio as ds_esito_messaggio,
         t.ifkcrsi_cd_operazione as cd_operazione,
-        t.ifkcrsi_richiesta as nm_richiesta,
+        t.ifkcrsi_nm_richiesta as nm_richiesta,
         t.ifkcrsi_id_guid_cf as nm_id_guid_cf,
         t.ifkcrsi_esito_amlcheck as cd_esito_amlcheck,
         t.ifkcrsi_ds_esito_amlcheck as ds_esito_amlcheck,
@@ -290,13 +293,14 @@ carte as (
         cr.crcar_autorizz_override as cd_user_esito_finale,
         cr.crcar_override as cd_motivo_override,
         cm.cremo_tipo_override as tp_override,
+        t.ifkcrsi_richiesta as cd_inquirycode,
         t.ifkcrsi_esito_elab_cde as cd_esito_elab_cde,
         t.ifkcrsi_ds_esito_elab_cde as ds_esito_elab_cde,
         t.ifkcrsi_esito_chiamata as cd_esito_chiamata,
         t.ifkcrsi_esito_codice as cd_esito_codice,
         t.ifkcrsi_esito_messaggio as ds_esito_messaggio,
         t.ifkcrsi_cd_operazione as cd_operazione,
-        t.ifkcrsi_richiesta as nm_richiesta,
+        t.ifkcrsi_nm_richiesta as nm_richiesta,
         t.ifkcrsi_id_guid_cf as nm_id_guid_cf,
         t.ifkcrsi_esito_amlcheck as cd_esito_amlcheck,
         t.ifkcrsi_ds_esito_amlcheck as ds_esito_amlcheck,
@@ -349,6 +353,7 @@ cqs as (
         q.qpr_autore_overr as cd_user_esito_finale,
         q.qpr_motivo_overr as cd_motivo_override,
         cm.cremo_tipo_override as tp_override,
+        null as cd_inquirycode,
         null as cd_esito_elab_cde,
         null as ds_esito_elab_cde,
         null as cd_esito_chiamata,
@@ -406,6 +411,7 @@ select
     u.cd_user_esito_finale,
     u.cd_motivo_override,
     u.tp_override,
+    u.cd_inquirycode,
     u.cd_esito_elab_cde,
     u.ds_esito_elab_cde,
     u.cd_esito_chiamata,
@@ -468,7 +474,6 @@ select
     aia.cd_eurisc_crif_stato_cli,
     aia.cd_eurisc_crif_stato_coo,
     aia.pc_dbr_perc_indebitamento_pratica,
-    aia.cd_inquirycode_out as cd_inquirycode,
     aia.cd_processcode,
     aia.cd_indicatore_prequalifica_cli,
     aia.cd_indicatore_prequalifica_coo,
@@ -498,16 +503,16 @@ select
     ppa.nm_policy_prescreening_ko_cli
 from unioned as u
 left join scoring_dettaglio_agg as sda
-    on u.nm_richiesta = try_cast(sda.cd_inquirycode as number)
+    on u.cd_inquirycode = try_cast(sda.cd_inquirycode as number)
 left join scoring_testata as st
-    on u.nm_richiesta = try_cast(st.cd_inquirycode as number)
+    on u.cd_inquirycode = try_cast(st.cd_inquirycode as number)
 left join accettazione_input_agg as aia
-    on u.nm_richiesta = try_cast(aia.cd_inquirycode as number)
+    on u.cd_inquirycode = try_cast(aia.cd_inquirycode as number)
 left join accettazione_output_agg as aoa
-    on u.nm_richiesta = try_cast(aoa.cd_inquirycode as number)
+    on u.cd_inquirycode = try_cast(aoa.cd_inquirycode as number)
 left join accettazione_output_pr_ov_agg as aova
-    on u.nm_richiesta = try_cast(aova.cd_inquirycode as number)
+    on u.cd_inquirycode = try_cast(aova.cd_inquirycode as number)
 left join prescreening_output_lkp as pol
-    on u.nm_richiesta = try_cast(pol.cd_inquirycode as number)
+    on u.cd_inquirycode = try_cast(pol.cd_inquirycode as number)
 left join prescreening_pr_agg as ppa
-    on u.nm_richiesta = try_cast(ppa.cd_inquirycode as number)
+    on u.cd_inquirycode = try_cast(ppa.cd_inquirycode as number)
