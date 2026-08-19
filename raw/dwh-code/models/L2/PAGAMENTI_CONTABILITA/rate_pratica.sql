@@ -125,8 +125,10 @@ SELECT
     LISTAGG(tipo_componente, ' - ') AS DS_COMPONENTI_PIANO,
     NM_PROG_RATA,
     -- finestra di validita' del piano (puo' generare piu' righe per rata)
-    DT_INIZIO_VALIDITA,
-    DT_FINE_VALIDITA,
+    {{ custom_to_date('DT_INIZIO_VALIDITA', zero = 'min') }} AS DT_INIZIO_VALIDITA,
+    {{ custom_to_date('DT_FINE_VALIDITA', zero = 'max') }} AS DT_FINE_VALIDITA,
+    --DT_INIZIO_VALIDITA,
+    --DT_FINE_VALIDITA,
     MAX(CASE WHEN tipo_componente = 'FIN' THEN NM_RATA END) AS NM_RATA,
     MAX(CASE WHEN tipo_componente = 'FIN' THEN NM_RATA_ORIG END) AS NM_RATA_ORIG,
     MAX(CASE WHEN tipo_componente = 'FIN' THEN TP_RATA END) AS TP_RATA,

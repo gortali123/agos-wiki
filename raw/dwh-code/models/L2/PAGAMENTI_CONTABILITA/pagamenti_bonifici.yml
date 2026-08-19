@@ -91,6 +91,6 @@ models:
       - name: BOW_GROUP_STATUS
         data_type: VARCHAR(4)
       - name: DT_COMPETENZA_PRV_DA
-        data_type: NUMBER(5)
+        data_type: DATE
       - name: DT_COMPETENZA_PRV_AL
-        data_type: NUMBER(5)
+        data_type: DATE

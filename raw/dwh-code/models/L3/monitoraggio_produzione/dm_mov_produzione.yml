@@ -37,7 +37,7 @@ models:
         data_type: NUMBER(5)
       - name: EU_FINANZIATO
         data_type: NUMBER(13,2)
-      - name: EMFN
+      - name: NM_EMFN
         data_type: NUMBER(13,2)
       - name: NM_IRR_NUM
         data_type: NUMBER(13,2)

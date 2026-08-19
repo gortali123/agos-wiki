@@ -83,24 +83,91 @@ charging_profiles AS (
         cp.value AS charging_profile_xml
     FROM loans l_cte,
     {{ flatten_xml('l_cte.loan_xml', 'ChargingProfile', 'cp', outer=true) }}
+),
+
+
+-- Proiezione business + watermark (ex SELECT finale insert_overwrite).
+-- DT_RIFERIMENTO rimosso; watermark = DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ (trappola A).
+-- DT_START e' parte della PK (identifica il ChargingProfile nel Loan) -> vedi nota chiave.
+extraction AS (
+    SELECT
+        CD_CREDIT_LINE AS CD_PRATICA,
+        CD_PLAN AS CD_PIANO,
+        CD_LOAN AS CD_CERTIFICATO,   -- WARN tabella: solo NUMBER
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Start/Date', 'DATE') }} AS DT_START,
+
+        CD_ORGANISATION AS CD_CLIENTE,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Party', 'VARCHAR(6)') }} AS CD_PAGATORE,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRateType', 'VARCHAR(7)') }} AS TP_INTERESSE_BASE,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRate', 'NUMBER(5,4)') }} AS PC_TASSO_BSE,   -- WARN tabella: solo NUMBER
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/PlanRateVariance', 'NUMBER(5,4)') }} AS NM_SPREAD_PIAN,   -- WARN tabella: solo NUMBER
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/DealerRateVariance', 'NUMBER(5,4)') }} AS NM_SPREAD_DLR,   -- WARN tabella: solo NUMBER; YML sorgente diceva NUMBER(3,2) -> allineato a NUMBER(5,4), DA CONFERMARE
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/CalculationType', 'VARCHAR(7)') }} AS TP_CALCOLO,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/End/Date', 'DATE') }} AS DT_END,
+
+        DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ AS LASTMODIFIEDDATA
+    FROM charging_profiles
+    -- Difensivo, OFF: riattiva se lo snapshot puo' duplicare la PK in giornata.
+    -- QUALIFY ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, CD_PIANO, CD_CERTIFICATO, DT_START ORDER BY DT_WFS_LAST_MODIFIED DESC) = 1
+),
+
+storicizzazione AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        DT_START,
+        LASTMODIFIEDDATA AS TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO, CD_CERTIFICATO, DT_START', 'LASTMODIFIEDDATA') }} AS TS_FINE_VALIDITA,   -- 'LASTMODIFIEDDATA' (trappola B)
+        CD_CLIENTE,
+        CD_PAGATORE,
+        TP_INTERESSE_BASE,
+        PC_TASSO_BSE,
+        NM_SPREAD_PIAN,
+        NM_SPREAD_DLR,
+        TP_CALCOLO,
+        DT_END,
+        LASTMODIFIEDDATA
+    FROM extraction
+),
+
+dedup AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        DT_START,
+        TS_INIZIO_VALIDITA,
+        TS_FINE_VALIDITA,
+        CD_CLIENTE,
+        CD_PAGATORE,
+        TP_INTERESSE_BASE,
+        PC_TASSO_BSE,
+        NM_SPREAD_PIAN,
+        NM_SPREAD_DLR,
+        TP_CALCOLO,
+        DT_END,
+        LASTMODIFIEDDATA,
+        {{ hash_cols(['CD_PRATICA', 'CD_PIANO', 'CD_CERTIFICATO', 'DT_START', 'CD_CLIENTE', 'CD_PAGATORE', 'TP_INTERESSE_BASE', 'PC_TASSO_BSE', 'NM_SPREAD_PIAN', 'NM_SPREAD_DLR', 'TP_CALCOLO', 'DT_END']) }} AS HASHED_COLS   -- PK + business, no TS_*, no LASTMODIFIEDDATA
+    FROM storicizzazione
+    {{ is_incremental_S1('CD_PRATICA, CD_PIANO, CD_CERTIFICATO, DT_START') }}
 )
 
--- Selezione Finale: Tutti i campi foglia dal foglio di analisi
+-- Selezione Finale: PK -> TS_INIZIO_VALIDITA -> TS_FINE_VALIDITA -> business -> LASTMODIFIEDDATA
 SELECT
-    DT_WFS_LAST_MODIFIED AS DT_RIFERIMENTO,
-    CD_ORGANISATION AS CD_CLIENTE,
-    CD_CREDIT_LINE AS CD_PRATICA, 
-    CD_PLAN AS CD_PIANO,
-    CD_LOAN AS CD_CERTIFICATO, -- WARN in table solo NUMBER
-    
-    -- Nodi da ChargingProfile in giù
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Party', 'VARCHAR(6)') }} AS CD_PAGATORE,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRateType', 'VARCHAR(7)') }} AS TP_INTERESSE_BASE,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRate', 'NUMBER(5,4)') }} AS PC_TASSO_BSE, -- WARN in table solo NUMBER
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/PlanRateVariance', 'NUMBER(5,4)') }} AS NM_SPREAD_PIAN, -- WARN in table solo NUMBER
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/DealerRateVariance', 'NUMBER(5,4)') }} AS NM_SPREAD_DLR, -- WARN in table solo NUMBER
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/CalculationType', 'VARCHAR(7)') }} AS TP_CALCOLO,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Start/Date', 'DATE') }} AS DT_START,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/End/Date', 'DATE') }} AS DT_END
-
-FROM charging_profiles
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        DT_START,
+        H.TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO, CD_CERTIFICATO, DT_START', 'H.TS_INIZIO_VALIDITA') }} AS TS_FINE_VALIDITA,   -- 'H.TS_INIZIO_VALIDITA'
+        CD_CLIENTE,
+        CD_PAGATORE,
+        TP_INTERESSE_BASE,
+        PC_TASSO_BSE,
+        NM_SPREAD_PIAN,
+        NM_SPREAD_DLR,
+        TP_CALCOLO,
+        DT_END,
+        LASTMODIFIEDDATA
+FROM dedup H

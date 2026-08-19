@@ -18,4 +18,6 @@ models:
         data_type: VARCHAR(35)
       - name: CD_F_TYP
         data_type: VARCHAR(2)
+      - name: CD_SFTYP
+        data_type: VARCHAR(2)
 

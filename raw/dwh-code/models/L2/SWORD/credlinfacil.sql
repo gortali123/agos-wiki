@@ -26,7 +26,7 @@ credit_lines AS (
     {{ flatten_xml('w.credit_lines_xml', 'CreditLine', 'cl', outer=true) }}
 ),
 
--- Livello 1.5: Estraggo il contenitore <CreditLineAssetTypes> per ogni CreditLine
+-- Livello 1.5: Estraggo il contenitore <CreditLineFacilities> per ogni CreditLine
 facilities_wrapper AS (
     SELECT
         cl_cte.DT_WFS_LAST_MODIFIED,
@@ -37,25 +37,63 @@ facilities_wrapper AS (
     {{ flatten_xml('cl_cte.credit_line_xml', 'CreditLineFacilities', 'fct', outer=true) }}
 ),
 
--- Livello 2: Estraggo i singoli nodi <AssetType> (Genera N righe per ogni CreditLine)
+-- Livello 2: Estraggo i singoli nodi <Facility> (Genera N righe per ogni CreditLine)
 facility_types AS (
     SELECT
         atw_cte.DT_WFS_LAST_MODIFIED,
         atw_cte.CD_ORGANISATION,
         atw_cte.CD_CREDIT_LINE,
-        -- at_cte.value rappresenta il nodo <AssetType> stesso
+        -- fct_cte.value rappresenta il nodo <Facility> stesso
         fct_cte.value AS facility_type_xml
-    FROM  facilities_wrapper atw_cte,
-    {{ flatten_xml('atw_cte. facilities_wrapper_xml', 'Facility', 'fct_cte', outer=true) }}
+    FROM facilities_wrapper atw_cte,
+    {{ flatten_xml('atw_cte.facilities_wrapper_xml', 'Facility', 'fct_cte', outer=true) }}
+),
+
+-- Proiezione business + watermark (ex SELECT finale del modello insert_overwrite).
+-- DT_RIFERIMENTO rimosso; DT_WFS_LAST_MODIFIED diventa il watermark LASTMODIFIEDDATA
+-- con cast ::TIMESTAMP_NTZ (NON custom_to_timestamp_ntz: e' gia' un DATE/TIMESTAMP -> trappola A).
+extraction AS (
+    SELECT
+        CD_CREDIT_LINE AS CD_PRATICA,
+        facility_type_xml:"$"::VARCHAR(25) AS TP_FACILITY,   -- WARN in table VARCHAR(11) ma non corrisponde con i dati
+        CD_ORGANISATION AS CD_CLIENTE,
+        DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ AS LASTMODIFIEDDATA
+    FROM facility_types
+    -- Difensivo, OFF: riattivare solo se lo snapshot puo' avere righe duplicate per (CD_PRATICA, TP_FACILITY)
+    -- nello stesso giorno (es. Facility ripetuta sullo stesso CreditLine, o piu' righe master_data).
+    -- QUALIFY ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, TP_FACILITY ORDER BY DT_WFS_LAST_MODIFIED DESC) = 1
+),
+
+storicizzazione AS (
+    SELECT
+        CD_PRATICA,
+        TP_FACILITY,
+        LASTMODIFIEDDATA AS TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, TP_FACILITY', 'LASTMODIFIEDDATA') }} AS TS_FINE_VALIDITA,   -- qui 'LASTMODIFIEDDATA' (alias H inesistente -> trappola B)
+        CD_CLIENTE,
+        LASTMODIFIEDDATA
+    FROM extraction
+),
+
+dedup AS (
+    SELECT
+        CD_PRATICA,
+        TP_FACILITY,
+        TS_INIZIO_VALIDITA,
+        TS_FINE_VALIDITA,
+        CD_CLIENTE,
+        LASTMODIFIEDDATA,
+        {{ hash_cols(['CD_PRATICA', 'TP_FACILITY', 'CD_CLIENTE']) }} AS HASHED_COLS   -- PK + business, no TS_*, no LASTMODIFIEDDATA
+    FROM storicizzazione
+    {{ is_incremental_S1('CD_PRATICA, TP_FACILITY') }}
 )
 
--- Selezione Finale
-SELECT 
-    DT_WFS_LAST_MODIFIED AS DT_RIFERIMENTO,
-    CD_ORGANISATION AS CD_CLIENTE,
-    CD_CREDIT_LINE AS CD_PRATICA,
-
-    -- ne estraggo direttamente il valore testuale con il cast a VARCHAR
-    facility_type_xml:"$"::VARCHAR(25) AS TP_FACILITY -- WARN in table VARCHAR(11) ma non corrisponde con i dati
-
-FROM facility_types
+-- Selezione Finale: PK -> TS_INIZIO_VALIDITA -> TS_FINE_VALIDITA -> business -> LASTMODIFIEDDATA
+SELECT
+    CD_PRATICA,
+    TP_FACILITY,
+    H.TS_INIZIO_VALIDITA,
+    {{ ts_fine_validita('CD_PRATICA, TP_FACILITY', 'H.TS_INIZIO_VALIDITA') }} AS TS_FINE_VALIDITA,   -- qui 'H.TS_INIZIO_VALIDITA'
+    CD_CLIENTE,
+    LASTMODIFIEDDATA
+FROM dedup H

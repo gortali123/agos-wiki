@@ -3,16 +3,30 @@ models:
   - name: organisation
     config:
       materialized: incremental
-      incremental_strategy: insert_overwrite
+      incremental_strategy: merge
+      unique_key: [CD_CLIENTE, TS_INIZIO_VALIDITA]
       query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "ORGANISATION"}'
+      post_hook:
+        # Chiusura per assenza (SCD2), livello root: nessun nodo ripetuto, org_xml e' il nodo
+        # <Organisation>. Chiude le org la cui OrganisationReference non e' piu' nello snapshot.
+        - >
+          {{ chiudi_finestre_scd2_sword(
+               source_name='master_data',
+               root_path='OrganisationId/OrganisationReference',
+               levels=[],
+               root_key_cols=['CD_CLIENTE']
+             ) }}
     constraints:
       - type: primary_key
-        columns: [CD_CLIENTE]
+        warn_unenforced: false
+        columns: [CD_CLIENTE, TS_INIZIO_VALIDITA]
     columns:
-      - name: DT_RIFERIMENTO
-        data_type: DATE
       - name: CD_CLIENTE
         data_type: NUMBER(10,0)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
       - name: TP_ORGANISATION
         data_type: VARCHAR(10)
       - name: TP_DEALER
@@ -43,3 +57,5 @@ models:
         data_type: VARCHAR(10)
       - name: DT_ATTIVAZIONE
         data_type: DATE
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

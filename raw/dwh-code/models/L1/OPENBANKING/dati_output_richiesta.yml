@@ -3,14 +3,16 @@ version: 2
 models:
   - name: dati_output_richiesta
     config:
-      materialized: table
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['id_dati_output_pk', 'id_richiesta_fk', 'transaction_id']
       meta:
-        cluster: ["TBD"]
+        cluster: ["A2"]
       query_tag: '{"app":"DBT", "sorgente":"OPENBANKING", "schema":"L1_E_OPENBANKING", "archivio":"DATI_OUTPUT_RICHIESTA"}'
     constraints:
       - type: primary_key
         warn_unenforced: false
-        columns: [id_dati_output_pk]
+        columns: [id_dati_output_pk, id_richiesta_fk, transaction_id]
     columns:
       - name: ts_riferimento
         data_type: TIMESTAMP_NTZ

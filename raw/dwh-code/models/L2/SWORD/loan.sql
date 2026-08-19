@@ -70,31 +70,103 @@ loans AS (
         l.value AS loan_xml
     FROM loans_wrapper lw_cte,
     {{ flatten_xml('lw_cte.loans_wrapper_xml', 'Loan', 'l', outer=true) }}
+),
+
+
+-- Proiezione business + watermark (ex SELECT finale insert_overwrite).
+-- DT_RIFERIMENTO rimosso; watermark = DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ (trappola A).
+extraction AS (
+    SELECT
+        CD_CREDIT_LINE AS CD_PRATICA,
+        CD_PLAN AS CD_PIANO,
+        {{ get_xml_path('loan_xml', 'LoanID', 'NUMBER(8,0)') }} AS CD_CERTIFICATO,   -- WARN tabella: solo NUMBER, lunghezza da capire
+
+        CD_ORGANISATION AS CD_CLIENTE,
+        {{ get_xml_path('loan_xml', 'LoanStatus', 'VARCHAR(12)') }} AS CD_STATO_CERTIF,
+        {{ get_xml_path('loan_xml', 'PaymentStatus', 'VARCHAR(7)') }} AS CD_PAYMENT_STATUS,   -- WARN: non presente in tabella
+        {{ get_xml_path('loan_xml', 'Region', 'VARCHAR(2)') }} AS CD_REGION,   -- WARN: non presente in tabella
+        {{ get_xml_path('loan_xml', 'Restructured', 'VARCHAR(5)') }} AS FL_RISTRUTTURAZIONE,
+
+        {{ get_xml_path('loan_xml', 'InterestStartDate', 'DATE') }} AS DT_INIZIO_CALC_INTSSI,
+        {{ get_xml_path('loan_xml', 'MaturityDate', 'DATE') }} AS DT_SCADENZA_CONTR,
+        {{ get_xml_path('loan_xml', 'SettlementDate', 'DATE') }} AS DT_RIMBORSO,
+        {{ get_xml_path('loan_xml', 'EffectiveDate', 'DATE') }} AS DT_STATO_CERTIF,
+
+        {{ get_xml_path('loan_xml', 'OriginalPrincipalAmount/Amount', 'NUMBER(13,2)') }} AS EU_ORIGINARIO_VEIC,   -- WARN tabella: solo NUMBER
+        {{ get_xml_path('loan_xml', 'CurrentPrincipalAmount/Amount', 'NUMBER(13,2)') }} AS EU_IMPORTO_CORR,   -- WARN tabella: solo NUMBER
+        {{ get_xml_path('loan_xml', 'Utilisation/Amount', 'NUMBER(13,2)') }} AS EU_UTILIZZATO,   -- WARN tabella: solo NUMBER
+
+        DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ AS LASTMODIFIEDDATA
+    FROM loans
+    -- QUALIFY ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, CD_PIANO, CD_CERTIFICATO ORDER BY DT_WFS_LAST_MODIFIED DESC) = 1  -- difensivo, off
+),
+
+storicizzazione AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        LASTMODIFIEDDATA AS TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO, CD_CERTIFICATO', 'LASTMODIFIEDDATA') }} AS TS_FINE_VALIDITA,   -- 'LASTMODIFIEDDATA' (trappola B)
+        CD_CLIENTE,
+        CD_STATO_CERTIF,
+        CD_PAYMENT_STATUS,
+        CD_REGION,
+        FL_RISTRUTTURAZIONE,
+        DT_INIZIO_CALC_INTSSI,
+        DT_SCADENZA_CONTR,
+        DT_RIMBORSO,
+        DT_STATO_CERTIF,
+        EU_ORIGINARIO_VEIC,
+        EU_IMPORTO_CORR,
+        EU_UTILIZZATO,
+        LASTMODIFIEDDATA
+    FROM extraction
+),
+
+dedup AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        TS_INIZIO_VALIDITA,
+        TS_FINE_VALIDITA,
+        CD_CLIENTE,
+        CD_STATO_CERTIF,
+        CD_PAYMENT_STATUS,
+        CD_REGION,
+        FL_RISTRUTTURAZIONE,
+        DT_INIZIO_CALC_INTSSI,
+        DT_SCADENZA_CONTR,
+        DT_RIMBORSO,
+        DT_STATO_CERTIF,
+        EU_ORIGINARIO_VEIC,
+        EU_IMPORTO_CORR,
+        EU_UTILIZZATO,
+        LASTMODIFIEDDATA,
+        {{ hash_cols(['CD_PRATICA', 'CD_PIANO', 'CD_CERTIFICATO', 'CD_CLIENTE', 'CD_STATO_CERTIF', 'CD_PAYMENT_STATUS', 'CD_REGION', 'FL_RISTRUTTURAZIONE', 'DT_INIZIO_CALC_INTSSI', 'DT_SCADENZA_CONTR', 'DT_RIMBORSO', 'DT_STATO_CERTIF', 'EU_ORIGINARIO_VEIC', 'EU_IMPORTO_CORR', 'EU_UTILIZZATO']) }} AS HASHED_COLS
+    FROM storicizzazione
+    {{ is_incremental_S1('CD_PRATICA, CD_PIANO, CD_CERTIFICATO') }}
 )
 
--- Selezione Finale: Estrazione dei campi dal nodo <Loan>
-SELECT 
-    DT_WFS_LAST_MODIFIED AS DT_RIFERIMENTO,
-    CD_ORGANISATION AS CD_CLIENTE,
-    CD_CREDIT_LINE AS CD_PRATICA,
-    CD_PLAN AS CD_PIANO,
-    
-    -- Campi diretti sotto Loan
-    {{ get_xml_path('loan_xml', 'LoanID', 'NUMBER(8,0)') }} AS CD_CERTIFICATO, -- WARN in table solo NUMBER da capire lunghezza
-    {{ get_xml_path('loan_xml', 'LoanStatus', 'VARCHAR(12)') }} AS CD_STATO_CERTIF, 
-    {{ get_xml_path('loan_xml', 'PaymentStatus', 'VARCHAR(7)') }} AS CD_PAYMENT_STATUS, -- WARN non in table
-    {{ get_xml_path('loan_xml', 'Region', 'VARCHAR(2)') }} AS CD_REGION, -- WARN non in table
-    {{ get_xml_path('loan_xml', 'Restructured', 'VARCHAR(5)') }} AS FL_RISTRUTTURAZIONE,
-    
-    -- Date (cast a VARCHAR, oppure 'DATE' se il tuo modello lo richiede specificamente)
-    {{ get_xml_path('loan_xml', 'InterestStartDate', 'DATE') }} AS DT_INIZIO_CALC_INTSSI,
-    {{ get_xml_path('loan_xml', 'MaturityDate', 'DATE') }} AS DT_SCADENZA_CONTR,
-    {{ get_xml_path('loan_xml', 'SettlementDate', 'DATE') }} AS DT_RIMBORSO,
-    {{ get_xml_path('loan_xml', 'EffectiveDate', 'DATE') }} AS DT_STATO_CERTIF,
-
-    -- Importi annidati (cast a NUMBER)
-    {{ get_xml_path('loan_xml', 'OriginalPrincipalAmount/Amount', 'NUMBER(13,2)') }} AS EU_ORIGINARIO_VEIC, -- WARN in table solo NUMBER da capire lunghezza
-    {{ get_xml_path('loan_xml', 'CurrentPrincipalAmount/Amount', 'NUMBER(13,2)') }} AS EU_IMPORTO_CORR, -- WARN in table solo NUMBER da capire lunghezza
-    {{ get_xml_path('loan_xml', 'Utilisation/Amount', 'NUMBER(13,2)') }} AS EU_UTILIZZATO -- WARN in table solo NUMBER da capire lunghezza
-
-FROM loans
+-- Selezione Finale: PK -> TS_INIZIO_VALIDITA -> TS_FINE_VALIDITA -> business -> LASTMODIFIEDDATA
+SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        H.TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO, CD_CERTIFICATO', 'H.TS_INIZIO_VALIDITA') }} AS TS_FINE_VALIDITA,   -- 'H.TS_INIZIO_VALIDITA'
+        CD_CLIENTE,
+        CD_STATO_CERTIF,
+        CD_PAYMENT_STATUS,
+        CD_REGION,
+        FL_RISTRUTTURAZIONE,
+        DT_INIZIO_CALC_INTSSI,
+        DT_SCADENZA_CONTR,
+        DT_RIMBORSO,
+        DT_STATO_CERTIF,
+        EU_ORIGINARIO_VEIC,
+        EU_IMPORTO_CORR,
+        EU_UTILIZZATO,
+        LASTMODIFIEDDATA
+FROM dedup H

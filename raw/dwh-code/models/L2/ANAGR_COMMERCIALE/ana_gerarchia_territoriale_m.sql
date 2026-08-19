@@ -25,7 +25,7 @@ CCANATFI_M_1 AS (
         LASTMODIFIEDDATA
     FROM {{ ref('ccanatfi_m') }}
     {% if is_incremental() %}
-    WHERE DT_OSSERVAZIONE = {{ get_dt_osservazione() }}
+    WHERE DT_OSSERVAZIONE = {{ last_day_past_month() }}
     {% endif %}
 ),
 /* ---------------------------------------------------------
@@ -63,7 +63,12 @@ ATTR_FILIALE AS (
     /* Area -> 100 */
     SELECT t.ANATFI_FILIALE AS CODICE_FILIALE,
            '100'               AS ATTR_CODE,
-           t.ANATFI_AREA     AS CD_ATTR,
+           CASE WHEN t.ANATFI_AREA='IFQ' AND t.ANATFI_DISTRETTO ='I01' THEN 'IFQ1'
+             WHEN t.ANATFI_AREA='IFQ' AND t.ANATFI_DISTRETTO ='I10' THEN 'IFQ2'
+             WHEN t.ANATFI_AREA='IFQ' AND t.ANATFI_DISTRETTO ='I99' THEN 'IFQ3' 
+             ELSE t.ANATFI_AREA
+             END AS CD_ATTR,
+           --t.ANATFI_AREA     AS CD_ATTR,
            ar.TABARE_DESCRIZIONE AS DS_ATTR
     FROM CCANATFI_M_1 t
     JOIN {{ ref('cctabare') }} ar
@@ -122,7 +127,13 @@ ATTR_FILIALE AS (
 BASE AS (
     SELECT
         t.ANATFI_FILIALE     AS CODICE_FILIALE,
-        COALESCE(t.ANATFI_AREA, ar.TABARE_AREA) AS CD_RETE,
+        --COALESCE(t.ANATFI_AREA, ar.TABARE_AREA) AS CD_RETE,
+        COALESCE (CASE WHEN t.ANATFI_AREA='IFQ' AND t.ANATFI_DISTRETTO ='I01' THEN 'IFQ1'
+             WHEN t.ANATFI_AREA='IFQ' AND t.ANATFI_DISTRETTO ='I10' THEN 'IFQ2'
+             WHEN t.ANATFI_AREA='IFQ' AND t.ANATFI_DISTRETTO ='I99' THEN 'IFQ3' 
+             ELSE t.ANATFI_AREA
+             END,
+            CASE WHEN ar.TABARE_AREA='IFQ' THEN 'IFQ1' END) AS CD_RETE, 
         t.DT_OSSERVAZIONE    AS DT_OSSERVAZIONE,
         t.LASTMODIFIEDDATA
     FROM CCANATFI_M_1 t
@@ -138,7 +149,7 @@ BASE AS (
 
 SELECT DISTINCT
     b.DT_OSSERVAZIONE,
-    a1.CD_ATTR AS CD_GER_TERRITORIALE_1,
+    SUBSTR(a1.CD_ATTR, 1, 3) AS CD_GER_TERRITORIALE_1,
     a1.DS_ATTR AS DS_GER_TERRITORIALE_1,
 
     a2.CD_ATTR AS CD_GER_TERRITORIALE_2,

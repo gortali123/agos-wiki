@@ -283,6 +283,10 @@ models:
         +schema: L2_PRODOTTO
         +meta: {subject_area: "CARTE"}
         +tags: ["carte"]
+      FORM_E_PREVENTIVATORI:
+        +schema: L2_FORM_E_PREVENTIVATORI
+        +meta: {subject_area: "FORM_E_PREVENTIVATORI"}
+        +tags: ["form_e_preventivatori"]
       GESTIONE_CREDITI:
         +schema: L2_GESTIONE_CREDITI
         +meta: {subject_area: "GESTIONE_CREDITI"}
@@ -319,14 +323,30 @@ models:
         +schema: L2_SWORD
         +meta: {subject_area: "SWORD"}
         +tags: ["sword"]
+      SA_CAMPAGNE:
+        +schema: L2_SA_CAMPAGNE
+        +meta: {subject_area: "SA_CAMPAGNE"}
+        +tags: ["sa_campagne"]
+      SA_CRM:
+        +schema: L2_SA_CRM
+        +meta: {subject_area: "SA_CRM"}
+        +tags: ["sa_crm"]
       PAGAMENTI_CONTABILITA:
         +schema: L2_PAGAMENTI_CONTABILITA
         +meta: {subject_area: "PAGAMENTI_CONTABILITA"}
         +tags: ["pagamenti_contabilita"]
+      AREA_RISERVATA:
+        +schema: L2_AREA_RISERVATA
+        +meta: {subject_area: "AREA_RISERVATA"}
+        +tags: ["area_riservata"]
       ANAGR_COMMERCIALE:
         +schema: L2_ANAGR_COMMERCIALE
         +meta: {subject_area: "ANAGR_COMMERCIALE"}
         +tags: ["anagr_commerciale"]
+      BUDGET:
+        +schema: L2_BUDGET
+        +meta: {subject_area: "BUDGET"}
+        +tags: ["budget"]
 
     L3:
       +meta: {layer: "L3"}

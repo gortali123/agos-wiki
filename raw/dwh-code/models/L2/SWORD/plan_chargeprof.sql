@@ -58,26 +58,86 @@ charging_profiles AS (
         cp.value AS charging_profile_xml
     FROM plans p,
     {{ flatten_xml('p.plan_xml', 'ChargingProfile', 'cp', outer=true) }}
+),
+
+
+-- Proiezione business + watermark. ChargingProfile e' figlio diretto di Plan (no wrapper).
+-- DT_RIFERIMENTO rimosso; watermark = DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ (trappola A).
+-- TP_CALCOLO: COALESCE(...,'ND') come da modello -> stessa COALESCE nella chiusura (post_hook).
+extraction AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Start/Day', 'NUMBER') }} AS NM_START,
+        COALESCE({{ get_xml_path('charging_profile_xml', 'ChargingTimings/CalculationType', 'VARCHAR(7)') }}, 'ND') AS TP_CALCOLO,
+
+        CD_ORGANISATION AS CD_CLIENTE,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/End/Day', 'NUMBER') }} AS NM_END,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Party', 'VARCHAR(6)') }} AS CD_PAGATORE,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRateType', 'VARCHAR(7)') }} AS TP_INTERESSE_BASE,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRate', 'NUMBER(5,3)') }} AS NM_INTERESSE,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/PlanRateVariance', 'NUMBER(5,3)') }} AS NM_VARIANZA_INTSS_PIA,
+        {{ get_xml_path('charging_profile_xml', 'ChargingTimings/DealerRateVariance', 'NUMBER(5,3)') }} AS NM_VARIANZA_INTSS_CLI,
+
+        DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ AS LASTMODIFIEDDATA
+    FROM charging_profiles
+    -- QUALIFY ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, CD_PIANO, NM_START, TP_CALCOLO ORDER BY DT_WFS_LAST_MODIFIED DESC) = 1  -- difensivo, off
+),
+
+storicizzazione AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        NM_START,
+        TP_CALCOLO,
+        LASTMODIFIEDDATA AS TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO, NM_START, TP_CALCOLO', 'LASTMODIFIEDDATA') }} AS TS_FINE_VALIDITA,   -- 'LASTMODIFIEDDATA' (trappola B)
+        CD_CLIENTE,
+        NM_END,
+        CD_PAGATORE,
+        TP_INTERESSE_BASE,
+        NM_INTERESSE,
+        NM_VARIANZA_INTSS_PIA,
+        NM_VARIANZA_INTSS_CLI,
+        LASTMODIFIEDDATA
+    FROM extraction
+),
+
+dedup AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        NM_START,
+        TP_CALCOLO,
+        TS_INIZIO_VALIDITA,
+        TS_FINE_VALIDITA,
+        CD_CLIENTE,
+        NM_END,
+        CD_PAGATORE,
+        TP_INTERESSE_BASE,
+        NM_INTERESSE,
+        NM_VARIANZA_INTSS_PIA,
+        NM_VARIANZA_INTSS_CLI,
+        LASTMODIFIEDDATA,
+        {{ hash_cols(['CD_PRATICA', 'CD_PIANO', 'NM_START', 'TP_CALCOLO', 'CD_CLIENTE', 'NM_END', 'CD_PAGATORE', 'TP_INTERESSE_BASE', 'NM_INTERESSE', 'NM_VARIANZA_INTSS_PIA', 'NM_VARIANZA_INTSS_CLI']) }} AS HASHED_COLS
+    FROM storicizzazione
+    {{ is_incremental_S1('CD_PRATICA, CD_PIANO, NM_START, TP_CALCOLO') }}
 )
 
--- Estrazione finale dei campi mappati dal tuo Excel
-
+-- Selezione Finale: PK -> TS_INIZIO_VALIDITA -> TS_FINE_VALIDITA -> business -> LASTMODIFIEDDATA
 SELECT
-    DT_WFS_LAST_MODIFIED AS DT_RIFERIMENTO,
-    CD_ORGANISATION AS CD_CLIENTE,
-    CD_PRATICA,
-    CD_PIANO,
-    
-    -- Estraggo i campi usando esattamente i percorsi "finali" del tuo ExcelCASE 
-    COALESCE(
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/CalculationType', 'VARCHAR(7)') }},
-    'ND' ) AS TP_CALCOLO,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Start/Day', 'NUMBER') }} AS NM_START,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/End/Day', 'NUMBER') }} AS NM_END,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/Party', 'VARCHAR(6)') }} AS CD_PAGATORE,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRateType', 'VARCHAR(7)') }} AS TP_INTERESSE_BASE,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/BaseRate', 'NUMBER(5,3)') }} AS NM_INTERESSE,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/PlanRateVariance', 'NUMBER(5,3)') }} AS NM_VARIANZA_INTSS_PIA,
-    {{ get_xml_path('charging_profile_xml', 'ChargingTimings/DealerRateVariance', 'NUMBER(5,3)') }} AS NM_VARIANZA_INTSS_CLI
-
-FROM charging_profiles
+        CD_PRATICA,
+        CD_PIANO,
+        NM_START,
+        TP_CALCOLO,
+        H.TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO, NM_START, TP_CALCOLO', 'H.TS_INIZIO_VALIDITA') }} AS TS_FINE_VALIDITA,   -- 'H.TS_INIZIO_VALIDITA'
+        CD_CLIENTE,
+        NM_END,
+        CD_PAGATORE,
+        TP_INTERESSE_BASE,
+        NM_INTERESSE,
+        NM_VARIANZA_INTSS_PIA,
+        NM_VARIANZA_INTSS_CLI,
+        LASTMODIFIEDDATA
+FROM dedup H

@@ -88,40 +88,92 @@ transactions AS (
         t.value AS transaction_xml
     FROM fin_transactions_wrapper ftw_cte,
     {{ flatten_xml('ftw_cte.fin_transactions_wrapper_xml', 'Transaction', 't', outer=true) }}
+),
+
+
+extraction AS (
+    SELECT
+        CD_ORGANISATION AS CD_CLIENTE,
+        CD_CREDIT_LINE AS CD_PRATICA,
+        CD_PLAN AS CD_PIANO,
+        CD_LOAN AS CD_CERTIFICATO,   -- WARN tabella: solo NUMBER
+        {{ get_xml_path('transaction_xml', 'PaymentMethod/AccountReference', 'VARCHAR(70)') }} AS CD_ACCOUNT,
+        {{ get_xml_path('transaction_xml', 'PaymentMethod/DebitCreditIndicator', 'VARCHAR(6)') }} AS TP_PAYMENT_METHOD_DEBIT_CREDIT,
+        {{ get_xml_path('transaction_xml', 'PaymentMethod/PaymentTiming', 'VARCHAR(4)') }} AS CD_PAYMENT_TIMING,
+        {{ get_xml_path('transaction_xml', 'PaymentMethod/PaymentType', 'VARCHAR(13)') }} AS TP_PAYMENT,
+        {{ get_xml_path('transaction_xml', 'PaymentMethod/ValueType', 'VARCHAR(3)') }} AS TP_VALUE,
+        {{ get_xml_path('transaction_xml', 'ProcessType', 'VARCHAR(7)') }} AS TP_PROCESSO,
+        {{ get_xml_path('transaction_xml', 'ItemType', 'VARCHAR(16)') }} AS TP_OGGETTO_TRANSZ,
+        {{ get_xml_path('transaction_xml', 'FinancialItemCategory', 'VARCHAR(18)') }} AS TP_CATEGORIA_FIN,
+        {{ get_xml_path('transaction_xml', 'DebitCreditIndicator', 'VARCHAR(6)') }} AS TP_TRANSACTION_DEBIT_CREDIT,
+        {{ get_xml_path('transaction_xml', 'Status', 'VARCHAR(14)') }} AS CD_STATO,
+        {{ get_xml_path('transaction_xml', 'TransactionType', 'VARCHAR(10)') }} AS TP_TRANSAZIONE,   -- WARN tabella VARCHAR(6), valori non corrispondono -> tenuto VARCHAR(10), DA CONFERMARE
+        {{ get_xml_path('transaction_xml', 'NettTaxType', 'VARCHAR(4)') }} AS TP_NET_TAX,
+        {{ get_xml_path('transaction_xml', 'CreationDate', 'DATE') }} AS DT_CREAZIONE_RECD,
+        {{ get_xml_path('transaction_xml', 'ProcessDate', 'DATE') }} AS DT_REGISTRAZIONE,
+        {{ get_xml_path('transaction_xml', 'BillingDate', 'DATE') }} AS DT_FATTURAZIONE,
+        {{ get_xml_path('transaction_xml', 'PaidDate', 'DATE') }} AS DT_PAGAMENTO,
+        {{ get_xml_path('transaction_xml', 'DueDate', 'DATE') }} AS DT_SCADENZA,
+        {{ get_xml_path('transaction_xml', 'TransactionAmount/Amount', 'NUMBER(13,2)') }} AS EU_MOVIMENTO,
+        DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ AS LASTMODIFIEDDATA
+    FROM transactions
+),
+
+hashed AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        LASTMODIFIEDDATA AS TS_INSERIMENTO,
+        CD_CLIENTE,
+        CD_ACCOUNT,
+        TP_PAYMENT_METHOD_DEBIT_CREDIT,
+        CD_PAYMENT_TIMING,
+        TP_PAYMENT,
+        TP_VALUE,
+        TP_PROCESSO,
+        TP_OGGETTO_TRANSZ,
+        TP_CATEGORIA_FIN,
+        TP_TRANSACTION_DEBIT_CREDIT,
+        CD_STATO,
+        TP_TRANSAZIONE,
+        TP_NET_TAX,
+        DT_CREAZIONE_RECD,
+        DT_REGISTRAZIONE,
+        DT_FATTURAZIONE,
+        DT_PAGAMENTO,
+        DT_SCADENZA,
+        EU_MOVIMENTO,
+        LASTMODIFIEDDATA,
+        MD5(TO_VARCHAR(ARRAY_CONSTRUCT(CD_PRATICA, CD_PIANO, CD_CERTIFICATO, CD_CLIENTE, CD_ACCOUNT, TP_PAYMENT_METHOD_DEBIT_CREDIT, CD_PAYMENT_TIMING, TP_PAYMENT, TP_VALUE, TP_PROCESSO, TP_OGGETTO_TRANSZ, TP_CATEGORIA_FIN, TP_TRANSACTION_DEBIT_CREDIT, CD_STATO, TP_TRANSAZIONE, TP_NET_TAX, DT_CREAZIONE_RECD, DT_REGISTRAZIONE, DT_FATTURAZIONE, DT_PAGAMENTO, DT_SCADENZA, EU_MOVIMENTO))) AS HASH_TRANSACTION   -- fingerprint tecnico (no chiave business)
+    FROM extraction
 )
 
--- Selezione Finale: Estrazione campi dal nodo singolo <Transaction>
-SELECT 
-    DT_WFS_LAST_MODIFIED AS DT_RIFERIMENTO,
-    CD_ORGANISATION AS CD_CLIENTE,
-    CD_CREDIT_LINE AS CD_PRATICA,
-    CD_PLAN AS CD_PIANO,
-    CD_LOAN AS CD_CERTIFICATO, --WARN in table solo NUMBER
-    ROW_NUMBER() OVER (PARTITION BY CD_CERTIFICATO ORDER BY CD_PRATICA) AS PR_TRANSAZIONE, -- WARN in table presente campo come PK
-    -- Nodi annidati sotto PaymentMethod
-    {{ get_xml_path('transaction_xml', 'PaymentMethod/AccountReference', 'VARCHAR(70)') }} AS CD_ACCOUNT,
-    {{ get_xml_path('transaction_xml', 'PaymentMethod/DebitCreditIndicator', 'VARCHAR(6)') }} AS TP_PAYMENT_METHOD_DEBIT_CREDIT,
-    {{ get_xml_path('transaction_xml', 'PaymentMethod/PaymentTiming', 'VARCHAR(4)') }} AS CD_PAYMENT_TIMING,
-    {{ get_xml_path('transaction_xml', 'PaymentMethod/PaymentType', 'VARCHAR(13)') }} AS TP_PAYMENT,
-    {{ get_xml_path('transaction_xml', 'PaymentMethod/ValueType', 'VARCHAR(3)') }} AS TP_VALUE,
-    
-    -- Nodi diretti sotto Transaction
-    {{ get_xml_path('transaction_xml', 'ProcessType', 'VARCHAR(7)') }} AS TP_PROCESSO,
-    {{ get_xml_path('transaction_xml', 'ItemType', 'VARCHAR(16)') }} AS TP_OGGETTO_TRANSZ,
-    {{ get_xml_path('transaction_xml', 'FinancialItemCategory', 'VARCHAR(18)') }} AS TP_CATEGORIA_FIN,
-    {{ get_xml_path('transaction_xml', 'DebitCreditIndicator', 'VARCHAR(6)') }} AS TP_TRANSACTION_DEBIT_CREDIT,
-    {{ get_xml_path('transaction_xml', 'Status', 'VARCHAR(14)') }} AS CD_STATO, 
-    {{ get_xml_path('transaction_xml', 'TransactionType', 'VARCHAR(10)') }} AS TP_TRANSAZIONE, -- WARN in table VARCHAR(6) ma i valori non corrispondono
-    {{ get_xml_path('transaction_xml', 'NettTaxType', 'VARCHAR(4)') }} AS TP_NET_TAX,
-    
-    -- Date
-    {{ get_xml_path('transaction_xml', 'CreationDate', 'DATE') }} AS DT_CREAZIONE_RECD,
-    {{ get_xml_path('transaction_xml', 'ProcessDate', 'DATE') }} AS DT_REGISTRAZIONE,
-    {{ get_xml_path('transaction_xml', 'BillingDate', 'DATE') }} AS DT_FATTURAZIONE,
-    {{ get_xml_path('transaction_xml', 'PaidDate', 'DATE') }} AS DT_PAGAMENTO,
-    {{ get_xml_path('transaction_xml', 'DueDate', 'DATE') }} AS DT_SCADENZA,
-
-    -- Nodo annidato sotto TransactionAmount
-    {{ get_xml_path('transaction_xml', 'TransactionAmount/Amount', 'NUMBER(13,2)') }} AS EU_MOVIMENTO
-
-FROM transactions
+SELECT
+    CD_PRATICA,
+    CD_PIANO,
+    CD_CERTIFICATO,
+    ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, CD_PIANO, CD_CERTIFICATO ORDER BY DT_CREAZIONE_RECD ASC, DT_REGISTRAZIONE ASC, HASH_TRANSACTION ASC) PR_TRANSAZIONE,
+    TS_INSERIMENTO,
+    CD_CLIENTE,
+    CD_ACCOUNT,
+    TP_PAYMENT_METHOD_DEBIT_CREDIT,
+    CD_PAYMENT_TIMING,
+    TP_PAYMENT,
+    TP_VALUE,
+    TP_PROCESSO,
+    TP_OGGETTO_TRANSZ,
+    TP_CATEGORIA_FIN,
+    TP_TRANSACTION_DEBIT_CREDIT,
+    CD_STATO,
+    TP_TRANSAZIONE,
+    TP_NET_TAX,
+    DT_CREAZIONE_RECD,
+    DT_REGISTRAZIONE,
+    DT_FATTURAZIONE,
+    DT_PAGAMENTO,
+    DT_SCADENZA,
+    EU_MOVIMENTO,
+    LASTMODIFIEDDATA,
+    HASH_TRANSACTION
+FROM hashed h

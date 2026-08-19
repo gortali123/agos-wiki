@@ -106,15 +106,15 @@ base AS (
             ELSE 'N'
         END AS FL_STORNO,
         CASE 
-            WHEN a.CRVOA_NUMERO_ASSEGNO IS NOT NULL THEN 'S'
+            WHEN {{ custom_is_not_null('a.CRVOA_NUMERO_ASSEGNO') }} THEN 'S'
             ELSE 'N' 
         END AS FL_ASSEGNO, 
         {{ ole_to_date('a.CRVOA_DATA_REGISTRAZIONE') }} AS DT_DECORRENZA,
         {{ ole_to_date('f.CRVOC_DATA_ACQUISTO') }} AS DT_UTILIZZO,
         {{ ole_to_date('f.CRVOC_DATA_VALUTA') }} AS DT_VALUTA,
         CASE
-            WHEN f.CRVOC_CONTABILIZZATO = 'S' AND  sv.CROSV_EMETTITORE_A IS NULL THEN {{ ole_to_date('f.CRVOC_DATA_ACQUISTO') }}
-            WHEN f.CRVOC_DARE_AVERE = 'A' AND sv.CROSV_EMETTITORE_A IS NOT NULL THEN {{ ole_to_date('a.CRVOA_DATA_REGISTRAZIONE') }}
+            WHEN f.CRVOC_CONTABILIZZATO = 'S' AND  (sv.CROSV_EMETTITORE_A = 0 OR sv.CROSV_EMETTITORE_A IS NULL) THEN {{ ole_to_date('f.CRVOC_DATA_ACQUISTO') }}
+            WHEN f.CRVOC_DARE_AVERE = 'A' AND (sv.CROSV_EMETTITORE_A <> 0 OR sv.CROSV_EMETTITORE_A IS NOT NULL) THEN {{ ole_to_date('a.CRVOA_DATA_REGISTRAZIONE') }}
             ELSE NULL
         END AS DT_STORNATA,
         {{ ole_to_date('a.CRVOA_DATA_LIQUIDAZIONE') }} AS DT_LIQUIDAZIONE, 
@@ -145,7 +145,7 @@ base AS (
         f.CRVOC_NUM_RATE AS NM_DURATA_FINANZ, 
         f.CRVOC_COMMISSIONI AS PC_COMMISSIONE,
         /*f.CRVOC_TAEG*/ {{ custom_to_decimal('cast(NULL as number)') }} AS NM_TAEG, -- WARN: CRVOC_TAEG non presente in CRVOUF
-        CASE WHEN f.CRVOC_CONTR_DEALER IS NOT NULL THEN 'S' ELSE 'N' END AS FL_CONTRIBUTI_PROMO, 
+        CASE WHEN (f.CRVOC_CONTR_DEALER <> 0 OR f.CRVOC_CONTR_DEALER IS NOT NULL) THEN 'S' ELSE 'N' END AS FL_CONTRIBUTI_PROMO, 
         {{ custom_to_decimal('ci.CRINS_TAN_CAMP') }} AS NM_TAN_PROMO,
         {{ custom_to_decimal('ci.CRINS_TEG_CAMP') }} AS NM_TEG_PROMO,
         {{ custom_to_decimal('ci.CRINS_TAEG_CAMP') }} AS NM_TAEG_PROMO,
@@ -162,8 +162,8 @@ base AS (
         {{ custom_to_decimal('f.CRVOC_INTERESSI', precision=11) }} AS EU_INTERESSI_PROMO,
         /*f.CRVOC_IRR*/ {{ custom_to_decimal('cast(NULL as number)') }} AS NM_IRR, -- WARN CRVOC_IRR non presente in CRVOUF
         CASE
-            WHEN sv.CROSV_RIGA IS NOT NULL THEN 'N' 
-            WHEN sq.SPCLSTAQ_RIGA IS NOT NULL THEN 'Y'
+            WHEN (sv.CROSV_RIGA <> 0 OR sv.CROSV_RIGA IS NOT NULL) THEN 'N' 
+            WHEN (sq.SPCLSTAQ_RIGA <> 0 OR sq.SPCLSTAQ_RIGA IS NOT NULL) THEN 'Y'
         END AS FL_CIRCUITO, -- WARN: SPCLFSTAQ non in catalog sorgenti
         COALESCE(sv.CROSV_TIPO_COLL, sq.SPCLSTAQ_TIPO_COLL) AS TP_COLLEGAMENTO,
         COALESCE(sv.CROSV_PROTOCOLLO_A, sq.SPCLSTAQ_PROTOCOLLO_A) AS CD_PROTOCOLLO_UT_COLLEGATO,

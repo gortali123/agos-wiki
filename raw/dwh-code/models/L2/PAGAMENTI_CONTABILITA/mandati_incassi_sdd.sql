@@ -37,5 +37,5 @@ SELECT
     man.ICMAMAN_TIPO_FLUSSO AS TP_FLUSSO
 FROM {{ ref('icmafman') }} man
 LEFT JOIN {{ ref('bnptfcuc') }} cuc
-    ON man.ICMAMAN_CID = cuc.BNPTCUC_CODICE_CUC
+    ON man.ICMAMAN_CID = cuc.BNPTCUC_CREDITOR_IDENTIFIER
 WHERE man.FL_DELETED = 'N'

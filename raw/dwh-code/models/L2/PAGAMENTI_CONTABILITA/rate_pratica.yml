@@ -33,9 +33,9 @@ models:
       - name: NM_PROG_RATA
         data_type: NUMBER(5)
       - name: DT_INIZIO_VALIDITA
-        data_type: NUMBER(8)
+        data_type: DATE
       - name: DT_FINE_VALIDITA
-        data_type: NUMBER(8)
+        data_type: DATE
       - name: NM_RATA
         data_type: NUMBER(3)
       - name: NM_RATA_ORIG

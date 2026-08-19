@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: l1_e_bsn
+    database: "{{ env_var('DBT_DATABASE') }}"
+    schema: L1_E_BSN
+    tables:
+      - name: lkp_gerarchia_tipo_cliente_cq
+      - name: lkp_ger_macro_prodotto_ca
+      - name: lkp_ger_macro_prodotto_co
+      - name: lkp_ger_macro_prodotto_cq
+      - name: lkp_mercato_ca_b2b
+      - name: lkp_mercato_ca_b2c
+      - name: lkp_mercato_cq
+      - name: lkp_mercato_pa_pf
+      - name: lkp_mercato_pp
+      - name: lkp_elenco_conti
+      - name: lkp_ristrutturazioni

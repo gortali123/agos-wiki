@@ -3,22 +3,37 @@ models:
   - name: creditline
     config:
       materialized: incremental
-      incremental_strategy: insert_overwrite
+      incremental_strategy: merge
+      unique_key: [CD_CLIENTE, CD_PRATICA, TS_INIZIO_VALIDITA]
       query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "CREDITLINE"}'
+      post_hook:
+        - >
+          {{ chiudi_finestre_scd2_sword(
+               source_name='master_data',
+               root_path='OrganisationId/OrganisationReference',
+               levels=[
+                 {'wrapper': 'CreditLines', 'node': 'CreditLine',
+                  'keys': [{'name': 'CD_PRATICA', 'path': 'CreditLineReference', 'type': 'VARCHAR(30)'}]}
+               ],
+               root_key_cols=['CD_CLIENTE']
+             ) }}
     constraints:
       - type: primary_key
-        columns: [DT_RIFERIMENTO, CD_PRATICA, DS_NOME_LIN_CREDIT]
+        warn_unenforced: false
+        columns: [CD_CLIENTE, CD_PRATICA, TS_INIZIO_VALIDITA]
     columns:
-      - name: DT_RIFERIMENTO
-        data_type: DATE
       - name: CD_CLIENTE
         data_type: NUMBER(10,0)
       - name: CD_PRATICA
         data_type: VARCHAR(30)
-      - name: TP_LINEA_DI_CREDITO
-        data_type: VARCHAR(12)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
       - name: DS_NOME_LIN_CREDIT
         data_type: VARCHAR(40)
+      - name: TP_LINEA_DI_CREDITO
+        data_type: VARCHAR(12)
       - name: CD_PARENT_CREDIT_LINE
         data_type: VARCHAR(20)
       - name: CD_STATO_LIN_CRED
@@ -61,3 +76,5 @@ models:
         data_type: NUMBER(10,3)
       - name: PC_GUARANTEE_OVER_LIMIT
         data_type: NUMBER(10,3)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

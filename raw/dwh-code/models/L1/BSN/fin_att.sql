@@ -10,6 +10,3 @@ select
   TRY_TO_DATE(DT_INIZ_VALI, 'DD/MM/YYYY') AS dt_iniz_vali,
   TRY_TO_DATE(DT_FINE_VALI, 'DD/MM/YYYY') AS dt_fine_vali
 from {{ source('source_l0','fin_att') }}
-
-
-

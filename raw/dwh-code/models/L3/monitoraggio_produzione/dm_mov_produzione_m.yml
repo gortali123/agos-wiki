@@ -10,10 +10,6 @@ models:
         warn_unenforced: false
         columns: [TP_PROCEDURA, CD_PRATICA, CD_EMETTITORE_UTILIZZO, CD_PROTOCOLLO_UTILIZZO, CD_RIGA_UTILIZZO, DT_MOVIMENTO, TP_MOVIMENTO, DT_INIZIO_VALIDITA]
     columns:
-      - name: DT_INIZIO_VALIDITA
-        data_type: TIMESTAMP_NTZ
-      - name: DT_FINE_VALIDITA
-        data_type: TIMESTAMP_NTZ
       - name: TP_PROCEDURA
         data_type: VARCHAR(2)
       - name: CD_PRATICA
@@ -24,6 +20,10 @@ models:
         data_type: NUMBER(9)
       - name: CD_RIGA_UTILIZZO
         data_type: NUMBER(4)
+      - name: DT_INIZIO_VALIDITA
+        data_type: DATE
+      - name: DT_FINE_VALIDITA
+        data_type: DATE
       - name: DT_MOVIMENTO
         data_type: DATE
       - name: TP_MOVIMENTO
@@ -42,7 +42,7 @@ models:
         data_type: NUMBER(5)
       - name: EU_FINANZIATO
         data_type: NUMBER(13,2)
-      - name: EMFN
+      - name: NM_EMFN
         data_type: NUMBER(13,2)
       - name: NM_IRR_NUM
         data_type: NUMBER(13,2)

@@ -3,20 +3,43 @@ models:
   - name: plan_paysch
     config:
       materialized: incremental
-      incremental_strategy: insert_overwrite
+      incremental_strategy: merge
+      unique_key: [CD_PRATICA, CD_PIANO, NM_GIORNI_SCADZ_RTA, TS_INIZIO_VALIDITA]
       query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "PLAN_PAYSCH"}'
+      post_hook:
+        # Chiusura per assenza (SCD2). CreditLine -> Plans/Plan -> PaymentSchedules/PaymentSchedule
+        # (1:1, livello intermedio senza chiave) -> Payments/Payment (chiave NM_GIORNI_SCADZ_RTA).
+        - >
+          {{ chiudi_finestre_scd2_sword(
+               source_name='master_data',
+               root_path='OrganisationId/OrganisationReference',
+               levels=[
+                 {'wrapper': 'CreditLines', 'node': 'CreditLine',
+                  'keys': [{'name': 'CD_PRATICA', 'path': 'CreditLineReference', 'type': 'VARCHAR(17)'}]},
+                 {'wrapper': 'Plans', 'node': 'Plan',
+                  'keys': [{'name': 'CD_PIANO', 'path': 'PlanReference', 'type': 'VARCHAR(30)'}]},
+                 {'wrapper': 'PaymentSchedules', 'node': 'PaymentSchedule', 'keys': []},
+                 {'wrapper': 'Payments', 'node': 'Payment',
+                  'keys': [{'name': 'NM_GIORNI_SCADZ_RTA', 'path': 'Period/DayMonth', 'type': 'NUMBER(3,0)'}]}
+               ]
+             ) }}
     constraints:
       - type: primary_key
-        columns: [CD_PRATICA, CD_PIANO, NM_GIORNI_SCADZ_RTA]
+        warn_unenforced: false
+        columns: [CD_PRATICA, CD_PIANO, NM_GIORNI_SCADZ_RTA, TS_INIZIO_VALIDITA]
     columns:
-      - name: DT_RIFERIMENTO
-        data_type: DATE
-      - name: CD_CLIENTE
-        data_type: NUMBER(10,0)
       - name: CD_PRATICA
         data_type: VARCHAR(17)
       - name: CD_PIANO
         data_type: VARCHAR(30)
+      - name: NM_GIORNI_SCADZ_RTA
+        data_type: NUMBER(3,0)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
       - name: TP_PARTIAL_PAYMENT
         data_type: VARCHAR(5)
       - name: CD_REFERENCE
@@ -29,9 +52,9 @@ models:
         data_type: VARCHAR(4)
       - name: EU_ADJUSTMENT
         data_type: VARCHAR(20)
-      - name: NM_GIORNI_SCADZ_RTA
-        data_type: NUMBER(3,0)
       - name: PC_RATA
         data_type: NUMBER(3,0)
       - name: TP_TRANSACTION
         data_type: VARCHAR(10)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

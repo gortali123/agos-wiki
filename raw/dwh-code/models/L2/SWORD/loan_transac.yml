@@ -3,16 +3,12 @@ models:
   - name: loan_transac
     config:
       materialized: incremental
-      incremental_strategy: insert_overwrite
+      incremental_strategy: append
       query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "LOAN_TRANSAC"}'
-    constraints:
-      - type: primary_key
-        columns: [DT_RIFERIMENTO, CD_PRATICA, CD_PIANO, CD_CERTIFICATO, PR_TRANSAZIONE]
+    # Nessun primary_key: entita' append-only senza chiave business (una riga per transazione,
+    # dedup tecnica su HASH_TRANSACTION). Vedi note di consegna.
     columns:
-      - name: DT_RIFERIMENTO
-        data_type: DATE
-      - name: CD_CLIENTE
-        data_type: NUMBER(10,0)
+      
       - name: CD_PRATICA
         data_type: VARCHAR(17)
       - name: CD_PIANO
@@ -20,6 +16,10 @@ models:
       - name: CD_CERTIFICATO
         data_type: NUMBER(8,0)
       - name: PR_TRANSAZIONE
+        data_type: NUMBER(10)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ
+      - name: CD_CLIENTE
         data_type: NUMBER(10,0)
       - name: CD_ACCOUNT
         data_type: VARCHAR(70)
@@ -57,3 +57,7 @@ models:
         data_type: DATE
       - name: EU_MOVIMENTO
         data_type: NUMBER(13,2)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ
+      - name: HASH_TRANSACTION
+        data_type: VARCHAR(32)

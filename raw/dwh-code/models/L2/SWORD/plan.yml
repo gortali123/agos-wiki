@@ -3,23 +3,42 @@ models:
   - name: plan
     config:
       materialized: incremental
-      incremental_strategy: insert_overwrite
+      incremental_strategy: merge
+      unique_key: [CD_PRATICA, CD_PIANO, TS_INIZIO_VALIDITA]
       query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "PLAN"}'
+      post_hook:
+        # Chiusura per assenza (SCD2). CreditLine -> Plans/Plan.
+        - >
+          {{ chiudi_finestre_scd2_sword(
+               source_name='master_data',
+               root_path='OrganisationId/OrganisationReference',
+               levels=[
+                 {'wrapper': 'CreditLines', 'node': 'CreditLine',
+                  'keys': [{'name': 'CD_PRATICA', 'path': 'CreditLineReference', 'type': 'VARCHAR(17)'}]},
+                 {'wrapper': 'Plans', 'node': 'Plan',
+                  'keys': [{'name': 'CD_PIANO', 'path': 'PlanReference', 'type': 'VARCHAR(30)'}]}
+               ]
+             ) }}
     constraints:
       - type: primary_key
-        columns: [CD_PRATICA, CD_PIANO]
+        warn_unenforced: false
+        columns: [CD_PRATICA, CD_PIANO, TS_INIZIO_VALIDITA]
     columns:
-      - name: DT_RIFERIMENTO
-        data_type: DATE
-      - name: CD_CLIENTE
-        data_type: NUMBER(10,0)
       - name: CD_PRATICA
         data_type: VARCHAR(17)
       - name: CD_PIANO
         data_type: VARCHAR(30)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
       - name: TP_VEICOLO
         data_type: VARCHAR(15)
       - name: TP_FACILITY
         data_type: VARCHAR(30)
       - name: PC_FINANZIATO
         data_type: NUMBER(3,0)
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

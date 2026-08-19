@@ -3,22 +3,42 @@ models:
   - name: loan_asset
     config:
       materialized: incremental
-      incremental_strategy: insert_overwrite
+      incremental_strategy: merge
+      unique_key: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO, TS_INIZIO_VALIDITA]
       query_tag: '{"app": "DBT", "schema": "L2_SWORD", "entita": "LOAN_ASSET"}'
+      post_hook:
+        # Chiusura per assenza (SCD2). Chiave su 4 livelli (3 nodi ripetuti):
+        #   CreditLine -> Plans/Plan -> Loans/Loan. Modalita' generale `levels`.
+        - >
+          {{ chiudi_finestre_scd2_sword(
+               source_name='master_data',
+               root_path='OrganisationId/OrganisationReference',
+               levels=[
+                 {'wrapper': 'CreditLines', 'node': 'CreditLine',
+                  'keys': [{'name': 'CD_PRATICA', 'path': 'CreditLineReference', 'type': 'VARCHAR(17)'}]},
+                 {'wrapper': 'Plans', 'node': 'Plan',
+                  'keys': [{'name': 'CD_PIANO', 'path': 'PlanReference', 'type': 'VARCHAR(30)'}]},
+                 {'wrapper': 'Loans', 'node': 'Loan',
+                  'keys': [{'name': 'CD_CERTIFICATO', 'path': 'LoanID', 'type': 'NUMBER(9,0)'}]}
+               ]
+             ) }}
     constraints:
       - type: primary_key
-        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO]
+        warn_unenforced: false
+        columns: [CD_PRATICA, CD_PIANO, CD_CERTIFICATO, TS_INIZIO_VALIDITA]
     columns:
-      - name: DT_RIFERIMENTO
-        data_type: DATE
-      - name: CD_CLIENTE
-        data_type: NUMBER(10,0)
       - name: CD_PRATICA
         data_type: VARCHAR(17)
       - name: CD_PIANO
         data_type: VARCHAR(30)
       - name: CD_CERTIFICATO
         data_type: NUMBER(9,0)
+      - name: TS_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: TS_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: CD_CLIENTE
+        data_type: NUMBER(10,0)
       - name: EU_PURCHASE_PRICE_GROSS
         data_type: NUMBER(13,2)
       - name: EU_PURCHASE_PRICE_NET
@@ -71,3 +91,5 @@ models:
         data_type: VARCHAR(1)
       - name: DT_REGISTRAZIONE_VEIC
         data_type: DATE
+      - name: LASTMODIFIEDDATA
+        data_type: TIMESTAMP_NTZ

@@ -13,10 +13,6 @@ models:
         warn_unenforced: false
         columns: [TP_PROCEDURA, CD_PROTOCOLLO, CD_RIGA, CD_EMETTITORE, DT_INIZIO_VALIDITA]
     columns:
-      - name: DT_INIZIO_VALIDITA
-        data_type: DATE
-      - name: DT_FINE_VALIDITA
-        data_type: DATE
       - name: TP_PROCEDURA
         data_type: VARCHAR(2)
       - name: CD_PRATICA
@@ -27,6 +23,10 @@ models:
         data_type: NUMBER(4)
       - name: CD_EMETTITORE
         data_type: NUMBER(3)
+      - name: DT_INIZIO_VALIDITA
+        data_type: DATE
+      - name: DT_FINE_VALIDITA
+        data_type: DATE
       - name: CD_MACRO_PRODOTTO_1
         data_type: VARCHAR(30)
       - name: CD_MACRO_PRODOTTO_2

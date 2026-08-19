@@ -70,22 +70,74 @@ loans AS (
         l.value AS loan_xml
     FROM loans_wrapper lw_cte,
     {{ flatten_xml('lw_cte.loans_wrapper_xml', 'Loan', 'l', outer=true) }}
+),
+
+-- Proiezione business + watermark (ex SELECT finale del modello insert_overwrite).
+-- DT_RIFERIMENTO rimosso; DT_WFS_LAST_MODIFIED -> watermark LASTMODIFIEDDATA con cast
+-- ::TIMESTAMP_NTZ (NON custom_to_timestamp_ntz: e' gia' DATE/TIMESTAMP -> trappola A).
+-- I campi Arrears sono estratti da stringhe XML grezze (get_xml_path col cast diretto: OK).
+extraction AS (
+    SELECT
+        CD_CREDIT_LINE AS CD_PRATICA,
+        CD_PLAN AS CD_PIANO,
+        {{ get_xml_path('loan_xml', 'LoanID', 'NUMBER(9,0)') }} AS CD_CERTIFICATO,   -- WARN tabella: solo NUMBER, lunghezza da capire
+
+        CD_ORGANISATION AS CD_CLIENTE,
+
+        -- Navigazione profonda dentro il nodo 1:1 Arrears
+        {{ get_xml_path('loan_xml', 'Arrears/ArrearsAmount/Amount', 'NUMBER(13,2)') }} AS EU_CAPITALE_IMPAG,
+        {{ get_xml_path('loan_xml', 'Arrears/ArrearsInterest', 'NUMBER(13,2)') }} AS EU_INTERESSI_IMPAG,
+        {{ get_xml_path('loan_xml', 'Arrears/ArrearsStartDate', 'DATE') }} AS DT_INSOLUTO,
+
+        DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ AS LASTMODIFIEDDATA
+    FROM loans
+    -- Difensivo, OFF: riattivare se lo snapshot puo' avere duplicati per (CD_PRATICA, CD_PIANO, CD_CERTIFICATO)
+    -- nello stesso giorno.
+    -- QUALIFY ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, CD_PIANO, CD_CERTIFICATO ORDER BY DT_WFS_LAST_MODIFIED DESC) = 1
+),
+
+storicizzazione AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        LASTMODIFIEDDATA AS TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO, CD_CERTIFICATO', 'LASTMODIFIEDDATA') }} AS TS_FINE_VALIDITA,   -- qui 'LASTMODIFIEDDATA' (trappola B)
+        CD_CLIENTE,
+        EU_CAPITALE_IMPAG,
+        EU_INTERESSI_IMPAG,
+        DT_INSOLUTO,
+        LASTMODIFIEDDATA
+    FROM extraction
+),
+
+dedup AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        CD_CERTIFICATO,
+        TS_INIZIO_VALIDITA,
+        TS_FINE_VALIDITA,
+        CD_CLIENTE,
+        EU_CAPITALE_IMPAG,
+        EU_INTERESSI_IMPAG,
+        DT_INSOLUTO,
+        LASTMODIFIEDDATA,
+        {{ hash_cols(['CD_PRATICA', 'CD_PIANO', 'CD_CERTIFICATO', 'CD_CLIENTE', 'EU_CAPITALE_IMPAG', 'EU_INTERESSI_IMPAG', 'DT_INSOLUTO']) }} AS HASHED_COLS   -- PK + business, no TS_*, no LASTMODIFIEDDATA
+    FROM storicizzazione
+    {{ is_incremental_S1('CD_PRATICA, CD_PIANO, CD_CERTIFICATO') }}
 )
 
--- Selezione Finale: Estrazione dei campi Arrears dal nodo <Loan>
-SELECT 
-    DT_WFS_LAST_MODIFIED AS DT_RIFERIMENTO,
-    CD_ORGANISATION AS CD_CLIENTE,
-    CD_CREDIT_LINE AS CD_PRATICA,
-    CD_PLAN AS CD_PIANO,
-    
-    -- Riferimento al prestito
-    {{ get_xml_path('loan_xml', 'LoanID', 'NUMBER(9,0)') }} AS CD_CERTIFICATO, -- WARN in table solo NUMBER da capire lunghezza
-    
-    -- Navigazione profonda dentro il nodo 1:1 Arrears
-    {{ get_xml_path('loan_xml', 'Arrears/ArrearsAmount/Amount', 'NUMBER(13,2)') }} AS EU_CAPITALE_IMPAG,
-    {{ get_xml_path('loan_xml', 'Arrears/ArrearsInterest', 'NUMBER(13,2)') }} AS EU_INTERESSI_IMPAG,
-    
-    {{ get_xml_path('loan_xml', 'Arrears/ArrearsStartDate', 'DATE') }} AS DT_INSOLUTO
-
-FROM loans
+-- Selezione Finale: PK -> TS_INIZIO_VALIDITA -> TS_FINE_VALIDITA -> business -> LASTMODIFIEDDATA
+SELECT
+    CD_PRATICA,
+    CD_PIANO,
+    CD_CERTIFICATO,
+    H.TS_INIZIO_VALIDITA,
+    {{ ts_fine_validita('CD_PRATICA, CD_PIANO, CD_CERTIFICATO', 'H.TS_INIZIO_VALIDITA') }} AS TS_FINE_VALIDITA,   -- qui 'H.TS_INIZIO_VALIDITA'
+    CD_CLIENTE,
+    EU_CAPITALE_IMPAG,
+    EU_INTERESSI_IMPAG,
+    DT_INSOLUTO,
+    LASTMODIFIEDDATA
+FROM dedup H

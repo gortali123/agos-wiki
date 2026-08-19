@@ -1,0 +1,7 @@
+version: 2
+sources:
+  - name: L3_MONITORING_PRODUZIONE
+    database: "{{ env_var('DBT_DATABASE') }}"
+    schema: L3_MONITORING_PRODUZIONE
+    tables:
+      - name: dm_config_running_o

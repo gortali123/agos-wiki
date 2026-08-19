@@ -1,0 +1,46 @@
+version: 2
+models:
+  - name: bdgt_prod
+    config:
+      alias: BUDGET_PROD
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_BUDGET", "entita": "BUDGET_PROD"}'
+
+    columns:
+      - name: TP_BUDGET
+        data_type: VARCHAR(10)
+      - name: DT_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: DT_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: NM_ANNO
+        data_type: NUMBER(4,0)
+      - name: NM_MESE
+        data_type: NUMBER(2,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(10)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(50)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(50)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(50)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(50)
+      - name: EU_BDG_FINANZ
+        data_type: NUMBER(38,2)
+      - name: NM_BDG_IRR
+        data_type: NUMBER(38,6)
+      - name: NM_BDG_DURATA
+        data_type: NUMBER(38,6)
+      - name: EU_FTP
+        data_type: NUMBER(38,2)
+      - name: NM_TAN
+        data_type: NUMBER(38,6)
+      - name: NM_BDG_PRAT_DECORSE
+        data_type: NUMBER(38,0)
+      - name: EU_BDG_NPV
+        data_type: NUMBER(38,2)
+      - name: EU_BDG_NPV_ASSIC
+        data_type: NUMBER(38,2)

@@ -51,7 +51,7 @@ WITH perimetro AS (
         AND  {{ custom_is_not_null('T.PSVT_BLOCCO') }}
         AND T.PSVT_AZIONE IN ('RID', 'RIF')
         AND T.PSVT_ORIGINE_RICHIESTA = 'FLE'
-        AND {{ custom_is_null('P.PLPSDAIF_DATA_REG') }}
+        AND P.PLPSDAIF_DATA_REG IS NULL OR P.PLPSDAIF_DATA_REG = 0
 )
 
 SELECT

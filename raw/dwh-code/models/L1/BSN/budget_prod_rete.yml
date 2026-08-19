@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: budget_prod_rete
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B2"]
+      query_tag: '{"app":"DBT", "sorgente":"BSN", "schema":"L1_E_BSN", "archivio":"BUDGET_PROD_RETE"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: tp_budget
+        data_type: VARCHAR(10)
+      - name: dt_inizio_validita
+        data_type: TIMESTAMP
+      - name: dt_fine_validita
+        data_type: TIMESTAMP
+      - name: nm_anno
+        data_type: NUMBER(4)
+      - name: nm_mese
+        data_type: NUMBER(2)
+      - name: tp_procedura
+        data_type: VARCHAR(10)
+      - name: cd_ger_territoriale_1
+        data_type: VARCHAR(50)
+      - name: cd_ger_territoriale_2
+        data_type: VARCHAR(50)
+      - name: cd_mercato_1
+        data_type: VARCHAR(50)
+      - name: cd_mercato_2
+        data_type: VARCHAR(50)
+      - name: cd_mercato_3
+        data_type: VARCHAR(50)
+      - name: cd_mercato_4
+        data_type: VARCHAR(50)
+      - name: eu_bdg_finanz
+        data_type: NUMBER(38,2)
+      - name: nm_bdg_irr
+        data_type: NUMBER(38,6)
+      - name: nm_bdg_durata
+        data_type: NUMBER(38,6)
+      - name: eu_ftp
+        data_type: NUMBER(38,2)
+      - name: nm_tan
+        data_type: NUMBER(38,6)
+      - name: nm_bdg_prat_decorse
+        data_type: NUMBER(38,6)
+      - name: eu_bdg_npv
+        data_type: NUMBER(38,2)
+      - name: eu_bdg_npv_assic
+        data_type: NUMBER(38,2)

@@ -1,0 +1,46 @@
+version: 2
+models:
+  - name: bdgt_estinzioni_ant_filiale
+    config:
+      alias: BUDGET_ESTINZIONI_ANT_FILIALE
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      query_tag: '{"app": "DBT", "schema": "L2_BUDGET", "entita": "BUDGET_ESTINZIONI_ANT_FILIALE"}'
+
+    columns:
+      - name: TP_BUDGET
+        data_type: VARCHAR(10)
+      - name: DT_INIZIO_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: DT_FINE_VALIDITA
+        data_type: TIMESTAMP_NTZ
+      - name: NM_ANNO
+        data_type: NUMBER(4,0)
+      - name: NM_MESE
+        data_type: NUMBER(2,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(10)
+      - name: CD_GER_TERRITORIALE_1
+        data_type: VARCHAR(50)
+      - name: CD_GER_TERRITORIALE_2
+        data_type: VARCHAR(50)
+      - name: CD_GER_TERRITORIALE_3
+        data_type: VARCHAR(50)
+      - name: CD_GER_TERRITORIALE_4
+        data_type: VARCHAR(50)
+      - name: CD_NODO_FOGLIA
+        data_type: VARCHAR(50)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(50)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(50)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(50)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(50)
+      - name: EU_BDG_EST_ANT_TOT
+        data_type: NUMBER(38,2)
+      - name: EU_BDG_EST_ANT_ESTERNE
+        data_type: NUMBER(38,2)
+      - name: PC_BDG_EST_ANT_ESTERN_SU_IMPIEG
+        data_type: NUMBER(38,6)

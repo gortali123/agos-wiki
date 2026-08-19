@@ -54,10 +54,4 @@ SELECT
     {{ custom_to_decimal('ef.EF_IMP_SPESE', 11, 2) }} AS EU_QUOTA_SPESE,
     {{ custom_to_decimal('ef.EF_IMP_ALTRI', 11, 2) }} AS EU_QUOTA_ALTRI
 FROM {{ ref('gaefarc') }} ef
-{#
-LEFT JOIN {{ref('efexfincde') }} sp
-    ON ef.EF_RECUPERATORE = sp.EFEXCDE_RECUPERATORE
-    AND ef.EF_RAPPORTINO = sp.EFEXCDE_RAPPORTINO
-    AND ef.EF_PROG_INC_RAP = sp.EFEXCDE_PROGR_INC
-#}
 WHERE ef.FL_DELETED = 'N'

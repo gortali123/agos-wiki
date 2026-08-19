@@ -46,18 +46,65 @@ plans AS (
         p.value AS plan_xml
     FROM plans_wrapper pw_cte,
     {{ flatten_xml('pw_cte.plans_wrapper_xml', 'Plan', 'p', outer=true) }}
+),
+
+
+-- Proiezione business + watermark (ex SELECT finale insert_overwrite).
+-- DT_RIFERIMENTO rimosso; watermark = DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ (trappola A).
+extraction AS (
+    SELECT
+        CD_CREDIT_LINE AS CD_PRATICA,
+        {{ get_xml_path('plan_xml', 'PlanReference', 'VARCHAR(30)') }} AS CD_PIANO,
+
+        CD_ORGANISATION AS CD_CLIENTE,
+        {{ get_xml_path('plan_xml', 'PlanAssetType', 'VARCHAR(15)') }} AS TP_VEICOLO,
+        {{ get_xml_path('plan_xml', 'PlanFacility', 'VARCHAR(30)') }} AS TP_FACILITY,
+        {{ get_xml_path('plan_xml', 'PercentageFunding', 'NUMBER(3,0)') }} AS PC_FINANZIATO,   -- WARN tabella: solo NUMBER
+
+        DT_WFS_LAST_MODIFIED::TIMESTAMP_NTZ AS LASTMODIFIEDDATA
+    FROM plans
+    -- QUALIFY ROW_NUMBER() OVER (PARTITION BY CD_PRATICA, CD_PIANO ORDER BY DT_WFS_LAST_MODIFIED DESC) = 1  -- difensivo, off
+),
+
+storicizzazione AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        LASTMODIFIEDDATA AS TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO', 'LASTMODIFIEDDATA') }} AS TS_FINE_VALIDITA,   -- 'LASTMODIFIEDDATA' (trappola B)
+        CD_CLIENTE,
+        TP_VEICOLO,
+        TP_FACILITY,
+        PC_FINANZIATO,
+        LASTMODIFIEDDATA
+    FROM extraction
+),
+
+dedup AS (
+    SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        TS_INIZIO_VALIDITA,
+        TS_FINE_VALIDITA,
+        CD_CLIENTE,
+        TP_VEICOLO,
+        TP_FACILITY,
+        PC_FINANZIATO,
+        LASTMODIFIEDDATA,
+        {{ hash_cols(['CD_PRATICA', 'CD_PIANO', 'CD_CLIENTE', 'TP_VEICOLO', 'TP_FACILITY', 'PC_FINANZIATO']) }} AS HASHED_COLS
+    FROM storicizzazione
+    {{ is_incremental_S1('CD_PRATICA, CD_PIANO') }}
 )
 
--- Selezione Finale: Estrazione dei campi mappati dall'Excel
-SELECT 
-    DT_WFS_LAST_MODIFIED AS DT_RIFERIMENTO,
-    CD_ORGANISATION AS CD_CLIENTE,
-    CD_CREDIT_LINE AS CD_PRATICA,
-    
-    -- Campi diretti sotto il nodo Plan
-    {{ get_xml_path('plan_xml', 'PlanReference', 'VARCHAR(30)') }} AS CD_PIANO,
-    {{ get_xml_path('plan_xml', 'PlanAssetType', 'VARCHAR(15)') }} AS TP_VEICOLO,
-    {{ get_xml_path('plan_xml', 'PlanFacility', 'VARCHAR(30)') }} AS TP_FACILITY,
-    {{ get_xml_path('plan_xml', 'PercentageFunding', 'NUMBER(3,0)') }} AS PC_FINANZIATO -- WARN in table solo NUMBER
-
-FROM plans
+-- Selezione Finale: PK -> TS_INIZIO_VALIDITA -> TS_FINE_VALIDITA -> business -> LASTMODIFIEDDATA
+SELECT
+        CD_PRATICA,
+        CD_PIANO,
+        H.TS_INIZIO_VALIDITA,
+        {{ ts_fine_validita('CD_PRATICA, CD_PIANO', 'H.TS_INIZIO_VALIDITA') }} AS TS_FINE_VALIDITA,   -- 'H.TS_INIZIO_VALIDITA'
+        CD_CLIENTE,
+        TP_VEICOLO,
+        TP_FACILITY,
+        PC_FINANZIATO,
+        LASTMODIFIEDDATA
+FROM dedup H

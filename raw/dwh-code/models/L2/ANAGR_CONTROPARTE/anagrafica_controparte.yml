@@ -295,9 +295,9 @@ models:
         data_type: VARCHAR(30)
       - name: NM_TELEFONO_DATORE_LAVORO
         data_type: VARCHAR(15)
-      - name: FL_INDIRIZZO_NORMALIZZATO_DATORE_LAVORO
+      - name: FL_IND_NORM_DATORE_LAV
         data_type: VARCHAR(1)
-      - name: FL_INDIRIZZO_FORZATO_DATORE_LAVORO
+      - name: FL_IND_FORZ_DATORE_LAV
         data_type: VARCHAR(1)
       - name: DS_FAX_DATORE_LAVORO
         data_type: VARCHAR(15)
@@ -395,35 +395,35 @@ models:
         data_type: NUMBER(9,0)
       - name: DS_NOME_LEGALE_RAPPRESENTANTE
         data_type: VARCHAR(30)
-      - name: DS_INDIRIZZO_LEGALE_RAPPRESENTANTE
+      - name: DS_IND_LEGALE_RAPPR
         data_type: VARCHAR(30)
       - name: DS_PRESSO_LEGALE_RAPPRESENTANTE
         data_type: VARCHAR(30)
       - name: CD_CAP_LEGALE_RAPPRESENTANTE
         data_type: NUMBER(5,0)
-      - name: DS_FRAZIONE_LEGALE_RAPPRESENTANTE
+      - name: DS_FRAZ_LEG_RAPPR
         data_type: VARCHAR(30)
       - name: DS_COMUNE_LEGALE_RAPPRESENTANTE
         data_type: VARCHAR(24)
-      - name: CD_PROVINCIA_LEGALE_RAPPRESENTANTE
+      - name: CD_PROV_LEG_RAPPR
         data_type: VARCHAR(2)
-      - name: DS_PROVINCIA_LEGALE_RAPPRESENTANTE
+      - name: DS_PROV_LEG_RAPPR
         data_type: VARCHAR(30)
       - name: DT_NASCITA_LEGALE_RAPPRESENTANTE
         data_type: DATE
-      - name: DS_LOUGO_NASCITA_LEGALE_RAPPRESENTANTE
+      - name: DS_LOUGO_NASC_LEG_RAPPR
         data_type: VARCHAR(30)
-      - name: CD_PROVINCIA_NASCITA_LEGALE_RAPPRESENTANTE
+      - name: CD_PROV_NASC_LEG_RAPPR
         data_type: VARCHAR(2)
-      - name: DS_PROVINCIA_NASCITA_LEGALE_RAPPRESENTANTE
+      - name: DS_PROV_NASC_LEG_RAPPR
         data_type: VARCHAR(30)
-      - name: CD_NAZIONE_NASCITA_LEGALE_RAPPRESENTANTE
+      - name: CD_NAZ_NASC_LEG_RAPPR
         data_type: VARCHAR(3)
-      - name: DS_NAZIONE_NASCITA_LEGALE_RAPPRESENTANTE
+      - name: DS_NAZ_NASC_LEG_RAPPR
         data_type: VARCHAR(30)
-      - name: CD_CITTADINANZA_LEGALE_RAPPRESENTANTE
+      - name: CD_CITTAD_LEG_RAPPR
         data_type: VARCHAR(3)
-      - name: DS_CITTADINANZA_LEGALE_RAPPRESENTANTE
+      - name: DS_CITTAD_LEG_RAPPR
         data_type: VARCHAR(30)
       - name: CD_CAUSALE_ANNULLO
         data_type: VARCHAR(3)
