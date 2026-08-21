@@ -13,21 +13,22 @@
       - *.yml, *.py, *.md, *.ps1 a livello radice della repo sorgente
       - models/L2, models/L3                    -> intere cartelle (mirror)
       - models/L0/<tutte le sorgenti tranne OCS> -> intere cartelle (mirror, enumerate dinamicamente)
-      - models/L0/OCS/<tutti i moduli>          -> struttura di cartelle (nomi, incluso nesting), senza file;
-                                                    per AIN e CH1 anche i file (mirror completo, sample)
+      - models/L0/OCS/<tutti i moduli>          -> struttura di cartelle (nomi, incluso nesting, es.
+                                                    AIN/AIN, AIN/XAI); per ogni cartella foglia con file,
+                                                    un solo sample (una coppia .sql+.yml)
       - models/L1/<tutte le sorgenti tranne OCS> -> intere cartelle (mirror, enumerate dinamicamente)
-      - models/L1/OCS/<tutti i moduli>          -> struttura di cartelle (nomi, incluso nesting), senza file;
-                                                    per AIN e CH1 anche i file (mirror completo, sample)
+      - models/L1/OCS/<tutti i moduli>          -> come sopra: struttura completa + un sample per cartella
       - snapshots/L1/<tutte le sorgenti tranne OCS> -> intere cartelle (mirror, enumerate dinamicamente)
-      - snapshots/L1/OCS/<tutti i moduli>       -> struttura di cartelle (nomi, incluso nesting), senza file;
-                                                    per AIN e CH1 anche i file (mirror completo, sample)
+      - snapshots/L1/OCS/<tutti i moduli>       -> come sopra: struttura completa + un sample per cartella
 
     Usa robocopy /MIR per le cartelle intere, cosi' facendo rimuove anche i file
-    cancellati a monte nel sottoinsieme sincronizzato. Per i moduli OCS diversi da
-    AIN/CH1 usa robocopy /MIR /XF per portare solo l'albero di sottocartelle (utile
-    ai fini di config in dbt_project.yml) senza vendorizzare i file di ogni modulo.
-    Non tocca nient'altro nella destinazione (es. non tocca altre sottocartelle di
-    models/L0, models/L1, snapshots/L1 che non fanno parte del campione scelto).
+    cancellati a monte nel sottoinsieme sincronizzato. Per OCS usa prima robocopy
+    /MIR /XF per portare solo l'albero di sottocartelle (utile ai fini di config in
+    dbt_project.yml, che ha bisogno dei nomi reali di ogni sottomodulo), poi copia
+    un solo file .sql e un solo file .yml di sample per ciascuna cartella foglia
+    che ne contiene, per tutti i moduli incluso AIN. Non tocca nient'altro nella
+    destinazione (es. non tocca altre sottocartelle di models/L0, models/L1,
+    snapshots/L1 che non fanno parte del campione scelto).
 #>
 
 [CmdletBinding()]
@@ -89,23 +90,53 @@ function Mirror-FolderStructureOnly {
     }
 }
 
+function Copy-SampleFilePair {
+    param([string]$SrcDir, [string]$DstDir)
+
+    $sampleBase = Get-ChildItem -Path $SrcDir -File |
+        Where-Object { $_.Extension -in @(".sql", ".yml") } |
+        Select-Object -ExpandProperty BaseName -Unique |
+        Sort-Object |
+        Select-Object -First 1
+
+    if (-not $sampleBase) { return }
+
+    if (-not $WhatIf -and -not (Test-Path $DstDir)) {
+        New-Item -ItemType Directory -Path $DstDir -Force | Out-Null
+    }
+
+    foreach ($ext in @(".sql", ".yml")) {
+        $f = Join-Path $SrcDir "$sampleBase$ext"
+        if (Test-Path $f) {
+            Write-Host "Copia sample: $f"
+            if (-not $WhatIf) {
+                Copy-Item -Path $f -Destination (Join-Path $DstDir "$sampleBase$ext") -Force
+            }
+        }
+    }
+}
+
 function Mirror-OcsModules {
     param([string]$OcsRelativePath)
 
     $ocsSource = Join-Path $Source $OcsRelativePath
+    $ocsDest = Join-Path $Dest $OcsRelativePath
+
     if (-not (Test-Path $ocsSource)) {
         Write-Warning "Skip (non trovato in sorgente): $OcsRelativePath"
         return
     }
 
-    Get-ChildItem -Path $ocsSource -Directory | ForEach-Object {
-        $moduleRelativePath = "$OcsRelativePath\$($_.Name)"
-        if ($_.Name -in @("AIN", "CH1")) {
-            Mirror-Folder $moduleRelativePath
-        } else {
-            Mirror-FolderStructureOnly $moduleRelativePath
-        }
+    # Porta l'intera struttura di sottocartelle (incluso il nesting, es. AIN/AIN, AIN/XAI), senza file
+    Mirror-FolderStructureOnly $OcsRelativePath
+
+    # Per ogni cartella (modulo o sua sottocartella) che contiene file, copia un solo sample .sql+.yml
+    Get-ChildItem -Path $ocsSource -Recurse -Directory -ErrorAction SilentlyContinue | ForEach-Object {
+        $relDir = $_.FullName.Substring($ocsSource.Length).TrimStart('\')
+        $dstDir = if ($relDir) { Join-Path $ocsDest $relDir } else { $ocsDest }
+        Copy-SampleFilePair -SrcDir $_.FullName -DstDir $dstDir
     }
+    Copy-SampleFilePair -SrcDir $ocsSource -DstDir $ocsDest
 }
 
 function Copy-RootFilesByExtension {
