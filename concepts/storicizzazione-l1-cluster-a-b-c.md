@@ -2,7 +2,7 @@
 title: "Storicizzazione L1: cluster A, B, C"
 type: concept
 tags: [layer/L1, storicizzazione]
-updated: 2026-07-14
+updated: 2026-08-19
 ---
 
 Classificazione degli archivi L1 secondo la modalità di storicizzazione, definita nella tabella tecnica `TECH.CFG_L1_CLUSTER_STO` e descritta in [[caricamento-layer-l0-l1]].
@@ -10,7 +10,7 @@ Classificazione degli archivi L1 secondo la modalità di storicizzazione, defini
 - **Cluster A**: delta giornaliero, quasi solo insert (rari update puntuali per bonifiche) → materializzazione incrementale `merge`. Sotto-varianti osservate nel codice: **A1**, **A2** (es. `meta.cluster` nei modelli L1 OCS). A2 aggiunge `fl_deleted`/`ts_deleted` via post-hook `logic_delete_merge()`.
 - **Cluster B**: fotografia completa ogni giorno → `TRUNCATE/INSERT`, materializzazione incrementale `insert_overwrite`. Nessuna storicizzazione necessaria per natura del caricamento. Confermato in `TECH.CFG_L1_CLUSTER_STO` (vedi [[cfg-l1-schema-e-cluster-sto]]) che esiste una sotto-variante **B1/B2** analoga ad A1/A2 (85+14 archivi), non ulteriormente dettagliata nei tre documenti raw.
 - **Cluster C**: richiede vera storicizzazione SCD2. Implementato con **snapshot DBT strategy `timestamp`** più un modello `ephemeral` intermedio di tipizzazione (`stg_<modello>.sql`) a monte dello snapshot. Post-hook `logic_delete_scd2()` per le cancellazioni.
-- **Cluster D**: non descritto nei tre documenti raw, ma presente nel codice (`generate_yaml.sql` genera per D: incremental+append con pre_hook `delete_month(get_dt_osservazione('ts_riferimento'))`, aggiunge colonna `dt_osservazione`) — corrisponde ad archivi con fotografie mensili aggiuntive. Vedi [[inconsistenze]].
+- **Cluster D** (ora documentato in [[caricamento-layer-l0-l1]], sezione aggiunta 2026-08-19): archivi a cadenza periodica non giornaliera (mensile di default, o settimanale). `generate_yaml` genera per D: incremental+append con pre_hook `delete_dt_osservazione(column='DT_OSSERVAZIONE', schedule='monthly'|'weekly')`, colonna `DT_OSSERVAZIONE` derivata in SELECT via `compute_dt_osservazione(column, schedule)`. Esempio reale: `L1/POSTE/mailc_esiti_tgb.yml` con `schedule='weekly'` su `DT_ACCETTAZIONE`. Verificato riga per riga contro `raw/dwh-code/macros/materialization/get_dt_osservazione.sql`/`compute_dt_osservazione.sql`/`delete_dt_osservazione.sql` — nessuna incongruenza residua con la doc.
 - **TBD**: stato osservato in `TECH.CFG_L1_CLUSTER_STO` (55 archivi, vedi [[cfg-l1-schema-e-cluster-sto]]) per archivi non ancora classificati in un cluster — concentrato su BSN, SAP, PRIMEWEB, DIL, SWORD, BANCO; nessun archivio OCS risulta TBD.
 
 ## Campi tecnici L1 per cluster

@@ -2,7 +2,7 @@
 title: Caricamento layer L2
 type: source
 tags: [layer/L2, layer/L3, source/docx]
-updated: 2026-07-14
+updated: 2026-08-19
 ---
 
 Sintesi di `raw/Agos X - Caricamento layer L2.docx` ("Agos X – Processo di Loading", parte 2). Descrive l'integrazione Snowflake L1→L2/L3 dove avviene la modellazione delle entità di business.
@@ -37,9 +37,9 @@ Regola d'ordine colonne: campi di storicizzazione subito dopo la PK funzionale, 
 ## Gestione duplicazioni di chiave (PROGRESSIVO_PK)
 
 Quando un archivio L1 ha PK non univoca (es. `CCANALOG`), si distingue tra:
-- record duplicati con stesso contenuto → solo uno viene portato in L2 (hash su righe consecutive della stessa controparte);
-- record duplicati con contenuto diverso → si aggiunge `PROGRESSIVO_PK`, calcolato partizionando per chiave e ordinando su `ROWID`.
-- Solo per `VARIAZIONI_ANAGRAFICHE` esiste anche `PROGRESSIVO_CONTROPARTE`, partizionato su `AL_CODICE` e ordinato su `ROWID`.
+- record duplicati con stesso contenuto → solo uno viene portato in L2. **Aggiornamento 2026-08-03**: la doc ora precisa che l'hash considera **tutti** i campi portati da L1 a L2 (non solo "i restanti"), su righe consecutive della stessa controparte;
+- record duplicati con contenuto diverso → si aggiunge `PROGRESSIVO_PK` (rinominato `PR_PK` nel codice, vedi [[progressivo-pk-e-progressivo-controparte]]), calcolato partizionando per chiave e ordinando su `ROWID`.
+- **Rimosso 2026-08-03**: il paragrafo dedicato a `PROGRESSIVO_CONTROPARTE` (caso speciale `VARIAZIONI_ANAGRAFICHE`) non è più presente in questa versione della docx — il campo esiste tuttora nel codice come `PR_CONTROPARTE` (vedi [[l2-anagr-controparte]], [[progressivo-pk-e-progressivo-controparte]]), quindi si tratta di una semplificazione del testo, non di una rimozione funzionale.
 
 Vedi [[progressivo-pk-e-progressivo-controparte]].
 
@@ -57,13 +57,14 @@ Due step: filtro in lettura (`FL_DELETED = Y` escluso) + cancellazione fisica po
 ## Data quality e log
 
 - Test DBT nativi (`not_null`, `unique`, `accepted_values`, `relationships`), test generici custom in `tests/generic/`, eventuali pacchetti esterni (`dbt-utils`).
-- Viste di consultazione in schema `LOGS`: `V_L2_DBT_RUN_MODELS`, `V_L2_TEST`, `V_L2_TEST_RESULTS` (quest'ultima segnalata come da completare in fase progettuale dedicata).
+- **Log — sezione non aggiornata (gap confermato 2026-08-19)**: il documento descrive ancora il pacchetto `dbt_artifacts` (`dbt_artifacts.upload_results(results)` come hook `on-run-end`, tabelle `DBT_ARTIFACTS.MODELS/TESTS/SNAPSHOTS/*_EXECUTIONS`) e tre viste `LOGS.V_L2_DBT_RUN_MODELS`/`V_L2_TEST`/`V_L2_TEST_RESULTS`. Il codice reale (`raw/dwh-code/macros/log/log_run_results.sql`, unico hook `on-run-end` per l'intero progetto, non solo L2) scrive invece in `LOGS.EVENT_LOG` tramite la stored procedure `LOG_DBT` — stesso meccanismo già documentato correttamente in [[caricamento-layer-l0-l1]] (viste `V_EVENT_LOG`/`DT_EVENT_LOG`/`V_LAST_RUN_STATUS`). Nessuna occorrenza di `dbt_artifacts` in `raw/dwh-code/`. Vedi [[inconsistenze]] (voce 8).
 
 ## Note di staleness
 
 - Rimanda a un documento esterno non vendorizzato: `Agos X - Linee_Guida_Layer_L2_Storicizzazione_20260304.pptx`.
 - Sezione data quality segnalata come non definitiva ("Ulteriori dettagli saranno integrati durante la fase progettuale dedicata alla data quality").
-- Letto e verificato contro `raw/dwh-code/` in data 2026-07-14 — vedi [[inconsistenze]].
+- Sezione "Raccolta dei log" (fine documento) obsoleta rispetto al codice — vedi sopra.
+- Letto e riverificato per intero contro `raw/dwh-code/` il 2026-08-19 — vedi [[inconsistenze]].
 
 ## Collegamenti
 

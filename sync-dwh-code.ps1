@@ -13,16 +13,21 @@
       - *.yml, *.py, *.md, *.ps1 a livello radice della repo sorgente
       - models/L2, models/L3                    -> intere cartelle (mirror)
       - models/L0/<tutte le sorgenti tranne OCS> -> intere cartelle (mirror, enumerate dinamicamente)
-      - models/L0/OCS/AIN                       -> intera cartella (mirror, sample)
+      - models/L0/OCS/<tutti i moduli>          -> struttura di cartelle (nomi, incluso nesting), senza file;
+                                                    per AIN e CH1 anche i file (mirror completo, sample)
       - models/L1/<tutte le sorgenti tranne OCS> -> intere cartelle (mirror, enumerate dinamicamente)
-      - models/L1/OCS/AIN                       -> intera cartella (mirror, sample)
+      - models/L1/OCS/<tutti i moduli>          -> struttura di cartelle (nomi, incluso nesting), senza file;
+                                                    per AIN e CH1 anche i file (mirror completo, sample)
       - snapshots/L1/<tutte le sorgenti tranne OCS> -> intere cartelle (mirror, enumerate dinamicamente)
-      - snapshots/L1/OCS/AIN                    -> intera cartella (mirror, sample)
+      - snapshots/L1/OCS/<tutti i moduli>       -> struttura di cartelle (nomi, incluso nesting), senza file;
+                                                    per AIN e CH1 anche i file (mirror completo, sample)
 
     Usa robocopy /MIR per le cartelle intere, cosi' facendo rimuove anche i file
-    cancellati a monte nel sottoinsieme sincronizzato. Non tocca nient'altro nella
-    destinazione (es. non tocca altre sottocartelle di models/L0, models/L1, snapshots/L1
-    che non fanno parte del campione scelto).
+    cancellati a monte nel sottoinsieme sincronizzato. Per i moduli OCS diversi da
+    AIN/CH1 usa robocopy /MIR /XF per portare solo l'albero di sottocartelle (utile
+    ai fini di config in dbt_project.yml) senza vendorizzare i file di ogni modulo.
+    Non tocca nient'altro nella destinazione (es. non tocca altre sottocartelle di
+    models/L0, models/L1, snapshots/L1 che non fanno parte del campione scelto).
 #>
 
 [CmdletBinding()]
@@ -63,6 +68,46 @@ function Mirror-Folder {
     }
 }
 
+function Mirror-FolderStructureOnly {
+    param([string]$RelativePath)
+
+    $src = Join-Path $Source $RelativePath
+    $dst = Join-Path $Dest $RelativePath
+
+    if (-not (Test-Path $src)) {
+        Write-Warning "Skip (non trovato in sorgente): $RelativePath"
+        return
+    }
+
+    Write-Host "Mirror (solo struttura cartelle, no file): $RelativePath"
+    $robocopyArgs = @($src, $dst, "/MIR", "/XF", "*.*", "/NFL", "/NDL", "/NJH", "/NJS", "/NP")
+    if ($WhatIf) { $robocopyArgs += "/L" }
+
+    robocopy @robocopyArgs | Out-Null
+    if ($LASTEXITCODE -ge 8) {
+        throw "robocopy ha fallito su '$RelativePath' (exit code $LASTEXITCODE)"
+    }
+}
+
+function Mirror-OcsModules {
+    param([string]$OcsRelativePath)
+
+    $ocsSource = Join-Path $Source $OcsRelativePath
+    if (-not (Test-Path $ocsSource)) {
+        Write-Warning "Skip (non trovato in sorgente): $OcsRelativePath"
+        return
+    }
+
+    Get-ChildItem -Path $ocsSource -Directory | ForEach-Object {
+        $moduleRelativePath = "$OcsRelativePath\$($_.Name)"
+        if ($_.Name -in @("AIN", "CH1")) {
+            Mirror-Folder $moduleRelativePath
+        } else {
+            Mirror-FolderStructureOnly $moduleRelativePath
+        }
+    }
+}
+
 function Copy-RootFilesByExtension {
     param([string[]]$Extensions)
 
@@ -97,8 +142,7 @@ $L0Source = Join-Path $Source "models\L0"
 if (Test-Path $L0Source) {
     Get-ChildItem -Path $L0Source -Directory | ForEach-Object {
         if ($_.Name -eq "OCS") {
-            Mirror-Folder "models\L0\OCS\AIN"
-            Mirror-Folder "models\L0\OCS\CH1"
+            Mirror-OcsModules "models\L0\OCS"
         } else {
             Mirror-Folder "models\L0\$($_.Name)"
         }
@@ -112,8 +156,7 @@ $L1Source = Join-Path $Source "models\L1"
 if (Test-Path $L1Source) {
     Get-ChildItem -Path $L1Source -Directory | ForEach-Object {
         if ($_.Name -eq "OCS") {
-            Mirror-Folder "models\L1\OCS\AIN"
-            Mirror-Folder "models\L1\OCS\CH1"
+            Mirror-OcsModules "models\L1\OCS"
         } else {
             Mirror-Folder "models\L1\$($_.Name)"
         }
@@ -127,8 +170,7 @@ $SnapshotsSource = Join-Path $Source "snapshots\L1"
 if (Test-Path $SnapshotsSource) {
     Get-ChildItem -Path $SnapshotsSource -Directory | ForEach-Object {
         if ($_.Name -eq "OCS") {
-            Mirror-Folder "snapshots\L1\OCS\AIN"
-            Mirror-Folder "snapshots\L1\OCS\CH1"
+            Mirror-OcsModules "snapshots\L1\OCS"
         } else {
             Mirror-Folder "snapshots\L1\$($_.Name)"
         }

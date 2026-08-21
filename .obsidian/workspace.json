@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "queries/proposta-testo-test-l1-ocs.md",
+                "file": "queries/inconsistenze.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "proposta-testo-test-l1-ocs"
+              "title": "inconsistenze"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -185,22 +187,27 @@
   },
   "active": "3b79670d107d39b6",
   "lastOpenFiles": [
-    "log.md.tmp.3492.6babb7de07eb",
-    "develop/macros/generate_schema_name.sql.tmp.3492.77ca8b389045",
-    "log.md.tmp.3492.6121ae99737e",
-    "index.md.tmp.3492.b9c918ce29d3",
-    "index.md.tmp.3492.195af66d0596",
-    "develop/macros/generate_models/generate_model.sql",
-    "develop/macros/generate_models/generate_model.sql.tmp.3492.f8f6e323541b",
-    "develop/macros/generate_models",
-    "develop/models/L1/POSTE/mailc_esiti_tgb.sql.tmp.3492.f73bfcc09be2",
-    "log.md.tmp.3492.59cfbd080140",
-    "index.md.tmp.3492.85ebf3c0d2b0",
+    "raw/~$DataQuality_analisi_v1.xlsx",
+    "raw/dwh-code/models/L2/PAGAMENTI_CONTABILITA/operazioni_cambiale.yml",
+    "raw/dwh-code/models/L2/PAGAMENTI_CONTABILITA/operazioni_cambiale.sql",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/sessioni.yml",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/sessioni.sql",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/form.yml",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/form.sql",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/ana_versioni_form.yml",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/ana_versioni_form.sql",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/ana_campagne_tig.yml",
+    "raw/dwh-code/models/L2/FORM_E_PREVENTIVATORI/ana_campagne_tig.sql",
+    "queries/proposta-testo-mensili-l2-l3.md",
+    "queries/proposta-testo-null-placeholder-l2.md",
+    "queries/proposta-testo-mensili-l0-l1.md",
+    "queries/proposta-testo-varchar-vuoti-l0-l1.md",
+    "queries/inconsistenze.md",
+    "queries/proposta-testo-placeholder-dollari-l2.md",
+    "queries/proposta-testo-test-l1-ocs.md",
     "queries/proposta-testo-log-l1.md",
     "queries/proposta-testo-job-l1.md",
     "queries/proposta-testo-generazione-modelli-l1.md",
-    "queries/proposta-testo-test-l1-ocs.md",
-    "queries/inconsistenze.md",
     "queries/null-vs-placeholder-ocs.md",
     "sources/cfg-l1-schema-e-cluster-sto.md",
     "CLAUDE.md",
@@ -216,11 +223,6 @@
     "entities/l2-carte.md",
     "entities/l2-assicurazioni.md",
     "entities/l2-antifrode.md",
-    "entities/l2-anagr-controparte.md",
-    "entities/layer-l3.md",
-    "entities/layer-l2.md",
-    "entities/layer-l1.md",
-    "entities/layer-l0.md",
     "Untitled 2.canvas",
     "Untitled 1.canvas",
     "Untitled.canvas"

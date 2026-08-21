@@ -2,7 +2,7 @@
 title: "NULL vs placeholder OCS (' ') in L2/L3: interventi secondo guida sviluppo"
 type: query
 tags: [layer/L1, layer/L2, layer/L3, ocs, data-quality]
-updated: 2026-07-20
+updated: 2026-08-03
 ---
 
 Regole ufficiali (guida sviluppo, sez. 5.5 "Gestione campi varchar vuoti OCS"):
@@ -13,39 +13,20 @@ Regole ufficiali (guida sviluppo, sez. 5.5 "Gestione campi varchar vuoti OCS"):
 
 **Unica eccezione nota**: archivio `BACCPTES`, dove `' '` significa "Poste Italiane" (non un NULL). Non referenziata in nessun modello L2/L3 vendorizzato, quindi nessuna eccezione attiva oggi. La guida non ne cita altre.
 
-## Da fare
+## Da fare (rivalutato 2026-08-03 contro codice reale — la maggior parte dei punti aperti nel giro precedente è stata migrata upstream)
 
-### IS NULL da sostituire con `custom_is_null()`
+### IS NULL/COALESCE ancora aperti
 
-| Macro area         | Tabella                             | Righe | Campo                                        |
-| ------------------ | ----------------------------------- | ----- | -------------------------------------------- |
-| RISCHI_ADEMPIMENTI | `svalutazioni_m.sql`                | 47    | SVCRSC_COD_TRANSAZIONE                       |
-| RISCHI_ADEMPIMENTI | `flessibilita_m.sql`                | 51    | PSVT_BLOCCO                                  |
-| GESTIONE_CREDITI   | `perdite_minime_abb.sql`            | 43    | PSVT_BLOCCO                                  |
-| PRODOTTO           | `carta.sql`                         | 73-74 | CEMPR_INVIO_EC_MAIL, CEMPR_INVIO_EC_INTERNET |
-| PRODOTTO_M         | `carta_m.sql`                       | 70-71 | CEMPR_INVIO_EC_MAIL, CEMPR_INVIO_EC_INTERNET |
-| CARTE              | `carte_utilizzi.sql`                | 143   | CRVOC_CODICE_CAMP                            |
-| CARTE              | `carte_utilizzi.sql`                | 191   | CRVOC_CONTR_DEALER                           |
-| PRODOTTO           | `pratica.sql`                       | 149   | CHC_CES_PERDITA                              |
-| PRODOTTO_M         | `pratica_m.sql`                     | 154   | CHC_CES_PERDITA                              |
-| PRODOTTO           | `carta.sql`                         | 86    | CAB_COD_BLOCCO_OCS                           |
-| PRODOTTO_M         | `carta_m.sql`                       | 83    | CAB_COD_BLOCCO_OCS                           |
-| CARTE              | `carte_limitazioni_operativita.sql` | 12    | CAB_COD_BLOCCO_OCS                           |
-| ONBOARDING         | `wfl_fase.sql`                      | 12    | WFISFA_STATO                                 |
-| ONBOARDING         | `wfl_istanza.sql`                   | 14    | WFISWFL_STATO                                |
-| ONBOARDING         | `wfl_sottofase.sql`                 | 13    | WFISSF_STATO                                 |
+| Macro area       | Tabella                  | Righe | Campo                | Problema |
+| ---------------- | ------------------------ | ----- | --------------------- | -------- |
+| CARTE            | `carte_utilizzi.sql`     | 148   | CRVOC_CONTR_DEALER    | `IS NOT NULL` puro invece di `custom_is_not_null()`; possibile campo NUMBER, vedi [[inconsistenze]] voce 12 |
+| GESTIONE_CREDITI | `passaggi_a_perdita.sql` | 8, 32 | B.TABTPP_CONCORDATA   | `NULLIF('B.TABTPP_CONCORDATA', ' ')` — nome colonna passato come stringa letterale tra apici, il confronto non ha mai effetto reale (bug di sintassi, non solo gap di migrazione). Vedi [[inconsistenze]] voce 14 |
 
-Nota: le 3 righe `wfl_fase`/`wfl_istanza`/`wfl_sottofase` già replicano manualmente `IS NULL OR campo = ' '` (funzionalmente corrette) ma vanno migrate a `custom_is_null()` per uniformità, come richiesto dalla guida.
+### Già corretto nel frattempo (era "da fare" nel giro precedente, ora migrato upstream)
 
-### COALESCE da integrare con `NULLIF(campo, ' ')`
+`RISCHI_ADEMPIMENTI/svalutazioni_m.sql:47`, `flessibilita_m.sql:51,54`, `GESTIONE_CREDITI/perdite_minime_abb.sql:43`, `PRODOTTO/carta.sql:73-74,86`, `PRODOTTO_M/carta_m.sql:70-71,83`, `CARTE/carte_limitazioni_operativita.sql:12`, `PRODOTTO/pratica.sql:149`, `PRODOTTO_M/pratica_m.sql:154`, `CARTE/carte_utilizzi.sql:94` (ex 143, CRVOC_CODICE_CAMP), `ONBOARDING/wfl_fase.sql:12`, `wfl_sottofase.sql:13`, `wfl_istanza.sql:14`, `wfl_attivita.sql:17` — tutti ora usano `custom_is_null`/`custom_is_not_null`; `ONBOARDING/doc_istruttoria.sql:19-26` ora `COALESCE(NULLIF(SEDO.OXDOTSEDO_OPE_BLOCCATA, ' '), ...)`; `ASSICURAZIONI/provvigioni_assicurative.sql:7` ora `{{ custom_is_null('A.BAPV_SERVIZIO') }}` (workaround TRIM rimosso).
 
-| Macro area       | Tabella                        | Righe | Campo (primo input COALESCE)                                                                    |
-| ---------------- | ------------------------------ | ----- | ----------------------------------------------------------------------------------------------- |
-| ONBOARDING       | `doc_istruttoria.sql`          | 19-26 | SEDO.OXDOTSEDO_OPE_BLOCCATA                                                                     |
-| GESTIONE_CREDITI | `passaggi_a_perdita.sql`       | 8, 32 | B.TABTPP_CONCORDATA                                                                             |
-| ASSICURAZIONI    | `provvigioni_assicurative.sql` | 7-8   | A.BAPV_SERVIZIO (workaround `TRIM(...)=''` ancora in uso, da migrare a `COALESCE(NULLIF(...))`) |
-
-## Già corretto
+## Già corretto (residuo dal giro precedente)
 
 | Macro area | Tabella | Righe | Nota |
 |---|---|---|---|
@@ -58,7 +39,18 @@ Nota: le 3 righe `wfl_fase`/`wfl_istanza`/`wfl_sottofase` già replicano manualm
 - `L3/basilea_core/dm_controlli_basilea_m.sql` (righe 28,47,50,57,60), letture da `L1_O_BAS.IFBLFSCRCO_TEST`/`IFBLFSCRCA_TEST` via `env_var()` hardcoded: provenienza non classificabile con certezza, da verificare prima di applicare la macro.
 - `ANTIFRODE/gestione_truffe.sql` (53, 56), letture da `L0.OXTRFTRU_TEST`/`OXTRFPTR_TEST`: stesso motivo, provenienza incerta.
 - `PRODOTTO/pratica.sql:570` e `PRODOTTO_M/pratica_m.sql:590` (CACSCES_TOT_PERDITA): tipo colonna probabilmente numerico, da verificare prima di applicare la macro.
+- `CARTE/carte_utilizzi.sql:116-117,165-166` (CROSV_EMETTITORE_A, CROSV_RIGA, SPCLSTAQ_RIGA): check di esistenza riga da `LEFT JOIN`, non placeholder OCS.
+- `CARTE/carte_utilizzi.sql:273` (CEMEM_CAU_COMMISSIO42) in condizione `ON` di una `LEFT JOIN`: basso rischio pratico, da rivalutare solo se emergono anomalie.
 - SWORD (14 modelli, XML `master_data`), SCORE_BANCHE_DATI (11 modelli, XML `cde`): sorgenti NO-OCS, nessun intervento richiesto.
+
+## Parte B — placeholder NUMBER OCS (0 invece di NULL), gap di documentazione
+
+`sources/guida-sviluppo.md` sez. 5.5 tratta **solo** il placeholder VARCHAR `' '`; il problema analogo su NUMBER (OCS invia `0` invece di NULL) non è menzionato in nessuna sezione della guida. Casi sospetti con indizio concreto (campo gemello nello stesso file già trattato con `NULLIF(x,0)`, o usato per dedurre presenza/assenza dato):
+
+- `CARTE/carte_utilizzi.sql:148` — `CRVOC_CONTR_DEALER IS NOT NULL` per derivare `FL_CONTRIBUTI_PROMO`; campi gemelli per significato nello stesso modello (`CRVOA_CONVENZIONATO`/`SUB_AGENTE`/`AGENTE`, righe 20-22/59-66) usano correttamente `NULLIF(campo,0)`.
+- `CARTE/carte_utilizzi.sql:109` — `CRVOA_NUMERO_ASSEGNO IS NOT NULL` per derivare `FL_ASSEGNO`; da verificare tipo colonna in L1.
+
+Nessun caso trovato di campo NUMBER OCS usato come denominatore di una divisione senza `NULLIF(...,0)`. Vedi [[inconsistenze]] voce 12.
 
 ## Collegamenti
 

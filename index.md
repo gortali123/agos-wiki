@@ -33,6 +33,7 @@
 - [Parsing COBOL](concepts/cobol-parsing.md)
 - [query_tag per monitoring](concepts/query-tag-monitoring.md) — copertura reale incompleta/errata nel codice
 - [LASTMODIFIEDDATA](concepts/lastmodifieddata.md) — ruoli: ordine colonne, filtro incrementale, cancellazioni
+- [Data Quality Framework (proposta)](concepts/data-quality-framework.md) — test dbt generati dinamicamente da tabella di config via Jinja negli schema.yml, solo design
 
 ## Sources
 
@@ -44,12 +45,13 @@
 
 ## Queries
 
-- [Inconsistenze: codice vs skill vs documentazione](queries/inconsistenze.md) — tabella riassuntiva (solo voci aperte) + 10 voci di dettaglio
+- [Inconsistenze: codice vs skill vs documentazione](queries/inconsistenze.md) — ricostruita da zero 2026-08-19, 8 incongruenze attive verificate contro il codice corrente (query_tag CARTE/L3, gap/anomalie delete_l2, naming macro, sentinella TIMESTAMP/DATE, 2 bug applicativi, log L2 non allineato); voci S/N, ID_/SK_ vs PR_ e sigle subject area rimosse (dipendevano dalla xlsx ora cancellata da raw/)
 - [NULL vs placeholder OCS (' ') in L2/L3](queries/null-vs-placeholder-ocs.md) — interventi da guida sviluppo: custom_is_null()/NULLIF, inventario completo
-- [Proposta testo: L1 - Raccolta dei log](queries/proposta-testo-log-l1.md) — sostituisce il capitolo obsoleto basato su dbt_artifacts con log_run_results/EVENT_LOG/viste
-- [Proposta testo: L1 - Controlli data quality (OCS)](queries/proposta-testo-test-l1-ocs.md) — corregge nomi test primary_key/try_cast (no suffisso _table)
-- [Proposta testo: L1 - Generazione modelli DBT](queries/proposta-testo-generazione-modelli-l1.md) — sezione autoconclusiva, assorbe guida sviluppo 4.1 (non la 4.2 job)
-- [Proposta testo: L1 - capitolo breve sui job dbt Cloud](queries/proposta-testo-job-l1.md) — elenco utility (generate_jobs.ps1/dbt-jobs-as-code/fetch_dbt_*), rimanda a guida sviluppo 4.2 per il dettaglio
+- [Proposta testo: L0-L1 - Normalizzazione VARCHAR vuoti OCS](queries/proposta-testo-varchar-vuoti-l0-l1.md) — trim + normalizzazione a `' '` in L1
+- [Proposta testo: L2 - Placeholder OCS VARCHAR/NUMBER](queries/proposta-testo-null-placeholder-l2.md) — custom_is_null/NULLIF(' ') e nuovo caso NUMBER=0/NULLIF(0)
+- [Proposta testo: L2 - Placeholder $$$$ su JOIN non-PK](queries/proposta-testo-placeholder-dollari-l2.md) — obsoletizzazione campi anagrafici, esempio legame_ditte_individuali
+- [Proposta testo: L0-L1 - Cluster D mensile/settimanale](queries/proposta-testo-mensili-l0-l1.md) — get_dt_osservazione/compute_dt_osservazione/delete_dt_osservazione
+- [Proposta testo: L2 - S3 mensile/settimanale](queries/proposta-testo-mensili-l2-l3.md) — stesse 3 macro lato L2
 
 ## Develop
 
@@ -68,7 +70,7 @@
 - [dm_co_matrix](develop/models/L3/campioni_accettazione/dm_co_matrix.sql) — DM_CO_MATRIX, proposto, non ancora portato upstream
 - [v_event_log](develop/views/logs/v_event_log.sql) — vista LOGS.V_EVENT_LOG corretta (rimosso filtro che nascondeva gli SKIPPED, timestamp con fallback), proposta
 - [v_last_run_status](develop/views/logs/v_last_run_status.sql) — vista di monitoring ultimo stato model/test per tabella, proposta
-- [log_run_results](develop/macros/log/log_run_results.sql) — fix macro logging: `default(0)`/`default("null")` sostituiscono solo gli undefined, non l'esplicito `None` dei nodi SKIPPED — usato `default(x, true)` su `nm_execution_time`/`nm_failures` per evitare il literal Python `None` nel JSON (errore Snowflake "unknown keyword None" in PARSE_JSON), proposto
+- ~~log_run_results~~ — **applicato upstream nel resync 2026-08-03**: `raw/dwh-code/macros/log/log_run_results.sql` usa ora `default(x, true)` su `nm_execution_time`/`nm_failures`, coerente col fix proposto
 - [appuntamento](develop/models/L2/MAIN/appuntamento.sql) — APPUNTAMENTO (CONTATTI), proposto — PK e 4 RT con gap gravi nel data model, vedi WARN inline
 - [contatto_ngs](develop/models/L2/MAIN/contatto_ngs.sql) — CONTATTO_NGS (CONTATTI), proposto
 - [preventivi](develop/models/L2/MAIN/preventivi.sql) — PREVENTIVI (CONTATTI), proposto
@@ -103,8 +105,9 @@
 - [dm_mov_produzione (query_tag)](develop/models/L3/monitoraggio_produzione/dm_mov_produzione.yml) — fix query_tag, proposto, non ancora portato upstream
 - [dm_mov_produzione_m (query_tag)](develop/models/L3/monitoraggio_produzione/dm_mov_produzione_m.yml) — fix query_tag, proposto, non ancora portato upstream
 - ~~generate_source/generate_yaml/generate_model/generate_snapshots (join CFG_L0_L1_MODULO_LOOKUP), generate_jobs (modulo=sottofolder)~~ — **applicati upstream nel resync 2026-07-24**, byte-identici al proposto in `develop/` — **ATTENZIONE**: quella versione ha l'ordine soprafolder/sottofolder invertito, vedi voce sotto
-- [generate_source/generate_yaml/generate_model/generate_snapshots (fix join + path)](develop/macros/generate_models/generate_source.sql) — **bug nel join**: la chiave di join era invertita. `CFG_L1_SCHEMA.cd_modulo` vale es. `ANA`/`XAN`; `CFG_L0_L1_MODULO_LOOKUP` ha `cd_modulo`=`ANA`/`XAN` (stessa chiave) e `cd_modulo_l1`=`ANA` per entrambe le righe (valore aggregato). Il join corretto è `mlk.cd_modulo = s.cd_modulo` (non `mlk.cd_modulo_l1 = s.cd_modulo`), soprafolder = `cd_modulo_l1` (dalla lookup, comune), sottofolder = `cd_modulo` grezzo (quello che distingue) → struttura reale `OCS/ANA/{ANA,XAN}`. La versione già applicata upstream nel resync aveva sia il join sia l'ordine del path sbagliati — **già live e da correggere con priorità**. Fix nelle 4 macro in `develop/macros/generate_models/`, proposto
-- [generate_models](develop/generate_models.ps1) — bug introdotto dal path OCS a due livelli: `Resolve-Mod` (escape del nome riservato Windows `CON`) veniva applicato all'intera stringa `modulo`, che ora può essere `"cd_modulo_l1/cd_modulo"` — un singolo segmento `CON` non veniva più intercettato; fix: split su `/` e `Resolve-Mod` applicato per segmento, proposto
+- ~~generate_source/generate_yaml/generate_model/generate_snapshots (fix join + path)~~ — **applicato upstream nel resync 2026-08-03**: `raw/dwh-code/macros/generate_models/generate_source.sql` ha ora il join corretto `mlk.cd_modulo = s.cd_modulo` e il path a due livelli `<cd_modulo_l1>/<cd_modulo>`, coerente col fix proposto in `develop/`; anche la docx [[caricamento-layer-l0-l1]] documenta ora questo meccanismo
+- ~~generate_models (Resolve-Mod per segmento)~~ — **applicato upstream**: `raw/dwh-code/generate_models.ps1` ha già lo split su `/` con `Resolve-Mod` per segmento
+- [generate_models](develop/generate_models.ps1) — `Invoke-Dbt` si fidava solo di `$LASTEXITCODE`: `dbt run-operation` può stampare `Compilation Error`/`Database Error` nell'output e comunque uscire con exit code 0, quindi lo script proseguiva silenziosamente sugli step successivi invece di fermarsi; fix: scan dell'output per marker di errore, trattati come fallimento anche a exit code 0, proposto
 - [plan-jobs](develop/plan-jobs.ps1) — output di `dbt-jobs-as-code.exe plan` ora scritto anche su file di default `plan_output.txt` (oltre a stdout), proposto
 - [custom_to_date](develop/macros/dtype_conversion/custom_to_date.sql) — fix variabile non definita `col_str` nel messaggio d'errore (era `column`), proposto
 - [delete_month](develop/macros/materialization/delete_month.sql) — fix parametro `column` ignorato nella DELETE (hardcoded `DT_OSSERVAZIONE`), proposto
@@ -113,9 +116,5 @@
 - [generate_schema_name](develop/macros/generate_schema_name.sql) — versione strict: raise_compiler_error se un modello non ha `schema:` custom, invece del fallback silenzioso su `target.schema`, proposta
 - [mailc_esiti_tgb (POSTE)](develop/models/L1/POSTE/mailc_esiti_tgb.yml) — MAILC_ESITI_TGB riclassificato da cluster C (ephemeral+snapshot) a cluster D (incremental append + `delete_week`), rinominato da `stg_mailc_esiti_tgb`, SELECT filtrato sullo stesso `get_dt_accettazione()` cancellato dal pre_hook; proposto, snapshot/stg vecchi da rimuovere upstream
 - [generate_model (fix filtro cluster D mensile)](develop/macros/generate_models/generate_model.sql) — aggiunge `WHERE get_dt_osservazione('ts_riferimento') = get_dt_osservazione()` al SELECT generato per cluster D, per allineare sempre delete e insert sullo stesso periodo target; solo mensile (nessun campo di cadenza in `TECH.CFG_L1_CLUSTER_STO`, `mailc_esiti_tgb` settimanale resta manuale), proposto
-- [try_cast (no where_clause)](develop/tests/generic/try_cast.sql) — riscritto a partire dallo stato corrente in `raw/dwh-code/` (lookup `selectattr|first` case-sensitive, ripristinato dall'utente): tolto il parametro `where_clause` (nessun filtro aggiuntivo supportato), proposto
-- [try_cast_from_sql](develop/tests/generic/try_cast_from_sql.sql) — identico a `raw/dwh-code/`: nessun parametro `where_clause`, il filtro è auto-rilevato dal `WHERE` nel `raw_code` dell'L1, proposto (nessuna modifica reale rispetto a raw)
-- [try_cast_positional](develop/tests/generic/try_cast_positional.sql) — identico a `raw/dwh-code/`, stesso auto-detect del `WHERE` dell'L1, proposto (nessuna modifica reale rispetto a raw)
-- [primary_key (no where_clause)](develop/tests/generic/primary_key.sql) — riscritto a partire da `raw/dwh-code/`: tolto il parametro `where_clause`, proposto
-- [primary_key_positional (no where_clause come argomento)](develop/tests/generic/primary_key_positional.sql) — riscritto a partire da `raw/dwh-code/`: tolto il parametro `where_clause`, tenuto solo il `where_clause_l1` auto-rilevato dal `raw_code` dell'L1, proposto
+- ~~try_cast / try_cast_from_sql / try_cast_positional / primary_key / primary_key_positional (no where_clause)~~ — **applicato upstream nel resync 2026-08-03**: confermato nessun parametro `where_clause` in `raw/dwh-code/tests/generic/try_cast.sql` e `primary_key.sql`, coerente col fix proposto
 - [primary_key_from_sql (nuovo test)](develop/tests/generic/primary_key_from_sql.sql) — analogo a `try_cast_from_sql` ma per PK: `null_pks`/`duplicate_pks` invariate (agiscono sui valori grezzi), `cast_failed_pks` riusa il parsing del `raw_code` L1 per testare l'espressione di cast reale della/e colonna/e PK invece di un `TRY_CAST(col AS tipo_dichiarato)` ricostruito a mano; `where_clause` auto-rilevato dal `raw_code` L1 (stesso meccanismo di `try_cast_from_sql`), nessun parametro. Da usare al posto di `primary_key` quando una o più `pk_columns` hanno logica di cast particolare (es. `TRY_TO_DATE` con formato custom), proposto
