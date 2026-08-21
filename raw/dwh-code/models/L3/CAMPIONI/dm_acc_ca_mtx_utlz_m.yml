@@ -1,0 +1,263 @@
+version: 2
+models:
+  - name: dm_acc_ca_mtx_utlz_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: DT_CARICAMENTO
+        data_type: DATE
+      - name: NM_UTILIZZI0
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI1
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI2
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI3
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI4
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI5
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI6
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI7
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI8
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI9
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI10
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI11
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI12
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI13
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI14
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI15
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI16
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI17
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI18
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI19
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI20
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI21
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI22
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI23
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI24
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI25
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI26
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI27
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI28
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI29
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI30
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI31
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI32
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI33
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI34
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI35
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI36
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI37
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI38
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI39
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI40
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI41
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI42
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI43
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI44
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI45
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI46
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI47
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI48
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI49
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI50
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI51
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI52
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI53
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI54
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI55
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI56
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI57
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI58
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI59
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI60
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI61
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI62
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI63
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI64
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI65
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI66
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI67
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI68
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI69
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI70
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI71
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI72
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI73
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI74
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI75
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI76
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI77
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI78
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI79
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI80
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI81
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI82
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI83
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI84
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI85
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI86
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI87
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI88
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI89
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI90
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI91
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI92
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI93
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI94
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI95
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI96
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI97
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI98
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI99
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI100
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI101
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI102
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI103
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI104
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI105
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI106
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI107
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI108
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI109
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI110
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI111
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI112
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI113
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI114
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI115
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI116
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI117
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI118
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI119
+        data_type: NUMBER(13,3)
+      - name: NM_UTILIZZI120
+        data_type: NUMBER(13,3)
+      - name: NM_MESI
+        data_type: NUMBER(10,0)

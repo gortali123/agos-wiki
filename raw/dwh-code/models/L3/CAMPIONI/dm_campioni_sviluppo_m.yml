@@ -1,0 +1,626 @@
+version: 2
+
+models:
+  - name: dm_campioni_sviluppo_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      contract:
+        enforced: false
+      pre_hook:
+        - "{{ delete_last_month('DT_OSSERVAZIONE') }}"
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(12,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(9,0)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: TP_CARTA
+        data_type: CHAR(2)
+      - name: DT_ULT_UTILIZZO
+        data_type: DATE
+      - name: CD_ABI_CLI
+        data_type: NUMBER(5,0)
+      - name: CD_CAB_CLI
+        data_type: NUMBER(5,0)
+      - name: CD_ORIGINE_PRAT
+        data_type: VARCHAR(3)
+      - name: CD_CIRCUITO_CARTA
+        data_type: VARCHAR(10)
+      - name: CD_MARCA_AUTO
+        data_type: VARCHAR(10)
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: DT_DECORR
+        data_type: DATE
+      - name: DT_PASSAGGIO_PERDITA
+        data_type: DATE
+      - name: DT_CESSIONE
+        data_type: DATE
+      - name: DT_PRIMA_SCAD
+        data_type: DATE
+      - name: DT_PRIMO_UTILIZZO
+        data_type: DATE
+      - name: EU_ANTICIPO
+        data_type: NUMBER(15,2)
+      - name: EU_BENE
+        data_type: NUMBER(15,2)
+      - name: EU_EROGATO
+        data_type: NUMBER(13,2)
+      - name: EU_MAXIRATA
+        data_type: NUMBER(15,2)
+      - name: FL_AUTO_NUOVA_USATA
+        data_type: CHAR(1)
+      - name: FL_MAXIRATA
+        data_type: CHAR(1)
+      - name: TP_AUTO
+        data_type: CHAR(2)
+      - name: TS_ATTIVAZ
+        data_type: TIMESTAMP_NTZ
+      - name: TS_CARIC
+        data_type: TIMESTAMP_NTZ
+      - name: TS_CARIC_ULT_PRAT_PRESTITO
+        data_type: TIMESTAMP_NTZ
+      - name: TS_LIQUIDAZIONE
+        data_type: TIMESTAMP_NTZ
+      - name: CD_USATO_L_IDENTIFICAZIONE_PROFAMILY
+        data_type: VARCHAR(10)
+      - name: EU_ALTRI_ADDEBITI_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_ON_BALANCE
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_1
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_2
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_3
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_4
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_5
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_6
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_7
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_8
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_9
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_10
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_11
+        data_type: NUMBER(15,2)
+      - name: EU_SALDO_MESE_12
+        data_type: NUMBER(15,2)
+      - name: TP_TRUFFA
+        data_type: VARCHAR(3)
+      - name: CD_BLOCCO_IST
+        data_type: VARCHAR(10)
+      - name: CD_CB_SCORE_CRIF_PLUS_CLI
+        data_type: VARCHAR(10)
+      - name: CD_CITTAD
+        data_type: VARCHAR(10)
+      - name: CD_CLIENTE
+        data_type: VARCHAR(10)
+      - name: CD_CTC_CLIENTE
+        data_type: VARCHAR(10)
+      - name: CD_SCORE_COMPORTAMENTALE_CRIF_CLIE
+        data_type: VARCHAR(10)
+      - name: CD_COOBLIGATO
+        data_type: VARCHAR(10)
+      - name: CD_CTC_COOB
+        data_type: VARCHAR(10)
+      - name: CD_FORMA_GIUR
+        data_type: VARCHAR(10)
+      - name: CD_OCCUP
+        data_type: VARCHAR(10)
+      - name: CD_ORG_CARTA
+        data_type: VARCHAR(10)
+      - name: CD_PROVENIENZA_COMMERCIALE
+        data_type: VARCHAR(10)
+      - name: CD_PROV_NASCITA
+        data_type: VARCHAR(10)
+      - name: CD_PROV_NASCITA_IST
+        data_type: VARCHAR(10)
+      - name: CD_PROV_RESID
+        data_type: VARCHAR(2)
+      - name: CD_PROV_RESID_IST
+        data_type: VARCHAR(10)
+      - name: CD_QUALITA_CLI
+        data_type: VARCHAR(10)
+      - name: CD_QUALITA_CONV
+        data_type: VARCHAR(10)
+      - name: CD_REGIONE_RESID
+        data_type: VARCHAR(10)
+      - name: CD_SESSO_CLI
+        data_type: VARCHAR(10)
+      - name: CD_SETTORE_ATTIVITA_CLI
+        data_type: VARCHAR(10)
+      - name: CD_STATO_CIVILE_CLI
+        data_type: VARCHAR(10)
+      - name: CD_STATO_CIVILE_COOB
+        data_type: VARCHAR(10)
+      - name: CD_TAB_FINANZIARIA
+        data_type: VARCHAR(10)
+      - name: CD_AZIENDA_CLI_IST
+        data_type: VARCHAR(10)
+      - name: CD_AZIENDA_CLI
+        data_type: NUMBER(3,0)
+      - name: TP_TASSO
+        data_type: VARCHAR(10)
+      - name: DS_BENE
+        data_type: VARCHAR(30)
+      - name: DT_INDIR_CLI
+        data_type: DATE
+      - name: DT_INIZIO_VALIDITA_OCCUP_CLI
+        data_type: DATE
+      - name: DT_INIZIO_RAPPORTO_CLI_IST
+        data_type: DATE
+      - name: DT_INIZIO_RAPPORTO_CLI
+        data_type: DATE
+      - name: DT_INIZIO_RAPPORTO_BANC
+        data_type: DATE
+      - name: DT_NASCITA_CLI
+        data_type: DATE
+      - name: DT_ULT_MORA
+        data_type: NUMBER(8,0)
+      - name: DT_ULT_PROTESTO
+        data_type: DATE
+      - name: EU_ALTRI_REDDITO_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_ALTRI_REDDITO_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_COMMISS
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_AGOS_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_AGOS_ATTRIBUITO_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_AGOS_ATTRIBUITO_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_AGOS_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_CRIF_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_CRIF_ATTRIBUITO_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_CRIF_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_CUMULO_RISCHIO_CRIF_ATTRIBUITO_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_DEPOSITO_BANC_COO
+        data_type: NUMBER(15,2)
+      - name: EU_FIDO_CLI_IST
+        data_type: NUMBER(15,2)
+      - name: EU_FIDO_COOB_IST
+        data_type: NUMBER(15,2)
+      - name: EU_FIDO
+        data_type: NUMBER(13,2)
+      - name: EU_FIDO_CLI
+        data_type: NUMBER(13,2)
+      - name: EU_FIDO_COOB
+        data_type: NUMBER(13,2)
+      - name: EU_FINANZIATO
+        data_type: NUMBER(15,2)
+      - name: EU_IMPIEGHI_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_MOROSITA_CLI_IST
+        data_type: NUMBER(15,2)
+      - name: EU_MOROSITA_COOB_IST
+        data_type: NUMBER(15,2)
+      - name: EU_MOROSITA_CLI
+        data_type: NUMBER(13,2)
+      - name: EU_MOROSITA_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_PROTESTI_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_PROTESTI_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_RATA
+        data_type: NUMBER(15,2)
+      - name: EU_RATA_MENSILIZZATA_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_RATA_MENSILIZZATA_COOB
+        data_type: NUMBER(15,2)
+      - name: NM_RATA_ATTUALE
+        data_type: NUMBER(15,2)
+      - name: EU_RATA_SEC_PER
+        data_type: NUMBER(15,2)
+      - name: EU_RATA_CRIF_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_RATA_CRIF_COOBLIGATO_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_REDDITO_ANNUO_CLI
+        data_type: NUMBER(15,2)
+      - name: EU_REDDITO_COOB
+        data_type: NUMBER(15,2)
+      - name: EU_REDDITO_FAMILIARI
+        data_type: NUMBER(15,2)
+      - name: FL_CONTO_BANC_CLI
+        data_type: CHAR(1)
+      - name: FL_CONTO_BANC_COOB
+        data_type: CHAR(1)
+      - name: FL_DEPOSITO_BANC_COOB
+        data_type: CHAR(1)
+      - name: FL_DEPOSITO_BANC_CLI
+        data_type: CHAR(1)
+      - name: FL_FIRMA_DOPPIA_IST
+        data_type: CHAR(1)
+      - name: FL_FIRMA_DOPPIA
+        data_type: VARCHAR(1)
+      - name: FL_PROTESTI
+        data_type: CHAR(1)
+      - name: NM_CESSIONE_BUSTA_PAGA_CLI
+        data_type: NUMBER(10,0)
+      - name: NM_FAMILIARI
+        data_type: NUMBER(10,0)
+      - name: NM_DURATA_CONTR_LAVORO
+        data_type: NUMBER(10,0)
+      - name: NM_MOROSITA_CLI_IST
+        data_type: NUMBER(10,0)
+      - name: NM_MOROSITA_CLI
+        data_type: NUMBER(10,0)
+      - name: NM_PROTESTI_COOB
+        data_type: NUMBER(10,0)
+      - name: TP_ABITAZ_CLI
+        data_type: CHAR(2)
+      - name: TP_ATTIVITA_CLI
+        data_type: CHAR(2)
+      - name: TP_ATTIVITA_CONV
+        data_type: CHAR(2)
+      - name: TP_SETTORE_ATTIVITA
+        data_type: CHAR(2)
+      - name: TP_BANC
+        data_type: CHAR(2)
+      - name: TP_BENE
+        data_type: CHAR(2)
+      - name: TP_CONTR_TEMPO_DET_INDET
+        data_type: CHAR(2)
+      - name: TP_LOCAZ
+        data_type: CHAR(2)
+      - name: TP_ORG
+        data_type: CHAR(2)
+      - name: TP_ORG_CARTA
+        data_type: CHAR(2)
+      - name: TP_MODALITA_PAGAM_IST
+        data_type: CHAR(2)
+      - name: TP_PAGAMENTO
+        data_type: CHAR(2)
+      - name: TP_PRAT_INTERNET
+        data_type: CHAR(2)
+      - name: TP_MODALITA_RIPAGAMENTO
+        data_type: CHAR(2)
+      - name: TP_RIPAGAMENTO_IST
+        data_type: CHAR(2)
+      - name: CD_FISCALE_CLI
+        data_type: VARCHAR(16)
+      - name: CD_FISCALE_COOB
+        data_type: VARCHAR(16)
+      - name: CD_NAZIONE_CLI
+        data_type: VARCHAR(3)
+      - name: CD_PIVA
+        data_type: VARCHAR(11)
+      - name: DS_NAZIONE_CLI
+        data_type: VARCHAR(30)
+      - name: CD_BLOCCO
+        data_type: VARCHAR(10)
+      - name: CD_CARTA_BANCO
+        data_type: VARCHAR(10)
+      - name: FL_CARTA_CONVERT
+        data_type: NUMBER(8,0)
+      - name: CD_PAGAM_ULT
+        data_type: VARCHAR(10)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(30)
+      - name: CD_STATO_PREPAG
+        data_type: VARCHAR(10)
+      - name: DT_ACCOD
+        data_type: DATE
+      - name: DT_ACCOD_POST_DFLT
+        data_type: DATE
+      - name: DT_APPROV
+        data_type: DATE
+      - name: DT_CARIC_PRIMA_PRAT
+        data_type: DATE
+      - name: DT_CONSEGNA_CARTA
+        data_type: DATE
+      - name: DT_DFLT
+        data_type: DATE
+      - name: DT_PROX_PAGAM
+        data_type: DATE
+      - name: DT_DELL_ULT_PAGAM
+        data_type: DATE
+      - name: DT_STORNO
+        data_type: DATE
+      - name: DT_ESTINZIONE
+        data_type: DATE
+      - name: DT_INSER_SCORE
+        data_type: DATE
+      - name: DT_INZIO_CLIENTE_AG_CLI
+        data_type: DATE
+      - name: DT_PRIMO_ACQUISTO
+        data_type: DATE
+      - name: DT_SCAD
+        data_type: DATE
+      - name: DT_SCAD_PRECEDENTE
+        data_type: DATE
+      - name: DT_ULT_SCAD
+        data_type: DATE
+      - name: DT_ULT_ACQUISTO
+        data_type: DATE
+      - name: DT_ULT_PAGAM_CARTA
+        data_type: DATE
+      - name: DT_ULT_UTILIZZO_STO
+        data_type: DATE
+      - name: FL_CARTA_PREPAG
+        data_type: CHAR(1)
+      - name: FL_CARTA_UTILIZZATA
+        data_type: DATE
+      - name: FL_CARTOLARIZZAZIONE
+        data_type: VARCHAR(1)
+      - name: FL_PRAT_CESSIONE_PERDITA
+        data_type: CHAR(1)
+      - name: CD_DESTINAZIONE_BENE
+        data_type: VARCHAR(10)
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(15,2)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(10)
+      - name: CD_TIPO_PRODOTTO
+        data_type: VARCHAR(10)
+      - name: FL_WEB_CANALE_ACQ
+        data_type: CHAR(1)
+      - name: FL_RIFINANZIAMENTO
+        data_type: CHAR(1)
+      - name: NM_GIORNI_SCADUTO
+        data_type: NUMBER(5,0)
+      - name: CD_IMPEGNI_CLI
+        data_type: VARCHAR(10)
+      - name: CD_IMPEGNI_COOB
+        data_type: VARCHAR(10)
+      - name: EU_DISPON
+        data_type: NUMBER(13,0)
+      - name: EU_DISPON_CONTABILE
+        data_type: NUMBER(13,0)
+      - name: EU_LIMITE_CARTA
+        data_type: NUMBER(13,2)
+      - name: EU_PERDITA
+        data_type: NUMBER(13,0)
+      - name: EU_RATEO
+        data_type: NUMBER(13,2)
+      - name: EU_RISCONTO
+        data_type: NUMBER(15,2)
+      - name: EU_RISCONTO_DFLT
+        data_type: NUMBER(15,2)
+      - name: EU_TASSO_MEDIO
+        data_type: NUMBER(5,3)
+      - name: EU_ULT_PAGAM
+        data_type: NUMBER(13,2)
+      - name: NM_IRR_NUM
+        data_type: NUMBER(10,0)
+      - name: NM_IRR_DEN
+        data_type: NUMBER(10,0)
+      - name: NM_MESI_DILAZIONE
+        data_type: NUMBER(2,0)
+      - name: NM_RESPINTE_L12M
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_L12M_CA
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_L12M_CO
+        data_type: NUMBER(10,0)
+      - name: NM_ANNI_ETA_ULT_CONTR
+        data_type: NUMBER(10,0)
+      - name: NM_CONTRATTI_CARTA
+        data_type: NUMBER(10,0)
+      - name: NM_CQS_CLI
+        data_type: NUMBER(10,0)
+      - name: NM_GIORNI_SCAD_EBA
+        data_type: NUMBER(5,0)
+      - name: NM_INSOLUTO_CORRENTE
+        data_type: NUMBER(12,0)
+      - name: NM_INSOL_ULTIMI_12_MESI
+        data_type: NUMBER(12,0)
+      - name: NM_INSOL_ULTIMI_24_MESI
+        data_type: NUMBER(12,0)
+      - name: NM_INSOL_WORST_TOT_WORST
+        data_type: NUMBER(10,0)
+      - name: NM_MAX_INSOLUTI_MENSILE
+        data_type: NUMBER(5,0)
+      - name: NM_MAX_ARRETRATI
+        data_type: NUMBER(5,0)
+      - name: NM_MENSALITA_CLIENTI
+        data_type: NUMBER(10,0)
+      - name: NM_MESI_APERT_CARTA_DALL
+        data_type: NUMBER(10,0)
+      - name: NM_PROTESTI
+        data_type: NUMBER(10,0)
+      - name: NM_RATE_ACCODATE_12M
+        data_type: NUMBER(10,0)
+      - name: NM_RATE_ACCODATE_TOT
+        data_type: NUMBER(10,0)
+      - name: NM_RATE
+        data_type: NUMBER(3,0)
+      - name: NM_RATE_PRIMO_PERODO
+        data_type: NUMBER(10,0)
+      - name: NM_RATE_SCADUTE
+        data_type: NUMBER(3,0)
+      - name: NM_RATE_SEC_PER
+        data_type: NUMBER(10,0)
+      - name: NM_RATE_TOT_INCLUSE_PIANI_TOT
+        data_type: NUMBER(3,0)
+      - name: NM_UTILIZZI_ULTIMI_12M
+        data_type: NUMBER(16,0)
+      - name: NM_UTILIZZI_ULTIMI_3M
+        data_type: NUMBER(16,0)
+      - name: NM_UTILIZZI_ULTIMI_6M
+        data_type: NUMBER(16,0)
+      - name: NM_UTILIZZI_TOT
+        data_type: NUMBER(16,0)
+      - name: CD_STATO_CONVERSIONE_CARTA
+        data_type: NUMBER(8,0)
+      - name: NM_TAN_DEN
+        data_type: NUMBER(10,0)
+      - name: NM_TAN_NUM
+        data_type: NUMBER(10,0)
+      - name: NM_TAN_DEN_2
+        data_type: NUMBER(10,0)
+      - name: NM_TAN_NUM_2
+        data_type: NUMBER(10,0)
+      - name: TP_ULT_FINANZIAMENTO
+        data_type: CHAR(2)
+      - name: EU_ANTICIPO_IST
+        data_type: NUMBER(15,2)
+      - name: NM_MESI_DILAZIONE_IST
+        data_type: NUMBER(2,0)
+      - name: NM_RESPINTE_3M
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_3M_CA
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_3M_CO
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_6M
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_6M_CA
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_6M_CO
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_9M
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_9M_CA
+        data_type: NUMBER(10,0)
+      - name: NM_RESPINTE_9M_CO
+        data_type: NUMBER(10,0)
+      - name: CD_ABITAZIONE_UC
+        data_type: VARCHAR(10)
+      - name: CD_BENE_UC
+        data_type: VARCHAR(10)
+      - name: CD_ESITO_FIL_ULT_PP_UC
+        data_type: VARCHAR(10)
+      - name: CD_ESITO_UTILIZZO_UC
+        data_type: VARCHAR(10)
+      - name: CD_IMPIEGO_UC
+        data_type: VARCHAR(10)
+      - name: CD_SCORE_CRIF_COOB_UC
+        data_type: NUMBER(9,0)
+      - name: CD_STATO_CIVILE_UC
+        data_type: VARCHAR(10)
+      - name: DT_APERTURA_PRIMA_PRATICA
+        data_type: DATE
+      - name: DT_CARIC_PRI_PRA_ACC
+        data_type: DATE
+      - name: DT_CARIC_ULT_PRA_ACC
+        data_type: DATE
+      - name: DT_CARIC_ULT_PRA_RES
+        data_type: DATE
+      - name: DT_DECOR_UC
+        data_type: DATE
+      - name: DT_FIRST_ACCODAMENTO
+        data_type: DATE
+      - name: DT_PRI_SCAD_ULT_CONS
+        data_type: DATE
+      - name: DT_ULTIMA_DELINQUENCY
+        data_type: DATE
+      - name: DT_ULTIMA_RTL_PAGAMENTO
+        data_type: DATE
+      - name: DT_ULTIMO_ANTICIPO
+        data_type: DATE
+      - name: EU_EAD_DEFAULT_CRRV2
+        data_type: NUMBER(15,2)
+      - name: EU_FINANZIATO_UC
+        data_type: NUMBER(15,2)
+      - name: EU_REDDITO_MENSILE_UC
+        data_type: NUMBER(15,0)
+      - name: FL_ACCODAMENTO
+        data_type: NUMBER(1,0)
+      - name: FL_ACCODAMENTO_L12M
+        data_type: NUMBER(1,0)
+      - name: FL_ACCODAMENTO_TOT
+        data_type: NUMBER(5,0)
+      - name: FL_CESSIONE
+        data_type: CHAR(1)
+      - name: FL_COOBBLIGATO
+        data_type: CHAR(1)
+      - name: FL_DEFAULT_12
+        data_type: VARCHAR(2)
+      - name: FL_PERDITA
+        data_type: CHAR(1)
+      - name: NM_ANNI_UC
+        data_type: NUMBER(8,0)
+      - name: NM_ANZIANITA_OCCUP_UC
+        data_type: NUMBER(10,0)
+      - name: NM_ANZIANITA_PRATICA
+        data_type: NUMBER(10,0)
+      - name: NM_CONTRATTI_ATTIVI_CARTA
+        data_type: NUMBER(10,0)
+      - name: NM_CONTRATTI_ATTIVI_CONSUMO
+        data_type: NUMBER(10,0)
+      - name: NM_CONTRATTI_TOT
+        data_type: NUMBER(10,0)
+      - name: NM_INSOL_TOT_CONSUMO
+        data_type: NUMBER(10,0)
+      - name: NM_INSOL_TOT_COOB
+        data_type: NUMBER(10,0)
+      - name: NM_MAX_INSOLVENZA_CLI
+        data_type: NUMBER(5,0)
+      - name: NM_MAX_INS_CLI_L12M
+        data_type: NUMBER(5,0)
+      - name: NM_MAX_INS_CLI_L18M
+        data_type: NUMBER(5,0)
+      - name: NM_MAX_INS_CLI_L24M
+        data_type: NUMBER(5,0)
+      - name: NM_MAX_INS_CLI_L3M
+        data_type: NUMBER(5,0)
+      - name: NM_MAX_INS_CLI_L6M
+        data_type: NUMBER(5,0)
+      - name: NM_MAX_INS_CLI_L9M
+        data_type: NUMBER(5,0)
+      - name: NM_MESI_APERTURA_CA_UC
+        data_type: NUMBER(10,0)
+      - name: NM_PRATICHE
+        data_type: NUMBER(10,0)
+      - name: NM_PRATICHE_CLIE
+        data_type: NUMBER(10,0)
+      - name: NM_PRATICHE_COOB
+        data_type: NUMBER(10,0)
+      - name: NM_PRAT_ACC_CONS
+        data_type: NUMBER(10,0)
+      - name: NM_PRAT_RES_CONS
+        data_type: NUMBER(10,0)
+      - name: NM_PRAT_RES_GEST
+        data_type: NUMBER(10,0)
+      - name: NM_PRAT_RIT_CONS
+        data_type: NUMBER(10,0)
+      - name: NM_RATE_TOT_ULT_CONS
+        data_type: NUMBER(10,0)
+      - name: TP_ATTIVITA_PREC
+        data_type: VARCHAR(5)
+      - name: TP_PERIMETRO
+        data_type: VARCHAR(4)
+      - name: NM_ANZIANITA_INDIR_UC
+        data_type: NUMBER(10,0)

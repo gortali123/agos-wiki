@@ -1,0 +1,66 @@
+version: 2
+models:
+  - name: dm_cmp_acc_perimetro_co
+    config:
+      materialized: table
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: DT_CARICAMENTO
+        data_type: DATE
+      - name: CD_CLIENTE
+        data_type: NUMBER(12,0)
+      - name: CD_STATO
+        data_type: VARCHAR(10)
+      - name: DT_RITIRATA
+        data_type: DATE
+      - name: DT_PASSAGGIO_PERDITA
+        data_type: DATE
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(30)
+      - name: DT_CHIUSURA_EFFETTIVA
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA
+        data_type: DATE
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: DT_CESSIONE
+        data_type: DATE
+      - name: DT_STORNATA
+        data_type: DATE
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(10)
+      - name: CD_TIPO_PRODOTTO
+        data_type: VARCHAR(10)
+      - name: CD_DESTINAZIONE_BENE
+        data_type: VARCHAR(10)
+      - name: CD_CANALE_ACQUISIZIONE
+        data_type: VARCHAR(10)
+      - name: FL_WEB_CANALE_ACQ
+        data_type: VARCHAR(1)
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(13,2)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(30)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: DT_DBT
+        data_type: DATE
+      - name: DT_ESTINZIONE_ANTICIPATA 
+        data_type: DATE

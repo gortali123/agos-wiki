@@ -1,0 +1,625 @@
+version: 2
+models:
+  - name: dm_acc_co_target_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: VARCHAR(10)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(2)
+      - name: CD_CLEINTE
+        data_type: NUMBER(8,NA)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_STATO_PRAT
+        data_type: VARCHAR(10)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(30)
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(30)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: DT_INSERIMENTO
+        data_type: DATE
+      - name: DT_CHIUSURA_GEST
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: DT_ESTINZIONE_ANTI
+        data_type: DATE
+      - name: DT_PERDITA
+        data_type: DATE
+      - name: DT_PRIMA_SCAD
+        data_type: DATE
+      - name: DT_STORNO
+        data_type: DATE
+      - name: DT_CALA_FINE_0
+        data_type: DATE
+      - name: DT_CALA_FINE_1
+        data_type: DATE
+      - name: DT_CALA_FINE_2
+        data_type: DATE
+      - name: DT_CALA_FINE_3
+        data_type: DATE
+      - name: DT_CALA_FINE_4
+        data_type: DATE
+      - name: DT_CALA_FINE_5
+        data_type: DATE
+      - name: DT_CALA_FINE_6
+        data_type: DATE
+      - name: DT_CALA_FINE_7
+        data_type: DATE
+      - name: DT_CALA_FINE_8
+        data_type: DATE
+      - name: DT_CALA_FINE_9
+        data_type: DATE
+      - name: DT_CALA_FINE_10
+        data_type: DATE
+      - name: DT_CALA_INIZ_0
+        data_type: DATE
+      - name: DT_CALA_INIZ_1
+        data_type: DATE
+      - name: DT_CALA_INIZ_2
+        data_type: DATE
+      - name: DT_CALA_INIZ_3
+        data_type: DATE
+      - name: DT_CALA_INIZ_4
+        data_type: DATE
+      - name: DT_CALA_INIZ_5
+        data_type: DATE
+      - name: DT_CALA_INIZ_6
+        data_type: DATE
+      - name: DT_CALA_INIZ_7
+        data_type: DATE
+      - name: DT_CALA_INIZ_8
+        data_type: DATE
+      - name: DT_CALA_INIZ_9
+        data_type: DATE
+      - name: DT_CALA_INIZ_10
+        data_type: DATE
+      - name: DT_MORA_FINE_0
+        data_type: DATE
+      - name: DT_MORA_FINE_1
+        data_type: DATE
+      - name: DT_MORA_FINE_2
+        data_type: DATE
+      - name: DT_MORA_FINE_3
+        data_type: DATE
+      - name: DT_MORA_FINE_4
+        data_type: DATE
+      - name: DT_MORA_FINE_5
+        data_type: DATE
+      - name: DT_MORA_FINE_6
+        data_type: DATE
+      - name: DT_MORA_FINE_7
+        data_type: DATE
+      - name: DT_MORA_FINE_8
+        data_type: DATE
+      - name: DT_MORA_FINE_9
+        data_type: DATE
+      - name: DT_MORA_FINE_10
+        data_type: DATE
+      - name: DT_MORA_INIZ_0
+        data_type: DATE
+      - name: DT_MORA_INIZ_1
+        data_type: DATE
+      - name: DT_MORA_INIZ_2
+        data_type: DATE
+      - name: DT_MORA_INIZ_3
+        data_type: DATE
+      - name: DT_MORA_INIZ_4
+        data_type: DATE
+      - name: DT_MORA_INIZ_5
+        data_type: DATE
+      - name: DT_MORA_INIZ_6
+        data_type: DATE
+      - name: DT_MORA_INIZ_7
+        data_type: DATE
+      - name: DT_MORA_INIZ_8
+        data_type: DATE
+      - name: DT_MORA_INIZ_9
+        data_type: DATE
+      - name: DT_MORA_INIZ_10
+        data_type: DATE
+      - name: NM_MESI_VALUTAZIONE
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO0
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO1
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO2
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO3
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO4
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO5
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO6
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO7
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO8
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO9
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO10
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO11
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO12
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO13
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO14
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO15
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO16
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO17
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO18
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO19
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO20
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO21
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO22
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO23
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO24
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO25
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO26
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO27
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO28
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO29
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO30
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO31
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO32
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO33
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO34
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO35
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO36
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO37
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO38
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO39
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO40
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO41
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO42
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO43
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO44
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO45
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO46
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO47
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO48
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO49
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO50
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO51
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO52
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO53
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO54
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO55
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO56
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO57
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO58
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO59
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO60
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO61
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO62
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO63
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO64
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO65
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO66
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO67
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO68
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO69
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO70
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO71
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO72
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO73
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO74
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO75
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO76
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO77
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO78
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO79
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO80
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO81
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO82
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO83
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO84
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO85
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO86
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO87
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO88
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO89
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO90
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO91
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO92
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO93
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO94
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO95
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO96
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO97
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO98
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO99
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO100
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO101
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO102
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO103
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO104
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO105
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO106
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO107
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO108
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO109
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO110
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO111
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO112
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO113
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO114
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO115
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO116
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO117
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO118
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO119
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST_ACCO120
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST0
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST1
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST2
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST3
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST4
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST5
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST6
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST7
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST8
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST9
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST10
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST11
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST12
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST13
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST14
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST15
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST16
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST17
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST18
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST19
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST20
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST21
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST22
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST23
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST24
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST25
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST26
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST27
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST28
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST29
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST30
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST31
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST32
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST33
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST34
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST35
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST36
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST37
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST38
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST39
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST40
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST41
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST42
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST43
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST44
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST45
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST46
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST47
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST48
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST49
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST50
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST51
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST52
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST53
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST54
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST55
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST56
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST57
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST58
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST59
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST60
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST61
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST62
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST63
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST64
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST65
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST66
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST67
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST68
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST69
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST70
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST71
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST72
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST73
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST74
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST75
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST76
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST77
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST78
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST79
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST80
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST81
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST82
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST83
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST84
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST85
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST86
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST87
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST88
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST89
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST90
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST91
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST92
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST93
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST94
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST95
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST96
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST97
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST98
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST99
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST100
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST101
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST102
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST103
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST104
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST105
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST106
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST107
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST108
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST109
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST110
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST111
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST112
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST113
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST114
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST115
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST116
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST117
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST118
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST119
+        data_type: NUMBER(8,NA)
+      - name: NM_WORST120
+        data_type: NUMBER(8,NA)

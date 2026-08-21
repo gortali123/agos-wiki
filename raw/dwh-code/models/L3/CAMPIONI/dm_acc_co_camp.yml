@@ -1,0 +1,661 @@
+version: 2
+
+models:
+  - name: dm_acc_co_camp
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: VARCHAR(10)
+      - name: CD_CLIENTE
+        data_type: NUMBER(38,0)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_DESTINAZIONE_BENE
+        data_type: VARCHAR(20)
+      - name: DS_DESTINAZIONE_BENE
+        data_type: VARCHAR(255)
+      - name: EU_PREZZO_BENE
+        data_type: NUMBER(18,2)
+      - name: CD_PRODOTTO
+        data_type: VARCHAR(20)
+      - name: CD_TIPO_PRODOTTO
+        data_type: VARCHAR(20)
+      - name: CD_CANALE_ACQUISIZIONE
+        data_type: VARCHAR(20)
+      - name: FL_WEB_CANALE_ACQ
+        data_type: VARCHAR(1)
+      - name: CD_MACRO_PRODOTTO_1
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_2
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_3
+        data_type: VARCHAR(20)
+      - name: CD_MACRO_PRODOTTO_4
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_1
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_2
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_3
+        data_type: VARCHAR(20)
+      - name: CD_MERCATO_4
+        data_type: VARCHAR(20)
+      - name: CD_DISTRETTO_FILIALE
+        data_type: VARCHAR(20)
+      - name: DS_DISTRETTO_FILIALE
+        data_type: VARCHAR(255)
+      - name: CD_AREA_FILIALE
+        data_type: VARCHAR(20)
+      - name: DS_AREA_FILIALE
+        data_type: VARCHAR(255)
+      - name: CD_RETE_VENDITA
+        data_type: NUMBER(38,0)
+      - name: CD_AGENTE
+        data_type: NUMBER(38,0)
+      - name: CD_SUB_AGENTE
+        data_type: NUMBER(38,0)
+      - name: CD_CONVENZIONATO
+        data_type: NUMBER(38,0)
+      - name: CD_PUNTO_VENDITA
+        data_type: NUMBER(38,0)
+      - name: DS_INSEGNA
+        data_type: VARCHAR(255)
+      - name: CD_VENDITORE
+        data_type: NUMBER(38,0)
+      - name: NM_TAN1
+        data_type: NUMBER(9,6)
+      - name: NM_TAN2
+        data_type: NUMBER(9,6)
+      - name: NM_TAN_PREAMM
+        data_type: NUMBER(9,6)
+      - name: NM_TAN_RATE
+        data_type: NUMBER(9,6)
+      - name: NM_TAEG1
+        data_type: NUMBER(9,6)
+      - name: NM_TAEG2
+        data_type: NUMBER(9,6)
+      - name: NM_TASSO_MORA
+        data_type: NUMBER(9,6)
+      - name: NM_TASSO_CLIENTE
+        data_type: NUMBER(9,6)
+      - name: DT_CARICAMENTO
+        data_type: DATE
+      - name: DT_ESAMINATA
+        data_type: DATE
+      - name: DT_ESITO
+        data_type: DATE
+      - name: DT_APPROVAZIONE
+        data_type: DATE
+      - name: DT_RESPINTA
+        data_type: DATE
+      - name: DT_RITIRATA
+        data_type: DATE
+      - name: DT_LIQUIDAZIONE
+        data_type: DATE
+      - name: DT_DECORRENZA
+        data_type: DATE
+      - name: DT_STORNATA
+        data_type: DATE
+      - name: DT_CHIUSURA_REGOLARE
+        data_type: DATE
+      - name: DT_ESTINZIONE_ANTICIPATA
+        data_type: DATE
+      - name: DT_PASSAGGIO_PERDITA
+        data_type: DATE
+      - name: DT_CESSIONE
+        data_type: DATE
+      - name: DT_CHIUSURA_EFFETTIVA
+        data_type: DATE
+      - name: DT_MESSA_IN_MORA
+        data_type: DATE
+      - name: DT_DBT
+        data_type: DATE
+      - name: TS_COMUNICAZIONE_ESITO_DEF
+        data_type: TIMESTAMP_NTZ(9)
+      - name: DT_CHIUSURA_ANZIANITA
+        data_type: DATE
+      - name: DT_ULT_ACCODAMENTO
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA
+        data_type: DATE
+      - name: DT_PRIMA_SCADENZA_IST
+        data_type: DATE
+      - name: DT_ULTIMA_SCADENZA
+        data_type: DATE
+      - name: DT_ULTIMA_SCADENZA_IST
+        data_type: DATE
+      - name: DT_ACQUISTO_MIN
+        data_type: DATE
+      - name: DT_CARICAMENTO_MIN
+        data_type: DATE
+      - name: DT_DECORRENZA_MIN
+        data_type: DATE
+      - name: DT_CARICAMENTO_SCORE
+        data_type: TIMESTAMP_NTZ(9)
+      - name: CD_ABI_CLIENTE
+        data_type: NUMBER(38,0)
+      - name: CD_CAB_CLIENTE
+        data_type: NUMBER(38,0)
+      - name: CD_CC_CLIENTE
+        data_type: VARCHAR(20)
+      - name: CD_PAESE
+        data_type: VARCHAR(60)
+      - name: CD_PRATICA_CARICAMENTO_MIN
+        data_type: NUMBER(38,0)
+      - name: CD_PRATICA_DECORRENZA_MIN
+        data_type: NUMBER(38,0)
+      - name: CD_NAZIONE_CLI
+        data_type: VARCHAR(20)
+      - name: CD_NAZIONE_COOB
+        data_type: VARCHAR(20)
+      - name: CD_COOBBLIGATO
+        data_type: VARCHAR(20)
+      - name: CD_CIN
+        data_type: VARCHAR(20)
+      - name: FL_MAXIRATA
+        data_type: VARCHAR(1)
+      - name: FL_CONSOLIDAMENTO
+        data_type: VARCHAR(1)
+      - name: FL_FIRMA_DOPPIA
+        data_type: VARCHAR(1)
+      - name: FL_GIA_CLIENTE_MARKETING
+        data_type: VARCHAR(1)
+      - name: CD_GIA_CLIENTE_MARKETING
+        data_type: VARCHAR(20)
+      - name: FL_GIA_CLIENTE_CREDITI
+        data_type: VARCHAR(1)
+      - name: FL_BENE_DETRAZ_FISCALE
+        data_type: VARCHAR(1)
+      - name: MAX_INS_CLI_L120M
+        data_type: NUMBER(3,0)
+      - name: MAX_INS_CLI_L120M_WORST
+        data_type: NUMBER(3,0)
+      - name: MAX_INSOLVENZA_CLI_CURRENT
+        data_type: NUMBER(3,0)
+      - name: MAX_INSOLVENZA_CLI_WORST
+        data_type: NUMBER(3,0)
+      - name: MAX_INSOLVENZA_CLIENTE
+        data_type: NUMBER(3,0)
+      - name: NM_ANNO_DECORRENZA
+        data_type: NUMBER(15,4)
+      - name: NM_MESE_DECORRENZA
+        data_type: NUMBER(15,4)
+      - name: NM_MESI_CLIENTE
+        data_type: NUMBER(15,4)
+      - name: EU_RATA_TOT
+        data_type: NUMBER(18,2)
+      - name: NM_RATE
+        data_type: NUMBER(15,4)
+      - name: NM_RATE_2
+        data_type: NUMBER(15,4)
+      - name: EU_RATA
+        data_type: NUMBER(18,2)
+      - name: EU_RATA_2
+        data_type: NUMBER(18,2)
+      - name: NM_DURATA_FINANZ
+        data_type: NUMBER(15,4)
+      - name: CD_FREQ_RATA
+        data_type: NUMBER(38,0)
+      - name: NM_MESI_DILAZIONE
+        data_type: NUMBER(15,4)
+      - name: DT_OPZIONE
+        data_type: DATE
+      - name: DT_SCADENZA_SPEC
+        data_type: DATE
+      - name: TP_TRUFFA
+        data_type: VARCHAR(10)
+      - name: CD_TRUFFA
+        data_type: VARCHAR(20)
+      - name: EU_EROGATO
+        data_type: NUMBER(18,2)
+      - name: EU_TOT_INTERESSI
+        data_type: NUMBER(18,2)
+      - name: EU_MAXI_RATA
+        data_type: NUMBER(18,2)
+      - name: EU_ANTICIPO
+        data_type: NUMBER(18,2)
+      - name: EU_MONTANTE
+        data_type: NUMBER(18,2)
+      - name: EU_FRESH_CASH
+        data_type: NUMBER(18,2)
+      - name: EU_COMMISSIONI_IST
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_BOLLO_IST
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_TOT_IST
+        data_type: NUMBER(18,2)
+      - name: EU_INTERESSI_TERZ
+        data_type: NUMBER(18,2)
+      - name: EU_INTERESSI_CONVENZ
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_DILAZ_CONVENZ
+        data_type: NUMBER(18,2)
+      - name: EU_TOT_CONTRIB_DA_INTER
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_RICORRENTI
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_SMGP
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_TRASPARENZA
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_EC
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_BOLLO_EC
+        data_type: NUMBER(18,2)
+      - name: EU_SPESE_RICORRENTI_TOT
+        data_type: NUMBER(18,2)
+      - name: DS_MARCA
+        data_type: VARCHAR(255)
+      - name: DS_MODELLO_AUTO
+        data_type: VARCHAR(255)
+      - name: CD_ESITO_PREC
+        data_type: VARCHAR(20)
+      - name: FL_GIACLIENTE_CLI
+        data_type: VARCHAR(1)
+      - name: FL_GIACLIENTE_COBLGT
+        data_type: VARCHAR(1)
+      - name: CD_RAE_CLI
+        data_type: VARCHAR(20)
+      - name: CD_RAE_COBLGT
+        data_type: VARCHAR(20)
+      - name: CD_STATO_CIV_CLI
+        data_type: VARCHAR(20)
+      - name: CD_STATO_CIV_COBLGT
+        data_type: VARCHAR(20)
+      - name: DT_INIZIO_CLI
+        data_type: DATE
+      - name: DT_INIZIO_COBLGT
+        data_type: DATE
+      - name: DT_LIQUIDAZIONE_UP
+        data_type: DATE
+      - name: DT_UF_CLI
+        data_type: DATE
+      - name: DT_UF_COBLGT
+        data_type: DATE
+      - name: EU_ENTRATE_MENS_TOT_CLI
+        data_type: NUMBER(18,2)
+      - name: EU_ENTRATE_MENS_TOT_COBLGT
+        data_type: NUMBER(18,2)
+      - name: EU_FIDO_ACCETTAZIONE
+        data_type: NUMBER(18,2)
+      - name: FL_INSOLVENZE_PREC_CRIF_CLI
+        data_type: VARCHAR(1)
+      - name: IN_OPERAZ_NON_PERF_CRIF_CLI
+        data_type: VARCHAR(1)
+      - name: FL_PROTESTI_CLI
+        data_type: VARCHAR(1)
+      - name: FL_PROTESTI_COBLGT
+        data_type: VARCHAR(1)
+      - name: FL_TRUFFATORE_CLI
+        data_type: VARCHAR(1)
+      - name: FL_TRUFFATORE_COBLGT
+        data_type: VARCHAR(1)
+      - name: CD_STATO_PRAT
+        data_type: VARCHAR(20)
+      - name: CD_ATTRIBUTO_PRAT
+        data_type: VARCHAR(20)
+      - name: CD_BLOCCO_PRAT
+        data_type: VARCHAR(20)
+      - name: CD_ESITO_PRAT
+        data_type: VARCHAR(20)
+      - name: DT_ESITO_PRAT
+        data_type: DATE
+      - name: CD_USER_ESITO_FINALE
+        data_type: VARCHAR(20)
+      - name: CD_MOTIVO_OVERRIDE
+        data_type: VARCHAR(20)
+      - name: TP_OVERRIDE
+        data_type: VARCHAR(10)
+      - name: CD_ESITO_ELAB_CDE
+        data_type: VARCHAR(20)
+      - name: DS_ESITO_ELAB_CDE
+        data_type: VARCHAR(255)
+      - name: CD_ESITO_CHIAMATA
+        data_type: VARCHAR(20)
+      - name: CD_ESITO_CODICE
+        data_type: VARCHAR(20)
+      - name: DS_ESITO_MESSAGGIO
+        data_type: VARCHAR(255)
+      - name: CD_OPERAZIONE
+        data_type: VARCHAR(20)
+      - name: NM_RICHIESTA
+        data_type: NUMBER(15,4)
+      - name: NM_ID_GUID_CF
+        data_type: VARCHAR(40)
+      - name: CD_ESITO_AMLCHECK
+        data_type: VARCHAR(20)
+      - name: DS_ESITO_AMLCHECK
+        data_type: VARCHAR(255)
+      - name: FL_PRT_CAR_ORA_SERV
+        data_type: VARCHAR(1)
+      - name: CD_ESITO_ANTIFRAUD
+        data_type: VARCHAR(20)
+      - name: DS_ESITO_ANTIFRAUD
+        data_type: VARCHAR(255)
+      - name: CD_ESITO_GIANOS
+        data_type: VARCHAR(20)
+      - name: CD_ESITO_FIRCOSOFT
+        data_type: VARCHAR(20)
+      - name: CD_VALUTAZ_PRT
+        data_type: VARCHAR(20)
+      - name: FL_APAG_CON_SOSPENS
+        data_type: VARCHAR(1)
+      - name: FL_SCIPAFI_OBBL
+        data_type: VARCHAR(1)
+      - name: CD_LIVELLO_FIRMA_PRT
+        data_type: VARCHAR(20)
+      - name: CD_AREA_RISCHIO
+        data_type: VARCHAR(20)
+      - name: FL_TIPO_VENDITA_CONGIUNTA
+        data_type: VARCHAR(1)
+      - name: EU_FIDO_MASSIMO
+        data_type: NUMBER(18,2)
+      - name: CD_MOTIVO_ESITO
+        data_type: VARCHAR(20)
+      - name: CD_FASCIA_RBP
+        data_type: NUMBER(38,0)
+      - name: CD_FASCIA_RBP_LIGHT
+        data_type: NUMBER(38,0)
+      - name: CD_TAB_FINANZ_IRR
+        data_type: VARCHAR(20)
+      - name: EU_FIDO_SCORE
+        data_type: NUMBER(18,2)
+      - name: CD_UTENTE
+        data_type: VARCHAR(20)
+      - name: TS_RISPOSTA
+        data_type: TIMESTAMP_NTZ(9)
+      - name: CD_SCORE_MODULO_1_OBJCODE
+        data_type: VARCHAR(20)
+      - name: NM_SCORE_MODULO_1_ALIGNED
+        data_type: NUMBER(15,4)
+      - name: CD_SCORE_MODULO_2_OBJCODE
+        data_type: VARCHAR(20)
+      - name: NM_SCORE_MODULO_2_ALIGNED
+        data_type: NUMBER(15,4)
+      - name: CD_SCORE_MODULO_3_OBJCODE
+        data_type: VARCHAR(20)
+      - name: NM_SCORE_MODULO_3_ALIGNED
+        data_type: NUMBER(15,4)
+      - name: CD_SCORE_MODULO_8_OBJCODE
+        data_type: VARCHAR(20)
+      - name: NM_SCORE_MODULO_8_ALIGNED
+        data_type: NUMBER(15,4)
+      - name: CD_SCORE_MODULO_9_OBJCODE
+        data_type: VARCHAR(20)
+      - name: NM_SCORE_MODULO_9_ALIGNED
+        data_type: NUMBER(15,4)
+      - name: CD_SEGMENTAZIONE_CODICE
+        data_type: VARCHAR(20)
+      - name: NM_EURISC_CBSCORE_CLI
+        data_type: NUMBER(15,4)
+      - name: NM_EURISC_CBSCORE_COO
+        data_type: NUMBER(15,4)
+      - name: NM_EURISC_NOHIT_PUNTEGGIO_CLI
+        data_type: NUMBER(15,4)
+      - name: NM_EURISC_NOHIT_PUNTEGGIO_COO
+        data_type: NUMBER(15,4)
+      - name: TP_EURISC_FASCIA_SCORE_CLI
+        data_type: VARCHAR(10)
+      - name: TP_EURISC_FASCIA_SCORE_COO
+        data_type: VARCHAR(10)
+      - name: NM_CTCPOS_SCORE_COMPLETO_CLI
+        data_type: NUMBER(15,4)
+      - name: NM_CTCPOS_SCORE_COMPLETO_COO
+        data_type: NUMBER(15,4)
+      - name: TP_CTCPOS_SCORE_COMPLETO_FASCIA_CLI
+        data_type: VARCHAR(10)
+      - name: TP_CTCPOS_SCORE_COMPLETO_FASCIA_COO
+        data_type: VARCHAR(10)
+      - name: FL_CTCPOS_HIT_NOHIT_CLI
+        data_type: VARCHAR(1)
+      - name: FL_CTCPOS_HIT_NOHIT_COO
+        data_type: VARCHAR(1)
+      - name: FL_EURISC_HIT_NOHIT_CLI
+        data_type: VARCHAR(1)
+      - name: FL_EURISC_HIT_NOHIT_COO
+        data_type: VARCHAR(1)
+      - name: NM_OB_SCORE_CLI
+        data_type: NUMBER(15,4)
+      - name: FL_OB_ESENZIONE_REDDITO_CLI
+        data_type: VARCHAR(1)
+      - name: CD_OB_STATO_CLI
+        data_type: VARCHAR(20)
+      - name: CD_CTCPOS_STATO_CLI
+        data_type: VARCHAR(20)
+      - name: CD_CTCPOS_STATO_COO
+        data_type: VARCHAR(20)
+      - name: CD_EURISC_CRIF_STATO_CLI
+        data_type: VARCHAR(20)
+      - name: CD_EURISC_CRIF_STATO_COO
+        data_type: VARCHAR(20)
+      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+        data_type: NUMBER(9,4)
+      - name: CD_INQUIRYCODE
+        data_type: VARCHAR(20)
+      - name: CD_PROCESSCODE
+        data_type: VARCHAR(20)
+      - name: CD_INDICATORE_PREQUALIFICA_CLI
+        data_type: VARCHAR(20)
+      - name: CD_INDICATORE_PREQUALIFICA_COO
+        data_type: VARCHAR(20)
+      - name: CD_NEWS_BANCO_CLI
+        data_type: VARCHAR(20)
+      - name: CD_NEWS_BANCO_COO
+        data_type: VARCHAR(20)
+      - name: CD_SEGMENTO_PERSONAL_CLI
+        data_type: VARCHAR(20)
+      - name: CD_SEGMENTO_PERSONAL_COO
+        data_type: VARCHAR(20)
+      - name: NM_REGOLE_KO
+        data_type: NUMBER(15,4)
+      - name: DS_REGOLE_KO
+        data_type: VARCHAR(255)
+      - name: NM_REGOLE_NC
+        data_type: NUMBER(15,4)
+      - name: DS_REGOLE_NC
+        data_type: VARCHAR(255)
+      - name: FL_ESITO_POLICY
+        data_type: VARCHAR(1)
+      - name: NM_LIVELLO_FIRMA_MAX_KO
+        data_type: NUMBER(15,4)
+      - name: NM_REGOLE_OVERRRIDE
+        data_type: NUMBER(15,4)
+      - name: DS_REGOLE_OVERRIDE
+        data_type: VARCHAR(255)
+      - name: DS_REGOLA_180_MESSAGGIO
+        data_type: VARCHAR(255)
+      - name: DS_REGOLA_180_DESCRIZIONE_RULES
+        data_type: VARCHAR(255)
+      - name: DS_REGOLA_179_MESSAGGIO
+        data_type: VARCHAR(255)
+      - name: DS_REGOLA_179_DESCRIZIONE_RULES
+        data_type: VARCHAR(255)
+      - name: DS_REGOLA_194_MESSAGGIO
+        data_type: VARCHAR(255)
+      - name: DS_REGOLA_194_DESCRIZIONE_RULES
+        data_type: VARCHAR(255)
+      - name: DS_REGOLA_43_DESCRIZIONE_RULES
+        data_type: VARCHAR(255)
+      - name: TP_SCIPAFI_CLI
+        data_type: VARCHAR(10)
+      - name: TP_SCIPAFI_COO
+        data_type: VARCHAR(10)
+      - name: CD_ESITO_PRESCREENING
+        data_type: VARCHAR(20)
+      - name: DS_ESITO_PRESCREENING
+        data_type: VARCHAR(255)
+      - name: NM_POLICY_PRESCREENING_KO_CLI
+        data_type: NUMBER(15,4)
+      - name: TS_INSERIMENTO
+        data_type: TIMESTAMP_NTZ(9)
+      - name: CD_CONTROPARTE
+        data_type: NUMBER(38,0)
+      - name: TP_RAPPORTO
+        data_type: VARCHAR(10)
+      - name: TP_CONTROPARTE
+        data_type: VARCHAR(10)
+      - name: DT_CARIC_ULT_PP_REMOTO
+        data_type: DATE
+      - name: DT_ULTIMA_MORA
+        data_type: DATE
+      - name: DT_PRIMO_UTILIZZO
+        data_type: DATE
+      - name: DT_INIZIO_RAPP
+        data_type: DATE
+      - name: DT_APERTURA_PRIMA_PRATICA
+        data_type: DATE
+      - name: CD_SESSO
+        data_type: VARCHAR(20)
+      - name: CD_CITTADINANZA
+        data_type: VARCHAR(20)
+      - name: NM_FAMILIARI
+        data_type: NUMBER(15,4)
+      - name: CD_STATO_CIVILE
+        data_type: VARCHAR(20)
+      - name: DS_STATO_CIVILE
+        data_type: VARCHAR(255)
+      - name: CD_CONIUGE_GARANTE
+        data_type: NUMBER(38,0)
+      - name: CD_FORMA_GIURIDICA
+        data_type: VARCHAR(20)
+      - name: DT_NASCITA
+        data_type: DATE
+      - name: CD_PROVINCIA_NASCITA
+        data_type: VARCHAR(20)
+      - name: CD_QUALITA
+        data_type: VARCHAR(20)
+      - name: CD_QUALITA_CONV
+        data_type: VARCHAR(20)
+      - name: CD_TIPO_AZIENDA
+        data_type: VARCHAR(20)
+      - name: DT_INIZIO_RAPP_BANCA
+        data_type: DATE
+      - name: TP_PRATICA_INTERNET
+        data_type: VARCHAR(10)
+      - name: NM_PRATICHE
+        data_type: NUMBER(15,4)
+      - name: TP_ATTIVITA
+        data_type: VARCHAR(10)
+      - name: TP_AMBITO_LAVORATIVO
+        data_type: VARCHAR(10)
+      - name: DS_DATORE_LAVORO
+        data_type: VARCHAR(255)
+      - name: CD_PARTITA_IVA_DATORE_LAVORO
+        data_type: VARCHAR(20)
+      - name: CD_SETT_ATTIVITA
+        data_type: VARCHAR(20)
+      - name: CD_OCCUPAZIONE
+        data_type: VARCHAR(20)
+      - name: DT_INIZIO_OCCUP
+        data_type: DATE
+      - name: TP_CONTRATTO_LAVORO
+        data_type: VARCHAR(10)
+      - name: NM_MESI_DURATA
+        data_type: NUMBER(15,4)
+      - name: NM_MENSILITA
+        data_type: NUMBER(15,4)
+      - name: FL_ACCREDITO_STIP
+        data_type: VARCHAR(1)
+      - name: CD_ABITAZIONE
+        data_type: VARCHAR(20)
+      - name: TP_ABITAZIONE
+        data_type: VARCHAR(10)
+      - name: TP_LOCAZIONE
+        data_type: VARCHAR(10)
+      - name: DT_INIZIO_INDIR
+        data_type: DATE
+      - name: CD_PROVINCIA_RESIDENZA
+        data_type: VARCHAR(20)
+      - name: CD_REGIONE_RESIDENZA
+        data_type: VARCHAR(20)
+      - name: CD_PROVEN_COMMERC
+        data_type: VARCHAR(20)
+      - name: EU_ALTRI_REDDITI
+        data_type: NUMBER(18,2)
+      - name: EU_REDDITO_ANNUO
+        data_type: NUMBER(18,2)
+      - name: NM_REDDITO_MENSILITA
+        data_type: NUMBER(15,4)
+      - name: EU_REDDITO_FAMIGLIARE
+        data_type: NUMBER(18,2)
+      - name: FL_DEPOSITO_BANCARIO
+        data_type: VARCHAR(1)
+      - name: FL_CONTO_BANCARIO
+        data_type: VARCHAR(1)
+      - name: FL_NUOVO_CLIENTE
+        data_type: VARCHAR(1)
+      - name: FL_GIA_CLIENTE_BANCA
+        data_type: VARCHAR(1)
+      - name: FL_FIRMA_DOPPIA_SDC
+        data_type: VARCHAR(1)
+      - name: EU_CUMULO_RISCHIO
+        data_type: NUMBER(18,2)
+      - name: EU_CUMULO_RISCHIO_CRIF
+        data_type: NUMBER(18,2)
+      - name: EU_COMMISSIONE
+        data_type: NUMBER(18,2)
+      - name: EU_DEPOSITO_BANCARIO
+        data_type: NUMBER(18,2)
+      - name: EU_FIDO
+        data_type: NUMBER(18,2)
+      - name: EU_FINANZIATO
+        data_type: NUMBER(18,2)
+      - name: EU_IMPIEGHI
+        data_type: NUMBER(18,2)
+      - name: EU_RATA_2_SDC
+        data_type: NUMBER(18,2)
+      - name: EU_RATA_CRIF
+        data_type: NUMBER(18,2)
+      - name: EU_ALTR_USC
+        data_type: NUMBER(18,2)
+      - name: NM_MOROSITA
+        data_type: NUMBER(15,4)
+      - name: EU_MOROSITA
+        data_type: NUMBER(18,2)
+      - name: NM_PROTESTI
+        data_type: NUMBER(15,4)
+      - name: DT_ULTIMO_PROTESTO
+        data_type: DATE
+      - name: EU_PROTESTI
+        data_type: NUMBER(18,2)
+      - name: TP_ORGANIZZAZIONE_CARTA
+        data_type: VARCHAR(10)
+      - name: CD_ORGANIZZAZIONE_CARTA
+        data_type: VARCHAR(20)
+      - name: CD_BLOCCO
+        data_type: VARCHAR(20)
+      - name: DS_BLOCCO
+        data_type: VARCHAR(255)
+      - name: NM_CESSIONE_BUSTA_PAGA
+        data_type: NUMBER(15,4)
+      - name: TP_PAGAMENTO
+        data_type: VARCHAR(10)
+      - name: TP_RIPAGAMENTO
+        data_type: VARCHAR(10)
+      - name: CD_TAB_FINANZ
+        data_type: VARCHAR(20)
+      - name: CD_TIPO_TASSO
+        data_type: VARCHAR(20)
+      - name: NM_RATE_SDC
+        data_type: NUMBER(15,4)
+      - name: NM_RATE_2_SDC
+        data_type: NUMBER(15,4)
+      - name: CD_CBSCORE_CRIF
+        data_type: VARCHAR(20)
+      - name: CD_CBSCORE_CRIF_ULT_CO
+        data_type: VARCHAR(20)
+      - name: CD_COMPORT_CRIF
+        data_type: VARCHAR(20)
+      - name: NM_QUANTITA_SCORE_CRIF
+        data_type: NUMBER(15,4)
+      - name: TP_BANCA
+        data_type: VARCHAR(10)
+      - name: CD_BENE
+        data_type: VARCHAR(20)
+      - name: EU_BENE
+        data_type: NUMBER(18,2)
+      - name: TP_BENE
+        data_type: VARCHAR(10)
+      - name: DS_BENE
+        data_type: VARCHAR(255)

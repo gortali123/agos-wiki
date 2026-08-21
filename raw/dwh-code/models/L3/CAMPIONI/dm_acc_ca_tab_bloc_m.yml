@@ -1,0 +1,31 @@
+version: 2
+models:
+  - name: dm_acc_ca_tab_bloc_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: CD_CLEINTE
+        data_type: NUMBER(9,0)
+      - name: DT_CHIUSURA_ALTRA_CARTA
+        data_type: DATE
+      - name: DT_PERDITA_ALTRA_CARTA
+        data_type: DATE
+      - name: CD_BLOCCO_PRIMARIO
+        data_type: VARCHAR(10)
+      - name: DT_CHIUSURA
+        data_type: DATE
+      - name: DT_CESSIONE
+        data_type: DATE
+      - name: TP_BLOCCO
+        data_type: CHAR(2)

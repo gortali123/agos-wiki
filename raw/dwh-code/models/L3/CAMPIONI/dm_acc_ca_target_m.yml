@@ -1,0 +1,419 @@
+version: 2
+models:
+  - name: dm_acc_ca_target_m
+
+    description: "DM_45 - Target Campioni Accettazione CA: impagati worst per offset mensile"
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      # FIX: il data model dichiara CD_PRATICA VARCHAR(10); il DDL L2 e' NUMBER(16,0)
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+        description: "Codice pratica"
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+        description: "Tipo procedura"
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+        description: "Data osservazione"
+      - name: CD_CLIENTE
+        data_type: NUMBER(9,0)
+        description: "Codice cliente"
+      - name: CD_STATO
+        data_type: VARCHAR(2)
+        description: "Codice stato pratica"
+      - name: FL_PERDITA_CESSIONE
+        data_type: CHAR(1)
+        description: "Flag di perdita/cessione"
+      - name: DT_CARICAMENTO
+        data_type: DATE
+        description: "Data caricamento (max fra dt_inse e dt_variazione)"
+      - name: DT_CHIUSURA
+        data_type: DATE
+        description: "Data chiusura della carta"
+      - name: DT_PRIMO_MOV_REGISTR
+        data_type: DATE
+        description: "Data primo acquisto"
+      - name: DT_DBT
+        data_type: DATE
+        description: "Data di DBT"
+      - name: DT_PERDITA
+        data_type: DATE
+        description: "Data di perdita"
+      - name: DT_CESSIONE
+        data_type: DATE
+        description: "Data di cessione"
+      - name: DT_PRIMA_SCAD
+        data_type: DATE
+        description: "Data di scadenza della prima rata"
+      - name: NM_WORST0
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 0 dopo DT_DECORRENZA"
+      - name: NM_WORST1
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 1 dopo DT_DECORRENZA"
+      - name: NM_WORST2
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 2 dopo DT_DECORRENZA"
+      - name: NM_WORST3
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 3 dopo DT_DECORRENZA"
+      - name: NM_WORST4
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 4 dopo DT_DECORRENZA"
+      - name: NM_WORST5
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 5 dopo DT_DECORRENZA"
+      - name: NM_WORST6
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 6 dopo DT_DECORRENZA"
+      - name: NM_WORST7
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 7 dopo DT_DECORRENZA"
+      - name: NM_WORST8
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 8 dopo DT_DECORRENZA"
+      - name: NM_WORST9
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 9 dopo DT_DECORRENZA"
+      - name: NM_WORST10
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 10 dopo DT_DECORRENZA"
+      - name: NM_WORST11
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 11 dopo DT_DECORRENZA"
+      - name: NM_WORST12
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 12 dopo DT_DECORRENZA"
+      - name: NM_WORST13
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 13 dopo DT_DECORRENZA"
+      - name: NM_WORST14
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 14 dopo DT_DECORRENZA"
+      - name: NM_WORST15
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 15 dopo DT_DECORRENZA"
+      - name: NM_WORST16
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 16 dopo DT_DECORRENZA"
+      - name: NM_WORST17
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 17 dopo DT_DECORRENZA"
+      - name: NM_WORST18
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 18 dopo DT_DECORRENZA"
+      - name: NM_WORST19
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 19 dopo DT_DECORRENZA"
+      - name: NM_WORST20
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 20 dopo DT_DECORRENZA"
+      - name: NM_WORST21
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 21 dopo DT_DECORRENZA"
+      - name: NM_WORST22
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 22 dopo DT_DECORRENZA"
+      - name: NM_WORST23
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 23 dopo DT_DECORRENZA"
+      - name: NM_WORST24
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 24 dopo DT_DECORRENZA"
+      - name: NM_WORST25
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 25 dopo DT_DECORRENZA"
+      - name: NM_WORST26
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 26 dopo DT_DECORRENZA"
+      - name: NM_WORST27
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 27 dopo DT_DECORRENZA"
+      - name: NM_WORST28
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 28 dopo DT_DECORRENZA"
+      - name: NM_WORST29
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 29 dopo DT_DECORRENZA"
+      - name: NM_WORST30
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 30 dopo DT_DECORRENZA"
+      - name: NM_WORST31
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 31 dopo DT_DECORRENZA"
+      - name: NM_WORST32
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 32 dopo DT_DECORRENZA"
+      - name: NM_WORST33
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 33 dopo DT_DECORRENZA"
+      - name: NM_WORST34
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 34 dopo DT_DECORRENZA"
+      - name: NM_WORST35
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 35 dopo DT_DECORRENZA"
+      - name: NM_WORST36
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 36 dopo DT_DECORRENZA"
+      - name: NM_WORST37
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 37 dopo DT_DECORRENZA"
+      - name: NM_WORST38
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 38 dopo DT_DECORRENZA"
+      - name: NM_WORST39
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 39 dopo DT_DECORRENZA"
+      - name: NM_WORST40
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 40 dopo DT_DECORRENZA"
+      - name: NM_WORST41
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 41 dopo DT_DECORRENZA"
+      - name: NM_WORST42
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 42 dopo DT_DECORRENZA"
+      - name: NM_WORST43
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 43 dopo DT_DECORRENZA"
+      - name: NM_WORST44
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 44 dopo DT_DECORRENZA"
+      - name: NM_WORST45
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 45 dopo DT_DECORRENZA"
+      - name: NM_WORST46
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 46 dopo DT_DECORRENZA"
+      - name: NM_WORST47
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 47 dopo DT_DECORRENZA"
+      - name: NM_WORST48
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 48 dopo DT_DECORRENZA"
+      - name: NM_WORST49
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 49 dopo DT_DECORRENZA"
+      - name: NM_WORST50
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 50 dopo DT_DECORRENZA"
+      - name: NM_WORST51
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 51 dopo DT_DECORRENZA"
+      - name: NM_WORST52
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 52 dopo DT_DECORRENZA"
+      - name: NM_WORST53
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 53 dopo DT_DECORRENZA"
+      - name: NM_WORST54
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 54 dopo DT_DECORRENZA"
+      - name: NM_WORST55
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 55 dopo DT_DECORRENZA"
+      - name: NM_WORST56
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 56 dopo DT_DECORRENZA"
+      - name: NM_WORST57
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 57 dopo DT_DECORRENZA"
+      - name: NM_WORST58
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 58 dopo DT_DECORRENZA"
+      - name: NM_WORST59
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 59 dopo DT_DECORRENZA"
+      - name: NM_WORST60
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 60 dopo DT_DECORRENZA"
+      - name: NM_WORST61
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 61 dopo DT_DECORRENZA"
+      - name: NM_WORST62
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 62 dopo DT_DECORRENZA"
+      - name: NM_WORST63
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 63 dopo DT_DECORRENZA"
+      - name: NM_WORST64
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 64 dopo DT_DECORRENZA"
+      - name: NM_WORST65
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 65 dopo DT_DECORRENZA"
+      - name: NM_WORST66
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 66 dopo DT_DECORRENZA"
+      - name: NM_WORST67
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 67 dopo DT_DECORRENZA"
+      - name: NM_WORST68
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 68 dopo DT_DECORRENZA"
+      - name: NM_WORST69
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 69 dopo DT_DECORRENZA"
+      - name: NM_WORST70
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 70 dopo DT_DECORRENZA"
+      - name: NM_WORST71
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 71 dopo DT_DECORRENZA"
+      - name: NM_WORST72
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 72 dopo DT_DECORRENZA"
+      - name: NM_WORST73
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 73 dopo DT_DECORRENZA"
+      - name: NM_WORST74
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 74 dopo DT_DECORRENZA"
+      - name: NM_WORST75
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 75 dopo DT_DECORRENZA"
+      - name: NM_WORST76
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 76 dopo DT_DECORRENZA"
+      - name: NM_WORST77
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 77 dopo DT_DECORRENZA"
+      - name: NM_WORST78
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 78 dopo DT_DECORRENZA"
+      - name: NM_WORST79
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 79 dopo DT_DECORRENZA"
+      - name: NM_WORST80
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 80 dopo DT_DECORRENZA"
+      - name: NM_WORST81
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 81 dopo DT_DECORRENZA"
+      - name: NM_WORST82
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 82 dopo DT_DECORRENZA"
+      - name: NM_WORST83
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 83 dopo DT_DECORRENZA"
+      - name: NM_WORST84
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 84 dopo DT_DECORRENZA"
+      - name: NM_WORST85
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 85 dopo DT_DECORRENZA"
+      - name: NM_WORST86
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 86 dopo DT_DECORRENZA"
+      - name: NM_WORST87
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 87 dopo DT_DECORRENZA"
+      - name: NM_WORST88
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 88 dopo DT_DECORRENZA"
+      - name: NM_WORST89
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 89 dopo DT_DECORRENZA"
+      - name: NM_WORST90
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 90 dopo DT_DECORRENZA"
+      - name: NM_WORST91
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 91 dopo DT_DECORRENZA"
+      - name: NM_WORST92
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 92 dopo DT_DECORRENZA"
+      - name: NM_WORST93
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 93 dopo DT_DECORRENZA"
+      - name: NM_WORST94
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 94 dopo DT_DECORRENZA"
+      - name: NM_WORST95
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 95 dopo DT_DECORRENZA"
+      - name: NM_WORST96
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 96 dopo DT_DECORRENZA"
+      - name: NM_WORST97
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 97 dopo DT_DECORRENZA"
+      - name: NM_WORST98
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 98 dopo DT_DECORRENZA"
+      - name: NM_WORST99
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 99 dopo DT_DECORRENZA"
+      - name: NM_WORST100
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 100 dopo DT_DECORRENZA"
+      - name: NM_WORST101
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 101 dopo DT_DECORRENZA"
+      - name: NM_WORST102
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 102 dopo DT_DECORRENZA"
+      - name: NM_WORST103
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 103 dopo DT_DECORRENZA"
+      - name: NM_WORST104
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 104 dopo DT_DECORRENZA"
+      - name: NM_WORST105
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 105 dopo DT_DECORRENZA"
+      - name: NM_WORST106
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 106 dopo DT_DECORRENZA"
+      - name: NM_WORST107
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 107 dopo DT_DECORRENZA"
+      - name: NM_WORST108
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 108 dopo DT_DECORRENZA"
+      - name: NM_WORST109
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 109 dopo DT_DECORRENZA"
+      - name: NM_WORST110
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 110 dopo DT_DECORRENZA"
+      - name: NM_WORST111
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 111 dopo DT_DECORRENZA"
+      - name: NM_WORST112
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 112 dopo DT_DECORRENZA"
+      - name: NM_WORST113
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 113 dopo DT_DECORRENZA"
+      - name: NM_WORST114
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 114 dopo DT_DECORRENZA"
+      - name: NM_WORST115
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 115 dopo DT_DECORRENZA"
+      - name: NM_WORST116
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 116 dopo DT_DECORRENZA"
+      - name: NM_WORST117
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 117 dopo DT_DECORRENZA"
+      - name: NM_WORST118
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 118 dopo DT_DECORRENZA"
+      - name: NM_WORST119
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 119 dopo DT_DECORRENZA"
+      - name: NM_WORST120
+        data_type: NUMBER(10,0)
+        description: "Numero di impagati worst (esclusi accodamenti) al mese 120 dopo DT_DECORRENZA"
+      - name: NM_MESI
+        data_type: NUMBER(10,0)
+        description: "Numero di mesi da DT_DECORRENZA a DT_OSSERVAZIONE"

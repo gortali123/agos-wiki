@@ -1,0 +1,263 @@
+version: 2
+models:
+  - name: dm_acc_ca_mtx_inat_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [CD_PRATICA, TP_PROCEDURA, DT_OSSERVAZIONE]
+    columns:
+      - name: CD_PRATICA
+        data_type: NUMBER(16,0)
+      - name: TP_PROCEDURA
+        data_type: CHAR(2)
+      - name: DT_OSSERVAZIONE
+        data_type: DATE
+      - name: DT_CARICAMENTO_SCORE
+        data_type: DATE
+      - name: FL_INUTILIZZI0
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI1
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI2
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI3
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI4
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI5
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI6
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI7
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI8
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI9
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI10
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI11
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI12
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI13
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI14
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI15
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI16
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI17
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI18
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI19
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI20
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI21
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI22
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI23
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI24
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI25
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI26
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI27
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI28
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI29
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI30
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI31
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI32
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI33
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI34
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI35
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI36
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI37
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI38
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI39
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI40
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI41
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI42
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI43
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI44
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI45
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI46
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI47
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI48
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI49
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI50
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI51
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI52
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI53
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI54
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI55
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI56
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI57
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI58
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI59
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI60
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI61
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI62
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI63
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI64
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI65
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI66
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI67
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI68
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI69
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI70
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI71
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI72
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI73
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI74
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI75
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI76
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI77
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI78
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI79
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI80
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI81
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI82
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI83
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI84
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI85
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI86
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI87
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI88
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI89
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI90
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI91
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI92
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI93
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI94
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI95
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI96
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI97
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI98
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI99
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI100
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI101
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI102
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI103
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI104
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI105
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI106
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI107
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI108
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI109
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI110
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI111
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI112
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI113
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI114
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI115
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI116
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI117
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI118
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI119
+        data_type: CHAR(1)
+      - name: FL_INUTILIZZI120
+        data_type: CHAR(1)
+      - name: NM_MESI
+        data_type: NUMBER(10,0)
