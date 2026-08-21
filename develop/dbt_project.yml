@@ -1,0 +1,725 @@
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'agosx'
+version: '1.0.0'
+config-version: 2
+
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'default'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+# Full documentation: https://dO.getdbt.com/dO/configuring-models
+
+# In dbt, the default materialization for a model is a view. This means, when you run
+# dbt run or dbt build, all of your models will be built as a view in your data platform.
+# The configuration below will override this setting for models in the example folder to
+# instead be materialized as tables. Any models you add to the root of the models folder will
+# continue to be built as views. These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+
+models:
+  agosx:
+    +materialized: incremental
+    +transient: false
+    +contract:
+      enforced: true
+    +on_schema_change: "append_new_columns"
+    +database: "{{ env_var('DBT_DATABASE') }}"
+    L1:
+      +meta: {layer: "L1"}
+      +tags: ["L1"]
+      ADOBE:
+        +meta: {source: "ADOBE"}
+        +schema: L1_E_ADB
+        +tags: ["adobe","noocs"]
+      BANCO:
+        +meta: {source: "BANCO"}
+        +schema: L1_E_BAN
+        +tags: ["banco","noocs"]
+      BSN:
+        +meta: {source: "BSN"}
+        +schema: L1_E_BSN
+        +tags: ["bsn","noocs"]
+      CDE:
+        +meta: {source: "CDE"}
+        +schema: L1_E_CDE
+        +tags: ["cde","noocs"]
+      CRIF:
+        +meta: {source: "CRIF"}
+        +schema: L1_E_CRF
+        +tags: ["crif","noocs"]
+      CRUSCOTTI:
+        +meta: {source: "CRUSCOTTI"}
+        +schema: L1_E_CRS
+        +tags: ["crs","noocs"]
+      CTC:
+        +meta: {source: "CTC"}
+        +schema: L1_E_CTC
+        +tags: ["ctc","noocs"]
+      DIL:
+        +meta: {source: "DIL"}
+        +schema: L1_E_DIL
+        +tags: ["dil","noocs"]
+      FEA:
+        +meta: {source: "FEA"}
+        +schema: L1_E_FEA
+        +tags: ["fea","noocs"]
+      IDM:
+        +meta: {source: "IDM"}
+        +schema: L1_E_IDM
+        +tags: ["idm","noocs"]
+      MICRODATA:
+        +meta: {source: "MICRODATA"}
+        +schema: L1_E_MCD
+        +tags: ["microdata","noocs"]
+      PRIMEWEB:
+        +meta: {source: "PRIMEWEB"}
+        +schema: L1_E_PWB
+        +tags: ["primeweb","noocs"]
+      OPENBANKING:
+        +meta: {source: "OPENBANKING"}
+        +schema: L1_E_OPB
+        +tags: ["openbanking","noocs"]
+      POSTE:
+        +meta: {source: "POSTE"}
+        +schema: L1_E_BSN
+        +tags: ["poste","noocs"]
+      SAP:
+        +meta: {source: "SAP"}
+        +schema: L1_E_SAP
+        +tags: ["sap","noocs"]
+      SFC:
+        +meta: {source: "SFC"}
+        +schema: L1_E_SFC
+        +tags: ["sfc","noocs"]
+      SWORD:
+        +meta: {source: "SWORD"}
+        +schema: L1_E_SWD
+        +tags: ["sword","noocs"]
+      XEROX:
+        +meta: {source: "XEROX"}
+        +schema: L1_E_XER
+        +tags: ["xerox","noocs"]
+      OCS:
+        +meta: {source: "OCS"}
+        +tags: ["ocs"]
+        AIN:
+          +schema: L1_O_AIN
+          AIN:
+            +meta: {modulo: "ain"}
+            +tags: ["ain"]
+          XAI:
+            +meta: {modulo: "xai"}
+            +tags: ["xai"]
+        ANA:
+          +schema: L1_O_ANA
+          ANA:
+            +meta: {modulo: "ana"}
+            +tags: ["ana"]
+          XAN:
+            +meta: {modulo: "xan"}
+            +tags: ["xan"]
+        ANT:
+          +schema: L1_O_ANT
+          XAT:
+            +meta: {modulo: "xat"}
+            +tags: ["xat"]
+        BAN:
+          +schema: L1_O_BAN
+          BAN:
+            +meta: {modulo: "ban"}
+            +tags: ["ban"]
+          XBA:
+            +meta: {modulo: "xba"}
+            +tags: ["xba"]
+        CAR:
+          +schema: L1_O_CAR
+          CAR:
+            +meta: {modulo: "car"}
+            +tags: ["car"]
+          XCA:
+            +meta: {modulo: "xca"}
+            +tags: ["xca"]
+        CH1:
+          +schema: L1_O_CH1
+          +meta: {modulo: "ch1"}
+          +tags: ["ch1"]
+        CH2:
+          +schema: L1_O_CH2
+          +meta: {modulo: "ch2"}
+          +tags: ["ch2"]
+        CHM:
+          +schema: L1_O_CHM
+          +meta: {modulo: "chm"}
+          +tags: ["chm"]
+        CMN:
+          +schema: L1_O_CMN
+          CMN:
+            +meta: {modulo: "cmn"}
+            +tags: ["cmn"]
+          XCM:
+            +meta: {modulo: "xcm"}
+            +tags: ["xcm"]
+        CNF:
+          +schema: L1_O_CNF
+          CNF:
+            +meta: {modulo: "cnf"}
+            +tags: ["cnf"]
+          XCF:
+            +meta: {modulo: "xcf"}
+            +tags: ["xcf"]
+        CNT:
+          +schema: L1_O_CNT
+          CNT:
+            +meta: {modulo: "cnt"}
+            +tags: ["cnt"]
+          XCN:
+            +meta: {modulo: "xcn"}
+            +tags: ["xcn"]
+        CON_:
+          +schema: L1_O_CON
+          CON_:
+            +meta: {modulo: "con"}
+            +tags: ["con"]
+          XCO:
+            +meta: {modulo: "xco"}
+            +tags: ["xco"]
+        CQS:
+          +schema: L1_O_CQS
+          CQS:
+            +meta: {modulo: "cqs"}
+            +tags: ["cqs"]
+          XCQ:
+            +meta: {modulo: "xcq"}
+            +tags: ["xcq"]
+        CRE:
+          +schema: L1_O_CRE
+          CRE:
+            +meta: {modulo: "cre"}
+            +tags: ["cre"]
+          XCE:
+            +meta: {modulo: "xce"}
+            +tags: ["xce"]
+        CRM:
+          +schema: L1_O_CRM
+          CRM:
+            +meta: {modulo: "crm"}
+            +tags: ["crm"]
+          XCR:
+            +meta: {modulo: "xcr"}
+            +tags: ["xcr"]
+        EFF:
+          +schema: L1_O_EFF
+          EFF:
+            +meta: {modulo: "eff"}
+            +tags: ["eff"]
+          XEF:
+            +meta: {modulo: "xef"}
+            +tags: ["xef"]
+        FMP:
+          +schema: L1_O_FMP
+          FMP:
+            +meta: {modulo: "fmp"}
+            +tags: ["fmp"]
+          XFM:
+            +meta: {modulo: "xfm"}
+            +tags: ["xfm"]
+        IAS:
+          +schema: L1_O_IAS
+          IAS:
+            +meta: {modulo: "ias"}
+            +tags: ["ias"]
+          XIA:
+            +meta: {modulo: "xia"}
+            +tags: ["xia"]
+        INC:
+          +schema: L1_O_INC
+          INC:
+            +meta: {modulo: "inc"}
+            +tags: ["inc"]
+          XIC:
+            +meta: {modulo: "xic"}
+            +tags: ["xic"]
+        INT:
+          +schema: L1_O_INT
+          INT:
+            +meta: {modulo: "int"}
+            +tags: ["int"]
+          XIN:
+            +meta: {modulo: "xin"}
+            +tags: ["xin"]
+        ITF:
+          +schema: L1_O_ITF
+          +meta: {modulo: "itf"}
+          +tags: ["itf"]
+        MIG:
+          +schema: L1_O_MIG
+          +meta: {modulo: "mig"}
+          +tags: ["mig"]
+        MSF:
+          +schema: L1_O_MSF
+          +meta: {modulo: "msf"}
+          +tags: ["msf"]
+        PAG:
+          +schema: L1_O_PAG
+          PAG:
+            +meta: {modulo: "pag"}
+            +tags: ["pag"]
+          XPA:
+            +meta: {modulo: "xpa"}
+            +tags: ["xpa"]
+        POS:
+          +schema: L1_O_POS
+          POS:
+            +meta: {modulo: "pos"}
+            +tags: ["pos"]
+          XPO:
+            +meta: {modulo: "xpo"}
+            +tags: ["xpo"]
+        PRV:
+          +schema: L1_O_PRV
+          PRV:
+            +meta: {modulo: "prv"}
+            +tags: ["prv"]
+          XPR:
+            +meta: {modulo: "xpr"}
+            +tags: ["xpr"]
+        REC:
+          +schema: L1_O_REC
+          REC:
+            +meta: {modulo: "rec"}
+            +tags: ["rec"]
+          XRE:
+            +meta: {modulo: "xre"}
+            +tags: ["xre"]
+        RIS:
+          +schema: L1_O_RIS
+          RIS:
+            +meta: {modulo: "ris"}
+            +tags: ["ris"]
+          XRI:
+            +meta: {modulo: "xri"}
+            +tags: ["xri"]
+        RVD:
+          +schema: L1_O_RVD
+          RVD:
+            +meta: {modulo: "rvd"}
+            +tags: ["rvd"]
+          XRV:
+            +meta: {modulo: "xrv"}
+            +tags: ["xrv"]
+        SDS:
+          +schema: L1_O_SDS
+          SDS:
+            +meta: {modulo: "sds"}
+            +tags: ["sds"]
+          XSD:
+            +meta: {modulo: "xsd"}
+            +tags: ["xsd"]
+        SER:
+          +schema: L1_O_SER
+          SER:
+            +meta: {modulo: "ser"}
+            +tags: ["ser"]
+          XSE:
+            +meta: {modulo: "xse"}
+            +tags: ["xse"]
+        SRV:
+          +schema: L1_O_SRV
+          +meta: {modulo: "srv"}
+          +tags: ["srv"]
+        SVC:
+          +schema: L1_O_SVC
+          SVC:
+            +meta: {modulo: "svc"}
+            +tags: ["svc"]
+          XSV:
+            +meta: {modulo: "xsv"}
+            +tags: ["xsv"]
+        TRS:
+          +schema: L1_O_TRS
+          TRS:
+            +meta: {modulo: "trs"}
+            +tags: ["trs"]
+          XTR:
+            +meta: {modulo: "xtr"}
+            +tags: ["xtr"]
+        VIG:
+          +schema: L1_O_VIG
+          VIG:
+            +meta: {modulo: "vig"}
+            +tags: ["vig"]
+          XVI:
+            +meta: {modulo: "xvi"}
+            +tags: ["xvi"]
+        WFL:
+          +schema: L1_O_WFL
+          WFL:
+            +meta: {modulo: "wfl"}
+            +tags: ["wfl"]
+          XWF:
+            +meta: {modulo: "xwf"}
+            +tags: ["xwf"]
+    L2:
+      +meta: {layer: "L2"}
+      +tags: ["L2"]
+      ANAGR_CONTROPARTE:
+        +schema: L2_ANAGR_CONTROPARTE
+        +meta: {subject_area: "ANAGR_CONTROPARTE"}
+        +tags: ["anagr_controparte"]
+      ANTIFRODE:
+        +schema: L2_ANTIFRODE
+        +meta: {subject_area: "ANTIFRODE"}
+        +tags: ["antifrode"]
+      ASSICURAZIONI:
+        +schema: L2_ASSICURAZIONI
+        +meta: {subject_area: "ASSICURAZIONI"}
+        +tags: ["assicurazioni"]
+      CARTE:
+        +schema: L2_PRODOTTO
+        +meta: {subject_area: "CARTE"}
+        +tags: ["carte"]
+      FORM_E_PREVENTIVATORI:
+        +schema: L2_FORM_E_PREVENTIVATORI
+        +meta: {subject_area: "FORM_E_PREVENTIVATORI"}
+        +tags: ["form_e_preventivatori"]
+      GESTIONE_CREDITI:
+        +schema: L2_GESTIONE_CREDITI
+        +meta: {subject_area: "GESTIONE_CREDITI"}
+        +tags: ["gestione_crediti"]
+      ONBOARDING:
+        +schema: L2_ONBOARDING
+        +meta: {subject_area: "ONBOARDING"}
+        +tags: ["onboarding"]
+      PRODOTTO:
+        +schema: L2_PRODOTTO
+        +meta: {subject_area: "PRODOTTO"}
+        +tags: ["prodotto"]
+      PRODOTTO_M:
+        +schema: L2_PRODOTTO_M
+        +meta: {subject_area: "PRODOTTO_M"}
+        +tags: ["prodotto_m"]
+      PROVVIGIONI_RAPPEL:
+        +schema: L2_PROVVIGIONI_RAPPEL
+        +meta: {subject_area: "PROVVIGIONI_RAPPEL"}
+        +tags: ["provvigioni_rappel"]
+      RISCHI_ADEMPIMENTI:
+        +schema: L2_RISCHI_ADEMPIMENTI
+        +meta: {subject_area: "RISCHI_ADEMPIMENTI"}
+        +tags: ["rischi_adempimenti"]
+      SALDI:
+        +schema: L2_SALDI
+        +meta: {subject_area: "SALDI"}
+        +tags: ["saldi"]
+      SCORE_BANCHE_DATI:
+        +schema: L2_SCORE_BANCHE_DATI
+        +meta: {subject_area: "SCORE_BANCHE_DATI"}
+        +tags: ["score_banche_dati"]
+      SWORD:
+        +schema: L2_SWORD
+        +meta: {subject_area: "SWORD"}
+        +tags: ["sword"]
+      SA_CAMPAGNE:
+        +schema: L2_SA_CAMPAGNE
+        +meta: {subject_area: "SA_CAMPAGNE"}
+        +tags: ["sa_campagne"]
+      SA_CRM:
+        +schema: L2_SA_CRM
+        +meta: {subject_area: "SA_CRM"}
+        +tags: ["sa_crm"]
+      PAGAMENTI_CONTABILITA:
+        +schema: L2_PAGAMENTI_CONTABILITA
+        +meta: {subject_area: "PAGAMENTI_CONTABILITA"}
+        +tags: ["pagamenti_contabilita"]
+      AREA_RISERVATA:
+        +schema: L2_AREA_RISERVATA
+        +meta: {subject_area: "AREA_RISERVATA"}
+        +tags: ["area_riservata"]
+      ANAGR_COMMERCIALE:
+        +schema: L2_ANAGR_COMMERCIALE
+        +meta: {subject_area: "ANAGR_COMMERCIALE"}
+        +tags: ["anagr_commerciale"]
+      BUDGET:
+        +schema: L2_BUDGET
+        +meta: {subject_area: "BUDGET"}
+        +tags: ["budget"]
+
+    L3:
+      +meta: {layer: "L3"}
+      BASILEA_CORE:
+        +schema: L3_BASILEA
+        +meta: {sotto_processo: "BASILEA_CORE"}
+        +tags: ["basilea_core"]
+      CAMPIONI:
+        +schema: L3_CAMPIONI
+        +meta: {subject_area: "CAMPIONI"}
+        +tags: ["campioni"]
+      MONITORAGGIO_PRODUZIONE:
+        +schema: L3_MONITORING_PRODUZIONE
+        +meta: {sotto_processo: "MONITORAGGIO_PRODUZIONE"}
+        +tags: ["monitoraggio_produzione"]
+      IFRS9:
+        +schema: L3_IFRS9
+        +meta: {sotto_processo: "IFRS9_BASE_DATI"}
+        +tags: ["ifrs9_base_dati"]
+      SALDI:
+        +schema: L3_SALDI
+        +meta: {subject_area: "SALDI"}
+        +tags: ["saldi"]
+
+snapshots:
+  agosx:
+    +transient: false
+    +database: "{{ env_var('DBT_DATABASE') }}"
+    +dbt_valid_to_current: "to_timestamp('9999-12-31')"
+    +snapshot_meta_column_names:
+      dbt_valid_from: ts_inizio_validita
+      dbt_valid_to: ts_fine_validita
+      dbt_scd_id: id_scd
+      dbt_updated_at: ts_updated_at
+    +strategy: timestamp
+    L1:
+      +meta: {layer: "L1", cluster: "C"}
+      +tags: ["L1"]
+      FEA:
+        +updated_at: ts_coalesce_modif_creaz
+        +meta: {source: "FEA"}
+        +schema: L1_E_FEA
+        +tags: ["fea","noocs"]
+      PRIMEWEB:
+        +updated_at: ts_riferimento
+        +meta: {source: "PRIMEWEB"}
+        +schema: L1_E_PWB
+        +tags: ["primeweb","noocs"]
+      OCS:
+        +updated_at: lastmodifieddata
+        +meta: {source: "OCS"}
+        +tags: ["ocs"]
+        +post-hook: "{{ logic_delete_scd2() }}"
+        AIN:
+          +schema: L1_O_AIN
+          +meta: {modulo: "ain"}
+          +tags: ["ain"]
+        ANA:
+          +schema: L1_O_ANA
+          ANA:
+            +meta: {modulo: "ana"}
+            +tags: ["ana"]
+          XAN:
+            +meta: {modulo: "xan"}
+            +tags: ["xan"]
+        ANT:
+          +schema: L1_O_ANT
+          XAT:
+            +meta: {modulo: "xat"}
+            +tags: ["xat"]
+        BAN:
+          +schema: L1_O_BAN
+          BAN:
+            +meta: {modulo: "ban"}
+            +tags: ["ban"]
+          XBA:
+            +meta: {modulo: "xba"}
+            +tags: ["xba"]
+        CAR:
+          +schema: L1_O_CAR
+          CAR:
+            +meta: {modulo: "car"}
+            +tags: ["car"]
+          XCA:
+            +meta: {modulo: "xca"}
+            +tags: ["xca"]
+        CMN:
+          +schema: L1_O_CMN
+          CMN:
+            +meta: {modulo: "cmn"}
+            +tags: ["cmn"]
+          XCM:
+            +meta: {modulo: "xcm"}
+            +tags: ["xcm"]
+        CNF:
+          +schema: L1_O_CNF
+          +meta: {modulo: "xcf"}
+          +tags: ["xcf"]
+        CNT:
+          +schema: L1_O_CNT
+          +meta: {modulo: "cnt"}
+          +tags: ["cnt"]
+        CON_:
+          +schema: L1_O_CON
+          CON_:
+            +meta: {modulo: "con"}
+            +tags: ["con"]
+          XCO:
+            +meta: {modulo: "xco"}
+            +tags: ["xco"]
+        CQS:
+          +schema: L1_O_CQS
+          CQS:
+            +meta: {modulo: "cqs"}
+            +tags: ["cqs"]
+          XCQ:
+            +meta: {modulo: "xcq"}
+            +tags: ["xcq"]
+        CRE:
+          +schema: L1_O_CRE
+          CRE:
+            +meta: {modulo: "cre"}
+            +tags: ["cre"]
+          XCE:
+            +meta: {modulo: "xce"}
+            +tags: ["xce"]
+        CRM:
+          +schema: L1_O_CRM
+          CRM:
+            +meta: {modulo: "crm"}
+            +tags: ["crm"]
+          XCR:
+            +meta: {modulo: "xcr"}
+            +tags: ["xcr"]
+        EFF:
+          +schema: L1_O_EFF
+          +meta: {modulo: "eff"}
+          +tags: ["eff"]
+        FMP:
+          +schema: L1_O_FMP
+          FMP:
+            +meta: {modulo: "fmp"}
+            +tags: ["fmp"]
+          XFM:
+            +meta: {modulo: "xfm"}
+            +tags: ["xfm"]
+        IAS:
+          +schema: L1_O_IAS
+          +meta: {modulo: "ias"}
+          +tags: ["ias"]
+        INC:
+          +schema: L1_O_INC
+          INC:
+            +meta: {modulo: "inc"}
+            +tags: ["inc"]
+          XIC:
+            +meta: {modulo: "xic"}
+            +tags: ["xic"]
+        INT:
+          +schema: L1_O_INT
+          INT:
+            +meta: {modulo: "int"}
+            +tags: ["int"]
+          XIN:
+            +meta: {modulo: "xin"}
+            +tags: ["xin"]
+        ITF:
+          +schema: L1_O_ITF
+          +meta: {modulo: "itf"}
+          +tags: ["itf"]
+        MSF:
+          +schema: L1_O_MSF
+          +meta: {modulo: "msf"}
+          +tags: ["msf"]
+        PAG:
+          +schema: L1_O_PAG
+          +meta: {modulo: "pag"}
+          +tags: ["pag"]
+        POS:
+          +schema: L1_O_POS
+          POS:
+            +meta: {modulo: "pos"}
+            +tags: ["pos"]
+          XPO:
+            +meta: {modulo: "xpo"}
+            +tags: ["xpo"]
+        PRV:
+          +schema: L1_O_PRV
+          PRV:
+            +meta: {modulo: "prv"}
+            +tags: ["prv"]
+          XPR:
+            +meta: {modulo: "xpr"}
+            +tags: ["xpr"]
+        REC:
+          +schema: L1_O_REC
+          REC:
+            +meta: {modulo: "rec"}
+            +tags: ["rec"]
+          XRE:
+            +meta: {modulo: "xre"}
+            +tags: ["xre"]
+        RIS:
+          +schema: L1_O_RIS
+          +meta: {modulo: "ris"}
+          +tags: ["ris"]
+        RVD:
+          +schema: L1_O_RVD
+          RVD:
+            +meta: {modulo: "rvd"}
+            +tags: ["rvd"]
+          XRV:
+            +meta: {modulo: "xrv"}
+            +tags: ["xrv"]
+        SDS:
+          +schema: L1_O_SDS
+          SDS:
+            +meta: {modulo: "sds"}
+            +tags: ["sds"]
+          XSD:
+            +meta: {modulo: "xsd"}
+            +tags: ["xsd"]
+        SER:
+          +schema: L1_O_SER
+          +meta: {modulo: "ser"}
+          +tags: ["ser"]
+        SRV:
+          +schema: L1_O_SRV
+          +meta: {modulo: "srv"}
+          +tags: ["srv"]
+        SVC:
+          +schema: L1_O_SVC
+          +meta: {modulo: "svc"}
+          +tags: ["svc"]
+        TRS:
+          +schema: L1_O_TRS
+          +meta: {modulo: "trs"}
+          +tags: ["trs"]
+        VIG:
+          +schema: L1_O_VIG
+          +meta: {modulo: "vig"}
+          +tags: ["vig"]
+        WFL:
+          +schema: L1_O_WFL
+          WFL:
+            +meta: {modulo: "wfl"}
+            +tags: ["wfl"]
+          XWF:
+            +meta: {modulo: "xwf"}
+            +tags: ["xwf"]
+
+tests:
+  +severity: warn
+  +store_failures_as: table
+  +database: "{{ env_var('DBT_DATABASE') }}"
+  +schema: DBT_STORE_FAILURES
+
+on-run-start:
+  - "{{ drop_snapshots_on_full_refresh() }}"
+
+on-run-end:
+  - "{{ log_run_results(results) }}"
+  - "{{ pop_test_log_records(results) }}"
