@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccrictdv
+    relation: ref('stg_ccrictdv')
+    config:
+      unique_key: [tdv_codice_divisa]

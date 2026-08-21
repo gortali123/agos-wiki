@@ -1,0 +1,23 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(ABI_ABI AS NUMBER(5,0)) AS abi_abi,
+  TRY_CAST(ABI_CHECK_DIGIT AS NUMBER(1,0)) AS abi_check_digit,
+  TRY_CAST(ABI_DT_INSERIMENTO AS NUMBER(8,0)) AS abi_dt_inserimento,
+  TRY_CAST(ABI_DT_ANNULLO AS NUMBER(8,0)) AS abi_dt_annullo,
+  TRY_CAST(IFF(RTRIM(ABI_FLAG) = '', ' ', RTRIM(ABI_FLAG)) AS VARCHAR(1)) AS abi_flag,
+  TRY_CAST(ABI_NEW_ABI AS NUMBER(5,0)) AS abi_new_abi,
+  TRY_CAST(IFF(RTRIM(FILL7) = '', ' ', RTRIM(FILL7)) AS VARCHAR(5)) AS fill7,
+  TRY_CAST(IFF(RTRIM(ABI_DENOMINAZIONE) = '', ' ', RTRIM(ABI_DENOMINAZIONE)) AS VARCHAR(80)) AS abi_denominazione,
+  TRY_CAST(IFF(RTRIM(ABI_DES_RIDOTTA) = '', ' ', RTRIM(ABI_DES_RIDOTTA)) AS VARCHAR(15)) AS abi_des_ridotta,
+  TRY_CAST(IFF(RTRIM(ABI_DES_RICERCA) = '', ' ', RTRIM(ABI_DES_RICERCA)) AS VARCHAR(30)) AS abi_des_ricerca,
+  TRY_CAST(ABI_CAB_SEDE AS NUMBER(5,0)) AS abi_cab_sede,
+  TRY_CAST(IFF(RTRIM(ABI_FLAG_RID) = '', ' ', RTRIM(ABI_FLAG_RID)) AS VARCHAR(1)) AS abi_flag_rid,
+  TRY_CAST(IFF(RTRIM(ABI_BANCA_DEL_GRUPPO) = '', ' ', RTRIM(ABI_BANCA_DEL_GRUPPO)) AS VARCHAR(1)) AS abi_banca_del_gruppo,
+  TRY_CAST(IFF(RTRIM(FILL12) = '', ' ', RTRIM(FILL12)) AS VARCHAR(15)) AS fill12,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','ccnewabi') }}

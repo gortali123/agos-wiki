@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: pccofcon
+    relation: ref('stg_pccofcon')
+    config:
+      unique_key: [pccocon_id_contatto]

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: re2incrret
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [rreint_recuperatore, rreint_num_rapportino]
+      - name: re2incrret_deleted

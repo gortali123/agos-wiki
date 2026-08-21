@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccbifcab
+    relation: ref('stg_ccbifcab')
+    config:
+      unique_key: [ccbicab_provincia]

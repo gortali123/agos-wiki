@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccprvcad
+    relation: ref('stg_ccprvcad')
+    config:
+      unique_key: [prvcad_procedura, prvcad_tipo_interm, prvcad_interm, prvcad_progressivo]

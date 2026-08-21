@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cqctfropr
+    relation: ref('stg_cqctfropr')
+    config:
+      unique_key: [cqctropr_pratica]

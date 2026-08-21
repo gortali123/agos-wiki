@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccanafpe
+    relation: ref('stg_ccanafpe')
+    config:
+      unique_key: [anafpe_fondo_pens]

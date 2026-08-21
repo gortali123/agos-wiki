@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: bapratac
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['baac_procedura', 'baac_pratica', 'baac_prg_psv', 'baac_rapporto', 'baac_prg_rapporto']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_FMP", "archivio":"BAPRATAC"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [baac_procedura, baac_pratica, baac_prg_psv, baac_rapporto, baac_prg_rapporto]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: baac_procedura
+        data_type: VARCHAR(2)
+      - name: baac_pratica
+        data_type: NUMBER(12,0)
+      - name: baac_prg_psv
+        data_type: NUMBER(11,0)
+      - name: baac_rapporto
+        data_type: VARCHAR(2)
+      - name: baac_prg_rapporto
+        data_type: NUMBER(2,0)
+      - name: baac_parentela
+        data_type: VARCHAR(1)
+      - name: baac_coabita
+        data_type: VARCHAR(1)
+      - name: baac_tit_eff
+        data_type: VARCHAR(1)
+      - name: baac_modifica
+        data_type: VARCHAR(1)
+      - name: baac_utente
+        data_type: VARCHAR(10)
+      - name: baac_data
+        data_type: NUMBER(8,0)
+      - name: baac_ora
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,161 @@
+version: 2
+
+models:
+  - name: ccbirpid
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['birpid_procedura', 'birpid_tipo_prodotto', 'birpid_emettitore', 'birpid_banca_plaf', 'birpid_prodotto', 'birpid_mod_pag', 'birpid_tipo_caric', 'birpid_tipo_contr', 'birpid_prat_indiciz', 'birpid_tipo_invio', 'birpid_comun_infraan', 'birpid_servizi', 'birpid_canale_acq', 'birpid_tab_finanz', 'birpid_grande_accordo', 'birpid_data_inizio_valid', 'birpid_sovraindebitamento']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_TRS", "archivio":"CCBIRPID"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [birpid_procedura, birpid_tipo_prodotto, birpid_emettitore, birpid_banca_plaf, birpid_prodotto, birpid_mod_pag, birpid_tipo_caric, birpid_tipo_contr, birpid_prat_indiciz, birpid_tipo_invio, birpid_comun_infraan, birpid_servizi, birpid_canale_acq, birpid_tab_finanz, birpid_grande_accordo, birpid_data_inizio_valid, birpid_sovraindebitamento]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: birpid_procedura
+        data_type: VARCHAR(2)
+      - name: birpid_tipo_prodotto
+        data_type: VARCHAR(2)
+      - name: birpid_emettitore
+        data_type: NUMBER(3,0)
+      - name: birpid_banca_plaf
+        data_type: NUMBER(5,0)
+      - name: birpid_prodotto
+        data_type: VARCHAR(2)
+      - name: birpid_mod_pag
+        data_type: VARCHAR(2)
+      - name: birpid_tipo_caric
+        data_type: VARCHAR(2)
+      - name: birpid_tipo_contr
+        data_type: VARCHAR(1)
+      - name: birpid_prat_indiciz
+        data_type: VARCHAR(1)
+      - name: birpid_tipo_invio
+        data_type: VARCHAR(1)
+      - name: birpid_comun_infraan
+        data_type: VARCHAR(1)
+      - name: birpid_servizi
+        data_type: VARCHAR(1)
+      - name: birpid_canale_acq
+        data_type: VARCHAR(3)
+      - name: birpid_tab_finanz
+        data_type: VARCHAR(10)
+      - name: birpid_grande_accordo
+        data_type: VARCHAR(6)
+      - name: birpid_data_inizio_valid
+        data_type: NUMBER(8,0)
+      - name: birpid_sovraindebitamento
+        data_type: VARCHAR(1)
+      - name: birpid_invio_docsint
+        data_type: VARCHAR(1)
+      - name: birpid_invio_rend
+        data_type: VARCHAR(1)
+      - name: birpid_all_rend_coab
+        data_type: VARCHAR(1)
+      - name: birpid_all_rend_n_coab
+        data_type: VARCHAR(1)
+      - name: birpid_docsint_cl
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gc
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_coo_c
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gaf_c
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_ganf_c
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_coo_nc
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gaf_nc
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_ganf_nc
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_cl_sub
+        data_type: VARCHAR(4)
+      - name: birpid_addebita_fid
+        data_type: VARCHAR(1)
+      - name: birpid_data_addebito_fid
+        data_type: NUMBER(8,0)
+      - name: birpid_docsint_cl_pt_dec
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gc_pt_dec
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_ga_pt_dec
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_cl_pt_saldo
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gc_pt_saldo
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_ga_pt_saldo
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_cl_pt_rata
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gc_pt_rata
+        data_type: VARCHAR(4)
+      - name: birpid_num_iniziale
+        data_type: NUMBER(3,0)
+      - name: birpid_num_iniz_ga
+        data_type: NUMBER(3,0)
+      - name: birpid_num_iniz_coo
+        data_type: NUMBER(3,0)
+      - name: birpid_stampa_loc
+        data_type: VARCHAR(1)
+      - name: birpid_ds_cl_pt_reg_1
+        data_type: VARCHAR(4)
+      - name: birpid_ds_cl_pt_reg_2
+        data_type: VARCHAR(4)
+      - name: birpid_ds_cl_pt_reg_3
+        data_type: VARCHAR(4)
+      - name: birpid_ds_cl_pt_reg_4
+        data_type: VARCHAR(4)
+      - name: birpid_ds_cl_pt_reg_5
+        data_type: VARCHAR(4)
+      - name: birpid_ds_cl_pt_reg_6
+        data_type: VARCHAR(4)
+      - name: birpid_ds_cl_pt_reg_7
+        data_type: VARCHAR(4)
+      - name: birpid_ds_cl_pt_reg_8
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_cl_inc_as
+        data_type: VARCHAR(4)
+      - name: birpid_ds_riacquisto
+        data_type: VARCHAR(4)
+      - name: birpid_data_fine_valid
+        data_type: NUMBER(8,0)
+      - name: birpid_addebita_nfid
+        data_type: VARCHAR(1)
+      - name: birpid_data_addebito_nfid
+        data_type: NUMBER(8,0)
+      - name: birpid_docsint_cl_ui
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gc_ui
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_coo_c_ui
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gaf_c_ui
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_ganf_c_ui
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_coo_nc_ui
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_gaf_nc_ui
+        data_type: VARCHAR(4)
+      - name: birpid_docsint_ganf_nc_ui
+        data_type: VARCHAR(4)
+      - name: rowid
+        data_type: NUMBER(38, 0)

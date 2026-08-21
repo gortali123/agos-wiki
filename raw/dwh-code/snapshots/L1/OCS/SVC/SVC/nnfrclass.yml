@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: nnfrclass
+    relation: ref('stg_nnfrclass')
+    config:
+      unique_key: [nnfrcl_provenienza, nnfrcl_codice]

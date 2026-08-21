@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccintiae
+    relation: ref('stg_ccintiae')
+    config:
+      unique_key: [intiae_interm, intiae_tipo_email]

@@ -1,0 +1,20 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(FATLOG_PRG_FATT AS NUMBER(9,0)) AS fatlog_prg_fatt,
+  TRY_CAST(IFF(RTRIM(FATLOG_OPERAZIONE) = '', ' ', RTRIM(FATLOG_OPERAZIONE)) AS VARCHAR(3)) AS fatlog_operazione,
+  TRY_CAST(FATLOG_NUM_FATT_RID AS NUMBER(7,0)) AS fatlog_num_fatt_rid,
+  TRY_CAST(IFF(RTRIM(FATLOG_NUM_FATT) = '', ' ', RTRIM(FATLOG_NUM_FATT)) AS VARCHAR(12)) AS fatlog_num_fatt,
+  TRY_CAST(FATLOG_DATA_FATT AS NUMBER(8,0)) AS fatlog_data_fatt,
+  TRY_CAST(FATLOG_NUM_REG AS NUMBER(7,0)) AS fatlog_num_reg,
+  TRY_CAST(FATLOG_NUM_REG_SE AS NUMBER(7,0)) AS fatlog_num_reg_se,
+  TRY_CAST(FATLOG_DATA_REG AS NUMBER(8,0)) AS fatlog_data_reg,
+  TRY_CAST(IFF(RTRIM(FATLOG_UTENTE) = '', ' ', RTRIM(FATLOG_UTENTE)) AS VARCHAR(10)) AS fatlog_utente,
+  TRY_CAST(FATLOG_DATA AS NUMBER(8,0)) AS fatlog_data,
+  TRY_CAST(FATLOG_ORA AS NUMBER(8,0)) AS fatlog_ora,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','ccfatlog') }}

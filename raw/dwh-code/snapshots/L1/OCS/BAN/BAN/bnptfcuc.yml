@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: bnptfcuc
+    relation: ref('stg_bnptfcuc')
+    config:
+      unique_key: [bnptcuc_codice_sia]

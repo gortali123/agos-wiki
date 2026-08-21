@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: wfisfat
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [wfisat_istanza, wfisat_fase, wfisat_sottofase, wfisat_attivita]
+      - name: wfisfat_deleted

@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: oxcnfotde
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['oxcnotde_progressivo', 'oxcnotde_data_estrazione', 'oxcnotde_procedura', 'oxcnotde_pratica', 'oxcnotde_prg_cessione', 'oxcnotde_totale']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CNF", "archivio":"OXCNFOTDE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [oxcnotde_progressivo, oxcnotde_data_estrazione, oxcnotde_procedura, oxcnotde_pratica, oxcnotde_prg_cessione, oxcnotde_totale]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: oxcnotde_progressivo
+        data_type: NUMBER(2,0)
+      - name: oxcnotde_data_estrazione
+        data_type: NUMBER(8,0)
+      - name: oxcnotde_procedura
+        data_type: VARCHAR(2)
+      - name: oxcnotde_pratica
+        data_type: NUMBER(12,0)
+      - name: oxcnotde_prg_cessione
+        data_type: NUMBER(5,0)
+      - name: oxcnotde_stato
+        data_type: VARCHAR(1)
+      - name: oxcnotde_num_insoluti
+        data_type: NUMBER(3,0)
+      - name: oxcnotde_totale
+        data_type: VARCHAR(1)
+      - name: oxcnotde_imp_conf_ass
+        data_type: NUMBER(13,0)
+      - name: oxcnotde_imp_inc_ass
+        data_type: NUMBER(13,0)
+      - name: oxcnotde_imp_abb_promoz
+        data_type: NUMBER(13,0)
+      - name: oxcnotde_imp_abb_oneri
+        data_type: NUMBER(13,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

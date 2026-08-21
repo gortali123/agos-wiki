@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: ccdcicanc
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [dcanc_progressivo, dcanc_destinatario, dcanc_num_pratica]
+      - name: ccdcicanc_deleted

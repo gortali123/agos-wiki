@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: cctababpac
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [tcap_provenienza, tcap_prodotto, tcap_tab_finanziaria, tcap_emettitore, tcap_tipo_prodotto, tcap_dest_finanz, tcap_convenzionato, tcap_istituto_finanz, tcap_mod_pagamento, tcap_tipo_caricamento, tcap_canale_acq, tcap_accordo, tcap_interm_agg, tcap_codice_pacchetto, tcap_codice_gruppo, tcap_data_inizio_val]
+      - name: cctababpac_deleted

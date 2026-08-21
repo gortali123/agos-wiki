@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: oxcnfescp
+    relation: ref('stg_oxcnfescp')
+    config:
+      unique_key: [oxcnescp_tipo, oxcnescp_procedura, oxcnescp_pratica]

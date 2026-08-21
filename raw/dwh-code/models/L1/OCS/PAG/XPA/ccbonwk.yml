@@ -1,0 +1,125 @@
+version: 2
+
+models:
+  - name: ccbonwk
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['bow_numero_bonifico']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XPA", "archivio":"CCBONWK"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [bow_numero_bonifico]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: bow_numero_bonifico
+        data_type: NUMBER(11,0)
+      - name: bow_provenienza
+        data_type: VARCHAR(2)
+      - name: bow_tipo
+        data_type: VARCHAR(2)
+      - name: bow_stato
+        data_type: VARCHAR(2)
+      - name: bow_tipo_fornitore
+        data_type: VARCHAR(2)
+      - name: bow_fornitore
+        data_type: NUMBER(9,0)
+      - name: bow_data_creazione
+        data_type: NUMBER(5,0)
+      - name: bow_data_scadenza
+        data_type: NUMBER(5,0)
+      - name: bow_importo_totale
+        data_type: NUMBER(13,0)
+      - name: bow_codice_abi
+        data_type: NUMBER(5,0)
+      - name: bow_codice_sportello
+        data_type: NUMBER(5,0)
+      - name: bow_conto_corrente
+        data_type: VARCHAR(12)
+      - name: bow_numero_fattura
+        data_type: VARCHAR(12)
+      - name: bow_numero_pratica
+        data_type: NUMBER(12,0)
+      - name: bow_data_contratto
+        data_type: NUMBER(5,0)
+      - name: bow_tipo_prodotto
+        data_type: VARCHAR(2)
+      - name: bow_banca_addebito
+        data_type: NUMBER(5,0)
+      - name: bow_data_presentazione
+        data_type: NUMBER(5,0)
+      - name: bow_presentazione
+        data_type: NUMBER(11,0)
+      - name: bow_distinta_orig
+        data_type: NUMBER(7,0)
+      - name: bow_data_da
+        data_type: NUMBER(5,0)
+      - name: bow_data_al
+        data_type: NUMBER(5,0)
+      - name: bow_numero_rata
+        data_type: NUMBER(3,0)
+      - name: bow_emettitore
+        data_type: VARCHAR(3)
+      - name: bow_origine
+        data_type: VARCHAR(2)
+      - name: bow_intest_pratica
+        data_type: VARCHAR(35)
+      - name: bow_descrizione
+        data_type: VARCHAR(45)
+      - name: bow_plico
+        data_type: VARCHAR(8)
+      - name: bow_mir
+        data_type: VARCHAR(10)
+      - name: bow_causale_rientro
+        data_type: NUMBER(5,0)
+      - name: bow_tipo_anomalia
+        data_type: VARCHAR(1)
+      - name: bow_cod_riferimento
+        data_type: VARCHAR(35)
+      - name: bow_data_valuta_accr
+        data_type: NUMBER(8,0)
+      - name: bow_bank_code
+        data_type: NUMBER(8,0)
+      - name: bow_sub_number
+        data_type: NUMBER(4,0)
+      - name: bow_data_rientro
+        data_type: NUMBER(8,0)
+      - name: bow_note
+        data_type: VARCHAR(110)
+      - name: bow_data_note
+        data_type: NUMBER(8,0)
+      - name: bow_ora_note
+        data_type: NUMBER(8,0)
+      - name: bow_ute_note
+        data_type: VARCHAR(10)
+      - name: bow_rag_soc_intest
+        data_type: VARCHAR(60)
+      - name: bow_esito_6
+        data_type: VARCHAR(1)
+      - name: bow_esito_7
+        data_type: VARCHAR(1)
+      - name: bow_esito_9
+        data_type: VARCHAR(1)
+      - name: bow_group_status
+        data_type: VARCHAR(4)
+      - name: bow_data_esecuz
+        data_type: NUMBER(8,0)
+      - name: bow_progr_prat
+        data_type: NUMBER(3,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

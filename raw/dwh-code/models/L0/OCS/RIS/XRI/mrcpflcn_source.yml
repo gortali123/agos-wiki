@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: mrcpflcn
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [mrcplcn_progressivo, mrcplcn_controparte]
+      - name: mrcpflcn_deleted

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: balogesapp
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [balog_procedura, balog_pratica, balog_prg_psv, balog_progressivo]
+      - name: balogesapp_deleted

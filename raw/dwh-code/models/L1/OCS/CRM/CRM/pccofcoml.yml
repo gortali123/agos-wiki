@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: pccofcoml
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['pccocoml_id_contatto', 'pccocoml_procedura', 'pccocoml_simulaz']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CRM", "archivio":"PCCOFCOML"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [pccocoml_id_contatto, pccocoml_procedura, pccocoml_simulaz]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: pccocoml_id_contatto
+        data_type: NUMBER(13,0)
+      - name: pccocoml_procedura
+        data_type: VARCHAR(2)
+      - name: pccocoml_simulaz
+        data_type: NUMBER(12,0)
+      - name: pccocoml_utente
+        data_type: VARCHAR(10)
+      - name: pccocoml_data
+        data_type: NUMBER(8,0)
+      - name: pccocoml_ora
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

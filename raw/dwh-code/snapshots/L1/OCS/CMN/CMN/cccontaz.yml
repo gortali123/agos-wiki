@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cccontaz
+    relation: ref('stg_cccontaz')
+    config:
+      unique_key: [contaz_azione]

@@ -1,0 +1,23 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(BALOG_PROG_MOD AS NUMBER(8,0)) AS balog_prog_mod,
+  TRY_CAST(BALOG_DATA_MODIFICA AS NUMBER(8,0)) AS balog_data_modifica,
+  TRY_CAST(BALOG_ORA_MODIFICA AS NUMBER(6,0)) AS balog_ora_modifica,
+  TRY_CAST(IFF(RTRIM(BALOG_OPE_MODIFICA) = '', ' ', RTRIM(BALOG_OPE_MODIFICA)) AS VARCHAR(10)) AS balog_ope_modifica,
+  TRY_CAST(IFF(RTRIM(BALOG_MOTIVAZIONE) = '', ' ', RTRIM(BALOG_MOTIVAZIONE)) AS VARCHAR(10)) AS balog_motivazione,
+  TRY_CAST(IFF(RTRIM(BALOG_PROCEDURA) = '', ' ', RTRIM(BALOG_PROCEDURA)) AS VARCHAR(2)) AS balog_procedura,
+  TRY_CAST(BALOG_PRATICA AS NUMBER(12,0)) AS balog_pratica,
+  TRY_CAST(BALOG_PROGRESSIVO AS NUMBER(3,0)) AS balog_progressivo,
+  TRY_CAST(BALOG_RETE_VENDITA AS NUMBER(9,0)) AS balog_rete_vendita,
+  TRY_CAST(BALOG_AGENTE AS NUMBER(9,0)) AS balog_agente,
+  TRY_CAST(BALOG_SUB_AGENTE AS NUMBER(9,0)) AS balog_sub_agente,
+  TRY_CAST(BALOG_CONVENZIONATO AS NUMBER(9,0)) AS balog_convenzionato,
+  TRY_CAST(BALOG_PUNTO_VENDITA AS NUMBER(9,0)) AS balog_punto_vendita,
+  TRY_CAST(BALOG_VENDITORE AS NUMBER(9,0)) AS balog_venditore,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','balogint') }}

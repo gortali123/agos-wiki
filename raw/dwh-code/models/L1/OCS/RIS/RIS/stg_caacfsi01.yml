@@ -1,0 +1,794 @@
+version: 2
+
+models:
+  - name: stg_caacfsi01
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_RIS", "archivio":"CAACFSI01"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: crcar_key_n
+        data_type: NUMBER(16,0)
+      - name: crcar_cliente
+        data_type: NUMBER(9,0)
+      - name: crcar_convenzionato
+        data_type: NUMBER(9,0)
+      - name: crcar_garante1
+        data_type: NUMBER(9,0)
+      - name: crcar_garante2
+        data_type: NUMBER(9,0)
+      - name: crcar_garante3
+        data_type: NUMBER(9,0)
+      - name: crcar_data_richiesta
+        data_type: NUMBER(5,0)
+      - name: crcar_data_rilascio
+        data_type: NUMBER(5,0)
+      - name: crcar_data_rinnovo
+        data_type: NUMBER(5,0)
+      - name: crcar_data_validita
+        data_type: NUMBER(5,0)
+      - name: crcar_data_scadenza
+        data_type: NUMBER(5,0)
+      - name: crcar_data_chiusura
+        data_type: NUMBER(5,0)
+      - name: crcar_data_messa_in_mora
+        data_type: NUMBER(5,0)
+      - name: crcar_data_primo_utilizzo
+        data_type: NUMBER(5,0)
+      - name: crcar_data_prima_scadenza
+        data_type: NUMBER(5,0)
+      - name: crcar_data_stampa_bp
+        data_type: NUMBER(5,0)
+      - name: crcar_filiale
+        data_type: NUMBER(3,0)
+      - name: crcar_prodotto
+        data_type: VARCHAR(2)
+      - name: crcar_provenienza
+        data_type: VARCHAR(1)
+      - name: crcar_richiesta_fattura
+        data_type: VARCHAR(1)
+      - name: crcar_tipo_garante
+        data_type: VARCHAR(1)
+      - name: crcar_stato
+        data_type: VARCHAR(2)
+      - name: crcar_blocco
+        data_type: VARCHAR(2)
+      - name: crcar_produzione
+        data_type: VARCHAR(1)
+      - name: crcar_spedizione
+        data_type: VARCHAR(1)
+      - name: crcar_lotto_produzione
+        data_type: NUMBER(5,0)
+      - name: crcar_lotto_spedizione
+        data_type: NUMBER(5,0)
+      - name: crcar_calcolo_scoring
+        data_type: VARCHAR(1)
+      - name: crcar_esito_approvazione
+        data_type: VARCHAR(1)
+      - name: crcar_override
+        data_type: VARCHAR(2)
+      - name: crcar_autorizz_override
+        data_type: VARCHAR(10)
+      - name: crcar_destinatario_spedizione
+        data_type: VARCHAR(2)
+      - name: crcar_destinatario_pin
+        data_type: VARCHAR(2)
+      - name: crcar_blocco_dispo
+        data_type: VARCHAR(1)
+      - name: crcar_blocco_data_da
+        data_type: NUMBER(5,0)
+      - name: crcar_a_recupero
+        data_type: VARCHAR(1)
+      - name: crcar_flag_carnet
+        data_type: VARCHAR(1)
+      - name: crcar_aziendale
+        data_type: VARCHAR(1)
+      - name: crcar_flag_com_entrata
+        data_type: VARCHAR(1)
+      - name: crcar_st_stato_1
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_1
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_1
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_2
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_2
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_2
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_3
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_3
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_3
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_4
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_4
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_4
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_5
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_5
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_5
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_6
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_6
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_6
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_7
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_7
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_7
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_8
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_8
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_8
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_9
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_9
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_9
+        data_type: VARCHAR(10)
+      - name: crcar_st_stato_10
+        data_type: VARCHAR(2)
+      - name: crcar_st_data_10
+        data_type: NUMBER(5,0)
+      - name: crcar_st_operatore_10
+        data_type: VARCHAR(10)
+      - name: crcar_bl_codice_blocco_1
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_1
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_1
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_2
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_2
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_2
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_3
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_3
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_3
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_4
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_4
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_4
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_5
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_5
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_5
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_6
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_6
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_6
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_7
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_7
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_7
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_8
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_8
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_8
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_9
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_9
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_9
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_codice_blocco_10
+        data_type: VARCHAR(2)
+      - name: crcar_bl_data_da_10
+        data_type: NUMBER(5,0)
+      - name: crcar_bl_data_al_10
+        data_type: NUMBER(5,0)
+      - name: crcar_tipo_caricamento
+        data_type: VARCHAR(2)
+      - name: crcar_tipo_dest_ec
+        data_type: VARCHAR(1)
+      - name: crcar_com_invio_ec_ri
+        data_type: NUMBER(13,0)
+      - name: crcar_com_invio_ec_bp
+        data_type: NUMBER(13,0)
+      - name: crcar_mod_invio_ec
+        data_type: VARCHAR(1)
+      - name: crcar_mod_emiss_carta
+        data_type: VARCHAR(1)
+      - name: crcar_data_blocco_disp
+        data_type: NUMBER(8,0)
+      - name: crcar_pag_forma
+        data_type: VARCHAR(2)
+      - name: crcar_pag_abi
+        data_type: NUMBER(5,0)
+        config:
+          meta:
+            masking: ZEROS
+      - name: crcar_pag_cab
+        data_type: NUMBER(5,0)
+        config:
+          meta:
+            masking: ZEROS
+      - name: crcar_pag_cc
+        data_type: VARCHAR(12)
+        config:
+          meta:
+            masking: SPACES
+      - name: crcar_pag_codice_rid
+        data_type: VARCHAR(16)
+      - name: crcar_pag_intest_conto
+        data_type: NUMBER(9,0)
+      - name: crcar_pag_banca_interna
+        data_type: NUMBER(5,0)
+      - name: crcar_ana_ammin
+        data_type: NUMBER(9,0)
+      - name: crcar_tipo_int_conto_cc
+        data_type: VARCHAR(1)
+      - name: crcar_flag_stato_rid
+        data_type: VARCHAR(1)
+      - name: crcar_liv_delibera
+        data_type: NUMBER(2,0)
+      - name: crcar_liv_respinta
+        data_type: NUMBER(2,0)
+      - name: crcar_mod_identif
+        data_type: VARCHAR(1)
+      - name: crcar_com_adesione
+        data_type: NUMBER(13,0)
+      - name: crcar_esa_bp
+        data_type: NUMBER(5,0)
+      - name: crcar_data_rid
+        data_type: NUMBER(5,0)
+      - name: crcar_data_rb
+        data_type: NUMBER(5,0)
+      - name: crcar_firmatario
+        data_type: NUMBER(9,0)
+      - name: crcar_intestazione_carta
+        data_type: VARCHAR(30)
+        config:
+          meta:
+            masking: SPACES
+      - name: crcar_intestazione_esten
+        data_type: VARCHAR(30)
+        config:
+          meta:
+            masking: SPACES
+      - name: crcar_intestazione_man
+        data_type: VARCHAR(1)
+      - name: crcar_agg_controparte_1
+        data_type: NUMBER(9,0)
+      - name: crcar_agg_intestazione_1
+        data_type: VARCHAR(30)
+        config:
+          meta:
+            masking: SPACES
+      - name: crcar_agg_stato_1
+        data_type: VARCHAR(2)
+      - name: crcar_agg_produzione_1
+        data_type: VARCHAR(1)
+      - name: crcar_agg_spedizione_1
+        data_type: VARCHAR(1)
+      - name: crcar_agg_lotto_produzione_1
+        data_type: NUMBER(5,0)
+      - name: crcar_agg_lotto_spedizione_1
+        data_type: NUMBER(5,0)
+      - name: crcar_agg_prod_1
+        data_type: VARCHAR(3)
+      - name: crcar_agg_controparte_2
+        data_type: NUMBER(9,0)
+      - name: crcar_agg_intestazione_2
+        data_type: VARCHAR(30)
+        config:
+          meta:
+            masking: SPACES
+      - name: crcar_agg_stato_2
+        data_type: VARCHAR(2)
+      - name: crcar_agg_produzione_2
+        data_type: VARCHAR(1)
+      - name: crcar_agg_spedizione_2
+        data_type: VARCHAR(1)
+      - name: crcar_agg_lotto_produzione_2
+        data_type: NUMBER(5,0)
+      - name: crcar_agg_lotto_spedizione_2
+        data_type: NUMBER(5,0)
+      - name: crcar_agg_prod_2
+        data_type: VARCHAR(3)
+      - name: crcar_agg_controparte_3
+        data_type: NUMBER(9,0)
+      - name: crcar_agg_intestazione_3
+        data_type: VARCHAR(30)
+        config:
+          meta:
+            masking: SPACES
+      - name: crcar_agg_stato_3
+        data_type: VARCHAR(2)
+      - name: crcar_agg_produzione_3
+        data_type: VARCHAR(1)
+      - name: crcar_agg_spedizione_3
+        data_type: VARCHAR(1)
+      - name: crcar_agg_lotto_produzione_3
+        data_type: NUMBER(5,0)
+      - name: crcar_agg_lotto_spedizione_3
+        data_type: NUMBER(5,0)
+      - name: crcar_agg_prod_3
+        data_type: VARCHAR(3)
+      - name: crcar_icr_importo
+        data_type: NUMBER(13,0)
+      - name: crcar_standard
+        data_type: VARCHAR(1)
+      - name: crcar_credit_limit
+        data_type: NUMBER(13,0)
+      - name: crcar_acquisto_min
+        data_type: NUMBER(13,0)
+      - name: crcar_acquisto_max
+        data_type: NUMBER(13,0)
+      - name: crcar_perc_overlimit
+        data_type: NUMBER(5,2)
+      - name: crcar_overlimit
+        data_type: NUMBER(13,0)
+      - name: crcar_pag_perc_saldo
+        data_type: NUMBER(5,2)
+      - name: crcar_pag_min_importo
+        data_type: NUMBER(13,0)
+      - name: crcar_pag_min_perc
+        data_type: NUMBER(5,2)
+      - name: crcar_stampa_pin
+        data_type: VARCHAR(1)
+      - name: crcar_int_tasso_1
+        data_type: NUMBER(8,3)
+      - name: crcar_int_dal_1
+        data_type: NUMBER(5,0)
+      - name: crcar_int_tar_1
+        data_type: NUMBER(5,3)
+      - name: crcar_int_tasso_2
+        data_type: NUMBER(8,3)
+      - name: crcar_int_dal_2
+        data_type: NUMBER(5,0)
+      - name: crcar_int_tar_2
+        data_type: NUMBER(5,3)
+      - name: crcar_int_tasso_3
+        data_type: NUMBER(8,3)
+      - name: crcar_int_dal_3
+        data_type: NUMBER(5,0)
+      - name: crcar_int_tar_3
+        data_type: NUMBER(5,3)
+      - name: crcar_int_divisore
+        data_type: NUMBER(3,0)
+      - name: crcar_int_abbuono
+        data_type: NUMBER(13,0)
+      - name: crcar_com_rinnovo
+        data_type: NUMBER(13,0)
+      - name: crcar_com_invio_ec
+        data_type: NUMBER(13,0)
+      - name: crcar_com_overlimit
+        data_type: NUMBER(13,0)
+      - name: crcar_garanzia_175
+        data_type: VARCHAR(1)
+      - name: crcar_garanzia_176
+        data_type: VARCHAR(1)
+      - name: crcar_garanzia_177
+        data_type: VARCHAR(1)
+      - name: crcar_garanzia_178
+        data_type: VARCHAR(1)
+      - name: crcar_garanzia_179
+        data_type: VARCHAR(1)
+      - name: crcar_flag_pin
+        data_type: VARCHAR(1)
+      - name: crcar_ap
+        data_type: VARCHAR(16)
+      - name: crcar_carta_sicura
+        data_type: NUMBER(6,0)
+      - name: crcar_cvc1
+        data_type: VARCHAR(3)
+      - name: crcar_cvc2
+        data_type: VARCHAR(3)
+      - name: crcar_tentativi_pin
+        data_type: NUMBER(2,0)
+      - name: crcar_data_atm
+        data_type: NUMBER(5,0)
+      - name: crcar_num_atm_gg
+        data_type: NUMBER(3,0)
+      - name: crcar_num_atm_mm
+        data_type: NUMBER(3,0)
+      - name: crcar_imp_atm_gg
+        data_type: NUMBER(13,0)
+      - name: crcar_imp_atm_mm
+        data_type: NUMBER(13,0)
+      - name: crcar_pan_organiz
+        data_type: NUMBER(16,0)
+      - name: crcar_data_nasc_f_1
+        data_type: NUMBER(8,0)
+      - name: crcar_data_nasc_f_4
+        data_type: NUMBER(8,0)
+      - name: crcar_campo_ut1
+        data_type: VARCHAR(2)
+      - name: crcar_campo_ut2
+        data_type: VARCHAR(2)
+      - name: crcar_cod_atos
+        data_type: NUMBER(11,0)
+      - name: crcar_campo_ut4
+        data_type: VARCHAR(30)
+      - name: crcar_prod_multifunz_f
+        data_type: VARCHAR(1)
+      - name: crcar_prod_multifunz_r
+        data_type: VARCHAR(1)
+      - name: crcar_prod_multifunz_s
+        data_type: VARCHAR(1)
+      - name: crcar_prod_multifunz_t
+        data_type: VARCHAR(1)
+      - name: crcar_richiesta_pin
+        data_type: VARCHAR(1)
+      - name: crcar_pvv_old
+        data_type: VARCHAR(4)
+      - name: crcar_ind_pvv_old
+        data_type: VARCHAR(1)
+      - name: crcar_mk_flag
+        data_type: VARCHAR(1)
+      - name: crcar_mk_data
+        data_type: NUMBER(8,0)
+      - name: crcar_mk_operatore
+        data_type: VARCHAR(10)
+      - name: crcar_furto_pan
+        data_type: NUMBER(16,0)
+      - name: crcar_furto_data
+        data_type: NUMBER(8,0)
+      - name: crcar_furto_ora
+        data_type: NUMBER(6,0)
+      - name: crcar_azienda_pan
+        data_type: NUMBER(16,0)
+      - name: crcar_tipo_ctr
+        data_type: VARCHAR(11)
+      - name: crcar_furto_stato
+        data_type: VARCHAR(2)
+      - name: crcar_furto_blocco
+        data_type: VARCHAR(2)
+      - name: crcar_pvv
+        data_type: NUMBER(4,0)
+      - name: crcar_ind_pvv
+        data_type: NUMBER(1,0)
+      - name: crcar_furto_pan_2
+        data_type: NUMBER(12,0)
+      - name: crcar_furto_operatore
+        data_type: VARCHAR(10)
+      - name: crcar_mod_calc_rata
+        data_type: VARCHAR(1)
+      - name: crcar_tab_calc_rata
+        data_type: VARCHAR(3)
+      - name: crcar_tipo_plastica
+        data_type: VARCHAR(3)
+      - name: crcar_promo_can
+        data_type: VARCHAR(1)
+      - name: crcar_data_assicurazione
+        data_type: NUMBER(5,0)
+      - name: crcar_moro_max
+        data_type: VARCHAR(2)
+      - name: crcar_credito_rich
+        data_type: NUMBER(13,0)
+      - name: crcar_promo_code
+        data_type: VARCHAR(5)
+      - name: crcar_dt_chiusura_ass
+        data_type: NUMBER(8,0)
+      - name: crcar_invio_positivo
+        data_type: VARCHAR(1)
+      - name: crcar_flag_attesa_att
+        data_type: VARCHAR(1)
+      - name: crcar_data_scad_tesser
+        data_type: NUMBER(6,0)
+      - name: crcar_mesi_validita
+        data_type: NUMBER(3,0)
+      - name: crcar_carta_cartone
+        data_type: VARCHAR(1)
+      - name: crcar_durata_piano_teo
+        data_type: NUMBER(3,0)
+      - name: crcar_ec_frequenza_scalare
+        data_type: VARCHAR(1)
+      - name: crcar_data_scadenza_old
+        data_type: NUMBER(5,0)
+      - name: crcar_cvc1_old
+        data_type: VARCHAR(3)
+      - name: crcar_cvc2_old
+        data_type: VARCHAR(3)
+      - name: crcar_assicurazione_attiva
+        data_type: VARCHAR(1)
+      - name: crcar_utente_modifica
+        data_type: VARCHAR(10)
+      - name: crcar_data_modifica
+        data_type: NUMBER(8,0)
+      - name: crcar_ora_modifica
+        data_type: NUMBER(8,0)
+      - name: crcar_tipo_rilavorazioni
+        data_type: VARCHAR(1)
+      - name: crcar_prog_rilavorazioni
+        data_type: NUMBER(7,0)
+      - name: crcar_prog_ricicli
+        data_type: NUMBER(3,0)
+      - name: crcar_canale_acq
+        data_type: VARCHAR(3)
+      - name: crcar_ndg_promotore
+        data_type: NUMBER(15,0)
+      - name: crcar_data_agg_1
+        data_type: NUMBER(8,0)
+      - name: crcar_dato_agg_1
+        data_type: VARCHAR(16)
+      - name: crcar_dato_agg_2
+        data_type: VARCHAR(16)
+      - name: crcar_dato_agg_3
+        data_type: VARCHAR(16)
+      - name: crcar_dato_agg_4
+        data_type: VARCHAR(16)
+      - name: crcar_cod_iniziativa
+        data_type: VARCHAR(12)
+      - name: crcar_rif_interno_cnv
+        data_type: VARCHAR(12)
+      - name: crcar_tan_ris_sal
+        data_type: NUMBER(8,3)
+      - name: crcar_tan_ris_int
+        data_type: NUMBER(8,3)
+      - name: crcar_prod_multifunz
+        data_type: VARCHAR(1)
+      - name: crcar_invio_positivo_priv
+        data_type: VARCHAR(1)
+      - name: crcar_bar_code
+        data_type: VARCHAR(13)
+      - name: crcar_tan_ris_multiconto
+        data_type: NUMBER(8,3)
+      - name: crcar_tan_ris_05
+        data_type: NUMBER(8,3)
+      - name: crcar_tabella_fin
+        data_type: VARCHAR(3)
+      - name: crcar_ec_frequenza
+        data_type: VARCHAR(1)
+      - name: crcar_pag_gg_valuta
+        data_type: NUMBER(2,0)
+      - name: crcar_com_entrata
+        data_type: NUMBER(13,0)
+      - name: crcar_accodam_data_dal_1
+        data_type: NUMBER(5,0)
+      - name: crcar_accodam_data_al_1
+        data_type: NUMBER(5,0)
+      - name: crcar_accodam_data_dal_2
+        data_type: NUMBER(5,0)
+      - name: crcar_accodam_data_al_2
+        data_type: NUMBER(5,0)
+      - name: crcar_accodam_data_dal_3
+        data_type: NUMBER(5,0)
+      - name: crcar_accodam_data_al_3
+        data_type: NUMBER(5,0)
+      - name: crcar_protocollo
+        data_type: NUMBER(9,0)
+      - name: crcar_protocollo_tel
+        data_type: VARCHAR(1)
+      - name: crcar_modulo_convenzionato
+        data_type: VARCHAR(2)
+      - name: crcar_accodam_penale1
+        data_type: NUMBER(13,0)
+      - name: crcar_accodam_penale2
+        data_type: NUMBER(13,0)
+      - name: crcar_accodam_penale3
+        data_type: NUMBER(13,0)
+      - name: crcar_mora_tasso
+        data_type: NUMBER(8,3)
+      - name: crcar_mora_extra
+        data_type: VARCHAR(1)
+      - name: crcar_spese_incasso
+        data_type: NUMBER(13,0)
+      - name: crcar_tipo_prod
+        data_type: VARCHAR(3)
+      - name: crcar_assic_rata
+        data_type: VARCHAR(1)
+      - name: crcar_assic_annuale
+        data_type: VARCHAR(1)
+      - name: crcar_firma_su_rid
+        data_type: VARCHAR(1)
+      - name: crcar_valuta_i_e
+        data_type: VARCHAR(1)
+      - name: crcar_stato_polizza
+        data_type: VARCHAR(2)
+      - name: crcar_rif_pv_ext
+        data_type: VARCHAR(16)
+      - name: crcar_prog_carta_su_cc
+        data_type: NUMBER(2,0)
+      - name: crcar_purn
+        data_type: NUMBER(16,0)
+      - name: crcar_email
+        data_type: VARCHAR(50)
+      - name: crcar_data_scad_tesser_old
+        data_type: NUMBER(6,0)
+      - name: crcar_ndg_contatto
+        data_type: NUMBER(15,0)
+      - name: crcar_prat_consumo_origine
+        data_type: NUMBER(12,0)
+      - name: crcar_microcircuito
+        data_type: VARCHAR(1)
+      - name: crcar_agevol
+        data_type: VARCHAR(5)
+      - name: crcar_gg_ciclo_ec
+        data_type: NUMBER(2,0)
+      - name: crcar_ini_int_grat
+        data_type: NUMBER(8,0)
+      - name: crcar_fin_int_grat
+        data_type: NUMBER(8,0)
+      - name: crcar_credit_limit_fam
+        data_type: NUMBER(13,0)
+      - name: crcar_data_primo_ec
+        data_type: NUMBER(8,0)
+      - name: crcar_bank_code
+        data_type: NUMBER(8,0)
+      - name: crcar_sub_number
+        data_type: NUMBER(4,0)
+      - name: crcar_num_atm_altern
+        data_type: NUMBER(2,0)
+      - name: crcar_tab_indicizzato
+        data_type: VARCHAR(3)
+      - name: crcar_eme
+        data_type: NUMBER(3,0)
+      - name: crcar_pgm
+        data_type: VARCHAR(10)
+      - name: crcar_contatto
+        data_type: VARCHAR(3)
+      - name: crcar_data_val_orig
+        data_type: NUMBER(8,0)
+      - name: crcar_data_produzione
+        data_type: NUMBER(8,0)
+      - name: crcar_data_positivo
+        data_type: NUMBER(8,0)
+      - name: crcar_terza_traccia
+        data_type: VARCHAR(106)
+      - name: crcar_ultimo_pan
+        data_type: NUMBER(16,0)
+      - name: crcar_area
+        data_type: VARCHAR(3)
+      - name: crcar_responsabile
+        data_type: VARCHAR(3)
+      - name: crcar_data_creazione
+        data_type: NUMBER(8,0)
+      - name: crcar_data_sostituzione
+        data_type: NUMBER(8,0)
+      - name: crcar_data_rientro_positivo
+        data_type: NUMBER(8,0)
+      - name: crcar_data_pos
+        data_type: NUMBER(8,0)
+      - name: crcar_num_pos_gg
+        data_type: NUMBER(3,0)
+      - name: crcar_num_pos_mm
+        data_type: NUMBER(3,0)
+      - name: crcar_imp_pos_gg
+        data_type: NUMBER(13,0)
+      - name: crcar_imp_pos_mm
+        data_type: NUMBER(13,0)
+      - name: crcar_data_ptr
+        data_type: NUMBER(8,0)
+      - name: crcar_num_ptr_gg
+        data_type: NUMBER(3,0)
+      - name: crcar_num_ptr_mm
+        data_type: NUMBER(3,0)
+      - name: crcar_imp_ptr_gg
+        data_type: NUMBER(13,0)
+      - name: crcar_imp_ptr_mm
+        data_type: NUMBER(13,0)
+      - name: crcar_atm_gratuite
+        data_type: NUMBER(2,0)
+      - name: crcar_st_bollo_contratto
+        data_type: NUMBER(2,0)
+      - name: crcar_importo_1
+        data_type: NUMBER(13,0)
+      - name: crcar_importo_2
+        data_type: NUMBER(13,0)
+      - name: crcar_codice_1
+        data_type: VARCHAR(2)
+      - name: crcar_codice_2
+        data_type: VARCHAR(2)
+      - name: crcar_data_1
+        data_type: NUMBER(8,0)
+      - name: crcar_data_2
+        data_type: NUMBER(8,0)
+      - name: crcar_tipo_imposta
+        data_type: VARCHAR(1)
+      - name: crcar_imp_imposta
+        data_type: NUMBER(13,0)
+      - name: crcar_dt_add_imposta
+        data_type: NUMBER(8,0)
+      - name: crcar_fase_imposta
+        data_type: VARCHAR(2)
+      - name: crcar_prog_log_imposta
+        data_type: NUMBER(9,0)
+      - name: crcar_importo_3
+        data_type: NUMBER(13,0)
+      - name: crcar_importo_4
+        data_type: NUMBER(13,0)
+      - name: crcar_account_open_date
+        data_type: NUMBER(8,0)
+      - name: crcar_data_4
+        data_type: NUMBER(8,0)
+      - name: crcar_flag_1
+        data_type: VARCHAR(2)
+      - name: crcar_flag_2
+        data_type: VARCHAR(2)
+      - name: crcar_flag_3
+        data_type: VARCHAR(1)
+      - name: crcar_piedino
+        data_type: NUMBER(15,0)
+      - name: crcar_sec_simultanea
+        data_type: VARCHAR(1)
+      - name: crcar_motivo_esi
+        data_type: VARCHAR(3)
+      - name: crcar_ruolo_deliberante
+        data_type: VARCHAR(3)
+      - name: crcar_branch_code
+        data_type: VARCHAR(7)
+      - name: crcar_contratto_rif
+        data_type: NUMBER(12,0)
+      - name: crcar_tipologia
+        data_type: VARCHAR(3)
+      - name: crcar_garante4
+        data_type: NUMBER(9,0)
+      - name: crcar_garante5
+        data_type: NUMBER(9,0)
+      - name: crcar_esponente1
+        data_type: NUMBER(9,0)
+      - name: crcar_esponente2
+        data_type: NUMBER(9,0)
+      - name: crcar_esponente3
+        data_type: NUMBER(9,0)
+      - name: crcar_esponente4
+        data_type: NUMBER(9,0)
+      - name: crcar_esponente5
+        data_type: NUMBER(9,0)
+      - name: crcar_coobbligato1
+        data_type: NUMBER(9,0)
+      - name: crcar_coobbligato2
+        data_type: NUMBER(9,0)
+      - name: crcar_coobbligato3
+        data_type: NUMBER(9,0)
+      - name: crcar_coobbligato4
+        data_type: NUMBER(9,0)
+      - name: crcar_coobbligato5
+        data_type: NUMBER(9,0)
+      - name: crcar_plafond
+        data_type: NUMBER(13,0)
+      - name: crcar_tipo_processo
+        data_type: VARCHAR(3)
+      - name: crcar_gr_int_utili
+        data_type: VARCHAR(4)
+      - name: crcar_data_add_comm_annua
+        data_type: NUMBER(8,0)
+      - name: crcar_fido_max_conc
+        data_type: NUMBER(13,0)
+      - name: crcar_delta_fido_su_ic
+        data_type: NUMBER(13,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

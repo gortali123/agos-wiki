@@ -1,0 +1,21 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(IFF(RTRIM(BAAC_PROCEDURA) = '', ' ', RTRIM(BAAC_PROCEDURA)) AS VARCHAR(2)) AS baac_procedura,
+  TRY_CAST(BAAC_PRATICA AS NUMBER(12,0)) AS baac_pratica,
+  TRY_CAST(BAAC_PRG_PSV AS NUMBER(11,0)) AS baac_prg_psv,
+  TRY_CAST(IFF(RTRIM(BAAC_RAPPORTO) = '', ' ', RTRIM(BAAC_RAPPORTO)) AS VARCHAR(2)) AS baac_rapporto,
+  TRY_CAST(BAAC_PRG_RAPPORTO AS NUMBER(2,0)) AS baac_prg_rapporto,
+  TRY_CAST(IFF(RTRIM(BAAC_PARENTELA) = '', ' ', RTRIM(BAAC_PARENTELA)) AS VARCHAR(1)) AS baac_parentela,
+  TRY_CAST(IFF(RTRIM(BAAC_COABITA) = '', ' ', RTRIM(BAAC_COABITA)) AS VARCHAR(1)) AS baac_coabita,
+  TRY_CAST(IFF(RTRIM(BAAC_TIT_EFF) = '', ' ', RTRIM(BAAC_TIT_EFF)) AS VARCHAR(1)) AS baac_tit_eff,
+  TRY_CAST(IFF(RTRIM(BAAC_MODIFICA) = '', ' ', RTRIM(BAAC_MODIFICA)) AS VARCHAR(1)) AS baac_modifica,
+  TRY_CAST(IFF(RTRIM(BAAC_UTENTE) = '', ' ', RTRIM(BAAC_UTENTE)) AS VARCHAR(10)) AS baac_utente,
+  TRY_CAST(BAAC_DATA AS NUMBER(8,0)) AS baac_data,
+  TRY_CAST(BAAC_ORA AS NUMBER(8,0)) AS baac_ora,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','bapratac') }}

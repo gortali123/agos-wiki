@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: bapratag
+    relation: ref('stg_bapratag')
+    config:
+      unique_key: [baag_procedura, baag_pratica]

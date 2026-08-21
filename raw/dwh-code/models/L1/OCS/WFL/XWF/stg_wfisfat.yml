@@ -1,0 +1,186 @@
+version: 2
+
+models:
+  - name: stg_wfisfat
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XWF", "archivio":"WFISFAT"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: wfisat_istanza
+        data_type: NUMBER(12,0)
+      - name: wfisat_fase
+        data_type: VARCHAR(10)
+      - name: wfisat_sottofase
+        data_type: VARCHAR(10)
+      - name: wfisat_attivita
+        data_type: VARCHAR(10)
+      - name: wfisat_stato
+        data_type: VARCHAR(1)
+      - name: wfisat_attivita_prec
+        data_type: VARCHAR(10)
+      - name: wfisat_attivita_prec_2
+        data_type: VARCHAR(10)
+      - name: wfisat_attivita_prec_3
+        data_type: VARCHAR(10)
+      - name: wfisat_attivita_prec_4
+        data_type: VARCHAR(10)
+      - name: wfisat_attivita_prec_5
+        data_type: VARCHAR(10)
+      - name: wfisat_fase_destinazione
+        data_type: VARCHAR(10)
+      - name: wfisat_utente
+        data_type: VARCHAR(10)
+      - name: wfisat_ufficio
+        data_type: VARCHAR(3)
+      - name: wfisat_zona
+        data_type: VARCHAR(3)
+      - name: wfisat_sospensione
+        data_type: VARCHAR(3)
+      - name: wfisat_utente_sosp
+        data_type: VARCHAR(10)
+      - name: wfisat_data_sosp
+        data_type: NUMBER(8,0)
+      - name: wfisat_ora_sosp
+        data_type: NUMBER(8,0)
+      - name: wfisat_priorita
+        data_type: NUMBER(2,0)
+      - name: wfisat_agenda
+        data_type: VARCHAR(10)
+      - name: wfisat_data_attivazione
+        data_type: NUMBER(8,0)
+      - name: wfisat_ora_attivazione
+        data_type: NUMBER(8,0)
+      - name: wfisat_utente_modifica
+        data_type: VARCHAR(10)
+      - name: wfisat_data_modifica
+        data_type: NUMBER(8,0)
+      - name: wfisat_ora_modifica
+        data_type: NUMBER(8,0)
+      - name: wfisat_data_scadenza
+        data_type: NUMBER(8,0)
+      - name: wfisat_tipo_chiusura
+        data_type: VARCHAR(1)
+      - name: wfisat_utente_chiusura
+        data_type: VARCHAR(10)
+      - name: wfisat_data_chiusura
+        data_type: NUMBER(8,0)
+      - name: wfisat_ora_chiusura
+        data_type: NUMBER(8,0)
+      - name: wfisat_workflow
+        data_type: VARCHAR(10)
+      - name: wfisat_area_wf
+        data_type: VARCHAR(2)
+      - name: wfisat_pratica
+        data_type: NUMBER(12,0)
+      - name: wfisat_tipo_caricamento
+        data_type: VARCHAR(2)
+      - name: wfisat_canale_acq
+        data_type: VARCHAR(3)
+      - name: wfisat_emettitore
+        data_type: NUMBER(3,0)
+      - name: wfisat_tipo_prodotto
+        data_type: VARCHAR(2)
+      - name: wfisat_prodotto
+        data_type: VARCHAR(2)
+      - name: wfisat_tab_finanz
+        data_type: VARCHAR(3)
+      - name: wfisat_tipo_processo
+        data_type: VARCHAR(3)
+      - name: wfisat_responsabile
+        data_type: VARCHAR(3)
+      - name: wfisat_area
+        data_type: VARCHAR(3)
+      - name: wfisat_filiale
+        data_type: VARCHAR(3)
+      - name: wfisat_stato_prat
+        data_type: VARCHAR(2)
+      - name: wfisat_attributo_prat
+        data_type: VARCHAR(2)
+      - name: wfisat_stato_int
+        data_type: VARCHAR(2)
+      - name: wfisat_attrb_int
+        data_type: VARCHAR(2)
+      - name: wfisat_intermediario
+        data_type: NUMBER(9,0)
+      - name: wfisat_tipo_intermediario
+        data_type: VARCHAR(2)
+      - name: wfisat_rete_vendita
+        data_type: NUMBER(9,0)
+      - name: wfisat_agente
+        data_type: NUMBER(9,0)
+      - name: wfisat_subagente
+        data_type: NUMBER(9,0)
+      - name: wfisat_convenzionato
+        data_type: NUMBER(9,0)
+      - name: wfisat_punto_vendita
+        data_type: NUMBER(9,0)
+      - name: wfisat_cliente
+        data_type: NUMBER(9,0)
+      - name: wfisat_esito_sistema
+        data_type: VARCHAR(1)
+      - name: wfisat_livello_firma
+        data_type: NUMBER(2,0)
+      - name: wfisat_tipo_firma
+        data_type: VARCHAR(1)
+      - name: wfisat_mod_att_firma
+        data_type: VARCHAR(3)
+      - name: wfisat_data_bo
+        data_type: NUMBER(8,0)
+      - name: wfisat_utente_chi_infban
+        data_type: VARCHAR(10)
+      - name: wfisat_utente_chi_delib
+        data_type: VARCHAR(10)
+      - name: wfisat_prog_riciclo
+        data_type: NUMBER(3,0)
+      - name: wfisat_prg_ret
+        data_type: NUMBER(3,0)
+      - name: wfisat_imp_finanz
+        data_type: NUMBER(13,0)
+      - name: wfisat_liq_sc
+        data_type: VARCHAR(1)
+      - name: wfisat_area_ris_cde
+        data_type: VARCHAR(4)
+      - name: wfisat_esenz_reddito
+        data_type: VARCHAR(1)
+      - name: wfisat_prg_sin
+        data_type: NUMBER(3,0)
+      - name: wfisat_data_com_sin
+        data_type: NUMBER(8,0)
+      - name: wfisat_codice_sin
+        data_type: VARCHAR(2)
+      - name: wfisat_class_sin
+        data_type: VARCHAR(3)
+      - name: wfisat_tipo_sin
+        data_type: VARCHAR(1)
+      - name: wfisat_stato_sin
+        data_type: VARCHAR(2)
+      - name: wfisat_ass_sin
+        data_type: NUMBER(9,0)
+      - name: wfisat_prg_psv
+        data_type: NUMBER(11,0)
+      - name: wfisat_azione_psv
+        data_type: VARCHAR(3)
+      - name: wfisat_stato_psv
+        data_type: VARCHAR(2)
+      - name: wfisat_blocco_psv
+        data_type: VARCHAR(2)
+      - name: wfisat_prg_psv_ext
+        data_type: NUMBER(11,0)
+      - name: wfisat_note
+        data_type: VARCHAR(30)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: oxcnfotde
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [oxcnotde_progressivo, oxcnotde_data_estrazione, oxcnotde_procedura, oxcnotde_pratica, oxcnotde_prg_cessione, oxcnotde_totale]
+      - name: oxcnfotde_deleted

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: cccfseet
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [cfseet_procedura, cfseet_pratica, cfseet_fase_credito, cfseet_rapporto, cfseet_controparte]
+      - name: cccfseet_deleted

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccrimbo
+    relation: ref('stg_ccrimbo')
+    config:
+      unique_key: [ccrim_progressivo]

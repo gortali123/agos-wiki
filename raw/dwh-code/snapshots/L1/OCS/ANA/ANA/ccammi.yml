@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccammi
+    relation: ref('stg_ccammi')
+    config:
+      unique_key: [ammi_codice, ammi_sede]

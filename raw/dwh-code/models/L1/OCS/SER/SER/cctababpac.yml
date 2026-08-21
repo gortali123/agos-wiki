@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: cctababpac
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['tcap_provenienza', 'tcap_prodotto', 'tcap_tab_finanziaria', 'tcap_emettitore', 'tcap_tipo_prodotto', 'tcap_dest_finanz', 'tcap_convenzionato', 'tcap_istituto_finanz', 'tcap_mod_pagamento', 'tcap_tipo_caricamento', 'tcap_canale_acq', 'tcap_accordo', 'tcap_interm_agg', 'tcap_codice_pacchetto', 'tcap_codice_gruppo', 'tcap_data_inizio_val']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_SER", "archivio":"CCTABABPAC"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [tcap_provenienza, tcap_prodotto, tcap_tab_finanziaria, tcap_emettitore, tcap_tipo_prodotto, tcap_dest_finanz, tcap_convenzionato, tcap_istituto_finanz, tcap_mod_pagamento, tcap_tipo_caricamento, tcap_canale_acq, tcap_accordo, tcap_interm_agg, tcap_codice_pacchetto, tcap_codice_gruppo, tcap_data_inizio_val]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: tcap_provenienza
+        data_type: VARCHAR(2)
+      - name: tcap_prodotto
+        data_type: VARCHAR(2)
+      - name: tcap_tab_finanziaria
+        data_type: VARCHAR(3)
+      - name: tcap_emettitore
+        data_type: NUMBER(3,0)
+      - name: tcap_tipo_prodotto
+        data_type: VARCHAR(2)
+      - name: tcap_dest_finanz
+        data_type: VARCHAR(3)
+      - name: tcap_convenzionato
+        data_type: NUMBER(9,0)
+      - name: tcap_istituto_finanz
+        data_type: NUMBER(5,0)
+      - name: tcap_mod_pagamento
+        data_type: VARCHAR(2)
+      - name: tcap_tipo_caricamento
+        data_type: VARCHAR(2)
+      - name: tcap_canale_acq
+        data_type: VARCHAR(3)
+      - name: tcap_accordo
+        data_type: VARCHAR(6)
+      - name: tcap_interm_agg
+        data_type: NUMBER(9,0)
+      - name: tcap_codice_pacchetto
+        data_type: VARCHAR(5)
+      - name: tcap_codice_gruppo
+        data_type: VARCHAR(5)
+      - name: tcap_obblig_facolt
+        data_type: VARCHAR(1)
+      - name: tcap_includi_escludi
+        data_type: VARCHAR(1)
+      - name: tcap_data_inizio_val
+        data_type: NUMBER(8,0)
+      - name: tcap_data_fine_val
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

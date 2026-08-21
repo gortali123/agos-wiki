@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: bauserarc
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_SRV", "archivio":"BAUSERARC"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [ute_codice]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: ute_codice
+        data_type: VARCHAR(10)
+      - name: ute_descrizione
+        data_type: VARCHAR(30)
+      - name: ute_master
+        data_type: VARCHAR(1)
+      - name: ute_livello_firma
+        data_type: NUMBER(2,0)
+      - name: ute_dipendenza
+        data_type: VARCHAR(1)
+      - name: ute_ufficio
+        data_type: VARCHAR(3)
+      - name: ute_telefono
+        data_type: VARCHAR(15)
+      - name: ute_fax
+        data_type: VARCHAR(15)
+      - name: ute_email
+        data_type: VARCHAR(50)
+      - name: ute_menu_iniziale
+        data_type: VARCHAR(10)
+      - name: ute_menu_speciale
+        data_type: VARCHAR(10)
+      - name: ute_gestione_stampe
+        data_type: VARCHAR(1)
+      - name: ute_riga_comandi
+        data_type: VARCHAR(1)
+      - name: ute_isola
+        data_type: VARCHAR(4)
+      - name: ute_tutte_filiali
+        data_type: VARCHAR(1)
+      - name: ute_filiale
+        data_type: VARCHAR(3)
+      - name: ute_rif_sicurezza
+        data_type: VARCHAR(10)
+      - name: ute_consulente
+        data_type: VARCHAR(1)
+      - name: ute_responsabile
+        data_type: VARCHAR(1)
+      - name: ute_abil_sas
+        data_type: VARCHAR(1)
+      - name: ute_ope_contabilita
+        data_type: VARCHAR(2)
+      - name: ute_profilo
+        data_type: VARCHAR(1)
+      - name: ute_automatico
+        data_type: VARCHAR(1)
+      - name: ute_tipo_accesso
+        data_type: VARCHAR(2)
+      - name: ute_applicazione
+        data_type: VARCHAR(2)
+      - name: rowid
+        data_type: NUMBER(38, 0)

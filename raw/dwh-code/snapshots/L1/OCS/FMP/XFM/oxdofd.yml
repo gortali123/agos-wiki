@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: oxdofd
+    relation: ref('stg_oxdofd')
+    config:
+      unique_key: [oxdod_cartella, oxdod_elemento, oxdod_versione_doc]

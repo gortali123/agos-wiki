@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccnewabi
+    relation: ref('stg_ccnewabi')
+    config:
+      unique_key: [abi_abi]

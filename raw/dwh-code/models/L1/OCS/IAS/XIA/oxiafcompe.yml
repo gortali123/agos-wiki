@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: oxiafcompe
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['comp_procedura', 'comp_contratto', 'comp_q_cartol', 'comp_versione', 'comp_tipo_importo', 'comp_sotto_tipo', 'comp_anno']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XIA", "archivio":"OXIAFCOMPE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [comp_procedura, comp_contratto, comp_q_cartol, comp_versione, comp_tipo_importo, comp_sotto_tipo, comp_anno]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: comp_procedura
+        data_type: VARCHAR(2)
+      - name: comp_contratto
+        data_type: NUMBER(12,0)
+      - name: comp_q_cartol
+        data_type: VARCHAR(1)
+      - name: comp_versione
+        data_type: NUMBER(3,0)
+      - name: comp_tipo_importo
+        data_type: VARCHAR(3)
+      - name: comp_sotto_tipo
+        data_type: VARCHAR(5)
+      - name: comp_anno
+        data_type: NUMBER(4,0)
+      - name: comp_eccez_incl_ric
+        data_type: VARCHAR(1)
+      - name: comp_risconto_01
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_01
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_02
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_02
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_03
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_03
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_04
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_04
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_05
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_05
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_06
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_06
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_07
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_07
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_08
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_08
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_09
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_09
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_10
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_10
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_11
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_11
+        data_type: NUMBER(13,0)
+      - name: comp_risconto_12
+        data_type: NUMBER(13,0)
+      - name: comp_rateo_12
+        data_type: NUMBER(13,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

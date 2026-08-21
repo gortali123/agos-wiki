@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: mfftbtca
+    relation: ref('stg_mfftbtca')
+    config:
+      unique_key: [mftbtca_tipo_caricamento]

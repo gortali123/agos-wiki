@@ -1,0 +1,331 @@
+version: 2
+
+models:
+  - name: psintacq
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['intacq_emettitore', 'intacq_protocollo', 'intacq_riga']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XPO", "archivio":"PSINTACQ"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [intacq_emettitore, intacq_protocollo, intacq_riga]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: intacq_emettitore
+        data_type: NUMBER(3,0)
+      - name: intacq_protocollo
+        data_type: NUMBER(7,0)
+      - name: intacq_riga
+        data_type: NUMBER(4,0)
+      - name: intacq_causale_ssb
+        data_type: NUMBER(5,0)
+      - name: intacq_imp_aut
+        data_type: NUMBER(13,0)
+      - name: intacq_aut_ssb
+        data_type: VARCHAR(6)
+      - name: intacq_cod_abb
+        data_type: VARCHAR(1)
+      - name: intacq_cod_rif_circuito
+        data_type: VARCHAR(2)
+      - name: intacq_id_titolare
+        data_type: VARCHAR(1)
+      - name: intacq_aut_time_ssb
+        data_type: VARCHAR(6)
+      - name: intacq_cod_transaz
+        data_type: NUMBER(2,0)
+      - name: intacq_imp_valuta
+        data_type: NUMBER(12,2)
+      - name: intacq_cod_valuta
+        data_type: VARCHAR(3)
+      - name: intacq_nome_eserc
+        data_type: VARCHAR(25)
+      - name: intacq_citta_eserc
+        data_type: VARCHAR(13)
+      - name: intacq_cod_naz_es
+        data_type: VARCHAR(3)
+      - name: intacq_cat_eserc
+        data_type: VARCHAR(5)
+      - name: intacq_cap_eserc
+        data_type: VARCHAR(5)
+      - name: intacq_pr_eserc
+        data_type: VARCHAR(3)
+      - name: intacq_key_circuito
+        data_type: VARCHAR(27)
+      - name: intacq_categoria
+        data_type: VARCHAR(2)
+      - name: intacq_acq_ref_nr
+        data_type: VARCHAR(23)
+      - name: intacq_cod_chargeback
+        data_type: VARCHAR(2)
+      - name: intacq_ind_doc
+        data_type: VARCHAR(1)
+      - name: intacq_errori
+        data_type: VARCHAR(15)
+      - name: intacq_msg_1
+        data_type: VARCHAR(50)
+      - name: intacq_msg_2
+        data_type: VARCHAR(20)
+      - name: intacq_motivo
+        data_type: VARCHAR(4)
+      - name: intacq_num_sped
+        data_type: NUMBER(3,0)
+      - name: intacq_num_disp
+        data_type: NUMBER(7,0)
+      - name: intacq_data_op
+        data_type: NUMBER(8,0)
+      - name: intacq_flr_lim_ind
+        data_type: VARCHAR(1)
+      - name: intacq_crb
+        data_type: VARCHAR(1)
+      - name: intacq_pcas
+        data_type: VARCHAR(1)
+      - name: intacq_acq_busin_id
+        data_type: NUMBER(8,0)
+      - name: intacq_int_fee_ind
+        data_type: VARCHAR(1)
+      - name: intacq_coll_fg
+        data_type: VARCHAR(1)
+      - name: intacq_pos_mode
+        data_type: VARCHAR(2)
+      - name: intacq_proc_date
+        data_type: NUMBER(4,0)
+      - name: intacq_reimb_att
+        data_type: VARCHAR(1)
+      - name: intacq_trans_nr
+        data_type: VARCHAR(12)
+      - name: intacq_iss_bin
+        data_type: NUMBER(6,0)
+      - name: intacq_acq_bin
+        data_type: NUMBER(6,0)
+      - name: intacq_chbk_ref_nr
+        data_type: NUMBER(6,0)
+      - name: intacq_eserc_cod
+        data_type: VARCHAR(15)
+      - name: intacq_term_id
+        data_type: VARCHAR(8)
+      - name: intacq_nat_fee
+        data_type: NUMBER(13,0)
+      - name: intacq_ecomm_ind
+        data_type: VARCHAR(1)
+      - name: intacq_spec_chbk_ind
+        data_type: VARCHAR(1)
+      - name: intacq_trace_nr
+        data_type: NUMBER(6,0)
+      - name: intacq_cardh_id
+        data_type: VARCHAR(1)
+      - name: intacq_prepaid
+        data_type: VARCHAR(1)
+      - name: intacq_service
+        data_type: VARCHAR(1)
+      - name: intacq_purch_id_fmt
+        data_type: VARCHAR(1)
+      - name: intacq_atm_sel
+        data_type: VARCHAR(1)
+      - name: intacq_paym_count
+        data_type: VARCHAR(2)
+      - name: intacq_purch_id
+        data_type: VARCHAR(25)
+      - name: intacq_cash_back
+        data_type: NUMBER(9,0)
+      - name: intacq_bus_fmt_code
+        data_type: VARCHAR(2)
+      - name: intacq_dati_agg
+        data_type: VARCHAR(142)
+      - name: intacq_flag
+        data_type: VARCHAR(1)
+      - name: intacq_cod_eserc
+        data_type: NUMBER(7,0)
+      - name: intacq_card_issuer
+        data_type: VARCHAR(10)
+      - name: intacq_oper_environment
+        data_type: VARCHAR(1)
+      - name: intacq_cardholder
+        data_type: VARCHAR(1)
+      - name: intacq_card_present
+        data_type: VARCHAR(1)
+      - name: intacq_data_input_mode
+        data_type: VARCHAR(1)
+      - name: intacq_pan
+        data_type: NUMBER(16,0)
+      - name: intacq_ora_op
+        data_type: NUMBER(6,0)
+      - name: intacq_su_transitorio
+        data_type: VARCHAR(1)
+      - name: intacq_circuito
+        data_type: VARCHAR(3)
+      - name: intacq_data_disp
+        data_type: NUMBER(8,0)
+      - name: intacq_int_fee
+        data_type: NUMBER(7,0)
+      - name: intacq_segno_int_fee
+        data_type: VARCHAR(1)
+      - name: intacq_abb_dispute
+        data_type: VARCHAR(23)
+      - name: intacq_imp_isa
+        data_type: NUMBER(7,0)
+      - name: intacq_importo_euro
+        data_type: NUMBER(13,0)
+      - name: intacq_mark_up
+        data_type: NUMBER(7,0)
+      - name: intacq_tipo_terminale
+        data_type: VARCHAR(3)
+      - name: intacq_acceptor_id
+        data_type: VARCHAR(15)
+      - name: intacq_tier_code
+        data_type: VARCHAR(1)
+      - name: intacq_acquriring_ist_id
+        data_type: VARCHAR(11)
+      - name: intacq_gcms_product_id
+        data_type: VARCHAR(3)
+      - name: intacq_processing_code
+        data_type: NUMBER(6,0)
+      - name: intacq_card_program_id
+        data_type: VARCHAR(3)
+      - name: intacq_interchange_rate
+        data_type: VARCHAR(2)
+      - name: intacq_product_class_override
+        data_type: VARCHAR(3)
+      - name: intacq_incentive_rates
+        data_type: VARCHAR(6)
+      - name: intacq_function_code
+        data_type: NUMBER(3,0)
+      - name: intacq_interchange_fee_div
+        data_type: NUMBER(7,0)
+      - name: intacq_cod_div_inter_fee
+        data_type: VARCHAR(3)
+      - name: intacq_data_scadenza
+        data_type: VARCHAR(4)
+      - name: intacq_zona_geografica
+        data_type: NUMBER(2,0)
+      - name: intacq_modo_lett_pan
+        data_type: VARCHAR(2)
+      - name: intacq_cambio_buy_rate
+        data_type: NUMBER(14,7)
+      - name: intacq_cambio_sell_rate
+        data_type: NUMBER(14,7)
+      - name: intacq_transaz_sicura
+        data_type: VARCHAR(1)
+      - name: intacq_pgm_registration_id
+        data_type: VARCHAR(3)
+      - name: intacq_trace_id
+        data_type: VARCHAR(15)
+      - name: intacq_multiple_seq_nbr
+        data_type: NUMBER(2,0)
+      - name: intacq_multiple_seq_count
+        data_type: NUMBER(2,0)
+      - name: intacq_payer_name
+        data_type: VARCHAR(30)
+      - name: intacq_payer_city
+        data_type: VARCHAR(25)
+      - name: intacq_payer_country_code
+        data_type: VARCHAR(3)
+      - name: intacq_payer_postal_code
+        data_type: VARCHAR(10)
+      - name: intacq_payer_dob
+        data_type: NUMBER(8,0)
+      - name: intacq_payee_first_name
+        data_type: VARCHAR(35)
+      - name: intacq_payee_last_name
+        data_type: VARCHAR(35)
+      - name: intacq_payee_address
+        data_type: VARCHAR(30)
+      - name: intacq_payee_address_1
+        data_type: VARCHAR(30)
+      - name: intacq_payee_city
+        data_type: VARCHAR(25)
+      - name: intacq_payee_state
+        data_type: VARCHAR(3)
+      - name: intacq_payee_country_code
+        data_type: VARCHAR(3)
+      - name: intacq_payee_postal_code
+        data_type: VARCHAR(10)
+      - name: intacq_payee_date_of_birth
+        data_type: VARCHAR(8)
+      - name: intacq_payee_phone_number
+        data_type: VARCHAR(20)
+      - name: intacq_int_fee_6dec
+        data_type: NUMBER(12,0)
+      - name: intacq_mdes
+        data_type: VARCHAR(21)
+      - name: intacq_pan_hce
+        data_type: VARCHAR(19)
+      - name: intacq_member_message_text
+        data_type: VARCHAR(50)
+      - name: intacq_business_app_id
+        data_type: VARCHAR(2)
+      - name: intacq_sender_ref_nmbr
+        data_type: VARCHAR(16)
+      - name: intacq_sender_acc_nmbr
+        data_type: VARCHAR(34)
+      - name: intacq_payer_address
+        data_type: VARCHAR(35)
+      - name: intacq_atm_access_fee
+        data_type: NUMBER(6,0)
+      - name: intacq_div_atm_access_fee
+        data_type: VARCHAR(3)
+      - name: intacq_operazione_c_less
+        data_type: VARCHAR(1)
+      - name: intacq_wallet_id
+        data_type: VARCHAR(3)
+      - name: intacq_mdes_token_ass_lvl
+        data_type: VARCHAR(2)
+      - name: intacq_mdes_token_req_id
+        data_type: VARCHAR(11)
+      - name: intacq_vcr_trans_code
+        data_type: NUMBER(2,0)
+      - name: intacq_vcr_msg_reason_code
+        data_type: VARCHAR(4)
+      - name: intacq_vcr_disp_cond
+        data_type: VARCHAR(3)
+      - name: intacq_vcr_vrol_fin_id
+        data_type: VARCHAR(11)
+      - name: intacq_vcr_vrol_case_num
+        data_type: NUMBER(10,0)
+      - name: intacq_vcr_vrol_bc_num
+        data_type: NUMBER(10,0)
+      - name: intacq_vcr_client_case_num
+        data_type: VARCHAR(20)
+      - name: intacq_vcr_dispute_status
+        data_type: VARCHAR(2)
+      - name: intacq_fast_funds_ind
+        data_type: VARCHAR(1)
+      - name: intacq_program_protocol
+        data_type: VARCHAR(1)
+      - name: intacq_access_fee
+        data_type: NUMBER(8,0)
+      - name: intacq_dcc_ind
+        data_type: VARCHAR(1)
+      - name: intacq_transaction_ind
+        data_type: VARCHAR(1)
+      - name: intacq_par
+        data_type: VARCHAR(29)
+      - name: intacq_add_trace_ref_num
+        data_type: VARCHAR(19)
+      - name: intacq_cod_naz_mittente
+        data_type: NUMBER(3,0)
+      - name: intacq_merch_country_origin
+        data_type: NUMBER(3,0)
+      - name: intacq_indirizzo_eserc
+        data_type: VARCHAR(14)
+      - name: intacq_transaction_link_id
+        data_type: VARCHAR(22)
+      - name: intacq_e_transaction_link_id
+        data_type: VARCHAR(22)
+      - name: rowid
+        data_type: NUMBER(38, 0)

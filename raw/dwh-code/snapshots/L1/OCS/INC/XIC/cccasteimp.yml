@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cccasteimp
+    relation: ref('stg_cccasteimp')
+    config:
+      unique_key: [cai_provenienza, cai_tipo, cai_numero_documento]

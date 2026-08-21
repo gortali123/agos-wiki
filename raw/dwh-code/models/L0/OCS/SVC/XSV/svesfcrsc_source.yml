@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: svesfcrsc
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [svcrsc_anno_estrazione, svcrsc_mese_estrazione, svcrsc_procedura, svcrsc_pratica, svcrsc_voce_bilancio, svcrsc_scheda_zainetto]
+      - name: svesfcrsc_deleted

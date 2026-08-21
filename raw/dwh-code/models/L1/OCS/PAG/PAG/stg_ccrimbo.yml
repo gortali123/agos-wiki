@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: stg_ccrimbo
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_PAG", "archivio":"CCRIMBO"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: ccrim_progressivo
+        data_type: NUMBER(7,0)
+      - name: ccrim_tipo_record
+        data_type: VARCHAR(2)
+      - name: ccrim_provenienza
+        data_type: VARCHAR(2)
+      - name: ccrim_num_pratica
+        data_type: NUMBER(12,0)
+      - name: ccrim_destinat
+        data_type: NUMBER(9,0)
+      - name: ccrim_pagamento
+        data_type: VARCHAR(2)
+      - name: ccrim_stato
+        data_type: VARCHAR(2)
+      - name: ccrim_attributo
+        data_type: VARCHAR(2)
+      - name: ccrim_cod_lettera
+        data_type: VARCHAR(4)
+      - name: ccrim_data_valuta
+        data_type: NUMBER(8,0)
+      - name: ccrim_importo
+        data_type: NUMBER(13,0)
+      - name: ccrim_capitale
+        data_type: NUMBER(13,0)
+      - name: ccrim_interessi_fin
+        data_type: NUMBER(13,0)
+      - name: ccrim_interessi_mora
+        data_type: NUMBER(13,0)
+      - name: ccrim_note_ric_1
+        data_type: VARCHAR(30)
+      - name: ccrim_note_ric_2
+        data_type: VARCHAR(30)
+      - name: ccrim_note_ric_3
+        data_type: VARCHAR(30)
+      - name: ccrim_note_ric_4
+        data_type: VARCHAR(30)
+      - name: ccrim_note_rif_1
+        data_type: VARCHAR(30)
+      - name: ccrim_note_rif_2
+        data_type: VARCHAR(30)
+      - name: ccrim_note_rif_3
+        data_type: VARCHAR(30)
+      - name: ccrim_banca_inte
+        data_type: NUMBER(5,0)
+      - name: ccrim_abi_cli
+        data_type: NUMBER(5,0)
+      - name: ccrim_cab_cli
+        data_type: NUMBER(5,0)
+      - name: ccrim_cc_cli
+        data_type: VARCHAR(12)
+      - name: ccrim_num_operaz_pag
+        data_type: VARCHAR(12)
+      - name: ccrim_data_reg_contab
+        data_type: NUMBER(8,0)
+      - name: ccrim_ope_reg_contab
+        data_type: VARCHAR(10)
+      - name: ccrim_articolo_cont
+        data_type: NUMBER(7,0)
+      - name: ccrim_key_ec
+        data_type: VARCHAR(100)
+      - name: ccrim_key_ec_rim
+        data_type: VARCHAR(100)
+      - name: ccrim_tipo_destinat
+        data_type: VARCHAR(2)
+      - name: ccrim_progr_prat
+        data_type: NUMBER(3,0)
+      - name: ccrim_data_presen_ob
+        data_type: NUMBER(8,0)
+      - name: ccrim_cumulato
+        data_type: VARCHAR(1)
+      - name: ccrim_fne_origine
+        data_type: VARCHAR(5)
+      - name: ccrim_emissione_as
+        data_type: VARCHAR(1)
+      - name: ccrim_flag_contr_antiric
+        data_type: VARCHAR(1)
+      - name: ccrim_data_contr_antiric
+        data_type: NUMBER(8,0)
+      - name: ccrim_controparte_cnt
+        data_type: NUMBER(9,0)
+      - name: ccrim_desc_bon_elet
+        data_type: VARCHAR(45)
+      - name: ccrim_presentazione
+        data_type: NUMBER(11,0)
+      - name: ccrim_data_pagamento
+        data_type: NUMBER(8,0)
+      - name: ccrim_cro
+        data_type: VARCHAR(35)
+      - name: ccrim_data_scadenza
+        data_type: NUMBER(8,0)
+      - name: ccrim_abi_ban_pagam
+        data_type: NUMBER(5,0)
+      - name: ccrim_cab_ban_pagam
+        data_type: NUMBER(5,0)
+      - name: ccrim_bank_code_cli
+        data_type: NUMBER(8,0)
+      - name: ccrim_sub_number_cli
+        data_type: NUMBER(4,0)
+      - name: ccrim_filiale
+        data_type: VARCHAR(3)
+      - name: ccrim_sottocausale
+        data_type: NUMBER(2,0)
+      - name: ccrim_data_validita
+        data_type: NUMBER(8,0)
+      - name: ccrim_progr_nuovo_pag
+        data_type: NUMBER(7,0)
+      - name: ccrim_pan_carta
+        data_type: NUMBER(16,0)
+      - name: ccrim_id_carta
+        data_type: NUMBER(16,0)
+      - name: ccrim_prodotto_carta
+        data_type: VARCHAR(6)
+      - name: ccrim_cau_rifiuto
+        data_type: VARCHAR(8)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,111 @@
+version: 2
+
+models:
+  - name: baccpdet
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['bold_circuito', 'bold_num_ccp', 'bold_centro', 'bold_data_allibramento', 'bold_tipo_record', 'bold_progressivo']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XIC", "archivio":"BACCPDET"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [bold_circuito, bold_num_ccp, bold_centro, bold_data_allibramento, bold_tipo_record, bold_progressivo]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: bold_circuito
+        data_type: VARCHAR(1)
+      - name: bold_num_ccp
+        data_type: NUMBER(3,0)
+      - name: bold_centro
+        data_type: VARCHAR(1)
+      - name: bold_data_allibramento
+        data_type: NUMBER(5,0)
+      - name: bold_tipo_record
+        data_type: VARCHAR(1)
+      - name: bold_progressivo
+        data_type: NUMBER(7,0)
+      - name: bold_contabilizzato
+        data_type: VARCHAR(1)
+      - name: bold_esatto
+        data_type: VARCHAR(1)
+      - name: bold_progr_sel
+        data_type: NUMBER(7,0)
+      - name: bold_tipo_doc
+        data_type: VARCHAR(2)
+      - name: bold_provincia
+        data_type: VARCHAR(2)
+      - name: bold_ufficio
+        data_type: NUMBER(3,0)
+      - name: bold_sportello
+        data_type: NUMBER(2,0)
+      - name: bold_progr_marc
+        data_type: VARCHAR(4)
+      - name: bold_data_accettazione
+        data_type: NUMBER(5,0)
+      - name: bold_importo
+        data_type: NUMBER(11,0)
+      - name: bold_provenienza
+        data_type: VARCHAR(2)
+      - name: bold_tipo_operazione
+        data_type: VARCHAR(2)
+      - name: bold_pratica
+        data_type: NUMBER(7,0)
+      - name: bold_rata
+        data_type: NUMBER(3,0)
+      - name: bold_filler_01
+        data_type: VARCHAR(3)
+      - name: bold_rata_pagata
+        data_type: NUMBER(3,0)
+      - name: bold_data_decorrenza
+        data_type: NUMBER(5,0)
+      - name: bold_tipo_prodotto
+        data_type: VARCHAR(2)
+      - name: bold_modificato
+        data_type: VARCHAR(1)
+      - name: bold_operatore_allin
+        data_type: VARCHAR(10)
+      - name: bold_data_allineamento
+        data_type: NUMBER(8,0)
+      - name: bold_filler_02
+        data_type: VARCHAR(7)
+      - name: bold_progres_acquisiz
+        data_type: NUMBER(7,0)
+      - name: bold_data_acquisiz
+        data_type: NUMBER(8,0)
+      - name: bold_data_registraz
+        data_type: NUMBER(8,0)
+      - name: bold_numeratore
+        data_type: NUMBER(13,0)
+      - name: bold_pratica_eff
+        data_type: NUMBER(12,0)
+      - name: bold_codice_bp
+        data_type: VARCHAR(3)
+      - name: bold_priorita
+        data_type: NUMBER(2,0)
+      - name: bold_evento
+        data_type: NUMBER(11,0)
+      - name: bold_prg_ccptelbit
+        data_type: NUMBER(13,0)
+      - name: bold_conto_postale
+        data_type: NUMBER(12,0)
+      - name: bold_cod_errore
+        data_type: VARCHAR(4)
+      - name: bold_notifica
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)

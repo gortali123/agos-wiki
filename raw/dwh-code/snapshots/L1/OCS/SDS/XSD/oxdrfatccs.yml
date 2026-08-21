@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: oxdrfatccs
+    relation: ref('stg_oxdrfatccs')
+    config:
+      unique_key: [dratccs_prat_cq, dratccs_azienda, dratccs_ass]

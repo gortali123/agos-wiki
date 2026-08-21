@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: bausercol
+    relation: ref('stg_bausercol')
+    config:
+      unique_key: [col_codice]

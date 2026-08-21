@@ -1,0 +1,119 @@
+version: 2
+
+models:
+  - name: badcidcd
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['bddci_num_documento', 'bddci_anno_documento', 'bddci_num_riga_documento', 'bddci_attivita', 'bddci_registro', 'bddci_sezionale']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XCN", "archivio":"BADCIDCD"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [bddci_num_documento, bddci_anno_documento, bddci_num_riga_documento, bddci_attivita, bddci_registro, bddci_sezionale]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: bddci_provenienza
+        data_type: VARCHAR(2)
+      - name: bddci_num_documento
+        data_type: NUMBER(7,0)
+      - name: bddci_data_documento
+        data_type: NUMBER(8,0)
+      - name: bddci_anno_documento
+        data_type: NUMBER(4,0)
+      - name: bddci_num_riga_documento
+        data_type: NUMBER(9,0)
+      - name: bddci_attivita
+        data_type: VARCHAR(1)
+      - name: bddci_registro
+        data_type: VARCHAR(1)
+      - name: bddci_sezionale
+        data_type: VARCHAR(1)
+      - name: bddci_num_pratica
+        data_type: NUMBER(12,0)
+      - name: bddci_scadenza_canone
+        data_type: NUMBER(8,0)
+      - name: bddci_numero_canone
+        data_type: NUMBER(3,0)
+      - name: bddci_inizio_locazione
+        data_type: NUMBER(8,0)
+      - name: bddci_termine_locazione
+        data_type: NUMBER(8,0)
+      - name: bddci_tipo_prodotto
+        data_type: VARCHAR(2)
+      - name: bddci_prodotto
+        data_type: VARCHAR(2)
+      - name: bddci_cod_marca
+        data_type: VARCHAR(2)
+      - name: bddci_cod_modello
+        data_type: VARCHAR(3)
+      - name: bddci_des_modello
+        data_type: VARCHAR(30)
+      - name: bddci_telaio
+        data_type: VARCHAR(20)
+      - name: bddci_targa
+        data_type: VARCHAR(8)
+      - name: bddci_des_contratto_1
+        data_type: VARCHAR(60)
+      - name: bddci_des_contratto_2
+        data_type: VARCHAR(60)
+      - name: bddci_des_contratto_3
+        data_type: VARCHAR(60)
+      - name: bddci_des_contratto_4
+        data_type: VARCHAR(60)
+      - name: bddci_des_contratto_5
+        data_type: VARCHAR(60)
+      - name: bddci_des_contratto_6
+        data_type: VARCHAR(60)
+      - name: bddci_cod_voce
+        data_type: VARCHAR(3)
+      - name: bddci_des_voce_a
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_b
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_c
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_01
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_02
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_03
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_04
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_05
+        data_type: VARCHAR(40)
+      - name: bddci_des_voce_06
+        data_type: VARCHAR(40)
+      - name: bddci_imponibile
+        data_type: NUMBER(13,0)
+      - name: bddci_cod_iva_voce
+        data_type: VARCHAR(2)
+      - name: bddci_aliq_iva_voce
+        data_type: NUMBER(3,1)
+      - name: bddci_iva_voce
+        data_type: NUMBER(13,0)
+      - name: bddci_valuta_i_e
+        data_type: VARCHAR(1)
+      - name: bddci_abbuono
+        data_type: VARCHAR(1)
+      - name: bddci_quantita
+        data_type: NUMBER(7,0)
+      - name: bddci_prezzo
+        data_type: NUMBER(13,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: ccbifgusdl
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [ccbiul_validita, ccbiul_categoria, ccbiul_classe, ccbiul_data_log, ccbiul_ora_log]
+      - name: ccbifgusdl_deleted

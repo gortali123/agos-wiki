@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cctabpacc
+    relation: ref('stg_cctabpacc')
+    config:
+      unique_key: [tcp_codice_pacchetto]

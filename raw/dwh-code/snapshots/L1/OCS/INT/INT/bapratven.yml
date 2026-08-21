@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: bapratven
+    relation: ref('stg_bapratven')
+    config:
+      unique_key: [baven_procedura, baven_pratica, baven_progressivo]

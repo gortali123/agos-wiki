@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cqasfpot
+    relation: ref('stg_cqasfpot')
+    config:
+      unique_key: [cqaspot_codice]

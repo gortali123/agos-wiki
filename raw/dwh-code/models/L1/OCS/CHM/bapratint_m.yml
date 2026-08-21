@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: bapratint_m
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      pre_hook:
+        - "{{ delete_dt_osservazione() }}"
+      meta:
+        cluster: ["D"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CHM", "archivio":"BAPRATINT_M"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [baint_procedura, baint_pratica, baint_progressivo, dt_osservazione]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: dt_osservazione
+        data_type: DATE
+      - name: baint_procedura
+        data_type: VARCHAR(2)
+      - name: baint_pratica
+        data_type: NUMBER(12,0)
+      - name: baint_progressivo
+        data_type: NUMBER(3,0)
+      - name: baint_rete_vendita
+        data_type: NUMBER(9,0)
+      - name: baint_agente
+        data_type: NUMBER(9,0)
+      - name: baint_sub_agente
+        data_type: NUMBER(9,0)
+      - name: baint_convenzionato
+        data_type: NUMBER(9,0)
+      - name: baint_punto_vendita
+        data_type: NUMBER(9,0)
+      - name: baint_venditore
+        data_type: NUMBER(9,0)
+      - name: baint_segnalatore
+        data_type: NUMBER(12,0)
+      - name: baint_brand
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)

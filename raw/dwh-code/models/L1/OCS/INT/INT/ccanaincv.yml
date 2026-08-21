@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: ccanaincv
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_INT", "archivio":"CCANAINCV"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [icvp_codice, icvp_tipo_ana, icvp_tipo_record]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: icvp_codice
+        data_type: NUMBER(9,0)
+      - name: icvp_tipo_ana
+        data_type: VARCHAR(2)
+      - name: icvp_tipo_record
+        data_type: VARCHAR(3)
+      - name: aicvpfil
+        data_type: VARCHAR(200)
+      - name: rowid
+        data_type: NUMBER(38, 0)

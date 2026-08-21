@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: oxiafeve
+    relation: ref('stg_oxiafeve')
+    config:
+      unique_key: [iaeve_procedura, iaeve_evento]

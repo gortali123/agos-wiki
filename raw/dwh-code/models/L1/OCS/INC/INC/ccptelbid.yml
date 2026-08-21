@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: ccptelbid
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['boid_progressivo', 'boid_conto_postale', 'boid_progressivo2']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_INC", "archivio":"CCPTELBID"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [boid_progressivo, boid_conto_postale, boid_progressivo2]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: boid_progressivo
+        data_type: NUMBER(13,0)
+      - name: boid_conto_postale
+        data_type: NUMBER(12,0)
+      - name: boid_progressivo2
+        data_type: NUMBER(5,0)
+      - name: boid_tipo_importo
+        data_type: VARCHAR(2)
+      - name: boid_importo
+        data_type: NUMBER(13,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: bapratpv
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [bapv_procedura, bapv_num_pratica, bapv_protocollo, bapv_protocollo_riga, bapv_protocollo_progr, bapv_num_cespite, bapv_servizio, bapv_emettitore, bapv_prodotto, bapv_cod_campagna, bapv_annomese, bapv_tipo_provvigione, bapv_tipo_premio, bapv_intermediario, bapv_tipo_intermediario, bapv_flag_storno]
+      - name: bapratpv_deleted

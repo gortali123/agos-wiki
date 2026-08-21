@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: cqasfflul
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['cqasflul_num_pratica', 'cqasflul_interfaccia', 'cqasflul_data', 'cqasflul_ora']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XCQ", "archivio":"CQASFFLUL"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [cqasflul_num_pratica, cqasflul_interfaccia, cqasflul_data, cqasflul_ora]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: cqasflul_num_pratica
+        data_type: NUMBER(12,0)
+      - name: cqasflul_interfaccia
+        data_type: VARCHAR(3)
+      - name: cqasflul_data
+        data_type: NUMBER(8,0)
+      - name: cqasflul_ora
+        data_type: NUMBER(8,0)
+      - name: cqasflul_utente
+        data_type: VARCHAR(10)
+      - name: cqasflul_stato
+        data_type: VARCHAR(2)
+      - name: cqasflul_funzione
+        data_type: VARCHAR(10)
+      - name: cqasflul_esito_avanz
+        data_type: VARCHAR(5)
+      - name: rowid
+        data_type: NUMBER(38, 0)

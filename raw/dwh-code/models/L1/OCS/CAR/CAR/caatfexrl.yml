@@ -1,0 +1,115 @@
+version: 2
+
+models:
+  - name: caatfexrl
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['rowid']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CAR", "archivio":"CAATFEXRL"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [rowid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: caatexrl_emettitore
+        data_type: NUMBER(3,0)
+      - name: caatexrl_autorizzazione
+        data_type: NUMBER(8,0)
+      - name: caatexrl_pan
+        data_type: NUMBER(16,0)
+      - name: caatexrl_provenienza
+        data_type: VARCHAR(1)
+      - name: caatexrl_tipo_richiesta
+        data_type: NUMBER(4,0)
+      - name: caatexrl_manuale
+        data_type: VARCHAR(1)
+      - name: caatexrl_estera
+        data_type: VARCHAR(1)
+      - name: caatexrl_importo
+        data_type: NUMBER(13,0)
+      - name: caatexrl_data
+        data_type: NUMBER(8,0)
+      - name: caatexrl_ora
+        data_type: NUMBER(6,0)
+      - name: caatexrl_esito
+        data_type: VARCHAR(1)
+      - name: caatexrl_merchant_name
+        data_type: VARCHAR(25)
+      - name: caatexrl_sup_soglia
+        data_type: VARCHAR(1)
+      - name: caatexrl_cellulare
+        data_type: VARCHAR(15)
+      - name: caatexrl_divisa_est
+        data_type: VARCHAR(3)
+      - name: caatexrl_imp_divisa_est
+        data_type: NUMBER(13,0)
+      - name: caatexrl_sing_aut
+        data_type: VARCHAR(1)
+      - name: caatexrl_esercente
+        data_type: NUMBER(9,0)
+      - name: caatexrl_tipo_movimento
+        data_type: VARCHAR(1)
+      - name: caatexrl_mov_storno
+        data_type: VARCHAR(1)
+      - name: caatexrl_sup_ris_princ
+        data_type: VARCHAR(1)
+      - name: caatexrl_avviso_aut_tot
+        data_type: VARCHAR(1)
+      - name: caatexrl_imp_aut_tot
+        data_type: NUMBER(13,0)
+      - name: caatexrl_imp_storno_p
+        data_type: NUMBER(13,0)
+      - name: caatexrl_dispo_ris_princ
+        data_type: NUMBER(13,0)
+      - name: caatexrl_dispo_salvad
+        data_type: NUMBER(13,0)
+      - name: caatexrl_esito_strategy
+        data_type: VARCHAR(2)
+      - name: caatexrl_close_loop
+        data_type: VARCHAR(1)
+      - name: caatexrl_merchant_conv
+        data_type: VARCHAR(1)
+      - name: caatexrl_campagna_cod
+        data_type: VARCHAR(3)
+      - name: caatexrl_aut_neg_merch_na
+        data_type: VARCHAR(1)
+      - name: caatexrl_campagna_num_rate
+        data_type: NUMBER(3,0)
+      - name: caatexrl_tasso_dilazione
+        data_type: NUMBER(6,3)
+      - name: caatexrl_tan
+        data_type: NUMBER(6,3)
+      - name: caatexrl_taeg
+        data_type: NUMBER(6,3)
+      - name: caatexrl_msg_inviato
+        data_type: VARCHAR(1)
+      - name: caatexrl_data_log
+        data_type: NUMBER(8,0)
+      - name: caatexrl_ora_log
+        data_type: NUMBER(8,0)
+      - name: caatexrl_utente_log
+        data_type: VARCHAR(10)
+      - name: caatexrl_avviso_sup_mark
+        data_type: VARCHAR(1)
+      - name: caatexrl_diff_tasso_bce
+        data_type: VARCHAR(8)
+      - name: caatexrl_diff_tasso_bce_f
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)

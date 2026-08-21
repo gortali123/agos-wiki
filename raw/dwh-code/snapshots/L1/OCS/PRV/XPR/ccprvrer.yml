@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccprvrer
+    relation: ref('stg_ccprvrer')
+    config:
+      unique_key: [prvrer_controparte_eer]

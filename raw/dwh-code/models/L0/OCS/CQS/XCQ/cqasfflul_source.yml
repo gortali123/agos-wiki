@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: cqasfflul
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [cqasflul_num_pratica, cqasflul_interfaccia, cqasflul_data, cqasflul_ora]
+      - name: cqasfflul_deleted

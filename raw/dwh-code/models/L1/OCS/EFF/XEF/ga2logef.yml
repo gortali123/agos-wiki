@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: ga2logef
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['rowid']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XEF", "archivio":"GA2LOGEF"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [rowid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: logef_num_effetto
+        data_type: NUMBER(12,0)
+      - name: logef_provenienza
+        data_type: VARCHAR(2)
+      - name: logef_pratica
+        data_type: NUMBER(12,0)
+      - name: logef_pgm
+        data_type: VARCHAR(10)
+      - name: logef_utente
+        data_type: VARCHAR(10)
+      - name: logef_data
+        data_type: NUMBER(8,0)
+      - name: logef_ora
+        data_type: NUMBER(8,0)
+      - name: logef_stato
+        data_type: VARCHAR(1)
+      - name: logef_gestore
+        data_type: NUMBER(9,0)
+      - name: logef_dislocazione
+        data_type: VARCHAR(1)
+      - name: logef_data_pre
+        data_type: NUMBER(8,0)
+      - name: logef_data_inc
+        data_type: NUMBER(8,0)
+      - name: logef_data_rit
+        data_type: NUMBER(8,0)
+      - name: logef_data_rie
+        data_type: NUMBER(8,0)
+      - name: logef_rec_file
+        data_type: VARCHAR(500)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: caaqfide
+    relation: ref('stg_caaqfide')
+    config:
+      unique_key: [caaqide_emettitore, caaqide_protocollo, caaqide_riga]

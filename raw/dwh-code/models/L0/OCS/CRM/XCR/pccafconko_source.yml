@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: pccafconko
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [pccaconko_data, pccaconko_ora, pccaconko_tipo_batch, pccaconko_id_contatto, pccaconko_progressivo]
+      - name: pccafconko_deleted

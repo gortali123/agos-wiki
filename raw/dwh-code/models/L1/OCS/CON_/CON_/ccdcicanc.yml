@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: ccdcicanc
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['dcanc_progressivo', 'dcanc_destinatario', 'dcanc_num_pratica']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CON", "archivio":"CCDCICANC"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [dcanc_progressivo, dcanc_destinatario, dcanc_num_pratica]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: dcanc_progressivo
+        data_type: NUMBER(9,0)
+      - name: dcanc_destinatario
+        data_type: NUMBER(9,0)
+      - name: dcanc_num_pratica
+        data_type: NUMBER(12,0)
+      - name: dcanc_tipo_cliente
+        data_type: VARCHAR(2)
+      - name: dcanc_provenienza
+        data_type: VARCHAR(2)
+      - name: dcanc_da_stampare
+        data_type: VARCHAR(1)
+      - name: dcanc_prg_psvt_rif_storno
+        data_type: NUMBER(11,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

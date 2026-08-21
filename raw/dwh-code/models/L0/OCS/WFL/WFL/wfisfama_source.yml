@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: wfisfama
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [wfisama_prg_ama, wfisama_istanza, wfisama_attivita]
+      - name: wfisfama_deleted

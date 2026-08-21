@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccbifescpr
+    relation: ref('stg_ccbifescpr')
+    config:
+      unique_key: [ccbifes_provenienza, ccbifes_pratica]

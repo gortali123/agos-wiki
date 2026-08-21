@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: balogint
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['balog_prog_mod', 'balog_procedura', 'balog_pratica', 'balog_progressivo']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XCA", "archivio":"BALOGINT"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [balog_prog_mod, balog_procedura, balog_pratica, balog_progressivo]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: balog_prog_mod
+        data_type: NUMBER(8,0)
+      - name: balog_data_modifica
+        data_type: NUMBER(8,0)
+      - name: balog_ora_modifica
+        data_type: NUMBER(6,0)
+      - name: balog_ope_modifica
+        data_type: VARCHAR(10)
+      - name: balog_motivazione
+        data_type: VARCHAR(10)
+      - name: balog_procedura
+        data_type: VARCHAR(2)
+      - name: balog_pratica
+        data_type: NUMBER(12,0)
+      - name: balog_progressivo
+        data_type: NUMBER(3,0)
+      - name: balog_rete_vendita
+        data_type: NUMBER(9,0)
+      - name: balog_agente
+        data_type: NUMBER(9,0)
+      - name: balog_sub_agente
+        data_type: NUMBER(9,0)
+      - name: balog_convenzionato
+        data_type: NUMBER(9,0)
+      - name: balog_punto_vendita
+        data_type: NUMBER(9,0)
+      - name: balog_venditore
+        data_type: NUMBER(9,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

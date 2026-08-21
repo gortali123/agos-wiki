@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: mgdrfcrana
+    config:
+      materialized: table
+      meta:
+        cluster: ["TBD"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_MIG", "archivio":"MGDRFCRANA"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [rowid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: anacrsu_controparte
+        data_type: NUMBER(9,0)
+      - name: anacrsu_societa
+        data_type: VARCHAR(2)
+      - name: anacrsu_controparte_agos
+        data_type: NUMBER(12,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

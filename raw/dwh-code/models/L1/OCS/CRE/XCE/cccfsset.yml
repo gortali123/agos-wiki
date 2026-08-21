@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  - name: cccfsset
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['cfsset_procedura', 'cfsset_pratica', 'cfsset_fase_credito', 'cfsset_progressivo', 'cfsset_rapporto', 'cfsset_controparte']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XCE", "archivio":"CCCFSSET"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [cfsset_procedura, cfsset_pratica, cfsset_fase_credito, cfsset_progressivo, cfsset_rapporto, cfsset_controparte]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: cfsset_procedura
+        data_type: VARCHAR(2)
+      - name: cfsset_pratica
+        data_type: NUMBER(12,0)
+      - name: cfsset_fase_credito
+        data_type: VARCHAR(3)
+      - name: cfsset_progressivo
+        data_type: NUMBER(11,0)
+      - name: cfsset_rapporto
+        data_type: VARCHAR(2)
+      - name: cfsset_controparte
+        data_type: NUMBER(9,0)
+      - name: cfsset_ric_pratica_fso
+        data_type: VARCHAR(19)
+      - name: cfsset_ric_cognome
+        data_type: VARCHAR(30)
+      - name: cfsset_ric_nome
+        data_type: VARCHAR(30)
+      - name: cfsset_ric_nazione
+        data_type: VARCHAR(3)
+      - name: cfsset_ric_nas_data
+        data_type: NUMBER(8,0)
+      - name: cfsset_ric_nas_nazione
+        data_type: VARCHAR(3)
+      - name: cfsset_ric_cittadinanza
+        data_type: VARCHAR(3)
+      - name: cfsset_esito
+        data_type: VARCHAR(2)
+      - name: cfsset_errore
+        data_type: VARCHAR(1)
+      - name: cfsset_res_esito_globale
+        data_type: VARCHAR(2)
+      - name: cfsset_res_esito
+        data_type: VARCHAR(2)
+      - name: cfsset_errore_tecnico
+        data_type: VARCHAR(1)
+      - name: cfsset_utente
+        data_type: VARCHAR(10)
+      - name: cfsset_data
+        data_type: NUMBER(8,0)
+      - name: cfsset_ora
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

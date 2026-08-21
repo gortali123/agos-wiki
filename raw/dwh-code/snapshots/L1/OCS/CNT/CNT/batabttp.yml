@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: batabttp
+    relation: ref('stg_batabttp')
+    config:
+      unique_key: [ttp_tipo_partita]

@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_bnptfcuc
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_BAN", "archivio":"BNPTFCUC"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: bnptcuc_codice_sia
+        data_type: VARCHAR(5)
+      - name: bnptcuc_creditor_identifier
+        data_type: VARCHAR(35)
+      - name: bnptcuc_codice_cuc
+        data_type: VARCHAR(35)
+      - name: rowid
+        data_type: NUMBER(38, 0)

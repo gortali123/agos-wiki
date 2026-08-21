@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: ccfatlog
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['rowid']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_PRV", "archivio":"CCFATLOG"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [rowid]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: fatlog_prg_fatt
+        data_type: NUMBER(9,0)
+      - name: fatlog_operazione
+        data_type: VARCHAR(3)
+      - name: fatlog_num_fatt_rid
+        data_type: NUMBER(7,0)
+      - name: fatlog_num_fatt
+        data_type: VARCHAR(12)
+      - name: fatlog_data_fatt
+        data_type: NUMBER(8,0)
+      - name: fatlog_num_reg
+        data_type: NUMBER(7,0)
+      - name: fatlog_num_reg_se
+        data_type: NUMBER(7,0)
+      - name: fatlog_data_reg
+        data_type: NUMBER(8,0)
+      - name: fatlog_utente
+        data_type: VARCHAR(10)
+      - name: fatlog_data
+        data_type: NUMBER(8,0)
+      - name: fatlog_ora
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: ccbirlge
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['birlge_procedura', 'birlge_num_pratica', 'birlge_destinatario', 'birlge_prog_test', 'birlge_flag_rateale']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XTR", "archivio":"CCBIRLGE"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [birlge_procedura, birlge_num_pratica, birlge_destinatario, birlge_prog_test, birlge_flag_rateale]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: birlge_procedura
+        data_type: VARCHAR(2)
+      - name: birlge_num_pratica
+        data_type: NUMBER(12,0)
+      - name: birlge_destinatario
+        data_type: NUMBER(9,0)
+      - name: birlge_prog_test
+        data_type: NUMBER(9,0)
+      - name: birlge_flag_rateale
+        data_type: VARCHAR(1)
+      - name: birlge_data_estraz
+        data_type: NUMBER(8,0)
+      - name: birlge_cod_errore
+        data_type: NUMBER(4,0)
+      - name: birlge_desc_errore
+        data_type: VARCHAR(132)
+      - name: rowid
+        data_type: NUMBER(38, 0)

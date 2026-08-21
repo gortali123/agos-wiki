@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cccretab
+    relation: ref('stg_cccretab')
+    config:
+      unique_key: [creab_abitazione]

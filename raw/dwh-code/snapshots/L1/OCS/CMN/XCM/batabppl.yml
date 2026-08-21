@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: batabppl
+    relation: ref('stg_batabppl')
+    config:
+      unique_key: [tabppl_tipo_lotto]

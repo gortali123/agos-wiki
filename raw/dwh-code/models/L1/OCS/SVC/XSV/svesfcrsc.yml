@@ -1,0 +1,299 @@
+version: 2
+
+models:
+  - name: svesfcrsc
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['svcrsc_anno_estrazione', 'svcrsc_mese_estrazione', 'svcrsc_procedura', 'svcrsc_pratica', 'svcrsc_voce_bilancio', 'svcrsc_scheda_zainetto']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XSV", "archivio":"SVESFCRSC"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [svcrsc_anno_estrazione, svcrsc_mese_estrazione, svcrsc_procedura, svcrsc_pratica, svcrsc_voce_bilancio, svcrsc_scheda_zainetto]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: svcrsc_anno_estrazione
+        data_type: NUMBER(4,0)
+      - name: svcrsc_mese_estrazione
+        data_type: NUMBER(2,0)
+      - name: svcrsc_procedura
+        data_type: VARCHAR(2)
+      - name: svcrsc_pratica
+        data_type: NUMBER(12,0)
+      - name: svcrsc_anno_riferimento
+        data_type: NUMBER(4,0)
+      - name: svcrsc_mese_riferimento
+        data_type: NUMBER(2,0)
+      - name: svcrsc_cliente
+        data_type: NUMBER(9,0)
+      - name: svcrsc_filiale
+        data_type: VARCHAR(3)
+      - name: svcrsc_macro_stato
+        data_type: VARCHAR(2)
+      - name: svcrsc_operatore_ctz
+        data_type: VARCHAR(3)
+      - name: svcrsc_stato_ctz
+        data_type: VARCHAR(2)
+      - name: svcrsc_attributo_ctz
+        data_type: VARCHAR(2)
+      - name: svcrsc_tipo_prodotto
+        data_type: VARCHAR(2)
+      - name: svcrsc_prodotto
+        data_type: VARCHAR(2)
+      - name: svcrsc_mesi_ult_inc
+        data_type: NUMBER(3,0)
+      - name: svcrsc_rate_insolute
+        data_type: NUMBER(3,0)
+      - name: svcrsc_data_decorrenza
+        data_type: NUMBER(8,0)
+      - name: svcrsc_class_rischio
+        data_type: VARCHAR(3)
+      - name: svcrsc_fsc_credito
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsc_percentuale
+        data_type: NUMBER(10,4)
+      - name: svcrsc_fsc_perc_effettiva
+        data_type: NUMBER(10,4)
+      - name: svcrsc_fsc_fondo
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsc_netto
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsc_accantonamento
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsc_ripresa_incasso
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsc_ripresa_valutaz
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsc_utilizzo_fondo
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsg_capitale_residuo
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsg_percentuale
+        data_type: NUMBER(10,4)
+      - name: svcrsc_fsg_perc_effettiva
+        data_type: NUMBER(10,4)
+      - name: svcrsc_fsg_fondo
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsg_netto
+        data_type: NUMBER(13,0)
+      - name: svcrsc_variazione_saldo
+        data_type: NUMBER(13,0)
+      - name: svcrsc_importi_perdita
+        data_type: NUMBER(13,0)
+      - name: svcrsc_flag_perdita
+        data_type: VARCHAR(1)
+      - name: svcrsc_flag_dbt
+        data_type: VARCHAR(1)
+      - name: svcrsc_flag_chiusa
+        data_type: VARCHAR(1)
+      - name: svcrsc_anno_dbt
+        data_type: NUMBER(4,0)
+      - name: svcrsc_rate_prima_db
+        data_type: NUMBER(3,0)
+      - name: svcrsc_fondo_totale
+        data_type: NUMBER(13,0)
+      - name: svcrsc_data_ult_scad
+        data_type: NUMBER(8,0)
+      - name: svcrsc_data_dbt
+        data_type: NUMBER(8,0)
+      - name: svcrsc_flag_cnt_ut
+        data_type: VARCHAR(1)
+      - name: svcrsc_flag_crea
+        data_type: VARCHAR(1)
+      - name: svcrsc_emettitore
+        data_type: NUMBER(3,0)
+      - name: svcrsc_fsc_cred_ve
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsg_capr_ve
+        data_type: NUMBER(13,0)
+      - name: svcrsc_consolidato
+        data_type: VARCHAR(1)
+      - name: svcrsc_cod_transazione
+        data_type: VARCHAR(2)
+      - name: svcrsc_tipo_conferimento
+        data_type: VARCHAR(1)
+      - name: svcrsc_attr_vig
+        data_type: VARCHAR(2)
+      - name: svcrsc_tipo_creazione
+        data_type: VARCHAR(1)
+      - name: svcrsc_data_variazione
+        data_type: NUMBER(8,0)
+      - name: svcrsc_utente_variazione
+        data_type: VARCHAR(10)
+      - name: svcrsc_data_consolidam
+        data_type: NUMBER(8,0)
+      - name: svcrsc_utente_consolidam
+        data_type: VARCHAR(10)
+      - name: svcrsc_tasso_ias
+        data_type: NUMBER(6,3)
+      - name: svcrsc_tan_contratto
+        data_type: NUMBER(6,3)
+      - name: svcrsc_impairment_scaduto
+        data_type: NUMBER(13,0)
+      - name: svcrsc_impairment_scadere
+        data_type: NUMBER(13,0)
+      - name: svcrsc_base_calc_impairment
+        data_type: NUMBER(13,0)
+      - name: svcrsc_tasso_attualizzaz
+        data_type: NUMBER(6,3)
+      - name: svcrsc_mesi_attualizzaz
+        data_type: NUMBER(10,5)
+      - name: svcrsc_status_rischio
+        data_type: VARCHAR(2)
+      - name: svcrsc_data_entrata_status
+        data_type: NUMBER(8,0)
+      - name: svcrsc_data_prev_realizzo
+        data_type: NUMBER(8,0)
+      - name: svcrsc_data_calc_impairment
+        data_type: NUMBER(8,0)
+      - name: svcrsc_utente_calc_impairment
+        data_type: VARCHAR(10)
+      - name: svcrsc_imp_attualizzato
+        data_type: NUMBER(13,0)
+      - name: svcrsc_cod_cedente
+        data_type: NUMBER(9,0)
+      - name: svcrsc_voce_bilancio
+        data_type: VARCHAR(1)
+      - name: svcrsc_tipo_scheda
+        data_type: VARCHAR(1)
+      - name: svcrsc_girofondo
+        data_type: NUMBER(13,0)
+      - name: svcrsc_scheda_zainetto
+        data_type: VARCHAR(1)
+      - name: svcrsc_uso_new_clas_sval
+        data_type: VARCHAR(1)
+      - name: svcrsc_flag_portafoglio
+        data_type: VARCHAR(1)
+      - name: svcrsc_finanziaria
+        data_type: NUMBER(9,0)
+      - name: svcrsc_categoria_atc
+        data_type: VARCHAR(2)
+      - name: svcrsc_tipo_categoria_atc
+        data_type: VARCHAR(1)
+      - name: svcrsc_stato_creditizio
+        data_type: VARCHAR(2)
+      - name: svcrsc_prefinanziamento
+        data_type: VARCHAR(1)
+      - name: svcrsc_tipo_provvista
+        data_type: VARCHAR(1)
+      - name: svcrsc_sin_sinistro
+        data_type: VARCHAR(2)
+      - name: svcrsc_ateco_atc
+        data_type: VARCHAR(6)
+      - name: svcrsc_garantito_riscosso
+        data_type: VARCHAR(1)
+      - name: svcrsc_importo_garanzia
+        data_type: NUMBER(13,0)
+      - name: svcrsc_azienda
+        data_type: NUMBER(9,0)
+      - name: svcrsc_tipo_pratica
+        data_type: VARCHAR(1)
+      - name: svcrsc_pratica_sin
+        data_type: VARCHAR(2)
+      - name: svcrsc_attr_forborne
+        data_type: VARCHAR(3)
+      - name: svcrsc_fascia_gar
+        data_type: VARCHAR(3)
+      - name: svcrsc_stato_qtask
+        data_type: NUMBER(5,0)
+      - name: svcrsc_attr_qtask
+        data_type: NUMBER(5,0)
+      - name: svcrsc_class_recupero
+        data_type: VARCHAR(3)
+      - name: svcrsc_azione_recupero
+        data_type: VARCHAR(3)
+      - name: svcrsc_flag_libero_1
+        data_type: VARCHAR(1)
+      - name: svcrsc_cod_libero_1
+        data_type: VARCHAR(2)
+      - name: svcrsc_perc_libero_1
+        data_type: NUMBER(6,3)
+      - name: svcrsc_imp_libero_1
+        data_type: NUMBER(13,0)
+      - name: svcrsc_azienda_pagante
+        data_type: NUMBER(9,0)
+      - name: svcrsc_tp_rif_scheda_prec
+        data_type: VARCHAR(1)
+      - name: svcrsc_fascia_dpd_fm
+        data_type: VARCHAR(2)
+      - name: svcrsc_adesione_acc_inps
+        data_type: VARCHAR(1)
+      - name: svcrsc_aggravio_collettive
+        data_type: VARCHAR(1)
+      - name: svcrsc_num_pratica_orig
+        data_type: NUMBER(12,0)
+      - name: svcrsc_debitore_pagante
+        data_type: NUMBER(9,0)
+      - name: svcrsc_scadere_rimontato
+        data_type: NUMBER(13,0)
+      - name: svcrsc_interessi_mora
+        data_type: NUMBER(13,0)
+      - name: svcrsc_tipo_contratto
+        data_type: VARCHAR(1)
+      - name: svcrsc_tipo_cessione
+        data_type: VARCHAR(1)
+      - name: svcrsc_canale_acq
+        data_type: VARCHAR(3)
+      - name: svcrsc_area
+        data_type: VARCHAR(3)
+      - name: svcrsc_categoria_atc_segn
+        data_type: VARCHAR(2)
+      - name: svcrsc_sk_soli_int_mora
+        data_type: VARCHAR(1)
+      - name: svcrsc_num_gg_scad_cont
+        data_type: NUMBER(5,0)
+      - name: svcrsc_provincia_res_cli
+        data_type: VARCHAR(2)
+      - name: svcrsc_regione_res_cli
+        data_type: VARCHAR(2)
+      - name: svcrsc_durata_orig
+        data_type: NUMBER(3,0)
+      - name: svcrsc_stage_ifrs9
+        data_type: VARCHAR(2)
+      - name: svcrsc_durata_residua
+        data_type: NUMBER(3,0)
+      - name: svcrsc_stage_cacf
+        data_type: VARCHAR(2)
+      - name: svcrsc_tipo_sinistro
+        data_type: VARCHAR(1)
+      - name: svcrsc_stato_sinistro
+        data_type: VARCHAR(2)
+      - name: svcrsc_imp_libero_2
+        data_type: NUMBER(13,0)
+      - name: svcrsc_fsc_ripresa_attualiz
+        data_type: NUMBER(13,0)
+      - name: svcrsc_time_reversal_mens
+        data_type: NUMBER(13,0)
+      - name: svcrsc_mod_ges_girofondi
+        data_type: VARCHAR(1)
+      - name: svcrsc_motivo_ingr_stage
+        data_type: VARCHAR(50)
+      - name: svcrsc_flag_write_off
+        data_type: VARCHAR(1)
+      - name: svcrsc_data_write_off
+        data_type: NUMBER(8,0)
+      - name: svcrsc_fondo_prec_wop
+        data_type: NUMBER(13,0)
+      - name: svcrsc_perdita_wop
+        data_type: NUMBER(13,0)
+      - name: svcrsc_utilizzo_wop
+        data_type: NUMBER(13,0)
+      - name: svcrsc_accantonamento_wop
+        data_type: NUMBER(13,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

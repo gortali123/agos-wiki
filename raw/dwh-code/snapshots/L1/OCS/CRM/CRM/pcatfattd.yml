@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: pcatfattd
+    relation: ref('stg_pcatfattd')
+    config:
+      unique_key: [pcatattd_evento]

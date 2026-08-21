@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: stg_nnfrclass
+    config:
+      materialized: ephemeral
+      meta:
+        cluster: ["C"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_SVC", "archivio":"NNFRCLASS"}'
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: nnfrcl_provenienza
+        data_type: VARCHAR(2)
+      - name: nnfrcl_codice
+        data_type: VARCHAR(3)
+      - name: nnfrcl_descrizione
+        data_type: VARCHAR(30)
+      - name: nnfrcl_perc_sval_fondo
+        data_type: NUMBER(10,4)
+      - name: nnfrcl_perc_sval_capit
+        data_type: NUMBER(10,4)
+      - name: nnfrcl_flag_soff
+        data_type: VARCHAR(1)
+      - name: nnfrcl_tasso_attualizzaz
+        data_type: NUMBER(6,3)
+      - name: nnfrcl_mesi_prev_realizzo
+        data_type: NUMBER(3,0)
+      - name: nnfrcl_tipo_deterioramento
+        data_type: VARCHAR(2)
+      - name: nnfrcl_utente_caricam
+        data_type: VARCHAR(10)
+      - name: nnfrcl_data_caricam
+        data_type: NUMBER(8,0)
+      - name: nnfrcl_ora_caricam
+        data_type: NUMBER(8,0)
+      - name: nnfrcl_utente_variaz
+        data_type: VARCHAR(10)
+      - name: nnfrcl_data_variaz
+        data_type: NUMBER(8,0)
+      - name: nnfrcl_ora_variaz
+        data_type: NUMBER(8,0)
+      - name: nnfrcl_macrostato_escl_1
+        data_type: VARCHAR(2)
+      - name: nnfrcl_macrostato_escl_2
+        data_type: VARCHAR(2)
+      - name: nnfrcl_macrostato_escl_3
+        data_type: VARCHAR(2)
+      - name: nnfrcl_macrostato_escl_4
+        data_type: VARCHAR(2)
+      - name: nnfrcl_macrostato_escl_5
+        data_type: VARCHAR(2)
+      - name: nnfrcl_stage_ifrs9
+        data_type: VARCHAR(2)
+      - name: nnfrcl_flag_libero_1
+        data_type: VARCHAR(1)
+      - name: nnfrcl_codice_libero_1
+        data_type: VARCHAR(2)
+      - name: nnfrcl_tasso_min_ias_att
+        data_type: NUMBER(6,3)
+      - name: nnfrcl_ges_realiz_dt_pam
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: efexfedps
+    relation: ref('stg_efexfedps')
+    config:
+      unique_key: [dps_procedura, dps_pratica, dps_data_scad_tit, dps_operazione, dps_effetto_ocs]

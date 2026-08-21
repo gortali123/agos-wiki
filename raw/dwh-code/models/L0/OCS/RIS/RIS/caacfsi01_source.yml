@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: caacfsi01
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [crcar_key_n]
+      - name: caacfsi01_deleted

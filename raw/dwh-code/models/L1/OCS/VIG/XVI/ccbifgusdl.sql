@@ -1,0 +1,20 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(CCBIUL_VALIDITA AS NUMBER(8,0)) AS ccbiul_validita,
+  TRY_CAST(IFF(RTRIM(CCBIUL_CATEGORIA) = '', ' ', RTRIM(CCBIUL_CATEGORIA)) AS VARCHAR(3)) AS ccbiul_categoria,
+  TRY_CAST(IFF(RTRIM(CCBIUL_CLASSE) = '', ' ', RTRIM(CCBIUL_CLASSE)) AS VARCHAR(2)) AS ccbiul_classe,
+  TRY_CAST(CCBIUL_DATA_LOG AS NUMBER(8,0)) AS ccbiul_data_log,
+  TRY_CAST(CCBIUL_ORA_LOG AS NUMBER(8,0)) AS ccbiul_ora_log,
+  TRY_CAST(IFF(RTRIM(CCBIUL_UTE_LOG) = '', ' ', RTRIM(CCBIUL_UTE_LOG)) AS VARCHAR(10)) AS ccbiul_ute_log,
+  TRY_CAST(IFF(RTRIM(CCBIUL_UTE_400) = '', ' ', RTRIM(CCBIUL_UTE_400)) AS VARCHAR(10)) AS ccbiul_ute_400,
+  TRY_CAST(IFF(RTRIM(CCBIUL_FUNZIONE) = '', ' ', RTRIM(CCBIUL_FUNZIONE)) AS VARCHAR(1)) AS ccbiul_funzione,
+  TRY_CAST(CCBIUL_TAEG AS NUMBER(5,2)) AS ccbiul_taeg,
+  TRY_CAST(CCBIUL_TEGM AS NUMBER(5,2)) AS ccbiul_tegm,
+  TRY_CAST(CCBIUL_TEGM_2 AS NUMBER(5,2)) AS ccbiul_tegm_2,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','ccbifgusdl') }}

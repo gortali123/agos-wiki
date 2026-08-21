@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: plaut
+    relation: ref('stg_plaut')
+    config:
+      unique_key: [rowid]

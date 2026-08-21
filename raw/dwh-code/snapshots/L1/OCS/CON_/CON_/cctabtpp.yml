@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cctabtpp
+    relation: ref('stg_cctabtpp')
+    config:
+      unique_key: [tabtpp_tipo]

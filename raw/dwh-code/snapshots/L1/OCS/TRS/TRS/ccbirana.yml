@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ccbirana
+    relation: ref('stg_ccbirana')
+    config:
+      unique_key: [birana_controparte]

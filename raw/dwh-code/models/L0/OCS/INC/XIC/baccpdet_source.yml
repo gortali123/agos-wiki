@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: baccpdet
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [bold_circuito, bold_num_ccp, bold_centro, bold_data_allibramento, bold_tipo_record, bold_progressivo]
+      - name: baccpdet_deleted

@@ -1,0 +1,139 @@
+version: 2
+
+models:
+  - name: cqacfdero
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['cqacd_ero_progressivo']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_CQS", "archivio":"CQACFDERO"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [cqacd_ero_progressivo]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: cqacd_ero_progressivo
+        data_type: NUMBER(11,0)
+      - name: cqacd_ero_num_pratica
+        data_type: NUMBER(12,0)
+      - name: cqacd_ero_tipo
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_destinatario
+        data_type: VARCHAR(2)
+      - name: cqacd_ero_data
+        data_type: NUMBER(8,0)
+      - name: cqacd_ero_progr
+        data_type: NUMBER(3,0)
+      - name: cqacd_ero_erogante
+        data_type: VARCHAR(2)
+      - name: cqacd_ero_modalita
+        data_type: VARCHAR(2)
+      - name: cqacd_ero_commissioni
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_bolli
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_pre_ammort
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_int_post_liq
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_nr_rate_tratt
+        data_type: NUMBER(3,0)
+      - name: cqacd_ero_imp_rate_tratt
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_inter_pass_tratt
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_anticipo
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_liquidato
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_banca_conto
+        data_type: VARCHAR(5)
+      - name: cqacd_ero_numero_assegno
+        data_type: VARCHAR(15)
+      - name: cqacd_ero_data_assegno
+        data_type: NUMBER(8,0)
+      - name: cqacd_ero_data_contab
+        data_type: NUMBER(8,0)
+      - name: cqacd_ero_banca_assegno
+        data_type: NUMBER(5,0)
+      - name: cqacd_ero_flag_erogato
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_flag_stampato
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_cedente_abi
+        data_type: NUMBER(5,0)
+      - name: cqacd_ero_cedente_cab
+        data_type: NUMBER(5,0)
+      - name: cqacd_ero_cedente_conto_c
+        data_type: VARCHAR(12)
+      - name: cqacd_ero_cedente_cin
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_provenienza
+        data_type: VARCHAR(2)
+      - name: cqacd_ero_num_estinzione
+        data_type: NUMBER(3,0)
+      - name: cqacd_ero_ced_prima_scad
+        data_type: NUMBER(8,0)
+      - name: cqacd_ero_ban_prima_scad
+        data_type: NUMBER(8,0)
+      - name: cqacd_ero_taeg
+        data_type: NUMBER(5,2)
+      - name: cqacd_ero_teg
+        data_type: NUMBER(5,2)
+      - name: cqacd_ero_comm_diff
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_cro
+        data_type: VARCHAR(35)
+      - name: cqacd_ero_prog_ant
+        data_type: NUMBER(3,0)
+      - name: cqacd_ero_pgm_chiamante
+        data_type: VARCHAR(10)
+      - name: cqacd_ero_pag_emissione_as
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_pag_banca_abi
+        data_type: NUMBER(5,0)
+      - name: cqacd_ero_pag_banca_cab
+        data_type: NUMBER(5,0)
+      - name: cqacd_ero_pag_cc
+        data_type: VARCHAR(12)
+      - name: cqacd_ero_pag_num_assegno
+        data_type: NUMBER(12,0)
+      - name: cqacd_ero_bollo_quietanza
+        data_type: NUMBER(13,0)
+      - name: cqacd_ero_flag_modalita
+        data_type: VARCHAR(1)
+      - name: cqacd_descrizione
+        data_type: VARCHAR(45)
+      - name: cqacd_ero_pratica_est_rin
+        data_type: NUMBER(12,0)
+      - name: cqacd_ero_log_prima_scad
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_ant_fid
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_log_ee_ante_term
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_progr_antic
+        data_type: NUMBER(3,0)
+      - name: cqacd_ero_post_pagam
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_step_data_valuta
+        data_type: VARCHAR(1)
+      - name: cqacd_ero_data_valuta_step_2
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

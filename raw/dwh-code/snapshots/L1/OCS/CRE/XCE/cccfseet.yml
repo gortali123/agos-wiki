@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cccfseet
+    relation: ref('stg_cccfseet')
+    config:
+      unique_key: [cfseet_procedura, cfseet_pratica, cfseet_fase_credito, cfseet_rapporto, cfseet_controparte]

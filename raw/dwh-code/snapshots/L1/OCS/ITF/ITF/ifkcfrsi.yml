@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: ifkcfrsi
+    relation: ref('stg_ifkcfrsi')
+    config:
+      unique_key: [ifkcrsi_richiesta]

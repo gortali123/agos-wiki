@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: rdrpfrap
+    relation: ref('stg_rdrpfrap')
+    config:
+      unique_key: [rpfrap_codice]

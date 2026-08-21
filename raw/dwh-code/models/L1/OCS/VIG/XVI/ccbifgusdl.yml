@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: ccbifgusdl
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['ccbiul_validita', 'ccbiul_categoria', 'ccbiul_classe', 'ccbiul_data_log', 'ccbiul_ora_log']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XVI", "archivio":"CCBIFGUSDL"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [ccbiul_validita, ccbiul_categoria, ccbiul_classe, ccbiul_data_log, ccbiul_ora_log]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: ccbiul_validita
+        data_type: NUMBER(8,0)
+      - name: ccbiul_categoria
+        data_type: VARCHAR(3)
+      - name: ccbiul_classe
+        data_type: VARCHAR(2)
+      - name: ccbiul_data_log
+        data_type: NUMBER(8,0)
+      - name: ccbiul_ora_log
+        data_type: NUMBER(8,0)
+      - name: ccbiul_ute_log
+        data_type: VARCHAR(10)
+      - name: ccbiul_ute_400
+        data_type: VARCHAR(10)
+      - name: ccbiul_funzione
+        data_type: VARCHAR(1)
+      - name: ccbiul_taeg
+        data_type: NUMBER(5,2)
+      - name: ccbiul_tegm
+        data_type: NUMBER(5,2)
+      - name: ccbiul_tegm_2
+        data_type: NUMBER(5,2)
+      - name: rowid
+        data_type: NUMBER(38, 0)

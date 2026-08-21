@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: wftbfag
+    relation: ref('stg_wftbfag')
+    config:
+      unique_key: [wftbag_agenda]

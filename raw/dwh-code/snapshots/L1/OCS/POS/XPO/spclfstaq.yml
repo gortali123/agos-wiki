@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: spclfstaq
+    relation: ref('stg_spclfstaq')
+    config:
+      unique_key: [spclstaq_emettitore, spclstaq_protocollo, spclstaq_riga]

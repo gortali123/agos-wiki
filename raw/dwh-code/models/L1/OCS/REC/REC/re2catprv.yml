@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: re2catprv
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['recpr_categoria', 'recpr_procedura', 'recpr_fascia_oper', 'recpr_cod_esito', 'recpr_pagamento', 'recpr_rap_rate', 'recpr_flag_incasso', 'recpr_data_inizio', 'recpr_rap_totale', 'recpr_flag_mod_rim', 'recpr_rap_spese', 'recpr_rap_n_rate']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_REC", "archivio":"RE2CATPRV"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [recpr_categoria, recpr_procedura, recpr_fascia_oper, recpr_cod_esito, recpr_pagamento, recpr_rap_rate, recpr_flag_incasso, recpr_data_inizio, recpr_rap_totale, recpr_flag_mod_rim, recpr_rap_spese, recpr_rap_n_rate]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: recpr_categoria
+        data_type: VARCHAR(3)
+      - name: recpr_procedura
+        data_type: VARCHAR(2)
+      - name: recpr_fascia_oper
+        data_type: VARCHAR(2)
+      - name: recpr_cod_esito
+        data_type: VARCHAR(3)
+      - name: recpr_pagamento
+        data_type: VARCHAR(2)
+      - name: recpr_rap_rate
+        data_type: NUMBER(6,3)
+      - name: recpr_flag_incasso
+        data_type: VARCHAR(1)
+      - name: recpr_data_inizio
+        data_type: NUMBER(8,0)
+      - name: recpr_base_01
+        data_type: VARCHAR(1)
+      - name: recpr_percentuale_01
+        data_type: NUMBER(6,3)
+      - name: recpr_base_02
+        data_type: VARCHAR(1)
+      - name: recpr_percentuale_02
+        data_type: NUMBER(6,3)
+      - name: recpr_base_03
+        data_type: VARCHAR(1)
+      - name: recpr_percentuale_03
+        data_type: NUMBER(6,3)
+      - name: recpr_base_04
+        data_type: VARCHAR(1)
+      - name: recpr_percentuale_04
+        data_type: NUMBER(6,3)
+      - name: recpr_importo_fisso
+        data_type: NUMBER(13,0)
+      - name: recpr_rate_eccesso
+        data_type: NUMBER(3,0)
+      - name: recpr_data_fine
+        data_type: NUMBER(8,0)
+      - name: recpr_rap_totale
+        data_type: NUMBER(6,3)
+      - name: recpr_flag_mod_rim
+        data_type: VARCHAR(1)
+      - name: recpr_rap_spese
+        data_type: NUMBER(6,3)
+      - name: recpr_rap_n_rate
+        data_type: NUMBER(6,3)
+      - name: recpr_effetti_immed
+        data_type: NUMBER(2,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

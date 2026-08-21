@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: ccbitasamm
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['tas_procedura', 'tas_amministrazione', 'tas_prodotto', 'tas_classe_importo', 'tas_durata_fino_a', 'tas_eta_cli_scad', 'tas_sede', 'tas_progressivo', 'tas_convenzione', 'tas_categoria', 'tas_importo_fino_a', 'tas_dt_ini_val_dett']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_VIG", "archivio":"CCBITASAMM"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [tas_procedura, tas_amministrazione, tas_prodotto, tas_classe_importo, tas_durata_fino_a, tas_eta_cli_scad, tas_sede, tas_progressivo, tas_convenzione, tas_categoria, tas_importo_fino_a, tas_dt_ini_val_dett]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: tas_procedura
+        data_type: VARCHAR(2)
+      - name: tas_amministrazione
+        data_type: NUMBER(9,0)
+      - name: tas_prodotto
+        data_type: VARCHAR(2)
+      - name: tas_classe_importo
+        data_type: VARCHAR(2)
+      - name: tas_durata_fino_a
+        data_type: NUMBER(3,0)
+      - name: tas_eta_cli_scad
+        data_type: NUMBER(3,0)
+      - name: tas_tasso_taeg
+        data_type: NUMBER(5,2)
+      - name: tas_tasso_teg
+        data_type: NUMBER(5,2)
+      - name: tas_perc_dimin_taeg
+        data_type: NUMBER(5,2)
+      - name: tas_perc_dimin_teg
+        data_type: NUMBER(5,2)
+      - name: tas_sede
+        data_type: VARCHAR(3)
+      - name: tas_progressivo
+        data_type: NUMBER(7,0)
+      - name: tas_convenzione
+        data_type: VARCHAR(2)
+      - name: tas_categoria
+        data_type: VARCHAR(3)
+      - name: tas_importo_fino_a
+        data_type: NUMBER(13,0)
+      - name: tas_teg_riferimento
+        data_type: VARCHAR(1)
+      - name: tas_teg_perc_dimin_tegm
+        data_type: NUMBER(5,2)
+      - name: tas_teg_perc_aumen_tegm
+        data_type: NUMBER(5,2)
+      - name: tas_taeg_perc_dimin_tegm
+        data_type: NUMBER(5,2)
+      - name: tas_taeg_perc_aumen_tegm
+        data_type: NUMBER(5,2)
+      - name: tas_dt_ini_val_dett
+        data_type: NUMBER(8,0)
+      - name: tas_dt_end_val_dett
+        data_type: NUMBER(8,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cacifccat
+    relation: ref('stg_cacifccat')
+    config:
+      unique_key: [caciccat_cod_tipologia]

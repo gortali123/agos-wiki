@@ -1,0 +1,23 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(IFF(RTRIM(BIRADD_PROCEDURA) = '', ' ', RTRIM(BIRADD_PROCEDURA)) AS VARCHAR(2)) AS biradd_procedura,
+  TRY_CAST(BIRADD_PRATICA AS NUMBER(12,0)) AS biradd_pratica,
+  TRY_CAST(BIRADD_PROGRESSIVO AS NUMBER(3,0)) AS biradd_progressivo,
+  TRY_CAST(BIRADD_RATA_TEORICA AS NUMBER(3,0)) AS biradd_rata_teorica,
+  TRY_CAST(BIRADD_IMPORTO_SB AS NUMBER(13,0)) AS biradd_importo_sb,
+  TRY_CAST(BIRADD_IMPORTO_SC AS NUMBER(13,0)) AS biradd_importo_sc,
+  TRY_CAST(BIRADD_DATA_ADD AS NUMBER(8,0)) AS biradd_data_add,
+  TRY_CAST(BIRADD_RATA_ADD AS NUMBER(3,0)) AS biradd_rata_add,
+  TRY_CAST(BIRADD_PRG_ADD_SB AS NUMBER(5,0)) AS biradd_prg_add_sb,
+  TRY_CAST(BIRADD_PRG_ADD_SC AS NUMBER(5,0)) AS biradd_prg_add_sc,
+  TRY_CAST(IFF(RTRIM(BIRADD_PROGRAMMA_ADD) = '', ' ', RTRIM(BIRADD_PROGRAMMA_ADD)) AS VARCHAR(10)) AS biradd_programma_add,
+  TRY_CAST(BIRADD_DATA_INVIO AS NUMBER(8,0)) AS biradd_data_invio,
+  TRY_CAST(BIRADD_DEST_BIRLGT AS NUMBER(9,0)) AS biradd_dest_birlgt,
+  TRY_CAST(BIRADD_PROGR_BIRLGT AS NUMBER(9,0)) AS biradd_progr_birlgt,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','ccbiradd') }}

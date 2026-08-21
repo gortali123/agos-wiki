@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: badcidcd
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [bddci_num_documento, bddci_anno_documento, bddci_num_riga_documento, bddci_attivita, bddci_registro, bddci_sezionale]
+      - name: badcidcd_deleted

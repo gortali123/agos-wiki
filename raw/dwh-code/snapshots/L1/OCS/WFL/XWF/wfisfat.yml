@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: wfisfat
+    relation: ref('stg_wfisfat')
+    config:
+      unique_key: [wfisat_istanza, wfisat_fase, wfisat_sottofase, wfisat_attivita]

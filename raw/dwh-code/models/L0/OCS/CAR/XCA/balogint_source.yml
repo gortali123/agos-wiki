@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: balogint
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [balog_prog_mod, balog_procedura, balog_pratica, balog_progressivo]
+      - name: balogint_deleted

@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: balogesapp
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['balog_procedura', 'balog_pratica', 'balog_prg_psv', 'balog_progressivo']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XFM", "archivio":"BALOGESAPP"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [balog_procedura, balog_pratica, balog_prg_psv, balog_progressivo]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: balog_procedura
+        data_type: VARCHAR(2)
+      - name: balog_pratica
+        data_type: NUMBER(12,0)
+      - name: balog_prg_psv
+        data_type: NUMBER(11,0)
+      - name: balog_progressivo
+        data_type: NUMBER(5,0)
+      - name: balog_funzione
+        data_type: VARCHAR(3)
+      - name: balog_applicazione
+        data_type: VARCHAR(1)
+      - name: balog_appl_masfe
+        data_type: VARCHAR(1)
+      - name: balog_attivita
+        data_type: VARCHAR(10)
+      - name: balog_utente
+        data_type: VARCHAR(10)
+      - name: balog_data_inizio_esame
+        data_type: NUMBER(8,0)
+      - name: balog_ora_inizio_esame
+        data_type: NUMBER(8,0)
+      - name: balog_data_inizio_del
+        data_type: NUMBER(8,0)
+      - name: balog_ora_inizio_del
+        data_type: NUMBER(8,0)
+      - name: balog_data_fine_elaborazione
+        data_type: NUMBER(8,0)
+      - name: balog_ora_fine_elaborazione
+        data_type: NUMBER(8,0)
+      - name: balog_codice_operazione
+        data_type: VARCHAR(10)
+      - name: balog_codice_errore
+        data_type: VARCHAR(4)
+      - name: balog_codice_errore_par
+        data_type: VARCHAR(20)
+      - name: rowid
+        data_type: NUMBER(38, 0)

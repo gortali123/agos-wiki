@@ -1,0 +1,125 @@
+version: 2
+
+models:
+  - name: oxcnfces
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['oxcnces_progr_css']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XCF", "archivio":"OXCNFCES"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [oxcnces_progr_css]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: oxcnces_progr_css
+        data_type: NUMBER(5,0)
+      - name: oxcnces_transazione
+        data_type: VARCHAR(2)
+      - name: oxcnces_trans_da_file
+        data_type: VARCHAR(1)
+      - name: oxcnces_cod_css
+        data_type: NUMBER(3,0)
+      - name: oxcnces_progr_sim
+        data_type: NUMBER(5,0)
+      - name: oxcnces_imp_css
+        data_type: NUMBER(13,0)
+      - name: oxcnces_data_css
+        data_type: NUMBER(8,0)
+      - name: oxcnces_limite_tan
+        data_type: NUMBER(5,3)
+      - name: oxcnces_num_rate_inc
+        data_type: NUMBER(3,0)
+      - name: oxcnces_soglia_insol
+        data_type: NUMBER(2,0)
+      - name: oxcnces_soglia_sto_insol
+        data_type: NUMBER(2,0)
+      - name: oxcnces_data_dec_da
+        data_type: NUMBER(8,0)
+      - name: oxcnces_data_dec_a
+        data_type: NUMBER(8,0)
+      - name: oxcnces_data_prima_scad
+        data_type: NUMBER(8,0)
+      - name: oxcnces_data_ult_scad
+        data_type: NUMBER(8,0)
+      - name: oxcnces_imp_quote_capit_ced
+        data_type: NUMBER(13,0)
+      - name: oxcnces_imp_nom_ceduto
+        data_type: NUMBER(13,0)
+      - name: oxcnces_num_ctr_ced
+        data_type: NUMBER(7,0)
+      - name: oxcnces_num_rate_ced
+        data_type: NUMBER(9,0)
+      - name: oxcnces_durata_media
+        data_type: NUMBER(3,0)
+      - name: oxcnces_data_competenza
+        data_type: NUMBER(8,0)
+      - name: oxcnces_cap_residuo
+        data_type: NUMBER(13,0)
+      - name: oxcnces_contr_territoriale
+        data_type: VARCHAR(1)
+      - name: oxcnces_contr_forma_pag
+        data_type: VARCHAR(1)
+      - name: oxcnces_perc_fisse_distr
+        data_type: VARCHAR(1)
+      - name: oxcnces_capitale_minimo
+        data_type: NUMBER(13,0)
+      - name: oxcnces_data_ult_scad_sintet
+        data_type: NUMBER(8,0)
+      - name: oxcnces_data_scad_rata_da
+        data_type: NUMBER(8,0)
+      - name: oxcnces_capit_resid_cli_max
+        data_type: NUMBER(13,0)
+      - name: oxcnces_assic_cedibile_min
+        data_type: NUMBER(13,0)
+      - name: oxcnces_inter_cedibili_min
+        data_type: NUMBER(13,0)
+      - name: oxcnces_contr_tan
+        data_type: VARCHAR(1)
+      - name: oxcnces_segn_ced_non_canc
+        data_type: VARCHAR(1)
+      - name: oxcnces_cod_trans_bankit
+        data_type: NUMBER(14,0)
+      - name: oxcnces_perc_max_sin_rin
+        data_type: NUMBER(5,2)
+      - name: oxcnces_perc_max_sin_prv
+        data_type: NUMBER(5,2)
+      - name: oxcnces_imp_max_sin_rin
+        data_type: NUMBER(13,0)
+      - name: oxcnces_imp_max_sin_prv
+        data_type: NUMBER(13,0)
+      - name: oxcnces_imp_max_sin_def
+        data_type: NUMBER(13,0)
+      - name: oxcnces_esc_ctr_tit_conti
+        data_type: VARCHAR(1)
+      - name: oxcnces_contr_atc
+        data_type: VARCHAR(1)
+      - name: oxcnces_contr_ass_vita
+        data_type: VARCHAR(1)
+      - name: oxcnces_contr_ass_imp
+        data_type: VARCHAR(1)
+      - name: oxcnces_dt_ct_quadro
+        data_type: NUMBER(8,0)
+      - name: oxcnces_dt_lett_cess_massiva
+        data_type: NUMBER(8,0)
+      - name: oxcnces_dt_gazzetta
+        data_type: NUMBER(8,0)
+      - name: oxcnces_num_gazzetta
+        data_type: NUMBER(3,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

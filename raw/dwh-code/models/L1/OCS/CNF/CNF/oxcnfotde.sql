@@ -1,0 +1,21 @@
+select
+  TRY_CAST(ts_riferimento AS TIMESTAMP_NTZ) as ts_riferimento,
+  TRY_CAST('{{ run_started_at }}' AS TIMESTAMP_NTZ) as ts_caricamento,
+  'N' as fl_deleted,
+  NULL::TIMESTAMP_NTZ as ts_deleted,
+  sys_change_operation,
+  TRY_CAST(lastmodifieddata AS TIMESTAMP_NTZ) as lastmodifieddata,
+  TRY_CAST(OXCNOTDE_PROGRESSIVO AS NUMBER(2,0)) AS oxcnotde_progressivo,
+  TRY_CAST(OXCNOTDE_DATA_ESTRAZIONE AS NUMBER(8,0)) AS oxcnotde_data_estrazione,
+  TRY_CAST(IFF(RTRIM(OXCNOTDE_PROCEDURA) = '', ' ', RTRIM(OXCNOTDE_PROCEDURA)) AS VARCHAR(2)) AS oxcnotde_procedura,
+  TRY_CAST(OXCNOTDE_PRATICA AS NUMBER(12,0)) AS oxcnotde_pratica,
+  TRY_CAST(OXCNOTDE_PRG_CESSIONE AS NUMBER(5,0)) AS oxcnotde_prg_cessione,
+  TRY_CAST(IFF(RTRIM(OXCNOTDE_STATO) = '', ' ', RTRIM(OXCNOTDE_STATO)) AS VARCHAR(1)) AS oxcnotde_stato,
+  TRY_CAST(OXCNOTDE_NUM_INSOLUTI AS NUMBER(3,0)) AS oxcnotde_num_insoluti,
+  TRY_CAST(IFF(RTRIM(OXCNOTDE_TOTALE) = '', ' ', RTRIM(OXCNOTDE_TOTALE)) AS VARCHAR(1)) AS oxcnotde_totale,
+  TRY_CAST(OXCNOTDE_IMP_CONF_ASS AS NUMBER(13,0)) AS oxcnotde_imp_conf_ass,
+  TRY_CAST(OXCNOTDE_IMP_INC_ASS AS NUMBER(13,0)) AS oxcnotde_imp_inc_ass,
+  TRY_CAST(OXCNOTDE_IMP_ABB_PROMOZ AS NUMBER(13,0)) AS oxcnotde_imp_abb_promoz,
+  TRY_CAST(OXCNOTDE_IMP_ABB_ONERI AS NUMBER(13,0)) AS oxcnotde_imp_abb_oneri,
+  TRY_CAST(ROWID AS NUMBER(38, 0)) AS rowid
+from {{ source('source_l0','oxcnfotde') }}

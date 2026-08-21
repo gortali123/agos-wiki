@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: rdtafbl
+    relation: ref('stg_rdtafbl')
+    config:
+      unique_key: [tafbl_blocco]

@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: ccexfdflus
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['exfdflus_anno', 'exfdflus_mese', 'exfdflus_voce', 'exfdflus_sottovoce', 'exfdflus_provenienza', 'exfdflus_pratica']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A1"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XSD", "archivio":"CCEXFDFLUS"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [exfdflus_anno, exfdflus_mese, exfdflus_voce, exfdflus_sottovoce, exfdflus_provenienza, exfdflus_pratica]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: exfdflus_anno
+        data_type: NUMBER(4,0)
+      - name: exfdflus_mese
+        data_type: NUMBER(2,0)
+      - name: exfdflus_voce
+        data_type: NUMBER(5,0)
+      - name: exfdflus_sottovoce
+        data_type: NUMBER(2,0)
+      - name: exfdflus_provenienza
+        data_type: VARCHAR(2)
+      - name: exfdflus_pratica
+        data_type: NUMBER(12,0)
+      - name: exfdflus_importo
+        data_type: NUMBER(13,0)
+      - name: exfdflus_cliente
+        data_type: NUMBER(9,0)
+      - name: exfdflus_cod_sportello
+        data_type: NUMBER(5,0)
+      - name: exfdflus_mese_rif
+        data_type: NUMBER(2,0)
+      - name: exfdflus_importo_ias
+        data_type: NUMBER(13,0)
+      - name: exfdflus_sae
+        data_type: VARCHAR(3)
+      - name: exfdflus_nota_int
+        data_type: VARCHAR(1)
+      - name: exfdflus_quadro
+        data_type: VARCHAR(20)
+      - name: exfdflus_tipo_dinamica
+        data_type: VARCHAR(20)
+      - name: exfdflus_ft_bonis
+        data_type: VARCHAR(1)
+      - name: exfdflus_ft_nuove_pos
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)

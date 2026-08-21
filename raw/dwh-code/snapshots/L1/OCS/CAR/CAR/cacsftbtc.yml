@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: cacsftbtc
+    relation: ref('stg_cacsftbtc')
+    config:
+      unique_key: [cacstbtc_tipo_cessione]

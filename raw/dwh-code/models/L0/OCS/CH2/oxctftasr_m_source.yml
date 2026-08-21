@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: oxctftasr_m
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [oxcttasr_procedura, oxcttasr_num_pratica, oxcttasr_cod_rendimento]
+      - name: oxctftasr_m_deleted

@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: rdtafbl
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [tafbl_blocco]
+      - name: rdtafbl_deleted

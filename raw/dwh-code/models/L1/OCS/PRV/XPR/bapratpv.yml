@@ -1,0 +1,157 @@
+version: 2
+
+models:
+  - name: bapratpv
+    config:
+      materialized: incremental
+      incremental_strategy: insert_overwrite
+      meta:
+        cluster: ["B2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_XPR", "archivio":"BAPRATPV"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [bapv_procedura, bapv_num_pratica, bapv_protocollo, bapv_protocollo_riga, bapv_protocollo_progr, bapv_num_cespite, bapv_servizio, bapv_emettitore, bapv_prodotto, bapv_cod_campagna, bapv_annomese, bapv_tipo_provvigione, bapv_tipo_premio, bapv_intermediario, bapv_tipo_intermediario, bapv_flag_storno]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: bapv_procedura
+        data_type: VARCHAR(2)
+      - name: bapv_num_pratica
+        data_type: NUMBER(12,0)
+      - name: bapv_protocollo
+        data_type: NUMBER(9,0)
+      - name: bapv_protocollo_riga
+        data_type: NUMBER(4,0)
+      - name: bapv_protocollo_progr
+        data_type: NUMBER(3,0)
+      - name: bapv_num_cespite
+        data_type: NUMBER(3,0)
+      - name: bapv_servizio
+        data_type: VARCHAR(5)
+      - name: bapv_emettitore
+        data_type: NUMBER(3,0)
+      - name: bapv_prodotto
+        data_type: VARCHAR(2)
+      - name: bapv_cod_campagna
+        data_type: VARCHAR(3)
+      - name: bapv_annomese
+        data_type: NUMBER(6,0)
+      - name: bapv_tipo_provvigione
+        data_type: VARCHAR(2)
+      - name: bapv_tipo_premio
+        data_type: VARCHAR(4)
+      - name: bapv_intermediario
+        data_type: NUMBER(9,0)
+      - name: bapv_tipo_intermediario
+        data_type: VARCHAR(2)
+      - name: bapv_flag_storno
+        data_type: VARCHAR(1)
+      - name: bapv_destinatario
+        data_type: NUMBER(9,0)
+      - name: bapv_tipo_destinatario
+        data_type: VARCHAR(2)
+      - name: bapv_destinat_pag
+        data_type: NUMBER(9,0)
+      - name: bapv_tipo_destinat_pag
+        data_type: VARCHAR(2)
+      - name: bapv_cat_provv
+        data_type: VARCHAR(3)
+      - name: bapv_base_calcolo_1
+        data_type: VARCHAR(1)
+      - name: bapv_perc_calcolo_1
+        data_type: NUMBER(6,3)
+      - name: bapv_indice_rif_1
+        data_type: VARCHAR(3)
+      - name: bapv_imponibile_1
+        data_type: NUMBER(13,0)
+      - name: bapv_importo_1
+        data_type: NUMBER(13,0)
+      - name: bapv_importo_1_ccl
+        data_type: NUMBER(13,0)
+      - name: bapv_base_calcolo_2
+        data_type: VARCHAR(1)
+      - name: bapv_perc_calcolo_2
+        data_type: NUMBER(6,3)
+      - name: bapv_indice_rif_2
+        data_type: VARCHAR(3)
+      - name: bapv_imponibile_2
+        data_type: NUMBER(13,0)
+      - name: bapv_importo_2
+        data_type: NUMBER(13,0)
+      - name: bapv_importo_2_ccl
+        data_type: NUMBER(13,0)
+      - name: bapv_importo_fisso
+        data_type: NUMBER(13,0)
+      - name: bapv_tipo_importo
+        data_type: VARCHAR(2)
+      - name: bapv_totale
+        data_type: NUMBER(13,0)
+      - name: bapv_categoria_cor
+        data_type: VARCHAR(3)
+      - name: bapv_correttivo_cor
+        data_type: VARCHAR(3)
+      - name: bapv_tipo_chk_cor
+        data_type: VARCHAR(3)
+      - name: bapv_perc_1_cor
+        data_type: NUMBER(6,3)
+      - name: bapv_perc_2_cor
+        data_type: NUMBER(6,3)
+      - name: bapv_perc_f_cor
+        data_type: NUMBER(6,3)
+      - name: bapv_imp_min_cor
+        data_type: NUMBER(13,0)
+      - name: bapv_imp_max_cor
+        data_type: NUMBER(13,0)
+      - name: bapv_importo_rif
+        data_type: NUMBER(13,0)
+      - name: bapv_da_liquidare
+        data_type: VARCHAR(1)
+      - name: bapv_data_liquidazione
+        data_type: NUMBER(8,0)
+      - name: bapv_doc_liquidazione
+        data_type: NUMBER(9,0)
+      - name: bapv_progr_fatt_det
+        data_type: NUMBER(3,0)
+      - name: bapv_fatt_provv_se
+        data_type: VARCHAR(1)
+      - name: bapv_data_calcolo
+        data_type: NUMBER(8,0)
+      - name: bapv_tipo_operaz
+        data_type: VARCHAR(2)
+      - name: bapv_progr_operaz
+        data_type: NUMBER(11,0)
+      - name: bapv_catena
+        data_type: NUMBER(3,0)
+      - name: bapv_blocco_ricalcolo
+        data_type: VARCHAR(1)
+      - name: bapv_interm_rif
+        data_type: NUMBER(9,0)
+      - name: bapv_tipo_interm_rif
+        data_type: VARCHAR(2)
+      - name: bapv_data_sopravv
+        data_type: NUMBER(8,0)
+      - name: bapv_data_maturaz
+        data_type: NUMBER(8,0)
+      - name: bapv_periodo_maturaz
+        data_type: NUMBER(3,0)
+      - name: bapv_tipo_periodo_maturaz
+        data_type: VARCHAR(1)
+      - name: bapv_tipo_maturaz
+        data_type: VARCHAR(1)
+      - name: bapv_progr_cumulo
+        data_type: NUMBER(9,0)
+      - name: bapv_procedura_rif
+        data_type: VARCHAR(2)
+      - name: bapv_pratica_rif
+        data_type: NUMBER(12,0)
+      - name: bapv_ind_ordin_le
+        data_type: NUMBER(2,0)
+      - name: rowid
+        data_type: NUMBER(38, 0)

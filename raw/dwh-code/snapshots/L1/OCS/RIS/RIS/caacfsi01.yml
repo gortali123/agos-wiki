@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: caacfsi01
+    relation: ref('stg_caacfsi01')
+    config:
+      unique_key: [crcar_key_n]

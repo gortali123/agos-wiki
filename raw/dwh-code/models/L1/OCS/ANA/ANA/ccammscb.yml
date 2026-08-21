@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: ccammscb
+    config:
+      materialized: incremental
+      incremental_strategy: merge
+      unique_key: ['ammscb_amministr', 'ammscb_sede', 'ammscb_progressivo']
+      post_hook: "{{ logic_delete_merge() }}"
+      meta:
+        cluster: ["A2"]
+      query_tag: '{"app":"DBT", "sorgente":"OCS", "schema":"L1_O_ANA", "archivio":"CCAMMSCB"}'
+    constraints:
+      - type: primary_key
+        warn_unenforced: false
+        columns: [ammscb_amministr, ammscb_sede, ammscb_progressivo]
+    columns:
+      - name: ts_riferimento
+        data_type: TIMESTAMP_NTZ
+      - name: ts_caricamento
+        data_type: TIMESTAMP_NTZ
+      - name: fl_deleted
+        data_type: VARCHAR(1)
+      - name: ts_deleted
+        data_type: TIMESTAMP_NTZ
+      - name: sys_change_operation
+        data_type: VARCHAR
+      - name: lastmodifieddata
+        data_type: TIMESTAMP_NTZ
+      - name: ammscb_amministr
+        data_type: NUMBER(9,0)
+      - name: ammscb_sede
+        data_type: NUMBER(3,0)
+      - name: ammscb_progressivo
+        data_type: NUMBER(3,0)
+      - name: ammscb_banca_abi
+        data_type: NUMBER(5,0)
+      - name: ammscb_banca_cab
+        data_type: NUMBER(5,0)
+      - name: ammscb_banca_cc
+        data_type: VARCHAR(12)
+      - name: ammscb_banca_cin
+        data_type: VARCHAR(1)
+      - name: rowid
+        data_type: NUMBER(38, 0)

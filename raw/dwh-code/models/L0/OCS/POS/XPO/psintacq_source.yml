@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: source_l0
+    schema: L0
+    tables:
+      - name: psintacq
+        data_tests:
+          - try_cast
+          - primary_key:
+              arguments:
+                pk_columns: [intacq_emettitore, intacq_protocollo, intacq_riga]
+      - name: psintacq_deleted

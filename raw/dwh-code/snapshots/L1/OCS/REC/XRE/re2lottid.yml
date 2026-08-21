@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: re2lottid
+    relation: ref('stg_re2lottid')
+    config:
+      unique_key: [relod_lotto, relod_procedura, relod_pratica]

@@ -1,0 +1,7 @@
+version: 2
+
+snapshots:
+  - name: re2catprd
+    relation: ref('stg_re2catprd')
+    config:
+      unique_key: [reprd_progr_combinaz]
