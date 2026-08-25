@@ -1,10 +1,15 @@
 {% test dq_config_driven(model, cfg_severity) %}
 
-{{ config(store_failures = false) }}
-
 {% if not execute %}
 
-select * from {{ model }} where false
+select
+  '{{ run_started_at }}' as ts_started_at,
+  'dq_config_driven' as ds_nome_test,
+  '' as ds_schema,
+  '{{ model.identifier }}' as ds_tabella,
+  object_construct() as gn_failure_info,
+  '{{ invocation_id }}' as cd_run_dbt
+where false
 
 {% else %}
 
@@ -25,24 +30,35 @@ select * from {{ model }} where false
   {%- do checks.append({'col': col, 'test_type': test_type, 'condition': condition}) -%}
 {%- endfor -%}
 
-{%- if checks | length > 0 -%}
+{%- if checks | length == 0 -%}
 
-  {%- set counts_sql -%}
-    {% for c in checks %}
-    select '{{ c.col }}' as ds_colonna, '{{ c.test_type }}' as ds_test_type, count(*) as nm_failures
-    from {{ model }}
-    where {{ c.condition }}
-    {{ "union all" if not loop.last }}
-    {% endfor %}
-  {%- endset -%}
+select
+  '{{ run_started_at }}' as ts_started_at,
+  'dq_config_driven' as ds_nome_test,
+  '{{ model.schema }}' as ds_schema,
+  '{{ model.identifier }}' as ds_tabella,
+  object_construct() as gn_failure_info,
+  '{{ invocation_id }}' as cd_run_dbt
+where false
 
-  {%- set counts_table = run_query(counts_sql) -%}
+{%- else -%}
 
-  {%- set log_rows = [] -%}
-  {%- for row in counts_table.rows -%}
-    {%- set nm_failures = row['NM_FAILURES'] -%}
-    {%- set row_status = 'PASS' if nm_failures == 0 else (cfg_severity | upper) -%}
-    {%- set json_row -%}
+{%- set counts_sql -%}
+  {% for c in checks %}
+  select '{{ c.col }}' as ds_colonna, '{{ c.test_type }}' as ds_test_type, count(*) as nm_failures
+  from {{ model }}
+  where {{ c.condition }}
+  {{ "union all" if not loop.last }}
+  {% endfor %}
+{%- endset -%}
+
+{%- set counts_table = run_query(counts_sql) -%}
+
+{%- set log_rows = [] -%}
+{%- for row in counts_table.rows -%}
+  {%- set nm_failures = row['NM_FAILURES'] -%}
+  {%- set row_status = 'PASS' if nm_failures == 0 else (cfg_severity | upper) -%}
+  {%- set json_row -%}
 {
   "execution_type": "TEST",
   "ts_started_at": "{{ run_started_at }}",
@@ -56,20 +72,34 @@ select * from {{ model }} where false
   "cd_run_dbt": "{{ invocation_id }}",
   "cd_query_sf": ""
 }
-    {%- endset -%}
-    {%- do log_rows.append(json_row) -%}
-  {%- endfor -%}
+  {%- endset -%}
+  {%- do log_rows.append(json_row) -%}
+{%- endfor -%}
 
-  {%- set payload = ('[' ~ (log_rows | join(', ')) ~ ']') | replace('$$', '') -%}
-  {%- do run_query(
-      "call " ~ env_var('DBT_DATABASE') ~ ".tech.log_dbt(parse_json($$" ~ payload ~ "$$))"
-  ) -%}
+{%- set payload = ('[' ~ (log_rows | join(', ')) ~ ']') | replace('$$', '') -%}
+{%- do run_query(
+    "call " ~ env_var('DBT_DATABASE') ~ ".tech.log_dbt(parse_json($$" ~ payload ~ "$$))"
+) -%}
 
-select * from {{ model }} where ({{ checks | map(attribute='condition') | join(') or (') }})
+with dq_results as (
+  select
+    object_construct(
+      {% for c in checks %}
+      '{{ c.col }}', iff({{ c.condition }}, '{{ c.test_type }}', null){{ ',' if not loop.last else '' }}
+      {% endfor %}
+    ) as failure_info
+  from {{ model }}
+)
 
-{%- else -%}
-
-select * from {{ model }} where false
+select
+  '{{ run_started_at }}' as ts_started_at,
+  'dq_config_driven' as ds_nome_test,
+  '{{ model.schema }}' as ds_schema,
+  '{{ model.identifier }}' as ds_tabella,
+  failure_info as gn_failure_info,
+  '{{ invocation_id }}' as cd_run_dbt
+from dq_results
+where array_size(object_keys(failure_info)) > 0
 
 {%- endif -%}
 
