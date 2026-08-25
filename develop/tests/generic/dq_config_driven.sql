@@ -18,7 +18,7 @@
   {{ config(severity = severity) }}
 
   {%- if test_type == 'is_valid_email' -%}
-    {%- set condition = column_name ~ " is not null and not regexp_like(" ~ column_name ~ ", '^[^@\\\\s]+@[^@\\\\s]+\\\\.[^@\\\\s]+$')" -%}
+    {%- set condition = is_valid_email(column_name) -%}
   {%- else -%}
     {{ exceptions.raise_compiler_error("dq_config_driven: DS_TEST_TYPE non gestito: " ~ test_type) }}
   {%- endif -%}
