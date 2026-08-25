@@ -12,9 +12,15 @@ models:
         columns: [CD_CONTROPARTE]
     data_tests:
       - dq_config_driven:
-          severity: warn
+          name: dq_config_driven_warn
+          cfg_severity: warn
+          config:
+            severity: warn
       - dq_config_driven:
-          severity: error
+          name: dq_config_driven_error
+          cfg_severity: error
+          config:
+            severity: error
     columns:
       - name: CD_CONTROPARTE
         data_type: NUMBER(9,0)
