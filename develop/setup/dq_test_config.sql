@@ -9,4 +9,4 @@ create table if not exists {{ env_var('DBT_DATABASE') }}.TECH.CFG_DQ_TEST_CONFIG
 
 insert into {{ env_var('DBT_DATABASE') }}.TECH.CFG_DQ_TEST_CONFIG
     (DS_MODELLO, DS_COLONNA, DS_TEST_TYPE, GN_PARAMS, DS_SEVERITY, FL_ACTIVE)
-values ('L2_ANAGR_CONTROPARTE', 'DS_EMAIL', 'is_valid_email', null, 'warn', 'Y');
+values ('anagrafica_controparte', 'DS_EMAIL', 'is_valid_email', null, 'warn', 'Y');

@@ -1,4 +1,4 @@
-﻿{% set cfg_by_col = dq_cfg_by_col('L2_ANAGR_CONTROPARTE') %}
+{% set cfg_by_col = dq_cfg_by_col('anagrafica_controparte') %}
 
 version: 2
 
