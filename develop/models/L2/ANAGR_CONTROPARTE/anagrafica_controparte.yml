@@ -13,12 +13,14 @@ models:
     data_tests:
       - dq_config_driven:
           name: dq_config_driven_warn
-          cfg_severity: warn
+          arguments:
+            cfg_severity: warn
           config:
             severity: warn
       - dq_config_driven:
           name: dq_config_driven_error
-          cfg_severity: error
+          arguments:
+            cfg_severity: error
           config:
             severity: error
     columns:
