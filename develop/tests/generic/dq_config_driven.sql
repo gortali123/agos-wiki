@@ -23,11 +23,11 @@ where false
   {%- set col = cfg_rows['DS_COLONNA'][i] -%}
   {%- set test_type = cfg_rows['DS_TEST_TYPE'][i] -%}
   {%- if test_type == 'is_valid_email' -%}
-    {%- set condition = col ~ " is not null and not regexp_like(" ~ col ~ ", '^[^@\\\\s]+@[^@\\\\s]+\\\\.[^@\\\\s]+$')" -%}
+    {%- set check_sql = test_is_valid_email(model=model, column_name=col) -%}
   {%- else -%}
     {{ exceptions.raise_compiler_error("dq_config_driven: DS_TEST_TYPE non gestito: " ~ test_type) }}
   {%- endif -%}
-  {%- do checks.append({'col': col, 'test_type': test_type, 'condition': condition}) -%}
+  {%- do checks.append({'col': col, 'test_type': test_type, 'sql': check_sql}) -%}
 {%- endfor -%}
 
 {%- if checks | length == 0 -%}
@@ -46,8 +46,7 @@ where false
 {%- set counts_sql -%}
   {% for c in checks %}
   select '{{ c.col }}' as ds_colonna, '{{ c.test_type }}' as ds_test_type, count(*) as nm_failures
-  from {{ model }}
-  where {{ c.condition }}
+  from ({{ c.sql }}) t
   {{ "union all" if not loop.last }}
   {% endfor %}
 {%- endset -%}
@@ -81,30 +80,7 @@ where false
     "call " ~ env_var('DBT_DATABASE') ~ ".tech.log_dbt(parse_json($$" ~ payload ~ "$$))"
 ) -%}
 
-with dq_results as (
-  select
-    object_construct(
-      {% for c in checks %}
-      '{{ c.col }}', iff({{ c.condition }}, {{ c.col }}::varchar, null){{ ',' if not loop.last else '' }}
-      {% endfor %}
-    ) as failure_info,
-    array_to_string(array_compact(array_construct(
-      {% for c in checks %}
-      iff({{ c.condition }}, '{{ c.test_type }}', null){{ ',' if not loop.last else '' }}
-      {% endfor %}
-    )), ',') as failed_test_types
-  from {{ model }}
-)
-
-select
-  '{{ run_started_at }}' as ts_started_at,
-  failed_test_types as ds_nome_test,
-  '{{ model.schema }}' as ds_schema,
-  '{{ model.identifier }}' as ds_tabella,
-  failure_info as gn_failure_info,
-  '{{ invocation_id }}' as cd_run_dbt
-from dq_results
-where array_size(object_keys(failure_info)) > 0
+{{ checks | map(attribute='sql') | join('\nunion all\n') }}
 
 {%- endif -%}
 
