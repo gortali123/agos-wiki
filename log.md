@@ -1,5 +1,8 @@
 # Log
 
+## [2026-08-25] develop | pilota data quality framework: check formato email su DS_EMAIL
+Primo test reale del design in [[data-quality-framework]]: `develop/tests/generic/is_valid_email.sql` (generic test custom, in `tests/generic/` — corretta anche la pagina concept che indicava erroneamente `macros/generic_tests/`), `develop/models/L2/ANAGR_CONTROPARTE/anagrafica_controparte.yml` (copia completa dello schema.yml reale con blocco Jinja generico per colonna che legge da `cfg_by_col`, nessun hardcode su `DS_EMAIL`), `develop/setup/dq_test_config.sql` (DDL + riga pilota `L2_ANAGR_CONTROPARTE`/`DS_EMAIL`/`is_valid_email`/`warn`). Non ancora eseguito con `dbt build`/`dbt test` reale (nessun accesso Snowflake da qui) né portato upstream. Aggiornati `index.md` e [[data-quality-framework]].
+
 ## [2026-08-20] query | design data quality framework config-driven su L2/L3
 Formalizzato in [[data-quality-framework]] il design discusso con l'utente: tabella `CFG.DQ_TEST_CONFIG` (modello/colonna/test_type/params/severity), generic test dbt custom, generazione dinamica dei blocchi `tests:` negli `schema.yml` via Jinja (`get_query_results_as_dict` a compile time) — nessuna tabella di risultati custom, i test generati sono nodi dbt normali e finiscono nell'event table esistente come i test classici. Requisiti utente: sempre via `dbt build`/`dbt test`, test custom, severity per riga. Solo design, nessuna implementazione in `develop/` per ora.
 

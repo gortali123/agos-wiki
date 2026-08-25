@@ -33,7 +33,7 @@
 - [Parsing COBOL](concepts/cobol-parsing.md)
 - [query_tag per monitoring](concepts/query-tag-monitoring.md) — copertura reale incompleta/errata nel codice
 - [LASTMODIFIEDDATA](concepts/lastmodifieddata.md) — ruoli: ordine colonne, filtro incrementale, cancellazioni
-- [Data Quality Framework (proposta)](concepts/data-quality-framework.md) — test dbt generati dinamicamente da tabella di config via Jinja negli schema.yml, solo design
+- [Data Quality Framework (proposta)](concepts/data-quality-framework.md) — test dbt generati dinamicamente da tabella di config via Jinja negli schema.yml; primo pilota (check email) in develop/
 
 ## Sources
 
@@ -118,3 +118,6 @@
 - [generate_model (fix filtro cluster D mensile)](develop/macros/generate_models/generate_model.sql) — aggiunge `WHERE get_dt_osservazione('ts_riferimento') = get_dt_osservazione()` al SELECT generato per cluster D, per allineare sempre delete e insert sullo stesso periodo target; solo mensile (nessun campo di cadenza in `TECH.CFG_L1_CLUSTER_STO`, `mailc_esiti_tgb` settimanale resta manuale), proposto
 - ~~try_cast / try_cast_from_sql / try_cast_positional / primary_key / primary_key_positional (no where_clause)~~ — **applicato upstream nel resync 2026-08-03**: confermato nessun parametro `where_clause` in `raw/dwh-code/tests/generic/try_cast.sql` e `primary_key.sql`, coerente col fix proposto
 - [primary_key_from_sql (nuovo test)](develop/tests/generic/primary_key_from_sql.sql) — analogo a `try_cast_from_sql` ma per PK: `null_pks`/`duplicate_pks` invariate (agiscono sui valori grezzi), `cast_failed_pks` riusa il parsing del `raw_code` L1 per testare l'espressione di cast reale della/e colonna/e PK invece di un `TRY_CAST(col AS tipo_dichiarato)` ricostruito a mano; `where_clause` auto-rilevato dal `raw_code` L1 (stesso meccanismo di `try_cast_from_sql`), nessun parametro. Da usare al posto di `primary_key` quando una o più `pk_columns` hanno logica di cast particolare (es. `TRY_TO_DATE` con formato custom), proposto
+- [is_valid_email (nuovo test)](develop/tests/generic/is_valid_email.sql) — pilota [[data-quality-framework]]: generic test custom formato email (`regexp_like`), proposto
+- [anagrafica_controparte (dq test dinamici)](develop/models/L2/ANAGR_CONTROPARTE/anagrafica_controparte.yml) — schema.yml completo con generazione dinamica generica del blocco `tests:` per colonna da `cfg.dq_test_config`, pilota `DS_EMAIL`/`is_valid_email`, proposto
+- [dq_test_config (setup)](develop/setup/dq_test_config.sql) — `CREATE TABLE cfg.dq_test_config` + riga pilota `DS_EMAIL`/`is_valid_email`, proposto
