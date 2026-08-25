@@ -1,5 +1,3 @@
-{% set cfg_by_col = dq_cfg_by_col('anagrafica_controparte') %}
-
 version: 2
 
 models:
@@ -15,676 +13,453 @@ models:
     columns:
       - name: CD_CONTROPARTE
         data_type: NUMBER(9,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_CONTROPARTE') }}
       - name: TP_CONTROPARTE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONTROPARTE') }}
       - name: CD_FORMA_GIURIDICA
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_FORMA_GIURIDICA') }}
       - name: CD_FISCALE
         data_type: VARCHAR(16)
-        {{ dq_tests_block(cfg_by_col, 'CD_FISCALE') }}
       - name: FL_CF_CALCOLATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_CF_CALCOLATO') }}
       - name: FL_CF_FORZATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_CF_FORZATO') }}
       - name: CD_UTENTE_FORZATURA_CF
         data_type: VARCHAR(10)
-        {{ dq_tests_block(cfg_by_col, 'CD_UTENTE_FORZATURA_CF') }}
       - name: CD_PARTITA_IVA
         data_type: VARCHAR(11)
-        {{ dq_tests_block(cfg_by_col, 'CD_PARTITA_IVA') }}
       - name: DS_NOME
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NOME') }}
       - name: DS_SECONDO_NOME
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SECONDO_NOME') }}
       - name: DS_COGNOME
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_COGNOME') }}
       - name: DS_COGNOME_MADRE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_COGNOME_MADRE') }}
       - name: CD_RIFERIMENTO_ALTRA_ANAGRAFICA
         data_type: NUMBER(9,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_RIFERIMENTO_ALTRA_ANAGRAFICA') }}
       - name: CD_MATRICOLA
         data_type: NUMBER(8,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_MATRICOLA') }}
       - name: DS_RAGIONE_SOCIALE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_RAGIONE_SOCIALE') }}
       - name: DS_RAGIONE_SOCIALE_2
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_RAGIONE_SOCIALE_2') }}
       - name: CD_CITTADINANZA
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_CITTADINANZA') }}
       - name: DS_CITTADINANZA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_CITTADINANZA') }}
       - name: DS_CITTA_NASCITA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_CITTA_NASCITA') }}
       - name: CD_NAZIONE_NASCITA
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_NAZIONE_NASCITA') }}
       - name: DS_NAZIONE_NASCITA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NAZIONE_NASCITA') }}
       - name: CD_PROVINCIA_NASCITA
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_PROVINCIA_NASCITA') }}
       - name: DS_PROVINCIA_NASCITA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PROVINCIA_NASCITA') }}
       - name: DS_COMUNE_NASCITA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_COMUNE_NASCITA') }}
       - name: CD_CAB_COMUNE_NASCITA
         data_type: VARCHAR(5)
-        {{ dq_tests_block(cfg_by_col, 'CD_CAB_COMUNE_NASCITA') }}
       - name: DT_NASCITA
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_NASCITA') }}
       - name: CD_SESSO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'CD_SESSO') }}
       - name: DT_DECESSO
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_DECESSO') }}
       - name: CD_ABI
         data_type: NUMBER(5,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_ABI') }}
       - name: CD_IDENTIFICATIVO
         data_type: VARCHAR(13)
-        {{ dq_tests_block(cfg_by_col, 'CD_IDENTIFICATIVO') }}
       - name: CD_NDG
         data_type: NUMBER(12,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_NDG') }}
       - name: CD_NDG2
         data_type: NUMBER(12,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_NDG2') }}
       - name: CD_NDG3
         data_type: VARCHAR(12)
-        {{ dq_tests_block(cfg_by_col, 'CD_NDG3') }}
       - name: CD_NDG_CRF
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'CD_NDG_CRF') }}
       - name: CD_INPS_MATRICOLA
         data_type: VARCHAR(10)
-        {{ dq_tests_block(cfg_by_col, 'CD_INPS_MATRICOLA') }}
       - name: CD_INAIL_PAT
         data_type: VARCHAR(9)
-        {{ dq_tests_block(cfg_by_col, 'CD_INAIL_PAT') }}
       - name: CD_IPA
         data_type: VARCHAR(20)
-        {{ dq_tests_block(cfg_by_col, 'CD_IPA') }}
       - name: CD_FILIALE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_FILIALE') }}
       - name: CD_FILIALE_STORICA
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_FILIALE_STORICA') }}
       - name: CD_ESENZIONE_IVA
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_ESENZIONE_IVA') }}
       - name: CD_SETTORE_ATTIVITA
         data_type: NUMBER(4,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_SETTORE_ATTIVITA') }}
       - name: DS_ATECO
         data_type: VARCHAR(180)
-        {{ dq_tests_block(cfg_by_col, 'DS_ATECO') }}
       - name: CD_ATECO
         data_type: VARCHAR(6)
-        {{ dq_tests_block(cfg_by_col, 'CD_ATECO') }}
       - name: CD_RAE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_RAE') }}
       - name: DS_RAE
         data_type: VARCHAR(60)
-        {{ dq_tests_block(cfg_by_col, 'DS_RAE') }}
       - name: CD_SAE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_SAE') }}
       - name: DS_SAE
         data_type: VARCHAR(60)
-        {{ dq_tests_block(cfg_by_col, 'DS_SAE') }}
       - name: CD_TAE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_TAE') }}
       - name: CD_CCIAA
         data_type: NUMBER(9,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_CCIAA') }}
       - name: TP_CCIAA
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'TP_CCIAA') }}
       - name: CD_PROVINCIA_CCIAA
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_PROVINCIA_CCIAA') }}
       - name: DS_PROVINCIA_CCIAA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PROVINCIA_CCIAA') }}
       - name: DT_REGISTRAZIONE_CCIAA
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_REGISTRAZIONE_CCIAA') }}
       - name: FL_CONTROLLO_CCIAA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_CONTROLLO_CCIAA') }}
       - name: FL_FALLIBILE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_FALLIBILE') }}
       - name: DT_FALLIMENTO
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_FALLIMENTO') }}
       - name: TP_PROC_CONCORSUALI
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_PROC_CONCORSUALI') }}
       - name: TP_PROC_LEGALI
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_PROC_LEGALI') }}
       - name: CD_DOCUMENTO
         data_type: VARCHAR(14)
-        {{ dq_tests_block(cfg_by_col, 'CD_DOCUMENTO') }}
       - name: TP_DOCUMENTO
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'TP_DOCUMENTO') }}
       - name: TP_EMITTENTE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'TP_EMITTENTE') }}
       - name: DT_RILASCIO_DOC
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_RILASCIO_DOC') }}
       - name: DT_FINE_VALIDITA_DOC
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_FINE_VALIDITA_DOC') }}
       - name: DS_COMUNE_RILASCIO_DOC
         data_type: VARCHAR(24)
-        {{ dq_tests_block(cfg_by_col, 'DS_COMUNE_RILASCIO_DOC') }}
       - name: CD_PROVINCIA_RILASCIO_DOC
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_PROVINCIA_RILASCIO_DOC') }}
       - name: DS_PROVINCIA_RILASCIO_DOC
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PROVINCIA_RILASCIO_DOC') }}
       - name: CD_NAZIONE_RILASCIO_DOC
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_NAZIONE_RILASCIO_DOC') }}
       - name: DS_NAZIONE_RILASCIO_DOC
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NAZIONE_RILASCIO_DOC') }}
       - name: CD_DOCUMENTO_2
         data_type: VARCHAR(14)
-        {{ dq_tests_block(cfg_by_col, 'CD_DOCUMENTO_2') }}
       - name: NM_TESSERA_SANITARIA
         data_type: VARCHAR(20)
-        {{ dq_tests_block(cfg_by_col, 'NM_TESSERA_SANITARIA') }}
       - name: DT_SCADENZA_TESSERA_SANITARIA
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_SCADENZA_TESSERA_SANITARIA') }}
       - name: DS_NOTE_DOCUMENTO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NOTE_DOCUMENTO') }}
       - name: FL_UNIVOCITA_DOCUMENTO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_UNIVOCITA_DOCUMENTO') }}
       - name: FL_SOSPETTO_FORZATO_DOCUMENTO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_SOSPETTO_FORZATO_DOCUMENTO') }}
       - name: DS_PRESSO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PRESSO') }}
       - name: DS_FRAZIONE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_FRAZIONE') }}
       - name: DS_INDIRIZZO_1
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_INDIRIZZO_1') }}
       - name: DT_INDIRIZZO_RESIDENZA_DAL
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_INDIRIZZO_RESIDENZA_DAL') }}
       - name: DS_INDIRIZZO_2
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_INDIRIZZO_2') }}
       - name: FL_INDIRIZZO_NORMALIZZATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_INDIRIZZO_NORMALIZZATO') }}
       - name: FL_INDIRIZZO_FORZATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_INDIRIZZO_FORZATO') }}
       - name: CD_CAP
         data_type: NUMBER(5,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_CAP') }}
       - name: CD_REGIONE_RESIDENZA
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_REGIONE_RESIDENZA') }}
       - name: DS_REGIONE_RESIDENZA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_REGIONE_RESIDENZA') }}
       - name: CD_NAZIONE_RESIDENZA
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_NAZIONE_RESIDENZA') }}
       - name: DS_NAZIONE_RESIDENZA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NAZIONE_RESIDENZA') }}
       - name: DS_COMUNE_RESIDENZA
         data_type: VARCHAR(24)
-        {{ dq_tests_block(cfg_by_col, 'DS_COMUNE_RESIDENZA') }}
       - name: CD_PROVINCIA_RESIDENZA
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_PROVINCIA_RESIDENZA') }}
       - name: DS_PROVINCIA_RESIDENZA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PROVINCIA_RESIDENZA') }}
       - name: CD_CAB_RESIDENZA
         data_type: VARCHAR(5)
-        {{ dq_tests_block(cfg_by_col, 'CD_CAB_RESIDENZA') }}
       - name: CD_TIPO_SEDE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'CD_TIPO_SEDE') }}
       - name: DS_SEDE_INDIRIZZO_1
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_INDIRIZZO_1') }}
       - name: DS_SEDE_INDIRIZZO_2
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_INDIRIZZO_2') }}
       - name: FL_SEDE_INDIRIZZO_NORMALIZZATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_SEDE_INDIRIZZO_NORMALIZZATO') }}
       - name: FL_SEDE_INDIRIZZO_FORZATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_SEDE_INDIRIZZO_FORZATO') }}
       - name: DS_SEDE_PRESSO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_PRESSO') }}
       - name: DS_SEDE_FRAZIONE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_FRAZIONE') }}
       - name: DS_SEDE_REGIONE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_REGIONE') }}
       - name: CD_SEDE_PROVINCIA
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_SEDE_PROVINCIA') }}
       - name: DS_SEDE_PROVINCIA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_PROVINCIA') }}
       - name: CD_SEDE_CAP
         data_type: NUMBER(5,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_SEDE_CAP') }}
       - name: DS_SEDE_COMUNE
         data_type: VARCHAR(24)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_COMUNE') }}
       - name: CD_SEDE_CAB_COMUNE
         data_type: VARCHAR(5)
-        {{ dq_tests_block(cfg_by_col, 'CD_SEDE_CAB_COMUNE') }}
       - name: CD_SEDE_NAZIONE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_SEDE_NAZIONE') }}
       - name: DS_SEDE_NAZIONE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_SEDE_NAZIONE') }}
       - name: TP_PERMESSO_SOGGIORNO
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'TP_PERMESSO_SOGGIORNO') }}
       - name: DT_INIZIO_PERMESSO_SOGGIORNO
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_INIZIO_PERMESSO_SOGGIORNO') }}
       - name: DT_SCADENZA_PERMESSO_SOGGIORNO
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_SCADENZA_PERMESSO_SOGGIORNO') }}
       - name: FL_SCADENZA_FORZATA_PERMESSO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_SCADENZA_FORZATA_PERMESSO') }}
       - name: FL_VALIDITA_FORZATA_PERMESSO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_VALIDITA_FORZATA_PERMESSO') }}
       - name: NM_CELLULARE
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'NM_CELLULARE') }}
       - name: NM_TELEFONO
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'NM_TELEFONO') }}
       - name: NM_TELEFONO_UFFICIO
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'NM_TELEFONO_UFFICIO') }}
       - name: NM_TELEFONO_SEDE
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'NM_TELEFONO_SEDE') }}
       - name: DS_FAX
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'DS_FAX') }}
       - name: DS_EMAIL
         data_type: VARCHAR(50)
-        {{ dq_tests_block(cfg_by_col, 'DS_EMAIL') }}
+        data_tests:
+          - dq_config_driven
       - name: DS_EMAIL_PEC
         data_type: VARCHAR(100)
-        {{ dq_tests_block(cfg_by_col, 'DS_EMAIL_PEC') }}
       - name: CD_OCCUPAZIONE
         data_type: NUMBER(3,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_OCCUPAZIONE') }}
       - name: CD_OCCUPAZIONE_2
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_OCCUPAZIONE_2') }}
       - name: DT_OCCUPAZIONE
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_OCCUPAZIONE') }}
       - name: DS_OCCUPAZIONE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_OCCUPAZIONE') }}
       - name: CD_TIPO_ATTIVITA_OCCUPAZIONE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'CD_TIPO_ATTIVITA_OCCUPAZIONE') }}
       - name: CD_SETTORE_OCCUPAZIONE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_SETTORE_OCCUPAZIONE') }}
       - name: DT_INIZIO_OCCUPAZIONE_CLI
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_INIZIO_OCCUPAZIONE_CLI') }}
       - name: DT_FINE_OCCUPAZIONE_CLI
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_FINE_OCCUPAZIONE_CLI') }}
       - name: FL_ISCRITTO_ALBO_ARTIGIANI
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_ISCRITTO_ALBO_ARTIGIANI') }}
       - name: NM_DIPENDENTI
         data_type: NUMBER(7,0)
-        {{ dq_tests_block(cfg_by_col, 'NM_DIPENDENTI') }}
       - name: NM_CAPITALE_SOCIALE
         data_type: NUMBER(13,0)
-        {{ dq_tests_block(cfg_by_col, 'NM_CAPITALE_SOCIALE') }}
       - name: FL_PARTECIPATA_ENTE_PUBBLICO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_PARTECIPATA_ENTE_PUBBLICO') }}
       - name: DS_DATORE_LAVORO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_DATORE_LAVORO') }}
       - name: CD_FISCALE_DATORE_LAVORO
         data_type: VARCHAR(16)
-        {{ dq_tests_block(cfg_by_col, 'CD_FISCALE_DATORE_LAVORO') }}
       - name: CD_PARTITA_IVA_DATORE_LAVORO
         data_type: VARCHAR(11)
-        {{ dq_tests_block(cfg_by_col, 'CD_PARTITA_IVA_DATORE_LAVORO') }}
       - name: CD_FORMA_GIURIDICA_DATORE_LAVORO
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_FORMA_GIURIDICA_DATORE_LAVORO') }}
       - name: CD_IDEN_DATORE_LAVORO
         data_type: VARCHAR(13)
-        {{ dq_tests_block(cfg_by_col, 'CD_IDEN_DATORE_LAVORO') }}
       - name: DS_INDIRIZZO_DATORE_LAVORO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_INDIRIZZO_DATORE_LAVORO') }}
       - name: DS_PRESSO_DATORE_LAVORO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PRESSO_DATORE_LAVORO') }}
       - name: DS_COMUNE_DATORE_LAVORO
         data_type: VARCHAR(24)
-        {{ dq_tests_block(cfg_by_col, 'DS_COMUNE_DATORE_LAVORO') }}
       - name: CD_CAP_INDIRIZZO_DATORE_LAVORO
         data_type: NUMBER(5,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_CAP_INDIRIZZO_DATORE_LAVORO') }}
       - name: DS_FRAZIONE_DATORE_LAVORO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_FRAZIONE_DATORE_LAVORO') }}
       - name: CD_PROVINCIA_DATORE_LAVORO
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_PROVINCIA_DATORE_LAVORO') }}
       - name: DS_PROVINCIA_DATORE_LAVORO
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PROVINCIA_DATORE_LAVORO') }}
       - name: NM_TELEFONO_DATORE_LAVORO
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'NM_TELEFONO_DATORE_LAVORO') }}
       - name: FL_IND_NORM_DATORE_LAV
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_IND_NORM_DATORE_LAV') }}
       - name: FL_IND_FORZ_DATORE_LAV
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_IND_FORZ_DATORE_LAV') }}
       - name: DS_FAX_DATORE_LAVORO
         data_type: VARCHAR(15)
-        {{ dq_tests_block(cfg_by_col, 'DS_FAX_DATORE_LAVORO') }}
       - name: FL_DIPENDENTE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_DIPENDENTE') }}
       - name: FL_CLIENTE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_CLIENTE') }}
       - name: FL_AGENTE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_AGENTE') }}
       - name: FL_TIPO_ALTRO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_TIPO_ALTRO') }}
       - name: FL_GARANTE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_GARANTE') }}
       - name: FL_FORNITORE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_FORNITORE') }}
       - name: FL_COOBLIGATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_COOBLIGATO') }}
       - name: FL_CONVENZIONATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_CONVENZIONATO') }}
       - name: FL_DITTA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_DITTA') }}
       - name: FL_FIRMATARIO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_FIRMATARIO') }}
       - name: FL_DELEGATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_DELEGATO') }}
       - name: FL_FONDO_PENSIONE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_FONDO_PENSIONE') }}
       - name: FL_FINANZIARIA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_FINANZIARIA') }}
       - name: FL_DATORE_LAVORO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_DATORE_LAVORO') }}
       - name: TP_INTERMEDIARIO_ABILITATO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_INTERMEDIARIO_ABILITATO') }}
       - name: FL_ANA_DI_GRUPPO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_ANA_DI_GRUPPO') }}
       - name: FL_CLIENTE_BANCA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_CLIENTE_BANCA') }}
       - name: TP_CONSENSO_SRQ
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_SRQ') }}
       - name: TP_CONSENSO_OCI
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_OCI') }}
       - name: TP_CONSENSO_OIA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_OIA') }}
       - name: TP_CONSENSO_OCE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_OCE') }}
       - name: TP_CONSENSO_OEA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_OEA') }}
       - name: TP_CONSENSO_OSA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_OSA') }}
       - name: TP_CONSENSO_DSU
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_DSU') }}
       - name: TP_CONSENSO_SIC
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_SIC') }}
       - name: TP_CONSENSO_IPR
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CONSENSO_IPR') }}
       - name: DT_CONSENSO_IPR
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_IPR') }}
       - name: DT_CONSENSO_SRQ
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_SRQ') }}
       - name: DT_CONSENSO_OCI
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_OCI') }}
       - name: DT_CONSENSO_OIA
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_OIA') }}
       - name: DT_CONSENSO_OCE
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_OCE') }}
       - name: DT_CONSENSO_OEA
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_OEA') }}
       - name: DT_CONSENSO_OSA
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_OSA') }}
       - name: DT_CONSENSO_DSU
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_DSU') }}
       - name: DT_CONSENSO_CIS
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_CONSENSO_CIS') }}
       - name: DS_NOTE_SIC
         data_type: VARCHAR(60)
-        {{ dq_tests_block(cfg_by_col, 'DS_NOTE_SIC') }}
       - name: TP_CANCELLAZIONE_DATI_PRIVACY
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_CANCELLAZIONE_DATI_PRIVACY') }}
       - name: EU_REDDITO_ANNUO
         data_type: NUMBER(13,2)
-        {{ dq_tests_block(cfg_by_col, 'EU_REDDITO_ANNUO') }}
       - name: NM_MENSILITA_REDDITO
         data_type: NUMBER(2,0)
-        {{ dq_tests_block(cfg_by_col, 'NM_MENSILITA_REDDITO') }}
       - name: EU_ALTRI_REDDITI
         data_type: NUMBER(13,2)
-        {{ dq_tests_block(cfg_by_col, 'EU_ALTRI_REDDITI') }}
       - name: TP_REDDITO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'TP_REDDITO') }}
       - name: EU_REDDITO_FAMILIARE
         data_type: NUMBER(13,2)
-        {{ dq_tests_block(cfg_by_col, 'EU_REDDITO_FAMILIARE') }}
       - name: EU_REDDITO_FAMILIARE_CONIUGE
         data_type: NUMBER(13,2)
-        {{ dq_tests_block(cfg_by_col, 'EU_REDDITO_FAMILIARE_CONIUGE') }}
       - name: CD_CENTRALE_RISCHI
         data_type: NUMBER(13,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_CENTRALE_RISCHI') }}
       - name: CD_SIA
         data_type: NUMBER(13,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_SIA') }}
       - name: CD_LEGALE_RAPPRESENTANTE
         data_type: NUMBER(9,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_LEGALE_RAPPRESENTANTE') }}
       - name: DS_NOME_LEGALE_RAPPRESENTANTE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NOME_LEGALE_RAPPRESENTANTE') }}
       - name: DS_IND_LEGALE_RAPPR
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_IND_LEGALE_RAPPR') }}
       - name: DS_PRESSO_LEGALE_RAPPRESENTANTE
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PRESSO_LEGALE_RAPPRESENTANTE') }}
       - name: CD_CAP_LEGALE_RAPPRESENTANTE
         data_type: NUMBER(5,0)
-        {{ dq_tests_block(cfg_by_col, 'CD_CAP_LEGALE_RAPPRESENTANTE') }}
       - name: DS_FRAZ_LEG_RAPPR
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_FRAZ_LEG_RAPPR') }}
       - name: DS_COMUNE_LEGALE_RAPPRESENTANTE
         data_type: VARCHAR(24)
-        {{ dq_tests_block(cfg_by_col, 'DS_COMUNE_LEGALE_RAPPRESENTANTE') }}
       - name: CD_PROV_LEG_RAPPR
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_PROV_LEG_RAPPR') }}
       - name: DS_PROV_LEG_RAPPR
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PROV_LEG_RAPPR') }}
       - name: DT_NASCITA_LEGALE_RAPPRESENTANTE
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_NASCITA_LEGALE_RAPPRESENTANTE') }}
       - name: DS_LOUGO_NASC_LEG_RAPPR
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_LOUGO_NASC_LEG_RAPPR') }}
       - name: CD_PROV_NASC_LEG_RAPPR
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_PROV_NASC_LEG_RAPPR') }}
       - name: DS_PROV_NASC_LEG_RAPPR
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_PROV_NASC_LEG_RAPPR') }}
       - name: CD_NAZ_NASC_LEG_RAPPR
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_NAZ_NASC_LEG_RAPPR') }}
       - name: DS_NAZ_NASC_LEG_RAPPR
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NAZ_NASC_LEG_RAPPR') }}
       - name: CD_CITTAD_LEG_RAPPR
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_CITTAD_LEG_RAPPR') }}
       - name: DS_CITTAD_LEG_RAPPR
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_CITTAD_LEG_RAPPR') }}
       - name: CD_CAUSALE_ANNULLO
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_CAUSALE_ANNULLO') }}
       - name: DT_ANNULLO
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_ANNULLO') }}
       - name: DT_INSERIMENTO
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_INSERIMENTO') }}
       - name: CD_UTENTE_INSERIMENTO
         data_type: VARCHAR(10)
-        {{ dq_tests_block(cfg_by_col, 'CD_UTENTE_INSERIMENTO') }}
       - name: DT_VARIAZIONE
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_VARIAZIONE') }}
       - name: CD_UTENTE_VARIAZIONE
         data_type: VARCHAR(10)
-        {{ dq_tests_block(cfg_by_col, 'CD_UTENTE_VARIAZIONE') }}
       - name: DT_TRASMISSIONE
         data_type: DATE
-        {{ dq_tests_block(cfg_by_col, 'DT_TRASMISSIONE') }}
       - name: DS_STRINGA_RICERCA
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_STRINGA_RICERCA') }}
       - name: CD_USER_1
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_USER_1') }}
       - name: CD_USER_2
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_USER_2') }}
       - name: CD_USER_3
         data_type: VARCHAR(2)
-        {{ dq_tests_block(cfg_by_col, 'CD_USER_3') }}
       - name: FL_NORM_DENOMINAZIONE
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_NORM_DENOMINAZIONE') }}
       - name: FL_NORM_LOCALITA
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_NORM_LOCALITA') }}
       - name: FL_NORM_INDIRIZZO
         data_type: VARCHAR(1)
-        {{ dq_tests_block(cfg_by_col, 'FL_NORM_INDIRIZZO') }}
       - name: DS_NOTA_01
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NOTA_01') }}
       - name: DS_NOTA_02
         data_type: VARCHAR(30)
-        {{ dq_tests_block(cfg_by_col, 'DS_NOTA_02') }}
       - name: CD_FILIALE_CASELLA_POSTALE
         data_type: VARCHAR(3)
-        {{ dq_tests_block(cfg_by_col, 'CD_FILIALE_CASELLA_POSTALE') }}
       - name: NM_CASELLA_POSTALE
         data_type: NUMBER(7,0)
-        {{ dq_tests_block(cfg_by_col, 'NM_CASELLA_POSTALE') }}

@@ -14,9 +14,11 @@ Proposta (non ancora implementata, solo design) per gestire i test di data quali
 3. I test devono essere **custom** (non solo i tipi standard tipo `not_null`/`unique` di dbt/dbt_utils).
 4. Ogni riga di configurazione può avere una **severity** propria (`warn`/`error`), mappata sul `config.severity` nativo di dbt.
 
-## Idea chiave
+## Idea chiave (corretta il 2026-08-25 dopo test reale — vedi sotto)
 
-Gli `schema.yml` di dbt sono **Jinja-rendered prima del parsing YAML**. Questo permette di interrogare la tabella di config a compile-time (via `run_query` / `dbt_utils.get_query_results_as_dict`) e generare dinamicamente i blocchi `tests:` per ogni colonna/modello, invece di scriverli a mano. I test generati sono a tutti gli effetti nodi dbt normali → finiscono in `run_results.json` come qualsiasi altro test, quindi il meccanismo di logging verso l'event table esistente li intercetta senza modifiche.
+L'idea iniziale era: generare dinamicamente i blocchi `tests:`/`data_tests:` per colonna dentro lo `schema.yml`, con un `{% for %}` Jinja a livello di documento che itera sulle righe di config. **Non funziona**: dbt fa un primo parse YAML del file *grezzo* (senza Jinja) per capirne la struttura, e solo *dopo*, dentro valori già validi (es. `description: "{{ doc(...) }}"`), applica il rendering Jinja. Un `{% set %}`/`{% for %}` a livello di documento, fuori da un valore YAML, rompe subito quel primo parse — verificato con un `dbt build` reale, errore `while scanning for the next token found character that cannot start any token` sulla riga con `{% set %}`.
+
+La generazione dinamica va quindi spostata **dentro il corpo di un generic test** (che è codice Jinja compilato normalmente, non soggetto al vincolo del primo parse grezzo), non nella struttura dello `schema.yml`. Lo `schema.yml` resta completamente statico: un solo riferimento al test, dichiarato una volta a livello di modello. Aggiungere/rimuovere un check si fa solo in `TECH.CFG_DQ_TEST_CONFIG`, mai più toccando lo yml. I test generati restano nodi dbt normali → finiscono in `run_results.json` come qualsiasi altro test, quindi il meccanismo di logging verso l'event table esistente li intercetta senza modifiche.
 
 ## Schema di configurazione
 
@@ -33,68 +35,80 @@ CREATE TABLE TECH.CFG_DQ_TEST_CONFIG (
 );
 ```
 
-## Generic test custom
+## Generic test config-driven, dichiarato per colonna
 
-Uno per `TEST_TYPE`, in `tests/generic/` (convenzione reale del repo — vedi i generic test esistenti in `raw/dwh-code/tests/generic/`, es. `try_cast.sql`, `primary_key.sql` — non `macros/generic_tests/` come scritto nella prima bozza di questa pagina).
-
-```sql
--- macros/generic_tests/dq_not_null.sql
-{% test dq_not_null(model, column_name) %}
-    select * from {{ model }} where {{ column_name }} is null
-{% endtest %}
-```
+Un solo generic test, `dq_config_driven(model, column_name)`, in `tests/generic/` (convenzione reale del repo — vedi `raw/dwh-code/tests/generic/try_cast.sql`, `primary_key.sql`). Dichiarato **sotto ogni colonna** che deve avere un check (una riga `data_tests:` per colonna, come un test dbt normale) — non a livello di modello: `column_name` arriva automaticamente da dbt (stesso meccanismo di `not_null`/`unique`), non va passato a mano. Keyword `data_tests:`, non `tests:` (deprecata) — il repo vendorizzato usa sistematicamente `data_tests:` (vedi `raw/dwh-code/models/L0/ADOBE/*.yml`).
 
 ```sql
--- macros/generic_tests/dq_custom_sql.sql
-{% test dq_custom_sql(model, column_name=none, condition_sql=none) %}
-    select *
-    from {{ model }}
-    where not ({{ condition_sql }})
+{% test dq_config_driven(model, column_name) %}
+
+{%- if not execute -%}
+  select null as dq_failures where false
+{%- else -%}
+
+{%- set cfg_rows = dbt_utils.get_query_results_as_dict(
+    "select ds_test_type, ds_severity from " ~ env_var('DBT_DATABASE') ~ ".tech.cfg_dq_test_config"
+    ~ " where ds_modello = '" ~ model.identifier ~ "' and ds_colonna = '" ~ column_name ~ "' and fl_active = 'Y'"
+) -%}
+
+{%- if cfg_rows['DS_TEST_TYPE'] | length == 0 -%}
+  select null as dq_failures where false
+{%- else -%}
+
+  {%- set test_type = cfg_rows['DS_TEST_TYPE'][0] -%}
+  {%- set severity = cfg_rows['DS_SEVERITY'][0] -%}
+  {{ config(severity = severity) }}
+
+  {%- if test_type == 'is_valid_email' -%}
+    {%- set condition = column_name ~ " is not null and not regexp_like(" ~ column_name ~ ", '^[^@\\\\s]+@[^@\\\\s]+\\\\.[^@\\\\s]+$')" -%}
+  {%- else -%}
+    {{ exceptions.raise_compiler_error("dq_config_driven: DS_TEST_TYPE non gestito: " ~ test_type) }}
+  {%- endif -%}
+
+  select * from {{ model }} where {{ condition }}
+
+{%- endif -%}
+{%- endif -%}
+
 {% endtest %}
 ```
-
-## Generazione dinamica dei test da config
 
 ```yaml
-{% set cfg = dbt_utils.get_query_results_as_dict(
-    "select ds_colonna, ds_test_type, gn_params, ds_severity from tech.cfg_dq_test_config where ds_modello = 'L2_ANAGR_CONTROPARTE' and fl_active = 'Y'"
-) %}
-
 models:
-  - name: L2_ANAGR_CONTROPARTE
+  - name: anagrafica_controparte
     columns:
-    {% for i in range(cfg['DS_COLONNA']|length) %}
-      - name: {{ cfg['DS_COLONNA'][i] }}
-        tests:
-          - {{ cfg['DS_TEST_TYPE'][i] }}:
-              {% set p = fromjson(cfg['GN_PARAMS'][i]) %}
-              {% for k, v in p.items() %}
-              {{ k }}: "{{ v }}"
-              {% endfor %}
-              config:
-                severity: {{ cfg['DS_SEVERITY'][i] }}
-    {% endfor %}
+      - name: DS_EMAIL
+        data_type: VARCHAR(50)
+        data_tests:
+          - dq_config_driven
+      # ... resto delle colonne, invariato — data_tests solo dove serve un check
 ```
 
-Nel pilota effettivo (vedi sotto) la query è fattorizzata in una macro dedicata (`dq_cfg_by_col`, in `develop/macros/data_quality/dq_tests_block.sql`) invece di essere inline nello schema.yml, per poter essere riusata su più modelli.
+Punti chiave del design (rivisto più volte con l'utente il 2026-08-25):
+
+- **Nessuna generazione dinamica di struttura YAML.** Lo yml resta statico: aggiungere/togliere un check su una colonna richiede comunque una riga `data_tests: - dq_config_driven` in quella colonna (necessità strutturale — dbt deve sapere staticamente a quali nodi attaccare un test), ma **né il `test_type` né la `severity` sono scritti nello yml**: vivono solo in `TECH.CFG_DQ_TEST_CONFIG`, letti a runtime dal test.
+- **Severity impostata dinamicamente**: `{{ config(severity = severity) }}` chiamato dentro il corpo del test, con `severity` letta da `DS_SEVERITY` in config — nessuna duplicazione warn/error tra yml e tabella. Cambiare la severity di un check si fa **solo** in config, senza toccare lo yml. Da verificare alla prima esecuzione reale: `config()` chiamato dinamicamente dentro un generic test (non un model `.sql`) dovrebbe funzionare perché i test sono interamente Jinja-renderizzati, ma non ancora confermato con un `dbt build` su questa versione.
+- **`{% if not execute %}`**: evita che `get_query_results_as_dict` giri (fallendo) durante fasi di compile-only senza connessione attiva (es. `dbt parse`, generazione docs) — pattern già usato in `try_cast.sql` (`{% if execute %}`).
+- **Dispatch per `DS_TEST_TYPE`** (non un `rule_expr` SQL libero in config): la tabella di config resta quella già definita sotto (`DS_MODELLO`/`DS_COLONNA`/`DS_TEST_TYPE`/`GN_PARAMS`/`DS_SEVERITY`/`FL_ACTIVE`), quindi aggiungere un nuovo `test_type` richiede comunque un ramo `{% if %}` in più nel macro — trade-off accettato per restare aderenti allo schema già scelto, a fronte di un rule-engine generico (SQL libero via placeholder `{{col}}`) discusso e scartato.
 
 `dbt build` esegue questi test sempre dopo il modello; `dbt test` li rilancia isolatamente quando serve — nessun runner o hook aggiuntivo.
 
 ## Punto aperto / da verificare in fase di implementazione
 
-`get_query_results_as_dict` gira a **compile time**: serve una connessione al warehouse attiva durante il parse. Non è un problema nel normale flusso CLI/Cloud (ogni invocazione fa comunque il parse), ma va tenuto a mente: se la config cambia, il nuovo test compare solo al prossimo parse/compile, non a runtime su un artifact già compilato.
+`get_query_results_as_dict` gira a **compile time**: serve una connessione al warehouse attiva durante l'esecuzione del test (mitigato dal guard `{% if not execute %}` per le fasi compile-only). Se la config cambia, il nuovo test si applica dal prossimo `dbt build`/`dbt test` — non serve però più un ri-parse/ri-compile dello yml, perché la lettura della config avviene a runtime dentro il test stesso, non durante il parsing della struttura del modello.
 
 ## Pilota: check formato email su ANAGRAFICA_CONTROPARTE.DS_EMAIL (2026-08-25)
 
-Primo test reale, in `develop/`, non ancora portato upstream:
+Primo test reale, in `develop/`, non ancora portato upstream. Iterato più volte con l'utente dopo un `dbt build` reale che ha fatto emergere il vincolo sopra:
 
-- `develop/tests/generic/is_valid_email.sql` — generic test custom (`regexp_like` su pattern email base), in `tests/generic/` come da convenzione reale del repo.
-- `develop/macros/data_quality/dq_tests_block.sql` — `dq_cfg_by_col(model_name)` (una query su `TECH.CFG_DQ_TEST_CONFIG` per modello, risultato raggruppato per colonna) + `dq_tests_block(cfg_by_col, col_name)` (puro lookup/render, nessuna query aggiuntiva).
-- `develop/models/L2/ANAGR_CONTROPARTE/anagrafica_controparte.yml` — copia completa dello schema.yml reale (tutte le colonne/data_type/constraints), con `{{ dq_tests_block(cfg_by_col, '<NOME_COLONNA>') }}` dopo ogni `data_type:`. Nessuna colonna è hardcoded per un test specifico: la chiamata è identica per tutte le ~230 colonne, è la riga di config a decidere quali producono un test.
-- `develop/setup/dq_test_config.sql` — `CREATE TABLE TECH.CFG_DQ_TEST_CONFIG` (schema da questa pagina, nomi colonna con prefissi `DS_`/`FL_`/`GN_` coerenti col resto del progetto) + riga pilota: `('L2_ANAGR_CONTROPARTE', 'DS_EMAIL', 'is_valid_email', null, 'warn', 'Y')`.
+- `develop/tests/generic/dq_config_driven.sql` — generic test unico, a livello di modello, come descritto sopra.
+- `develop/models/L2/ANAGR_CONTROPARTE/anagrafica_controparte.yml` — copia completa dello schema.yml reale (tutte le colonne/data_type/constraints), completamente statica, con solo due `data_tests:` a livello di modello che richiamano `dq_config_driven` (warn/error).
+- `develop/setup/dq_test_config.sql` — `CREATE TABLE TECH.CFG_DQ_TEST_CONFIG` (schema sotto, prefissi `DS_`/`FL_`/`GN_` coerenti col resto del progetto) + riga pilota: `('anagrafica_controparte', 'DS_EMAIL', 'is_valid_email', null, 'warn', 'Y')` — nota: `DS_MODELLO` valorizzato col nome del modello dbt (`anagrafica_controparte`), non con lo schema Snowflake (`L2_ANAGR_CONTROPARTE`, usato invece nel `query_tag`) — i due sono stati inizialmente confusi durante il pilota.
 
-Non ancora verificato: una compilazione/run dbt reale (serve l'ambiente Snowflake collegato, non disponibile da qui) — quindi il pattern è verificato solo a livello di lettura/design, non eseguito.
+File obsoleti rimossi durante l'iterazione (primi tentativi con generazione per-colonna nello yml, poi scartati per il vincolo sopra): `develop/tests/generic/is_valid_email.sql`, `develop/macros/data_quality/dq_tests_block.sql`.
+
+Non ancora rieseguito con `dbt build` dopo l'ultima revisione (il giro precedente aveva fallito, causa che ha portato alla riscrittura sopra) — da riverificare.
 
 ## Stato
 
-Design confermato 2026-08-20; primo pilota implementato in `develop/` il 2026-08-25 (vedi sopra). Da formalizzare ulteriormente (altri test_type, altri modelli) solo dopo validazione del pilota.
+Design confermato 2026-08-20; riprogettato il 2026-08-25 dopo un `dbt build` reale che ha invalidato l'approccio "yml generato dinamicamente" — nuovo approccio "test config-driven a livello di modello" verificato solo a livello di lettura, non ancora ri-eseguito con dbt dopo la riscrittura.
