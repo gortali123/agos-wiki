@@ -17,12 +17,14 @@ models:
             cfg_severity: warn
           config:
             severity: warn
+            store_failures: true
       - dq_config_driven:
           name: dq_config_driven_error
           arguments:
             cfg_severity: error
           config:
             severity: error
+            store_failures: true
     columns:
       - name: CD_CONTROPARTE
         data_type: NUMBER(9,0)

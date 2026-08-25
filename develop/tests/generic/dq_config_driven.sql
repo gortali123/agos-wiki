@@ -85,15 +85,20 @@ with dq_results as (
   select
     object_construct(
       {% for c in checks %}
-      '{{ c.col }}', iff({{ c.condition }}, '{{ c.test_type }}', null){{ ',' if not loop.last else '' }}
+      '{{ c.col }}', iff({{ c.condition }}, {{ c.col }}::varchar, null){{ ',' if not loop.last else '' }}
       {% endfor %}
-    ) as failure_info
+    ) as failure_info,
+    array_to_string(array_compact(array_construct(
+      {% for c in checks %}
+      iff({{ c.condition }}, '{{ c.test_type }}', null){{ ',' if not loop.last else '' }}
+      {% endfor %}
+    )), ',') as failed_test_types
   from {{ model }}
 )
 
 select
   '{{ run_started_at }}' as ts_started_at,
-  'dq_config_driven' as ds_nome_test,
+  failed_test_types as ds_nome_test,
   '{{ model.schema }}' as ds_schema,
   '{{ model.identifier }}' as ds_tabella,
   failure_info as gn_failure_info,
