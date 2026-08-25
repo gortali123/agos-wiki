@@ -1,4 +1,6 @@
-{% test dq_config_driven(model, column_name) %}
+{% test dq_config_driven(model, column_name, store_failures=false) %}
+
+{{ config(store_failures = store_failures) }}
 
 {%- if not execute -%}
   select null as dq_failures where false
@@ -18,12 +20,10 @@
   {{ config(severity = severity) }}
 
   {%- if test_type == 'is_valid_email' -%}
-    {%- set condition = is_valid_email(column_name) -%}
+    {{ test_is_valid_email(model=model, column_name=column_name) }}
   {%- else -%}
     {{ exceptions.raise_compiler_error("dq_config_driven: DS_TEST_TYPE non gestito: " ~ test_type) }}
   {%- endif -%}
-
-  select * from {{ model }} where {{ condition }}
 
 {%- endif -%}
 {%- endif -%}
