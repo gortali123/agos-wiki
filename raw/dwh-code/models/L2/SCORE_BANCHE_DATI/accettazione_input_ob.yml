@@ -40,9 +40,9 @@ models:
         data_type: NUMBER(16,2)
       - name: EU_OB_FINANZIAMENTI
         data_type: NUMBER(16,2)
-      - name: EU_OB_INVESTIMENTI_FINANZIARI_ENTRATE
+      - name: EU_OB_INVEST_FINANZ_ENTRATE
         data_type: NUMBER(16,2)
-      - name: EU_OB_INVESTIMENTI_FINANZIARI_USCITE
+      - name: EU_OB_INVEST_FINANZ_USCITE
         data_type: NUMBER(16,2)
       - name: FL_OB_ALERT_SPESE_MORE_RITARDI
         data_type: VARCHAR

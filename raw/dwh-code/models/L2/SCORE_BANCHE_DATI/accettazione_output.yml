@@ -43,7 +43,7 @@ models:
         data_type: VARCHAR
       - name: CD_ANAGRAFICA
         data_type: NUMBER(16,0)
-      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+      - name: PC_DBR_PERC_INDEBIT_PRATICA
         data_type: NUMBER(16,0)
       - name: EU_DBR_TOT_ENTRATE_PRATICA
         data_type: NUMBER(16,2)
@@ -59,7 +59,7 @@ models:
         data_type: VARCHAR
       - name: DS_MESSAGGIO
         data_type: VARCHAR
-      - name: NM_ETA_CLIENTE_TERMINE_FINANZIAMENTO
+      - name: NM_ETA_CLI_TERM_FINANZIAM
         data_type: NUMBER(16,0)
       - name: NM_ETA
         data_type: NUMBER(16,0)

@@ -105,9 +105,9 @@ models:
         data_type: VARCHAR
       - name: FL_CALL_EURISC_SI_NO_DB
         data_type: VARCHAR
-      - name: CD_SCIPAFI_ULTIMA_PRATICA_CLIENTE
+      - name: CD_SCIPAFI_ULT_PRATICA_CLI
         data_type: NUMBER(16,0)
-      - name: DT_SCIPAFI_ULTIMA_CONSULTAZIONE_CLIENTE
+      - name: CD_SCIPAFI_ULT_CONSULT_CLI
         data_type: DATE
       - name: CD_ANAGRAFICA
         data_type: NUMBER(16,0)

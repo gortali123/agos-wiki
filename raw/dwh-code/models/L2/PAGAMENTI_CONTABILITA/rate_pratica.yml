@@ -110,3 +110,7 @@ models:
         data_type: VARCHAR(1)
       - name: FL_ESCLUSIONE_BOLLO
         data_type: VARCHAR(1)
+      - name: CD_AZIONE_PSVT_CQ
+        data_type: VARCHAR(3)
+      - name: PR_AZIONE_PSVT_CQ
+        data_type: NUMBER(11)

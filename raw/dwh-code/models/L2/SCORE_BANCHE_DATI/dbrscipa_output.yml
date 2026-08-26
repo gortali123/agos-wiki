@@ -43,7 +43,7 @@ models:
         data_type: NUMBER(16,2)
       - name: CD_OPERATION
         data_type: VARCHAR
-      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+      - name: PC_DBR_PERC_INDEBIT_PRATICA
         data_type: NUMBER(16,2)
       - name: EU_DBR_TOT_ENTRATE_PRATICA
         data_type: NUMBER(16,2)
@@ -179,7 +179,7 @@ models:
         data_type: NUMBER(16,2)
       - name: EU_DBR_IMPEGNI_CRIF_APPLICANT
         data_type: NUMBER(16,2)
-      - name: PC_DBR_PERC_INDEBITAMENTO_APPLICANT
+      - name: PC_DBR_PERC_INDEBIT_APPLICANT
         data_type: NUMBER(16,2)
       - name: EU_DBR_REDDITO_ANNUO_APPLICANT
         data_type: NUMBER(16,2)

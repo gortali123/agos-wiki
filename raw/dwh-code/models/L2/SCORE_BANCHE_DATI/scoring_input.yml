@@ -111,7 +111,7 @@ models:
         data_type: VARCHAR
       - name: CD_OPERATION
         data_type: VARCHAR
-      - name: EU_IMPORTO_FINANZIATO_ULTIMA_PRA_CLI2
+      - name: EU_IMP_FINANZ_ULT_PRA_CLI2
         data_type: NUMBER(16,2)
       - name: DT_GIA_CORRENTISTA
         data_type: DATE
@@ -207,7 +207,7 @@ models:
         data_type: VARCHAR
       - name: DT_DECOR_ULT_PRA2
         data_type: DATE
-      - name: EU_IMPORTO_FINANZIATO_ULTIMA_PRA_CLI
+      - name: EU_IMP_FINANZ_ULT_PRA_CLI
         data_type: NUMBER(16,2)
       - name: CD_IBAN
         data_type: VARCHAR
@@ -315,7 +315,7 @@ models:
         data_type: VARCHAR
       - name: FL_BANCO_ATTIVO_CONOSCIUTO
         data_type: VARCHAR
-      - name: CD_FORMA_GIURIDICA_DATORE_DI_LAVORO
+      - name: CD_FORMA_GIUR_DATORE_LAVORO
         data_type: VARCHAR
       - name: FL_PRESENZA_CQ
         data_type: VARCHAR
@@ -377,7 +377,7 @@ models:
         data_type: NUMBER(16,2)
       - name: FL_CTCPOS_HIT_NOHIT
         data_type: VARCHAR
-      - name: CD_CTCPOS_EX_CTC_GLOBAL_INDICATORI
+      - name: CD_CTCPOS_EX_CTC_GLOB_INDIC
         data_type: VARCHAR
-      - name: DS_CERVED_SCORE_IMMOB_CLASS_VALUE_DESC
+      - name: DS_CRVD_SCORE_IMMOB_CLS_DESC
         data_type: VARCHAR

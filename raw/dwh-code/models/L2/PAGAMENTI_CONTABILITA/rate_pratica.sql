@@ -21,7 +21,7 @@
 -- Ordine colonne del SELECT allineato al contract (YML).
 -- =============================================================================
 
-WITH dettaglio AS (
+WITH dettaglio_CO AS (
 
     -- Componente FIN: dettaglio finanziario della rata (OXCTFPAFD e' sempre FIN)
     SELECT
@@ -78,7 +78,7 @@ WITH dettaglio AS (
     WHERE FL_DELETED = 'N'   -- cluster A2
 ),
 
-dettaglio_componente AS (
+dettaglio_componente_CO AS (
 
     SELECT
         d.TP_PROCEDURA,
@@ -107,7 +107,7 @@ dettaglio_componente AS (
         t.OXCTPAFT_VALIDITA_DAL AS DT_INIZIO_VALIDITA,
         t.OXCTPAFT_VALIDITA_AL  AS DT_FINE_VALIDITA,
         t.OXCTPAFT_EVENTO AS evento
-    FROM dettaglio d
+    FROM dettaglio_CO d
     LEFT JOIN {{ ref('oxctfpaft') }} t
         ON  t.OXCTPAFT_PROCEDURA   = d.TP_PROCEDURA
         AND t.OXCTPAFT_NUM_PRATICA = d.CD_PRATICA
@@ -117,7 +117,61 @@ dettaglio_componente AS (
     -- TSE non e' una vera componente di piano -> esclusa
     WHERE t.OXCTPAFT_TIPO_COMPONENTE IS NOT NULL
     AND t.OXCTPAFT_TIPO_COMPONENTE <> 'TSE'
+),
+
+testata_componente_CQ AS(
+
+    SELECT 
+        QRPAT_NUM_PRATICA,
+        QRPAT_PROGRESSIVO,
+        QRPAT_VALIDITA_DAL,
+        LEAD(QRPAT_VALIDITA_DAL) OVER (
+											PARTITION BY QRPAT_NUM_PRATICA
+											ORDER BY QRPAT_PROGRESSIVO
+								) AS DT_FINE_VALIDITA,
+        QRPAT_AZIONE_CREAZ,
+        QRPAT_PRG_PSVT_CREAZ
+    FROM {{ ref('qsratpat') }}
+
+),
+
+dettaglio_componente_CQ AS (
+
+    SELECT
+        'CQ' AS TP_PROCEDURA,
+        a.QRPAD_NUM_PRATICA AS CD_PRATICA,
+        a.QRPAD_PROGRESSIVO,
+        a.QRPAD_NUMERO_RATA AS NM_PROG_RATA,
+        a.QRPAD_NUMERO_RATA AS NM_RATA,
+        NULL AS NM_RATA_ORIG,
+        a.QRPAD_TIPO_RATA AS TP_RATA,
+        a.QRPAD_DATA_SCADENZA AS DT_SCADENZA,
+        a.QRPAD_IMPORTO AS EU_IMPORTO,
+        a.QRPAD_QUOTA_CAPITALE AS EU_COMP_FIN_CAPITALE,
+        a.QRPAD_QUOTA_INTERESSI AS EU_COMP_FIN_INTERESSI,
+        NULL AS EU_COMP_FIN_CAPITALE_RESIDUO,
+        NULL AS DT_SCADENZA_NUOVA,
+        NULL AS DT_ACCODAMENTO,
+        NULL AS TP_ACCODAMENTO,
+        NULL AS EU_INTERESSI_INT,
+        NULL AS EU_INTERESSI_CNV,
+        NULL AS CD_NUM_DOC_CASTELLETTO,
+        NULL AS TP_MOD_PAGAMENTO,
+        NULL AS TP_DETT_RATA,
+        NULL AS FL_ESCLUSIONE_BOLLO,
+        -- FIN dalla fonte AFD, altrimenti il tipo componente lo detta AFT
+        NULL AS tipo_componente,
+        b.QRPAT_VALIDITA_DAL AS  DT_INIZIO_VALIDITA,
+        COALESCE (b.DT_FINE_VALIDITA, 99991231) AS DT_FINE_VALIDITA,
+        b.QRPAT_AZIONE_CREAZ AS CD_AZIONE_PSVT_CQ,
+		b.QRPAT_PRG_PSVT_CREAZ AS PR_AZIONE_PSVT_CQ
+    FROM {{ ref('qsratpad') }} a
+    LEFT JOIN testata_componente_CQ b
+        ON  a.QRPAD_NUM_PRATICA   = b.QRPAT_NUM_PRATICA
+        AND a.QRPAD_PROGRESSIVO = b.QRPAT_PROGRESSIVO
+        AND a.FL_DELETED = 'N'             -- cluster A2 (lookup)
 )
+
 
 SELECT
     TP_PROCEDURA,
@@ -170,8 +224,10 @@ SELECT
     MAX(CASE WHEN tipo_componente = 'FIN' THEN CD_NUM_DOC_CASTELLETTO END) AS CD_NUM_DOC_CASTELLETTO,
     MAX(CASE WHEN tipo_componente = 'FIN' THEN TP_MOD_PAGAMENTO END) AS TP_MOD_PAGAMENTO,
     MAX(CASE WHEN tipo_componente = 'FIN' THEN TP_DETT_RATA END) AS TP_DETT_RATA,
-    MAX(CASE WHEN tipo_componente = 'FIN' THEN FL_ESCLUSIONE_BOLLO END) AS FL_ESCLUSIONE_BOLLO
-FROM dettaglio_componente
+    MAX(CASE WHEN tipo_componente = 'FIN' THEN FL_ESCLUSIONE_BOLLO END) AS FL_ESCLUSIONE_BOLLO,
+	MAX(NULL) AS CD_AZIONE_PSVT_CQ,
+	MAX(NULL) AS PR_AZIONE_PSVT_CQ
+FROM dettaglio_componente_CO
 GROUP BY
     TP_PROCEDURA,
     CD_PRATICA,
@@ -179,3 +235,54 @@ GROUP BY
     DT_INIZIO_VALIDITA,
     DT_FINE_VALIDITA,
     evento
+
+UNION ALL
+
+SELECT
+    TP_PROCEDURA,
+    CD_PRATICA,
+    'FIN' AS DS_COMPONENTI_PIANO,
+    NM_PROG_RATA,
+    {{ custom_to_date('DT_INIZIO_VALIDITA', zero = 'min') }} AS DT_INIZIO_VALIDITA,
+    {{ custom_to_date('DT_FINE_VALIDITA', zero = 'max') }} AS DT_FINE_VALIDITA,
+    NM_RATA,
+    NM_RATA_ORIG,
+    TP_RATA,
+    {{ custom_to_date('DT_SCADENZA') }} AS DT_SCADENZA,
+    {{ custom_to_decimal("EU_IMPORTO", 16, 2) }} AS EU_IMPORTO_RATA_TOT,
+    {{ custom_to_decimal("EU_IMPORTO", 16, 2) }} AS EU_COMP_FIN, 
+    {{ custom_to_decimal("EU_COMP_FIN_CAPITALE", 16, 2) }} AS EU_COMP_FIN_CAPITALE,
+    {{ custom_to_decimal("EU_COMP_FIN_INTERESSI", 16, 2) }} AS EU_COMP_FIN_INTERESSI,
+    {{ custom_to_decimal("EU_COMP_FIN_CAPITALE_RESIDUO", 16, 2) }} AS EU_COMP_FIN_CAPITALE_RESIDUO,
+    NULL AS EU_COMP_SPI,  -- spese di incasso
+    NULL AS EU_COMP_ASS,  -- assicurazione
+    NULL AS EU_COMP_DLR,  -- dilazione ripartita
+    NULL AS EU_COMP_SPE,  -- spese
+    NULL AS EU_COMP_BOL,  -- bollo su fattura
+    NULL AS EU_COMP_SCO,  -- sconto
+    NULL AS EU_COMP_IAI,  -- int. accod. addebito immediato
+    NULL AS EU_COMP_IAD,  -- int. accod. addebito differito
+    NULL AS EU_COMP_TRA,  -- int. traslazione piano
+    NULL AS EU_COMP_IAS,  -- int. accod. su rata successiva
+    NULL AS EU_COMP_IND,  -- int. indicizzazione
+    NULL AS EU_COMP_DL1,  -- dilazione ripartita da rifin.
+    NULL AS EU_COMP_ADD,  -- altri addebiti ripartiti
+    NULL AS EU_COMP_RIP,  -- quote ripartite su rate a scadere
+    NULL AS EU_COMP_BLR,  -- bollo su rata
+    NULL AS EU_COMP_IDE,  -- interessi Dealer (FC)
+    NULL AS EU_COMP_CDE,  -- commissioni Dealer (FC)
+    NULL AS EU_COMP_SEL,  -- ammortamento servizi Leasing
+    NULL AS DT_SCADENZA_NUOVA,
+    NULL AS DT_ACCODAMENTO,
+    NULL AS TP_ACCODAMENTO,
+    NULL AS FL_ACCODAMENTO,
+    NULL AS EU_INTERESSI_INT,
+    NULL AS EU_INTERESSI_CNV,
+    NULL AS CD_NUM_DOC_CASTELLETTO,
+    NULL AS TP_MOD_PAGAMENTO,
+    NULL AS TP_DETT_RATA,
+    NULL AS FL_ESCLUSIONE_BOLLO,
+	CD_AZIONE_PSVT_CQ,
+	PR_AZIONE_PSVT_CQ
+FROM dettaglio_componente_CQ
+	

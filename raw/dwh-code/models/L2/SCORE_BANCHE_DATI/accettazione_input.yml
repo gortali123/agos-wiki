@@ -203,7 +203,7 @@ models:
         data_type: NUMBER(16)
       - name: NM_MENSILITA
         data_type: NUMBER(16)
-      - name: NM_NEWDOD_GIORNI_SUPERAMENTO_SOGLIA_MATERIALITA
+      - name: NM_NEWDOD_GG_SUPER_SOGLIA_MAT
         data_type: NUMBER(16)
       - name: FL_OV_DOC_IDENTITA_DOPPIO
         data_type: VARCHAR
@@ -227,7 +227,7 @@ models:
         data_type: VARCHAR
       - name: DS_BENE
         data_type: VARCHAR
-      - name: CD_FORMA_GIURIDICA_DATORE_DI_LAVORO
+      - name: CD_FORMA_GIUR_DATORE_LAVORO
         data_type: VARCHAR
       - name: FL_PRESENZA_CQ
         data_type: VARCHAR
@@ -239,9 +239,9 @@ models:
         data_type: VARCHAR
       - name: FL_OV_59_RBPSCORE
         data_type: VARCHAR
-      - name: FL_OV_13_LIVELLO_AUTORIZZAZIONE_INSUFF
+      - name: FL_OV_13_LIV_AUTORIZZ_INSUFF
         data_type: VARCHAR
-      - name: FL_OV_53_INTERROGAZIONE_POLICY_NON_EFFETTUATA
+      - name: FL_OV_53_INTERROG_POLICY_NEFF
         data_type: VARCHAR
       - name: EU_NETTO_DA_EROGARE
         data_type: NUMBER(16,2)
@@ -261,7 +261,7 @@ models:
         data_type: VARCHAR
       - name: EU_FIDO
         data_type: NUMBER(16,2)
-      - name: FL_OV_24_RENDIMENTO_EFFETTIVO_SCARSO
+      - name: FL_OV_24_REND_EFFETT_SCARSO
         data_type: VARCHAR
       - name: FL_VARIAZIONE_DOCUMENTO
         data_type: VARCHAR
@@ -345,7 +345,7 @@ models:
         data_type: VARCHAR
       - name: CD_SEGNALAZIONE_ANAGRAFICA
         data_type: VARCHAR
-      - name: TP_CLASSE_SEGNALAZIONE_ANAGRAFICA
+      - name: TP_CLASSE_SEGNAL_ANAGRAFICA
         data_type: VARCHAR
       - name: FL_TRUFFATORE
         data_type: VARCHAR
@@ -355,7 +355,7 @@ models:
         data_type: VARCHAR
       - name: CD_PROVINCIA_RESIDENZA
         data_type: VARCHAR
-      - name: DS_RAGIONE_SOCIALE_DATORE_DI_LAVORO
+      - name: DS_RAG_SOC_DATORE_LAVORO
         data_type: VARCHAR
       - name: DS_LOCALITA_DATORE_DI_LAVORO
         data_type: VARCHAR
@@ -481,13 +481,13 @@ models:
         data_type: NUMBER(16,2)
       - name: EU_TOT_USCITE_MENSILI_APPLICANT
         data_type: NUMBER(16,2)
-      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+      - name: PC_DBR_PERC_INDEBIT_PRATICA
         data_type: NUMBER(16)
       - name: EU_DBR_ALTRI_IMPEGNI_APPLICANT
         data_type: NUMBER(16,2)
       - name: EU_DBR_IMPEGNI_CRIF_APPLICANT
         data_type: NUMBER(16,2)
-      - name: PC_DBR_PERC_INDEBITAMENTO_APPLICANT
+      - name: PC_DBR_PERC_INDEBIT_APPLICANT
         data_type: NUMBER(16)
       - name: EU_DBR_REDDITO_ANNUO_APPLICANT
         data_type: NUMBER(16,2)
@@ -525,7 +525,7 @@ models:
         data_type: NUMBER(16)
       - name: TP_PREVAPP_TIPO_ATTIVITA
         data_type: VARCHAR
-      - name: CD_PREVAPP_CROSS_SELLING_DECISIONE
+      - name: CD_PREVAPP_CROSS_SELL_DECIS
         data_type: VARCHAR
       - name: EU_PREVAPP_FIDO_CROSS_SELLING
         data_type: NUMBER(16,2)
@@ -647,13 +647,13 @@ models:
         data_type: NUMBER(16)
       - name: NM_EURISC_CTR_RICHIESTI_U2M
         data_type: NUMBER(16)
-      - name: FL_EURISC_OPERAZIONI_NON_PERFEZIONATE
+      - name: FL_EURISC_OPERAZ_NON_PERFEZ
         data_type: VARCHAR
       - name: FL_EURISC_INSOLVENZE_PRECEDENTI
         data_type: VARCHAR
-      - name: NM_EURISC_TOTALE_NUMERO_CONTRATTI
+      - name: NM_EURISC_TOT_NUM_CONTRATTI
         data_type: NUMBER(16)
-      - name: NM_EURISC_A_NUMERO_RESIDENZE_STORICHE
+      - name: NM_EURISC_A_NUM_RESID_STORICHE
         data_type: NUMBER(16)
       - name: CD_EURISC_I_ITF
         data_type: VARCHAR
@@ -693,29 +693,29 @@ models:
         data_type: NUMBER(16,2)
       - name: EU_EURISC_NORA_UTILIZ_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_CQS_RATA_MENS_RC
+      - name: EU_EURISC_RAT_CQS_RATA_MENS_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_CQS_RATE_RESIDUE_RC
+      - name: EU_EURISC_RAT_CQS_RATE_RESID_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_CQS_RATE_SCAD_NOPAG_RC
+      - name: EU_EURISC_RAT_CQS_RATE_SCAD_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_LEAS_RATA_MENS_RC
+      - name: EU_EURISC_RAT_LEAS_RATA_MENS_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_LEAS_RATE_RESIDUE_RC
+      - name: EU_EURISC_RAT_LEAS_RATE_RES_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_LEAS_RATE_SCAD_NOPAG_RC
+      - name: EU_EURISC_RAT_LEAS_RATE_SCAD_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_MUT_RATA_MENS_RC
+      - name: EU_EURISC_RAT_MUT_RATA_MENS_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_MUT_RATE_RESIDUE_RC
+      - name: EU_EURISC_RAT_MUT_RATE_RESID_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_MUT_RATE_SCAD_NOPAG_RC
+      - name: EU_EURISC_RAT_MUT_RATE_SCAD_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_PP_RATA_MENS_RC
+      - name: EU_EURISC_RAT_PP_RATA_MENS_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_PP_RATE_RESIDUE_RC
+      - name: EU_EURISC_RAT_PP_RATE_RESID_RC
         data_type: NUMBER(16,2)
-      - name: EU_EURISC_RAT_IMP_PP_RATE_SCAD_NOPAG_RC
+      - name: EU_EURISC_RAT_PP_RATE_SCAD_RC
         data_type: NUMBER(16,2)
       - name: NM_EURISC_RAT_NUM_CQS_ACC
         data_type: NUMBER(16)
@@ -735,7 +735,7 @@ models:
         data_type: NUMBER(16)
       - name: FL_CTCPOS_HIT_NOHIT
         data_type: VARCHAR
-      - name: FL_CTCPOS_OPERAZIONI_NON_PERFEZIONATE
+      - name: FL_CTCPOS_OPERAZ_NON_PERFEZ
         data_type: VARCHAR
       - name: FL_CTCPOS_INSOLVENZE_PRECEDENTI
         data_type: VARCHAR
@@ -757,27 +757,27 @@ models:
         data_type: NUMBER(16)
       - name: NM_CTCPOS_RAT_NUM_CQS_ACC
         data_type: NUMBER(16)
-      - name: EU_CTCPOS_RAT_IMP_PP_RATE_SCAD_NOPAG_RC
+      - name: EU_CTCPOS_RAT_PP_RATE_SCAD_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_PP_RATE_RESIDUE_RC
+      - name: EU_CTCPOS_RAT_PP_RATE_RES_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_PP_RATA_MENS_RC
+      - name: EU_CTCPOS_RAT_PP_RATA_MENS_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_MUT_RATE_SCAD_NOPAG_RC
+      - name: EU_CTCPOS_RAT_MUT_RATE_SCAD_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_MUT_RATE_RESIDUE_RC
+      - name: EU_CTCPOS_RAT_MUT_RATE_RESID_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_MUT_RATA_MENS_RC
+      - name: EU_CTCPOS_RAT_MUT_RATA_MENS_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_LEAS_RATE_SCAD_NOPAG_RC
+      - name: EU_CTCPOS_RAT_LEAS_RATE_SCAD_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_LEAS_RATE_RESIDUE_RC
+      - name: EU_CTCPOS_RAT_LEAS_RATE_RES_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_LEAS_RATA_MENS_RC
+      - name: EU_CTCPOS_RAT_LEAS_RATA_MENS_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_CQS_RATE_RESIDUE_RC
+      - name: EU_CTCPOS_RAT_CQS_RATE_RESID_RC
         data_type: NUMBER(16,2)
-      - name: EU_CTCPOS_RAT_IMP_CQS_RATA_MENS_RC
+      - name: EU_CTCPOS_RAT_CQS_RATA_MENS_RC
         data_type: NUMBER(16,2)
       - name: NM_CTCPOS_TOT_CONTRATTI
         data_type: NUMBER(16)
@@ -795,9 +795,9 @@ models:
         data_type: NUMBER(16)
       - name: NM_CTCPOS_ENTI_SEGNALANTI
         data_type: NUMBER(16)
-      - name: NM_CTCPOS_TOTALE_NUMERO_CONTRATTI
+      - name: NM_CTCPOS_TOT_NUM_CONTRATTI
         data_type: NUMBER(16)
-      - name: NM_CTCPOS_NUMERO_RESIDENZE_STORICHE
+      - name: NM_CTCPOS_NUM_RESID_STORICHE
         data_type: NUMBER(16)
       - name: NM_CTCPOS_RICH_RATEALI
         data_type: NUMBER(16)
@@ -889,12 +889,12 @@ models:
         data_type: DATE
       - name: CD_CTCPOS_SCORE_COMPORTAMENTALE
         data_type: VARCHAR
-      - name: CD_CTCPOS_SCORE_COMPORTAMENTALE_FASCIA
+      - name: CD_CTCPOS_SCORE_COMPORT_FASCIA
         data_type: VARCHAR
       - name: DT_CTCPOS_SCORE_COMPORTAMENTALE
         data_type: DATE
       - name: CD_CTCPOS_SCORE_COMPLETO
-        data_type: VARCHAR
+        data_type: NUMBER
       - name: CD_CTCPOS_SCORE_COMPLETO_FASCIA
         data_type: VARCHAR
       - name: DT_CTCPOS_SCORE_COMPLETO
@@ -923,7 +923,7 @@ models:
         data_type: VARCHAR
       - name: CD_CERVED_SCORECARD_CLASSVALUE
         data_type: VARCHAR
-      - name: DS_CERVED_SCORECARD_CLASSDESCRIPTION
+      - name: DS_CRVD_SCORECARD_CLASSDESC
         data_type: VARCHAR
       - name: CD_CERVED_SCORECARD_MODELID
         data_type: VARCHAR
@@ -965,17 +965,17 @@ models:
         data_type: VARCHAR
       - name: DS_CERVED_SCORE_CGS_AREA_DESC
         data_type: VARCHAR
-      - name: FL_CERVED_SCORE_PAYLINE_AVAILABLE
+      - name: FL_CRVD_SCORE_PAYLINE_AVAIL
         data_type: VARCHAR
       - name: CD_CERVED_SCORE_PAYLINE_AREA
         data_type: VARCHAR
-      - name: DS_CERVED_SCORE_PAYLINE_AREA_DESC
+      - name: DS_CRVD_SCORE_PAYLINE_AREA_DESC
         data_type: VARCHAR
-      - name: FL_CERVED_SCORE_EVENTI_NEG_AVAILABLE
+      - name: FL_CRVD_SCORE_EVNT_NEG_AVAIL
         data_type: VARCHAR
       - name: CD_CERVED_SCORE_EVENTI_NEG_AREA
         data_type: VARCHAR
-      - name: DS_CERVED_SCORE_EVENTI_NEG_AREA_DESC
+      - name: DS_CRVD_SCORE_EVNT_NEG_AREA_DESC
         data_type: VARCHAR
       - name: FL_CERVED_SCORE_ECOFIN_AVAILABLE
         data_type: VARCHAR
@@ -983,45 +983,45 @@ models:
         data_type: VARCHAR
       - name: DS_CERVED_SCORE_ECOFIN_AREA_DESC
         data_type: VARCHAR
-      - name: FL_CERVED_SCORE_CONSULTAZIONI_AVAILABLE
+      - name: FL_CRVD_SCORE_CONSULT_AVAIL
         data_type: VARCHAR
-      - name: CD_CERVED_SCORE_CONSULTAZIONI_AREA
+      - name: CD_CRVD_SCORE_CONSULT_AREA
         data_type: VARCHAR
-      - name: DS_CERVED_SCORE_CONSULTAZIONI_AREA_DESC
+      - name: DS_CRVD_SCORE_CONSULT_ARDESC
         data_type: VARCHAR
       - name: FL_CERVED_SCORE_IMMOB_AVAILABLE
         data_type: VARCHAR
-      - name: CD_CERVED_SCORE_IMMOB_CLASS_VALUE
+      - name: CD_CRVD_SCORE_IMMOB_CLS_VAL
         data_type: VARCHAR
-      - name: FL_CERVED_SCORE_GOVERNANCE_AVAILABLE
+      - name: FL_CRVD_SCORE_GOVERN_AVAIL
         data_type: VARCHAR
       - name: CD_CERVED_SCORE_GOVERNANCE_AREA
         data_type: VARCHAR
-      - name: DS_CERVED_SCORE_GOVERNANCE_AREA_DESC
+      - name: DS_CRVD_SCORE_GOVERN_AREA_DESC
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_CLOSINGDATE
+      - name: CD_CRVD_LASTBAL_CLOSINGDATE
         data_type: VARCHAR
       - name: CD_CERVED_LAST_BALANCE_DURATION
         data_type: VARCHAR
       - name: CD_CERVED_LAST_BALANCE_SALES
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_TOTALASSETS
+      - name: CD_CRVD_LASTBAL_TOTALASSETS
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_SHAREHOLDERFUNDS
+      - name: CD_CRVD_LASTBAL_SHRHLD_FUND
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_SHORTTERMLIQUIDITY
+      - name: CD_CRVD_LASTBAL_ST_LIQUIDITY
         data_type: VARCHAR
       - name: CD_CERVED_LAST_BALANCE_CASHFLOW
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_GROSSPROFIT
+      - name: CD_CRVD_LASTBAL_GROSSPROFIT
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_PROFITANDLOSS
+      - name: CD_CRVD_LASTBAL_PROFIT_LOSS
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_SHORTTERMASSETS
+      - name: CD_CRVD_LASTBAL_ST_ASSETS
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_TOTALEREVENUES
+      - name: CD_CRVD_LASTBAL_TOT_REVENUES
         data_type: VARCHAR
-      - name: CD_CERVED_LAST_BALANCE_SHORTTERMLIABILITIES
+      - name: CD_CRVD_LASTBAL_ST_LIABILIT
         data_type: VARCHAR
       - name: CD_ESITO_SCORE
         data_type: VARCHAR

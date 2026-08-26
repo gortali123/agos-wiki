@@ -161,11 +161,11 @@ models:
         data_type: VARCHAR
       - name: FL_LAST_EURISC_INC_CLI_NOHIT
         data_type: VARCHAR
-      - name: DT_LAST_EURISC_INC_CLI_DATA_CARICAMENTO
+      - name: DT_LAST_EURISC_INC_CLI_DT_CAR
         data_type: DATE
-      - name: DT_LAST_EURISC_INC_CLI_DATA_ELABORAZIONE
+      - name: DT_LAST_EURISC_INC_CLI_DT_ELAB
         data_type: DATE
-      - name: CD_LAST_EURISC_INC_CLI_CODICE_PRATICA
+      - name: CD_LAST_EURISC_INC_CLI_COD_PRA
         data_type: VARCHAR
       - name: CD_LAST_EURISC_INC_CLI_PROCEDURA
         data_type: VARCHAR
@@ -205,9 +205,9 @@ models:
         data_type: VARCHAR
       - name: NM_CTCPOS_SCORE_COMPLETO
         data_type: VARCHAR
-      - name: DT_CTCPOS_SCORE_COMPORTAMENTALE_DT
+      - name: DT_CTCPOS_SCORE_COMPORT_DT
         data_type: VARCHAR
-      - name: CD_CTCPOS_SCORE_COMPORTAMENTALE_FASCIA
+      - name: CD_CTCPOS_SCORE_COMPORT_FASCIA
         data_type: VARCHAR
       - name: NM_CTCPOS_SCORE_COMPORTAMENTALE
         data_type: VARCHAR

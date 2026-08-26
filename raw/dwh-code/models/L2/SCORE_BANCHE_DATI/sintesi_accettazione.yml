@@ -12,83 +12,83 @@ models:
         columns: [TP_PROCEDURA, CD_PRATICA]
     columns:
       - name: TP_PROCEDURA
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: CD_PRATICA
         data_type: NUMBER(12)
       - name: CD_STATO_PRAT
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: CD_ATTRIBUTO_PRAT
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: CD_BLOCCO_PRAT
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: CD_ESITO_PRAT
-        data_type: VARCHAR(1)
+        data_type: VARCHAR  # VARCHAR(1)
       - name: DT_ESITO_PRAT
         data_type: DATE
       - name: CD_USER_ESITO_FINALE
-        data_type: VARCHAR(10)
+        data_type: VARCHAR  # VARCHAR(10)
       - name: CD_MOTIVO_OVERRIDE
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: TP_OVERRIDE
-        data_type: VARCHAR(30)
+        data_type: VARCHAR  # VARCHAR(30)
       - name: CD_INQUIRYCODE
         data_type: NUMBER(15)
       - name: CD_ESITO_ELAB_CDE
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: DS_ESITO_ELAB_CDE
-        data_type: VARCHAR(100)
+        data_type: VARCHAR  # VARCHAR(100)
       - name: CD_ESITO_CHIAMATA
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: CD_ESITO_CODICE
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: DS_ESITO_MESSAGGIO
-        data_type: VARCHAR(50)
+        data_type: VARCHAR  # VARCHAR(50)
       - name: CD_OPERAZIONE
-        data_type: VARCHAR(1)
+        data_type: VARCHAR  # VARCHAR(1)
       - name: NM_RICHIESTA
         data_type: NUMBER(15)
       - name: NM_ID_GUID_CF
-        data_type: VARCHAR(255)
+        data_type: VARCHAR  # VARCHAR(255)
       - name: CD_ESITO_AMLCHECK
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: DS_ESITO_AMLCHECK
-        data_type: VARCHAR(100)
+        data_type: VARCHAR  # VARCHAR(100)
       - name: FL_PRT_CAR_ORA_SERV
-        data_type: VARCHAR(1)
+        data_type: VARCHAR  # VARCHAR(1)
       - name: CD_ESITO_ANTIFRAUD
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: DS_ESITO_ANTIFRAUD
-        data_type: VARCHAR(100)
+        data_type: VARCHAR  # VARCHAR(100)
       - name: CD_ESITO_GIANOS
-        data_type: VARCHAR(5)
+        data_type: VARCHAR  # VARCHAR(5)
       - name: CD_ESITO_FIRCOSOFT
-        data_type: VARCHAR(5)
+        data_type: VARCHAR  # VARCHAR(5)
       - name: CD_VALUTAZ_PRT
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: FL_APAG_CON_SOSPENS
-        data_type: VARCHAR(1)
+        data_type: VARCHAR  # VARCHAR(1)
       - name: FL_SCIPAFI_OBBL
-        data_type: VARCHAR(1)
+        data_type: VARCHAR  # VARCHAR(1)
       - name: CD_LIVELLO_FIRMA_PRT
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: CD_AREA_RISCHIO
-        data_type: VARCHAR(4)
+        data_type: VARCHAR  # VARCHAR(4)
       - name: FL_TIPO_VENDITA_CONGIUNTA
-        data_type: VARCHAR(1)
+        data_type: VARCHAR  # VARCHAR(1)
       - name: EU_FIDO_MASSIMO
         data_type: NUMBER(13,2)
       - name: CD_MOTIVO_ESITO
-        data_type: VARCHAR(3)
+        data_type: VARCHAR  # VARCHAR(3)
       - name: CD_FASCIA_RBP
         data_type: NUMBER(2)
       - name: CD_FASCIA_RBP_LIGHT
         data_type: NUMBER(2)
       - name: CD_TAB_FINANZ_IRR
-        data_type: VARCHAR(3)
+        data_type: VARCHAR  # VARCHAR(3)
       - name: EU_FIDO_SCORE
         data_type: NUMBER(13,2)
       - name: CD_UTENTE
-        data_type: VARCHAR(10)
+        data_type: VARCHAR  # VARCHAR(10)
       - name: TS_RISPOSTA
         data_type: TIMESTAMP_NTZ
       # NOTA: dal campo seguente in poi il data model aggiornato riporta TIPO generico (VARCHAR/NUMBER senza
@@ -129,26 +129,26 @@ models:
         data_type: VARCHAR
       - name: TP_EURISC_FASCIA_SCORE_COO
         data_type: VARCHAR
-      - name: NM_CTCPOS_SCORE_COMPLETO_CLI #TODOriporta a NUMBER con i dati puliti
-        data_type: VARCHAR 
-      - name: NM_CTCPOS_SCORE_COMPLETO_COO #TODOriporta a NUMBER con i dati puliti
+      - name: NM_CTCPOS_SCORE_COMPLETO_CLI #TODO riporta a NUMBER con i dati puliti #TODO Riportato a NUMBER, verifica con i dati puliti
+        data_type: NUMBER 
+      - name: NM_CTCPOS_SCORE_COMPLETO_COO #TODO riporta a NUMBER con i dati puliti #TODO Riportato a NUMBER, verifica con i dati puliti
+        data_type: NUMBER
+      - name: TP_CTCPOS_SCORE_COMPL_FASC_CLI
         data_type: VARCHAR
-      - name: TP_CTCPOS_SCORE_COMPLETO_FASCIA_CLI
-        data_type: VARCHAR
-      - name: TP_CTCPOS_SCORE_COMPLETO_FASCIA_COO
+      - name: TP_CTCPOS_SCORE_COMPL_FASC_COO
         data_type: VARCHAR
       - name: FL_CTCPOS_HIT_NOHIT_CLI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_CTCPOS_HIT_NOHIT_COO
-        data_type: VARCHAR(1)
+        data_type: VARCHAR
       - name: FL_EURISC_HIT_NOHIT_CLI
-        data_type: VARCHAR(10)
+        data_type: VARCHAR  # VARCHAR(10)
       - name: FL_EURISC_HIT_NOHIT_COO
-        data_type: VARCHAR(10)
+        data_type: VARCHAR  # VARCHAR(10)
       - name: NM_OB_SCORE_CLI
         data_type: NUMBER
       - name: FL_OB_ESENZIONE_REDDITO_CLI
-        data_type: VARCHAR(1)
+        data_type: VARCHAR  # VARCHAR(1)
       - name: CD_OB_STATO_CLI
         data_type: VARCHAR
       - name: CD_CTCPOS_STATO_CLI
@@ -159,7 +159,7 @@ models:
         data_type: VARCHAR
       - name: CD_EURISC_CRIF_STATO_COO
         data_type: VARCHAR
-      - name: PC_DBR_PERC_INDEBITAMENTO_PRATICA
+      - name: PC_DBR_PERC_INDEBIT_PRATICA
         data_type: NUMBER
       - name: CD_PROCESSCODE
         data_type: VARCHAR
@@ -184,7 +184,7 @@ models:
       - name: DS_REGOLE_NC
         data_type: VARCHAR
       - name: FL_ESITO_POLICY
-        data_type: VARCHAR(2)
+        data_type: VARCHAR  # VARCHAR(2)
       - name: NM_LIVELLO_FIRMA_MAX_KO #TODO riporta a NUMBER con i dati puliti
         data_type: VARCHAR
       - name: NM_REGOLE_OVERRRIDE

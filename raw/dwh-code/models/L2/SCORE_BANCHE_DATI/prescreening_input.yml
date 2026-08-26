@@ -191,7 +191,7 @@ models:
         data_type: VARCHAR
       - name: FL_NEWDOD_FORBORNE
         data_type: VARCHAR
-      - name: NM_NEWDOD_GIORNI_SUPERAMENTO_SOGLIA_MATERIALITA
+      - name: NM_NEWDOD_GG_SUPER_SOGLIA_MAT
         data_type: VARCHAR
       - name: EU_CUMULO_AGOS_APPLICANT
         data_type: NUMBER(16,2)
